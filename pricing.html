@@ -1,0 +1,519 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>تعرفه‌ها و پرداخت | ایران کوین</title>
+  <meta name="description" content="تعرفه‌های اشتراک ایران کوین — پلن‌های آزمایشی، حرفه‌ای و سازمانی با قابلیت پرداخت امن.">
+  <meta name="theme-color" content="#7C3AED">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%237C3AED'/%3E%3Cstop offset='1' stop-color='%2306B6D4'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='64' height='64' rx='16' fill='url(%23g)'/%3E%3Ctext x='32' y='42' font-size='28' font-weight='800' text-anchor='middle' fill='white' font-family='Arial'%3EIC%3C/text%3E%3C/svg%3E">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="design/tokens.css">
+  <link rel="stylesheet" href="design/base.css">
+  <link rel="stylesheet" href="design/components.css">
+  <link rel="stylesheet" href="design/hero.css">
+  <link rel="stylesheet" href="design/sections.css">
+  <link rel="stylesheet" href="design/responsive.css">
+</head>
+<body>
+  <a class="skip-link" href="#main">پرش به محتوای اصلی</a>
+
+  <div class="page-veil" id="page-veil" aria-hidden="true">
+    <div class="veil-brand">
+      <span class="brand-mark">IC</span>
+      <span>ایران کوین</span>
+    </div>
+  </div>
+
+  <div style="position:fixed;top:0;inset-inline:0;height:3px;z-index:150;background:transparent;">
+    <div data-scroll-progress style="height:100%;background:var(--grad-brand);width:0%;border-radius:0 0 4px 0;"></div>
+  </div>
+
+  <!-- ============ NAVIGATION ============ -->
+  <header class="nav" id="nav">
+    <div class="container nav-inner">
+      <a class="brand" href="index.html" data-transition aria-label="ایران کوین — صفحه اصلی">
+        <span class="brand-mark" aria-hidden="true">IC</span>
+        <span class="brand-name">IRAN <b>COIN</b></span>
+      </a>
+      <nav class="nav-links" id="nav-links" aria-label="ناوبری اصلی">
+        <a class="nav-link" href="index.html#intelligence" data-transition>هوش مصنوعی</a>
+        <a class="nav-link" href="index.html#engine" data-transition>موتور معاملات</a>
+        <a class="nav-link" href="index.html#robot" data-transition>ربات معامله‌گر</a>
+        <a class="nav-link" href="index.html#dashboard" data-transition>داشبورد</a>
+        <a class="nav-link" href="index.html#security" data-transition>امنیت</a>
+        <a class="nav-link" href="pricing.html" aria-current="page">تعرفه‌ها</a>
+      </nav>
+      <div class="nav-actions">
+        <a class="btn btn-ghost btn-sm" href="dashboard.html" data-transition>ورود</a>
+        <a class="btn btn-primary btn-sm" href="#pay-panel" id="nav-subscribe">خرید اشتراک</a>
+        <button class="nav-burger" id="nav-burger" aria-expanded="false" aria-controls="nav-links" aria-label="باز و بسته کردن منو">
+          <span></span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main id="main">
+    <!-- ============ SUBSCRIPTION HERO ============ -->
+    <section class="price-hero" id="subscription-hero">
+      <div class="ph-bg" aria-hidden="true"></div>
+      <div class="container" data-reveal>
+        <span class="section-kicker">اشتراک ایران کوین</span>
+        <h1 class="t-display-xl">قدرت هوش مصنوعی، <span class="t-gradient">در دستان شما</span></h1>
+        <p class="lead" style="max-width:38rem;margin-inline:auto">
+          پلنی را انتخاب کنید که با سطح معاملات شما هماهنگ است. همه پلن‌ها با ۷ روز استفاده رایگان شروع می‌شوند.
+        </p>
+        <div style="display:flex;justify-content:center;margin-top:var(--sp-8)">
+          <div class="billing-toggle" role="group" aria-label="دوره پرداخت">
+            <button type="button" data-period="monthly" class="is-active" aria-pressed="true">ماهانه</button>
+            <button type="button" data-period="annual" aria-pressed="false">سالانه <span class="save-badge">۲۰٪ تخفیف</span></button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ PLAN SELECTOR ============ -->
+    <section class="section" id="plans" style="padding-top:var(--sp-8)">
+      <div class="container">
+        <div class="grid grid-3" style="align-items:stretch">
+          <!-- Starter -->
+          <article class="pricing-card" data-plan="starter" data-reveal>
+            <div class="pricing-name">آزمایشی</div>
+            <p class="pricing-desc">برای آشنایی با قدرت هوش مصنوعی ایران کوین</p>
+            <div class="pricing-price-row">
+              <span class="pricing-price" data-price-monthly="9" data-price-annual="7.2" data-period="monthly">9</span>
+              <span class="pricing-currency">دلار / ماه</span>
+            </div>
+            <div class="pricing-note" data-price-note data-note-monthly="بدون پیش‌پرداخت" data-note-annual="صورتحساب سالانه">بدون پیش‌پرداخت</div>
+            <ul class="pricing-features">
+              <li>۱ ربات معامله‌گر فعال</li>
+              <li>۳ استراتژی هوشمند</li>
+              <li>سیگنال‌های روزانه هوش مصنوعی</li>
+              <li>ژورنال معاملات پایه</li>
+              <li>پشتیبانی ایمیلی</li>
+              <li class="is-muted">مدیریت ریسک پیشرفته</li>
+              <li class="is-muted">اتصال چندصرافی‌ای</li>
+            </ul>
+            <button class="btn btn-secondary btn-block" type="button">انتخاب پلن آزمایشی</button>
+          </article>
+
+          <!-- Pro (recommended) -->
+          <article class="pricing-card is-recommended" data-plan="pro" data-reveal>
+            <span class="pricing-flag">پیشنهاد ایران کوین</span>
+            <div class="pricing-name">حرفه‌ای</div>
+            <p class="pricing-desc">برای معامله‌گران جدی که به ابزار کامل نیاز دارند</p>
+            <div class="pricing-price-row">
+              <span class="pricing-price" data-price-monthly="29" data-price-annual="23.2" data-period="monthly">29</span>
+              <span class="pricing-currency">دلار / ماه</span>
+            </div>
+            <div class="pricing-note" data-price-note data-note-monthly="بدون پیش‌پرداخت" data-note-annual="صورتحساب سالانه">بدون پیش‌پرداخت</div>
+            <ul class="pricing-features">
+              <li>۵ ربات معامله‌گر فعال</li>
+              <li>۱۵ استراتژی هوشمند + سفارشی‌سازی</li>
+              <li>سیگنال‌های لحظه‌ای با درجه اعتماد</li>
+              <li>ژورنال پیشرفته + تحلیل رفتاری</li>
+              <li>مدیریت ریسک کامل</li>
+              <li>اتصال تا ۳ صرافی</li>
+              <li>پشتیبانی اولویت‌دار</li>
+            </ul>
+            <button class="btn btn-primary btn-block" type="button">انتخاب پلن حرفه‌ای</button>
+          </article>
+
+          <!-- Pro+ -->
+          <article class="pricing-card" data-plan="institutional" data-reveal>
+            <div class="pricing-name">سازمانی</div>
+            <p class="pricing-desc">برای تیم‌ها و مدیران سرمایه حرفه‌ای</p>
+            <div class="pricing-price-row">
+              <span class="pricing-price" data-price-monthly="79" data-price-annual="63.2" data-period="monthly">79</span>
+              <span class="pricing-currency">دلار / ماه</span>
+            </div>
+            <div class="pricing-note" data-price-note data-note-monthly="بدون پیش‌پرداخت" data-note-annual="صورتحساب سالانه">بدون پیش‌پرداخت</div>
+            <ul class="pricing-features">
+              <li>ربات نامحدود</li>
+              <li>تمام استراتژی‌ها + ساخت استراتژی سفارشی</li>
+              <li>داده‌های پیشرفته و API اختصاصی</li>
+              <li>ژورنال تیمی و گزارش‌های تحلیلی</li>
+              <li>مدیریت ریسک سازمانی</li>
+              <li>اتصال نامحدود صرافی</li>
+              <li>مدیر حساب اختصاصی</li>
+            </ul>
+            <button class="btn btn-secondary btn-block" type="button">تماس با فروش سازمانی</button>
+          </article>
+        </div>
+        <p class="t-caption" style="text-align:center;margin-top:var(--sp-8)">
+          قیمت‌ها نمونه نمایشی هستند و تا تأیید نهایی محصول، هیچ مبلغی دریافت نمی‌شود.
+        </p>
+      </div>
+    </section><!-- ============ FEATURE COMPARISON ============ -->
+    <section class="section" id="compare" style="background:linear-gradient(180deg,var(--c-bg) 0%,#F1EEFB 100%)">
+      <div class="container">
+        <div class="section-head t-center" data-reveal>
+          <span class="section-kicker">مقایسه پلن‌ها</span>
+          <h2 class="t-heading-xl">مشخصات کامل در یک نگاه</h2>
+        </div>
+        <div style="overflow-x:auto" data-reveal>
+          <table class="cmp-table" style="min-width:44rem">
+            <thead>
+              <tr>
+                <th>قابلیت</th>
+                <th>آزمایشی</th>
+                <th>حرفه‌ای</th>
+                <th>سازمانی</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>ربات معامله‌گر فعال</td>
+                <td>۱</td>
+                <td>۵</td>
+                <td class="yes">نامحدود</td>
+              </tr>
+              <tr>
+                <td>استراتژی‌های هوشمند</td>
+                <td>۳</td>
+                <td>۱۵ + سفارشی</td>
+                <td class="yes">همه + ساخت استراتژی</td>
+              </tr>
+              <tr>
+                <td>سیگنال‌های هوش مصنوعی</td>
+                <td>روزانه</td>
+                <td class="yes">لحظه‌ای</td>
+                <td class="yes">لحظه‌ای + API</td>
+              </tr>
+              <tr>
+                <td>مدیریت ریسک پیشرفته</td>
+                <td class="no">—</td>
+                <td class="yes">✓</td>
+                <td class="yes">✓ سازمانی</td>
+              </tr>
+              <tr>
+                <td>اتصال صرافی</td>
+                <td>۱</td>
+                <td>۳</td>
+                <td class="yes">نامحدود</td>
+              </tr>
+              <tr>
+                <td>ژورنال معاملات</td>
+                <td>پایه</td>
+                <td class="yes">پیشرفته + رفتاری</td>
+                <td class="yes">تیمی + گزارش</td>
+              </tr>
+              <tr>
+                <td>پشتیبانی</td>
+                <td>ایمیلی</td>
+                <td class="yes">اولویت‌دار</td>
+                <td class="yes">مدیر حساب اختصاصی</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ SECURITY / GUARANTEE ============ -->
+    <section class="section" id="guarantee">
+      <div class="container">
+        <div class="grid grid-3">
+          <div class="glass-card" data-reveal>
+            <div class="card-icon">🔐</div>
+            <h3>پرداخت امن</h3>
+            <p>تمام تراکنش‌های پرداخت با رمزنگاری پیشرفته و درگاه‌های تأییدشده انجام می‌شود.</p>
+          </div>
+          <div class="glass-card" data-reveal>
+            <div class="card-icon">↩️</div>
+            <h3>ضمانت بازگشت وجه</h3>
+            <p>اگر در ۷ روز اول راضی نبودید، بدون سوال کل مبلغ به شما بازگردانده می‌شود.</p>
+          </div>
+          <div class="glass-card" data-reveal>
+            <div class="card-icon">⏸️</div>
+            <h3>لغو در هر زمان</h3>
+            <p>اشتراک خود را هر زمان بخواهید لغو کنید؛ دسترسی تا پایان دوره پرداختی باقی می‌ماند.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ FAQ ============ -->
+    <section class="section" id="faq" style="background:linear-gradient(180deg,var(--c-bg) 0%,#F1EEFB 100%)">
+      <div class="container-narrow">
+        <div class="section-head t-center" data-reveal>
+          <span class="section-kicker">سوالات متداول</span>
+          <h2 class="t-heading-xl">پاسخ پرسش‌های شما</h2>
+        </div>
+        <div style="display:grid;gap:var(--sp-3)">
+          <div class="faq-item" data-reveal>
+            <button class="faq-q" aria-expanded="false">
+              دوره آزمایشی رایگان چگونه کار می‌کند؟
+              <span class="faq-icon" aria-hidden="true">+</span>
+            </button>
+            <div class="faq-a">
+              <div class="faq-a-inner">
+                با ثبت‌نام در ایران کوین، ۷ روز استفاده کامل از پلن حرفه‌ای به‌صورت رایگان در اختیار شما قرار می‌گیرد.
+                برای شروع نیازی به درج اطلاعات کارت بانکی نیست و در پایان دوره، خودتان تصمیم می‌گیرید که ادامه دهید یا نه.
+              </div>
+            </div>
+          </div>
+          <div class="faq-item" data-reveal>
+            <button class="faq-q" aria-expanded="false">
+              آیا می‌توانم بین پلن‌ها جابه‌جا شوم؟
+              <span class="faq-icon" aria-hidden="true">+</span>
+            </button>
+            <div class="faq-a">
+              <div class="faq-a-inner">
+                بله. ارتقا در هر زمان با محاسبه مابه‌التفاوت همان روز انجام می‌شود و تغییر به پلن پایین‌تر از ابتدای دوره بعدی
+                اعمال خواهد شد.
+              </div>
+            </div>
+          </div>
+          <div class="faq-item" data-reveal>
+            <button class="faq-q" aria-expanded="false">
+              کلیدهای API صرافی من چقدر امن هستند؟
+              <span class="faq-icon" aria-hidden="true">+</span>
+            </button>
+            <div class="faq-a">
+              <div class="faq-a-inner">
+                کلیدهای API شما با رمزنگاری قوی ذخیره می‌شوند و ما پیشنهاد می‌کنیم فقط دسترسی «معامله» را فعال کنید،
+                هرگز دسترسی «برداشت». ایران کوین در هیچ شرایطی امکان برداشت وجه از حساب شما را ندارد.
+              </div>
+            </div>
+          </div>
+          <div class="faq-item" data-reveal>
+            <button class="faq-q" aria-expanded="false">
+              آیا ربات معامله‌گر تضمین سود دارد؟
+              <span class="faq-icon" aria-hidden="true">+</span>
+            </button>
+            <div class="faq-a">
+              <div class="faq-a-inner">
+                خیر. هیچ ابزار معاملاتی‌ای نمی‌تواند سود را تضمین کند. ایران کوین با مدیریت ریسک حرفه‌ای تلاش می‌کند
+                شانس موفقیت شما را افزایش دهد، اما معاملات ارز دیجیتال ذاتاً با ریسک همراه است.
+              </div>
+            </div>
+          </div>
+          <div class="faq-item" data-reveal>
+            <button class="faq-q" aria-expanded="false">
+              از چه صرافی‌هایی پشتیبانی می‌کنید؟
+              <span class="faq-icon" aria-hidden="true">+</span>
+            </button>
+            <div class="faq-a">
+              <div class="faq-a-inner">
+                معماری ایران کوین چندصرافی‌ای است. فهرست صرافی‌های فعال پس از تأیید رسمی هر همکاری اعلام می‌شود و
+                هیچ صرافی بدون تأیید رسمی به سیستم متصل نمی‌شود.
+              </div>
+            </div>
+          </div>
+          <div class="faq-item" data-reveal>
+            <button class="faq-q" aria-expanded="false">
+              آیا داده‌های من برای آموزش مدل‌ها استفاده می‌شود؟
+              <span class="faq-icon" aria-hidden="true">+</span>
+            </button>
+            <div class="faq-a">
+              <div class="faq-a-inner">
+                داده‌های معاملاتی شما به‌صورت ناشناس و فقط برای بهبود مدل‌های ایران کوین استفاده می‌شود. اطلاعات هویتی
+                و مالی شما هرگز به اشتراک گذاشته نمی‌شود.
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ PAYMENT PANEL ============ -->
+    <section class="section" id="pay-panel">
+      <div class="container">
+        <div class="section-head t-center" data-reveal>
+          <span class="section-kicker">پرداخت امن</span>
+          <h2 class="t-heading-xl">تکمیل اشتراک</h2>
+        </div>
+        <form class="pay-panel" id="pay-form" novalidate>
+          <div class="pp-summary" data-reveal>
+            <div>
+              <div class="t-dlabel">پلن انتخابی</div>
+              <div class="pp-plan" id="pp-plan-label">حرفه‌ای</div>
+            </div>
+            <div>
+              <div class="t-dlabel">مبلغ قابل پرداخت</div>
+              <div class="pp-price" id="pp-total">۲۹ دلار / ماه</div>
+            </div>
+          </div>
+
+          <div class="pp-field" data-reveal>
+            <label for="pay-name">نام و نام خانوادگی</label>
+            <input id="pay-name" name="name" type="text" placeholder="مثلاً: علی محمدی" autocomplete="name" required>
+          </div>
+
+          <div class="pp-field" data-reveal>
+            <label for="pay-email">ایمیل</label>
+            <input id="pay-email" name="email" type="email" placeholder="you@example.com" autocomplete="email" required>
+          </div>
+
+          <div class="pp-field" data-reveal>
+            <label>روش پرداخت</label>
+            <div class="pay-methods" role="group" aria-label="روش پرداخت">
+              <button type="button" class="pay-method is-selected" aria-pressed="true">
+                <span class="pm-icon">💳</span>
+                <span>کارت بانکی</span>
+              </button>
+              <button type="button" class="pay-method" aria-pressed="false">
+                <span class="pm-icon">₮</span>
+                <span>تتر (USDT)</span>
+              </button>
+              <button type="button" class="pay-method" aria-pressed="false">
+                <span class="pm-icon">🏦</span>
+                <span>کارت به کارت</span>
+              </button>
+            </div>
+          </div>
+
+          <div class="pp-row">
+            <div class="pp-field" data-reveal>
+              <label for="pay-card">شماره کارت (نمایشی)</label>
+              <input id="pay-card" name="card" type="text" inputmode="numeric" placeholder="0000 0000 0000 0000" data-mask-card>
+            </div>
+            <div class="pp-field" data-reveal>
+              <label for="pay-cvv">کد امنیتی (نمایشی)</label>
+              <input id="pay-cvv" name="cvv" type="text" inputmode="numeric" maxlength="4" placeholder="CVV2" data-mask-cvv>
+            </div>
+          </div>
+
+          <button class="btn btn-primary btn-lg btn-block" type="submit" id="pay-submit" data-reveal>
+            <span class="btn-spinner" aria-hidden="true"></span>
+            پرداخت و فعال‌سازی اشتراک
+          </button>
+
+          <div class="secure-note" data-reveal>
+            <span>🔒</span>
+            این صفحه نمایشی است و هیچ پرداخت واقعی انجام نمی‌شود.
+          </div>
+        </form>
+      </div>
+    </section>
+
+    <!-- ============ FINAL CTA ============ -->
+    <section class="section" style="padding-top:0">
+      <div class="container">
+        <div class="cta-final" data-reveal="zoom">
+          <div class="cta-inner">
+            <h2>هنوز مطمئن نیستید؟</h2>
+            <p>با پلن آزمایشی رایگان شروع کنید و قدرت هوش مصنوعی ایران کوین را از نزدیک ببینید.</p>
+            <div class="cta-actions">
+              <a class="btn btn-gold btn-lg" href="index.html" data-transition>بازگشت به صفحه اصلی</a>
+              <a class="btn btn-secondary btn-lg" href="dashboard.html" data-transition>پیش‌نمایش داشبورد</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ============ FOOTER ============ -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <a class="brand" href="index.html" data-transition>
+            <span class="brand-mark" aria-hidden="true">IC</span>
+            <span class="brand-name">IRAN <b>COIN</b></span>
+          </a>
+          <p>
+            ایران کوین؛ پلتفرم پیشرفته معاملات ارز دیجیتال با هوش مصنوعی.
+            هوش، دقت، سرعت و امنیت در خدمت تصمیم‌های مالی شما.
+          </p>
+        </div>
+        <div class="footer-col">
+          <h4>محصول</h4>
+          <a href="index.html#engine" data-transition>موتور معاملات</a>
+          <a href="index.html#robot" data-transition>ربات معامله‌گر</a>
+          <a href="index.html#risk" data-transition>مدیریت ریسک</a>
+          <a href="index.html#journal" data-transition>ژورنال معاملات</a>
+        </div>
+        <div class="footer-col">
+          <h4>دسترسی سریع</h4>
+          <a href="pricing.html">تعرفه‌ها</a>
+          <a href="dashboard.html" data-transition>داشبورد</a>
+          <a href="index.html#security" data-transition>امنیت</a>
+          <a href="#faq">سوالات متداول</a>
+        </div>
+        <div class="footer-col">
+          <h4>ارتباط با ما</h4>
+          <a href="mailto:support@example.com">پشتیبانی</a>
+          <a href="#guarantee">ضمانت بازگشت وجه</a>
+          <a href="#compare">مقایسه پلن‌ها</a>
+          <a href="index.html#exchanges" data-transition>صرافی‌های متصل</a>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <span>© ۱۴۰۵ ایران کوین. تمامی حقوق محفوظ است. — نسخه نمایشی</span>
+        <div class="footer-social">
+          <a href="#" aria-label="تلگرام" data-tip="تلگرام">✈</a>
+          <a href="#" aria-label="اینستاگرام" data-tip="اینستاگرام">◉</a>
+          <a href="#" aria-label="ایکس" data-tip="ایکس">𝕏</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/scroll.js"></script>
+  <script src="js/counters.js"></script>
+  <script src="js/main.js"></script>
+  <script>
+    (function () {
+      "use strict";
+
+      // Pre-select plan from landing CTA (?plan=&period=&price=)
+      var params = new URLSearchParams(window.location.search);
+      var plan = params.get("plan");
+      var period = params.get("period");
+      var price = params.get("price");
+
+      function setPlan(name) {
+        var label = document.getElementById("pp-plan-label");
+        if (label) label.textContent = name === "institutional" ? "سازمانی" : name === "starter" ? "آزمایشی" : "حرفه‌ای";
+        var priceEl = document.querySelector('[data-plan="' + name + '"] [data-price-monthly]');
+        if (priceEl) {
+          var m = priceEl.dataset.priceMonthly;
+          var a = priceEl.dataset.priceAnnual;
+          var total = document.getElementById("pp-total");
+          var active = document.querySelector(".billing-toggle button.is-active");
+          var per = active ? active.dataset.period : "monthly";
+          var val = per === "annual" ? a : m;
+          if (total) total.textContent = val + " دلار / " + (per === "annual" ? "سال" : "ماه");
+        }
+      }
+
+      if (plan) setPlan(plan);
+
+      // update payment summary when a plan is selected
+      document.querySelectorAll(".pricing-card .btn").forEach(function (btn) {
+        btn.addEventListener("click", function () {
+          var card = btn.closest(".pricing-card");
+          var name = card.dataset.plan;
+          if (name === "institutional") {
+            window.IRANCOIN.toast("برای پلن سازمانی با تیم فروش تماس بگیرید.");
+            return;
+          }
+          setPlan(name);
+          document.getElementById("pay-panel").scrollIntoView({ behavior: "smooth", block: "start" });
+        });
+      });
+
+      // card number formatting (demo)
+      var cardInput = document.getElementById("pay-card");
+      if (cardInput) {
+        cardInput.addEventListener("input", function () {
+          var v = cardInput.value.replace(/\D/g, "").slice(0, 16);
+          cardInput.value = v.replace(/(\d{4})(?=\d)/g, "$1 ");
+        });
+      }
+      var cvvInput = document.getElementById("pay-cvv");
+      if (cvvInput) {
+        cvvInput.addEventListener("input", function () {
+          cvvInput.value = cvvInput.value.replace(/\D/g, "").slice(0, 4);
+        });
+      }
+    })();
+  </script>
+</body>
+</html>

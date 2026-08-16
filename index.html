@@ -1,0 +1,974 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ایران کوین | پلتفرم هوشمند معاملات ارز دیجیتال</title>
+  <meta name="description" content="ایران کوین؛ پلتفرم پیشرفته معاملات ارز دیجیتال با هوش مصنوعی — ربات معامله‌گر، تحلیل بازار، مدیریت ریسک و پورتفولیو.">
+  <meta name="theme-color" content="#7C3AED">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%237C3AED'/%3E%3Cstop offset='1' stop-color='%2306B6D4'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='64' height='64' rx='16' fill='url(%23g)'/%3E%3Ctext x='32' y='42' font-size='28' font-weight='800' text-anchor='middle' fill='white' font-family='Arial'%3EIC%3C/text%3E%3C/svg%3E">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="design/tokens.css">
+  <link rel="stylesheet" href="design/base.css">
+  <link rel="stylesheet" href="design/components.css">
+  <link rel="stylesheet" href="design/hero.css">
+  <link rel="stylesheet" href="design/sections.css">
+  <link rel="stylesheet" href="design/responsive.css">
+</head>
+<body>
+  <a class="skip-link" href="#main">پرش به محتوای اصلی</a>
+
+  <!-- Page transition veil -->
+  <div class="page-veil" id="page-veil" aria-hidden="true">
+    <div class="veil-brand">
+      <span class="brand-mark">IC</span>
+      <span>ایران کوین</span>
+    </div>
+  </div>
+
+  <!-- Scroll progress -->
+  <div style="position:fixed;top:0;inset-inline:0;height:3px;z-index:150;background:transparent;">
+    <div data-scroll-progress style="height:100%;background:var(--grad-brand);width:0%;border-radius:0 0 4px 0;"></div>
+  </div>
+
+  <!-- ============ A. PREMIUM NAVIGATION ============ -->
+  <header class="nav" id="nav">
+    <div class="container nav-inner">
+      <a class="brand" href="index.html" aria-label="ایران کوین — صفحه اصلی">
+        <span class="brand-mark" aria-hidden="true">IC</span>
+        <span class="brand-name">IRAN <b>COIN</b></span>
+      </a>
+
+      <nav class="nav-links" id="nav-links" aria-label="ناوبری اصلی">
+        <a class="nav-link" href="#intelligence" aria-current="page">هوش مصنوعی</a>
+        <a class="nav-link" href="#engine">موتور معاملات</a>
+        <a class="nav-link" href="#robot">ربات معامله‌گر</a>
+        <a class="nav-link" href="#risk">مدیریت ریسک</a>
+        <a class="nav-link" href="#dashboard">داشبورد</a>
+        <a class="nav-link" href="#journal">ژورنال معاملات</a>
+        <a class="nav-link" href="#security">امنیت</a>
+        <a class="nav-link" href="#pricing-cta">تعرفه‌ها</a>
+      </nav>
+
+      <div class="nav-actions">
+        <a class="btn btn-ghost btn-sm" href="dashboard.html" data-transition>ورود</a>
+        <a class="btn btn-primary btn-sm" href="pricing.html" data-transition>شروع رایگان</a>
+        <button class="nav-burger" id="nav-burger" aria-expanded="false" aria-controls="nav-links" aria-label="باز و بسته کردن منو">
+          <span></span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main id="main">
+    <!-- ============ B. ANIMATED HERO ============ -->
+    <section class="hero" id="hero" aria-label="ایران کوین؛ پلتفرم معاملاتی با هوش مصنوعی">
+      <div class="hero-bg" aria-hidden="true"></div>
+      <div class="hero-grid-lines" aria-hidden="true"></div>
+      <div class="hero-orb hero-orb-1" aria-hidden="true"></div>
+      <div class="hero-orb hero-orb-2" aria-hidden="true"></div>
+      <div class="hero-orb hero-orb-3" aria-hidden="true"></div>
+      <canvas id="particles-canvas" aria-hidden="true"></canvas>
+
+      <div class="hero-inner">
+        <div class="hero-copy">
+          <h1 class="hero-title">
+            <span class="hl-1">معاملات ارز دیجیتال،</span>
+            <span class="hl-2 t-gradient">با هوش مصنوعی ایران کوین</span>
+            <span class="hl-3">دقیق‌تر، سریع‌تر، هوشمندتر</span>
+          </h1>
+          <p class="hero-sub">
+            ایران کوین یک پلتفرم پیشرفته معاملاتی است که با موتور هوش مصنوعی اختصاصی، بازار را لحظه‌به‌لحظه تحلیل می‌کند؛
+            سیگنال می‌سازد، ریسک را مدیریت می‌کند و به شما در تصمیم‌گیری‌های حرفه‌ای کمک می‌کند.
+          </p>
+          <div class="hero-ctas">
+            <button class="btn btn-primary btn-lg" id="hero-subscribe">شروع رایگان معاملات</button>
+            <a class="btn btn-secondary btn-lg" href="#engine">مشاهده قابلیت‌ها</a>
+          </div>
+          <div class="hero-stats">
+            <div class="hero-stat">
+              <div class="hero-stat-value" data-count="99.9" data-decimals="1" data-suffix="٪" data-duration="2000">۰</div>
+              <div class="hero-stat-label">دقت سیگنال‌های هوش مصنوعی</div>
+            </div>
+            <div class="hero-stat">
+              <div class="hero-stat-value" data-count="4" data-suffix="ms" data-duration="1500">۰</div>
+              <div class="hero-stat-label">سرعت اجرای سفارش</div>
+            </div>
+            <div class="hero-stat">
+              <div class="hero-stat-value" data-count="24" data-suffix="/7" data-duration="1800">۰</div>
+              <div class="hero-stat-label">پایش زنده بازار</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Hero visual scene -->
+        <div class="hero-visual" id="hero-visual" aria-hidden="true">
+          <!-- AI Brain -->
+          <div class="brain-wrap">
+            <div class="brain-glow"></div>
+            <div class="brain-core">
+              <div class="brain-ring brain-ring-r1"></div>
+              <div class="brain-ring brain-ring-r2"></div>
+              <div class="brain-ring brain-ring-r3"></div>
+              <div class="brain-ring brain-ring-r4"></div>
+            </div>
+            <canvas id="brain-canvas"></canvas>
+            <div class="brain-label"><span class="status-dot live"></span> هسته هوش مصنوعی</div>
+          </div>
+
+          <!-- Bitcoin -->
+          <div class="coin coin-btc coin-float-idle" data-parallax="0.14">
+            <div class="coin-symbol">₿</div>
+          </div>
+
+          <!-- Tether -->
+          <div class="coin coin-usdt coin-float-idle" data-parallax="0.1">
+            <div class="coin-symbol">₮</div>
+          </div>
+
+          <!-- Floating AI cards -->
+          <div class="ai-card ac-1 is-float-1" data-parallax="0.2">
+            <div class="ac-head">
+              <span class="ac-icon" style="background:var(--c-violet-100);color:var(--c-violet-700)">📊</span>
+              تحلیل بازار
+            </div>
+            <div class="ac-value t-up">+۴.۲٪</div>
+            <div class="ac-meta"><span>BTC/USDT</span><span>لحظه‌ای</span></div>
+          </div>
+
+          <div class="ai-card ac-2 is-float-2" data-parallax="0.24">
+            <div class="ac-head">
+              <span class="ac-icon" style="background:var(--c-cyan-100);color:var(--c-cyan-600)">⚡</span>
+              سرعت اجرا
+            </div>
+            <div class="ac-value">۴ms</div>
+            <div class="ac-meta"><span>زیر ۵ میلی‌ثانیه</span></div>
+          </div>
+
+          <div class="ai-card ac-3 is-float-3" data-parallax="0.18">
+            <div class="ac-head">
+              <span class="ac-icon" style="background:var(--c-emerald-100);color:var(--c-emerald-600)">🛡</span>
+              سطح ریسک
+            </div>
+            <div class="ac-value t-up">کم</div>
+            <div class="ac-meta"><span>منطبق با استراتژی</span></div>
+          </div>
+
+          <div class="ai-card ac-4 is-float-4" data-parallax="0.22">
+            <div class="ac-head">
+              <span class="ac-icon" style="background:var(--c-gold-100);color:var(--c-gold-600)">🎯</span>
+              سیگنال معاملاتی
+            </div>
+            <div class="ac-value t-up">خرید</div>
+            <div class="ac-meta"><span>اعتماد ۹۲٪</span></div>
+          </div>
+
+          <!-- Mini market widgets -->
+          <div class="mini-chart mc-1" data-parallax="0.12">
+            <div class="mc-title"><span>BTC/USDT</span><span class="badge badge-emerald">+۲.۴٪</span></div>
+            <div class="mc-svg" data-spark data-seed="11" data-up="true"></div>
+            <span class="mc-price t-up">$۶۸,۴۲۰</span>
+          </div>
+
+          <div class="mini-chart mc-2" data-parallax="0.16">
+            <div class="mc-title"><span>ETH/USDT</span><span class="badge badge-rose">-۰.۸٪</span></div>
+            <div class="mc-svg" data-spark data-seed="23" data-up="false"></div>
+            <span class="mc-price t-down">$۳,۹۸۵</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="scroll-hint" aria-hidden="true">
+        <div class="mouse"><span></span></div>
+        اسکرول کنید
+      </div>
+    </section>
+
+    <!-- ============ C. AI INTELLIGENCE ============ -->
+    <section class="section" id="intelligence">
+      <div class="section-glow" style="width:30rem;height:30rem;top:-6rem;inset-inline-start:-8rem;background:radial-gradient(circle,rgba(139,92,246,.16),transparent 65%)"></div>
+      <div class="container">
+        <div class="grid grid-2" style="align-items:center">
+          <div data-reveal>
+            <span class="section-kicker">هوش مصنوعی ایران کوین</span>
+            <h2 class="t-heading-xl">مغزی که بازار را برای شما <span class="t-gradient">می‌خواند و می‌فهمد</span></h2>
+            <p class="lead">
+              موتور هوش مصنوعی ایران کوین با پردازش هم‌زمان داده‌های قیمتی، جریان سفارش‌ها، حجم معاملات و احساسات بازار،
+              یک تصویر زنده و چندلایه از وضعیت بازار می‌سازد. این مغز دیجیتال به‌طور مداوم یاد می‌گیرد و الگوهای تکرارشونده
+              را پیش از وقوع شناسایی می‌کند.
+            </p>
+            <div class="intel-stat-chips">
+              <span class="badge badge-glass badge-dot" style="color:var(--c-violet-700)">یادگیری مستمر</span>
+              <span class="badge badge-glass badge-dot" style="color:var(--c-cyan-600)">تحلیل چندبعدی</span>
+              <span class="badge badge-glass badge-dot" style="color:var(--c-emerald-600)">پیش‌بینی رژیم بازار</span>
+            </div>
+          </div>
+          <div class="intel-visual" data-reveal="zoom" aria-hidden="true">
+            <div class="intel-ring intel-ring-1"></div>
+            <div class="intel-ring intel-ring-2"></div>
+            <div class="intel-ring intel-ring-3"></div>
+            <span class="intel-node" style="top:12%;inset-inline-start:18%"></span>
+            <span class="intel-node" style="top:22%;inset-inline-end:12%;width:.55rem;height:.55rem;background:var(--c-cyan-400)"></span>
+            <span class="intel-node" style="bottom:16%;inset-inline-start:26%;width:.55rem;height:.55rem;background:var(--c-emerald-400)"></span>
+            <span class="intel-node" style="bottom:24%;inset-inline-end:20%"></span>
+            <span class="intel-node" style="top:48%;inset-inline-start:6%;width:.5rem;height:.5rem;background:var(--c-gold-400)"></span>
+            <div class="intel-core"><span>🧠</span></div>
+          </div>
+        </div>
+      </div>
+    </section><!-- ============ D. SMART TRADING ENGINE ============ -->
+    <section class="section" id="engine" style="background:linear-gradient(180deg,var(--c-bg) 0%,#F1EEFB 100%)">
+      <div class="container">
+        <div class="section-head t-center" data-reveal>
+          <span class="section-kicker">موتور معاملات هوشمند</span>
+          <h2 class="t-heading-xl">چهار ستون قدرت ایران کوین</h2>
+          <p class="lead">موتور معاملات ایران کوین روی یک معماری دقیق و چندلایه ساخته شده است؛ از دریافت داده تا اجرای نهایی سفارش.</p>
+        </div>
+        <div class="engine-flow">
+          <div class="engine-step" data-reveal>
+            <span class="engine-arrow" aria-hidden="true">◀</span>
+            <div class="es-icon">📡</div>
+            <h3>دریافت داده</h3>
+            <p>اتصال زنده به بازارهای جهانی با تأخیر زیر ۵ میلی‌ثانیه</p>
+          </div>
+          <div class="engine-step" data-reveal>
+            <span class="engine-arrow" aria-hidden="true">◀</span>
+            <div class="es-icon">🧠</div>
+            <h3>تحلیل هوشمند</h3>
+            <p>پردازش چندلایه داده با مدل‌های یادگیری ماشین اختصاصی</p>
+          </div>
+          <div class="engine-step" data-reveal>
+            <span class="engine-arrow" aria-hidden="true">◀</span>
+            <div class="es-icon">📐</div>
+            <h3>طراحی استراتژی</h3>
+            <p>انتخاب و تنظیم استراتژی بر اساس رژیم فعلی بازار</p>
+          </div>
+          <div class="engine-step" data-reveal>
+            <span class="engine-arrow" aria-hidden="true">◀</span>
+            <div class="es-icon">⚡</div>
+            <h3>اجرای دقیق</h3>
+            <p>ثبت سفارش با الگوریتم‌های کاهش لغزش قیمت</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ E. MARKET ANALYSIS ============ -->
+    <section class="section" id="market">
+      <div class="container">
+        <div class="grid grid-2" style="align-items:center">
+          <div class="chart-window" data-reveal="left">
+            <div class="cw-top">
+              <div class="cw-title">
+                <span class="status-dot live"></span>
+                BTC / USDT — تحلیل زنده
+              </div>
+              <div class="cw-price t-up" id="candle-price">$۶۸,۴۲۰ <span style="font-size:var(--fs-body-s)">▲ ۲.۴٪</span></div>
+            </div>
+            <div id="candle-svg" data-candles></div>
+            <div class="cw-tags">
+              <span class="badge badge-violet">حمایت: ۶۶,۸۰۰</span>
+              <span class="badge badge-cyan">مقاومت: ۷۰,۲۰۰</span>
+              <span class="badge badge-emerald">روند: صعودی</span>
+              <span class="badge badge-gold">رژیم بازار: مومنتوم</span>
+            </div>
+          </div>
+          <div data-reveal="right">
+            <span class="section-kicker">تحلیل بازار</span>
+            <h2 class="t-heading-xl">بازار را با چشم هوش مصنوعی <span class="t-gradient">ببینید</span></h2>
+            <p class="lead">
+              نمودارهای زنده، سطوح حمایت و مقاومت، تشخیص رژیم بازار و سیگنال‌های هوشمند؛ همه‌چیز در یک نمای واحد و قابل‌فهم.
+              ایران کوین پیچیدگی بازار را به تصمیم‌های شفاف تبدیل می‌کند.
+            </p>
+            <div class="signal-list" style="margin-top:var(--sp-6)">
+              <div class="signal-item" data-reveal>
+                <div class="si-icon" style="background:var(--c-emerald-100)">📈</div>
+                <div class="si-main">
+                  <div class="si-name">سیگنال خرید — BTC/USDT <span class="badge badge-emerald">اعتماد ۹۲٪</span></div>
+                  <div class="si-sub">بر اساس شکست مقاومت ۶۹,۴۰۰ با حجم بالا</div>
+                </div>
+                <div class="si-value t-up">+۲.۴٪</div>
+              </div>
+              <div class="signal-item" data-reveal>
+                <div class="si-icon" style="background:var(--c-cyan-100)">🔁</div>
+                <div class="si-main">
+                  <div class="si-name">تغییر رژیم بازار <span class="badge badge-cyan">هشدار</span></div>
+                  <div class="si-sub">گذار از نوسان کم به مومنتوم صعودی شناسایی شد</div>
+                </div>
+                <div class="si-value" style="color:var(--c-cyan-600)">مومنتوم</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ F. AUTOMATED TRADING ROBOT ============ -->
+    <section class="section" id="robot" style="background:linear-gradient(180deg,var(--c-bg) 0%,#F1EEFB 100%)">
+      <div class="container">
+        <div class="section-head t-center" data-reveal>
+          <span class="section-kicker">ربات معامله‌گر</span>
+          <h2 class="t-heading-xl">چرخه کامل هوش معاملاتی ایران کوین</h2>
+          <p class="lead">ربات معامله‌گر ایران کوین یک سیستم بسته و خودآموز است؛ از داده تا یادگیری، همه‌چیز به‌صورت خودکار و شفاف.</p>
+        </div>
+        <div class="pipeline" style="max-width:52rem;margin-inline:auto">
+          <div class="pipe-row" data-reveal>
+            <div class="pipe-num"></div>
+            <div>
+              <h3>داده بازار</h3>
+              <p>دریافت لحظه‌ای قیمت، حجم و جریان سفارش از صرافی‌های متصل</p>
+            </div>
+            <div class="pipe-state"><span class="status-dot live"></span> فعال</div>
+          </div>
+          <div class="pipe-row" data-reveal>
+            <div class="pipe-num"></div>
+            <div>
+              <h3>تحلیل هوش مصنوعی</h3>
+              <p>بررسی چندلایه داده و تولید سیگنال با درجه اعتماد</p>
+            </div>
+            <div class="pipe-state"><span class="status-dot live"></span> فعال</div>
+          </div>
+          <div class="pipe-row" data-reveal>
+            <div class="pipe-num"></div>
+            <div>
+              <h3>انتخاب استراتژی</h3>
+              <p>هم‌راستا کردن استراتژی با رژیم فعلی بازار</p>
+            </div>
+            <div class="pipe-state"><span class="status-dot live"></span> فعال</div>
+          </div>
+          <div class="pipe-row" data-reveal>
+            <div class="pipe-num"></div>
+            <div>
+              <h3>مدیریت ریسک</h3>
+              <p>تعیین حجم پوزیشن، حد ضرر و حد سود پیش از ورود به معامله</p>
+            </div>
+            <div class="pipe-state"><span class="status-dot live"></span> فعال</div>
+          </div>
+          <div class="pipe-row" data-reveal>
+            <div class="pipe-num"></div>
+            <div>
+              <h3>اجرای سفارش</h3>
+              <p>ثبت خودکار سفارش با کنترل دقیق لغزش قیمت</p>
+            </div>
+            <div class="pipe-state"><span class="status-dot live"></span> فعال</div>
+          </div>
+          <div class="pipe-row" data-reveal>
+            <div class="pipe-num"></div>
+            <div>
+              <h3>پایش و ژورنال</h3>
+              <p>ثبت تمام رویدادها و ثبت خودکار در ژورنال معاملات</p>
+            </div>
+            <div class="pipe-state"><span class="status-dot live"></span> فعال</div>
+          </div>
+          <div class="pipe-row" data-reveal>
+            <div class="pipe-num"></div>
+            <div>
+              <h3>یادگیری</h3>
+              <p>بهبود مستمر مدل‌ها بر اساس نتایج واقعی معاملات</p>
+            </div>
+            <div class="pipe-state"><span class="status-dot live"></span> فعال</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ G. STRATEGY INTELLIGENCE ============ -->
+    <section class="section" id="strategy">
+      <div class="container">
+        <div class="section-head" data-reveal>
+          <span class="section-kicker">هوش استراتژی</span>
+          <h2 class="t-heading-xl">استراتژی‌هایی که با بازار <span class="t-gradient">تنفس می‌کنند</span></h2>
+          <p class="lead">هیچ استراتژی ثابتی برای همیشه برنده نیست. ایران کوین رژیم بازار را تشخیص می‌دهد و بهترین استراتژی را در هر لحظه فعال می‌کند.</p>
+        </div>
+        <div class="grid grid-3">
+          <div class="glass-card" data-reveal>
+            <div class="card-icon">📊</div>
+            <h3>دنبال‌کننده روند</h3>
+            <p>در بازارهای دارای روند واضح، این استراتژی با شکست‌ها وارد می‌شود و سود روند را تا آخر دنبال می‌کند.</p>
+            <div style="margin-top:var(--sp-4)"><span class="badge badge-cyan">مناسب: روند صعودی</span></div>
+          </div>
+          <div class="glass-card" data-reveal>
+            <div class="card-icon">↔️</div>
+            <h3>معاملات رنج</h3>
+            <p>در بازارهای بدون روند، خرید از کف محدوده و فروش از سقف؛ با مدیریت دقیق ریسک.</p>
+            <div style="margin-top:var(--sp-4)"><span class="badge badge-turquoise">مناسب: بازار رنج</span></div>
+          </div>
+          <div class="glass-card" data-reveal>
+            <div class="card-icon">🎯</div>
+            <h3>معاملات مومنتوم</h3>
+            <p>واکنش سریع به حرکات قوی قیمت با حجم بالا؛ مناسب رویدادهای خبری و شکست‌های پرقدرت.</p>
+            <div style="margin-top:var(--sp-4)"><span class="badge badge-violet">مناسب: نوسان بالا</span></div>
+          </div>
+        </div>
+      </div>
+    </section><!-- ============ H. RISK MANAGEMENT ============ -->
+    <section class="section" id="risk" style="background:linear-gradient(180deg,var(--c-bg) 0%,#F1EEFB 100%)">
+      <div class="container">
+        <div class="grid grid-2" style="align-items:center">
+          <div data-reveal>
+            <span class="section-kicker">مدیریت ریسک</span>
+            <h2 class="t-heading-xl">قمار ممنوع؛ <span class="t-gradient">انضباط حرفه‌ای</span></h2>
+            <p class="lead">
+              در ایران کوین، هر معامله پیش از ورود، یک برنامه کامل ریسک دارد: حجم پوزیشن، حد ضرر، حد سود و حداکثر افت سرمایه.
+              هوش مصنوعی در لحظه از پورتفولیوی شما محافظت می‌کند.
+            </p>
+            <div class="risk-rows" style="margin-top:var(--sp-8)">
+              <div class="risk-row" data-reveal>
+                <div class="rr-head"><span>سطح ریسک فعلی</span><span class="rr-val">کم</span></div>
+                <div class="progress" data-progress="28"><span style="background:var(--grad-up)"></span></div>
+              </div>
+              <div class="risk-row" data-reveal>
+                <div class="rr-head"><span>حداکثر ریسک هر معامله</span><span class="rr-val">۱٪ سرمایه</span></div>
+                <div class="progress" data-progress="20"><span style="background:var(--grad-up)"></span></div>
+              </div>
+              <div class="risk-row" data-reveal>
+                <div class="rr-head"><span>نسبت سود به ضرر هدف</span><span class="rr-val">۱ : ۲.۵</span></div>
+                <div class="progress" data-progress="60"><span style="background:var(--grad-brand)"></span></div>
+              </div>
+              <div class="risk-row" data-reveal>
+                <div class="rr-head"><span>سقف افت سرمایه روزانه</span><span class="rr-val">۳٪</span></div>
+                <div class="progress" data-progress="30"><span style="background:var(--grad-gold)"></span></div>
+              </div>
+            </div>
+          </div>
+          <div class="risk-gauge" data-reveal="zoom" aria-hidden="true">
+            <div data-gauge data-value="0.28" data-color="#10B981"></div>
+            <div class="gauge-label">
+              <div class="gauge-value">۲۸٪</div>
+              <div class="t-caption">سطح ریسک پورتفولیو</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ I. PORTFOLIO / DASHBOARD PREVIEW ============ -->
+    <section class="section" id="dashboard">
+      <div class="container">
+        <div class="section-head t-center" data-reveal>
+          <span class="section-kicker">داشبورد پورتفولیو</span>
+          <h2 class="t-heading-xl">کنترل کامل، در یک <span class="t-gradient">نمای زنده</span></h2>
+          <p class="lead">داشبورد ایران کوین تمام اطلاعات مهم را در یک نگاه می‌آورد: ارزش پورتفولیو، پوزیشن‌های باز، سیگنال‌ها و عملکرد استراتژی.</p>
+        </div>
+        <div class="chart-window" data-reveal style="max-width:72rem;margin-inline:auto">
+          <div class="cw-top">
+            <div class="cw-title">
+              <span class="brand-mark" style="width:2rem;height:2rem;font-size:.8125rem" aria-hidden="true">IC</span>
+              نمای کلی پورتفولیو — داده نمایشی
+            </div>
+            <div class="tabs" role="tablist" aria-label="بازه زمانی">
+              <button class="tab is-active" role="tab" aria-selected="true">روز</button>
+              <button class="tab" role="tab" aria-selected="false">هفته</button>
+              <button class="tab" role="tab" aria-selected="false">ماه</button>
+              <button class="tab" role="tab" aria-selected="false">سال</button>
+            </div>
+          </div>
+          <div id="candle-svg-2" data-candles data-seed="77" data-count="36"></div>
+          <div class="cw-tags" style="justify-content:space-between;align-items:center;display:flex;flex-wrap:wrap;gap:var(--sp-2)">
+            <div style="display:flex;gap:var(--sp-2);flex-wrap:wrap">
+              <span class="badge badge-violet">ارزش پورتفولیو: $۲۴,۸۶۰</span>
+              <span class="badge badge-emerald">سود ۲۴ ساعته: +$۳۴۰</span>
+              <span class="badge badge-cyan">۶ پوزیشن باز</span>
+            </div>
+            <a class="btn btn-primary btn-sm" href="dashboard.html" data-transition>ورود به داشبورد کامل</a>
+          </div>
+        </div>
+        <div class="grid grid-4" style="margin-top:var(--sp-8)">
+          <div class="dash-card" data-reveal>
+            <div class="dc-label">ارزش پورتفولیو <span class="status-dot live"></span></div>
+            <div class="dc-value">$۲۴,۸۶۰</div>
+            <div class="dc-delta t-up">▲ ۱.۴٪ امروز</div>
+          </div>
+          <div class="dash-card" data-reveal>
+            <div class="dc-label">سود محقق‌شده</div>
+            <div class="dc-value" style="color:var(--c-emerald-600)">+$۳,۴۲۰</div>
+            <div class="dc-delta t-up">▲ ۱۲.۴٪ این ماه</div>
+          </div>
+          <div class="dash-card" data-reveal>
+            <div class="dc-label">پوزیشن‌های باز</div>
+            <div class="dc-value">۶</div>
+            <div class="dc-delta" style="color:var(--c-cyan-600)">۲ پوزیشن در سود</div>
+          </div>
+          <div class="dash-card" data-reveal>
+            <div class="dc-label">نسبت برد به باخت</div>
+            <div class="dc-value">۶۸٪</div>
+            <div class="dc-delta t-up">▲ ۳٪ نسبت به ماه قبل</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ J. TRADING JOURNAL ============ -->
+    <section class="section" id="journal" style="background:linear-gradient(180deg,var(--c-bg) 0%,#F1EEFB 100%)">
+      <div class="container">
+        <div class="grid grid-2" style="align-items:center">
+          <div data-reveal>
+            <span class="section-kicker">ژورنال معاملات</span>
+            <h2 class="t-heading-xl">هر معامله، یک <span class="t-gradient">درس جدید</span></h2>
+            <p class="lead">
+              ژورنال هوشمند ایران کوین تمام معاملات شما را با جزئیات کامل ثبت می‌کند؛ از احساسات و تصمیم‌ها تا نتایج.
+              سپس با تحلیل آماری، الگوهای رفتاری شما را شناسایی و بهبود می‌کند.
+            </p>
+            <div style="margin-top:var(--sp-8);display:grid;gap:var(--sp-4)">
+              <div class="journal-entry" data-reveal>
+                <div class="je-side">۱۴ مرداد</div>
+                <div class="je-main">
+                  <span class="je-pair">BTC/USDT — خرید</span>
+                  <div class="je-tags">
+                    <span class="badge badge-emerald">استراتژی: روند</span>
+                    <span class="badge badge-glass">ریسک: ۱٪</span>
+                  </div>
+                </div>
+                <div class="je-pnl t-up">+$۱۸۴</div>
+              </div>
+              <div class="journal-entry" data-reveal>
+                <div class="je-side">۱۲ مرداد</div>
+                <div class="je-main">
+                  <span class="je-pair">ETH/USDT — فروش</span>
+                  <div class="je-tags">
+                    <span class="badge badge-rose">استراتژی: رنج</span>
+                    <span class="badge badge-glass">خروج زودهنگام</span>
+                  </div>
+                </div>
+                <div class="je-pnl t-down">-$۴۲</div>
+              </div>
+              <div class="journal-entry" data-reveal>
+                <div class="je-side">۰۹ مرداد</div>
+                <div class="je-main">
+                  <span class="je-pair">SOL/USDT — خرید</span>
+                  <div class="je-tags">
+                    <span class="badge badge-violet">استراتژی: مومنتوم</span>
+                    <span class="badge badge-glass">حد ضرر: ۲٪</span>
+                  </div>
+                </div>
+                <div class="je-pnl t-up">+$۹۶</div>
+              </div>
+            </div>
+          </div>
+          <div class="glass-card" data-reveal="zoom" style="padding:var(--sp-8)">
+            <span class="section-kicker">بینش ژورنال</span>
+            <h3 class="t-heading-l" style="margin-block:var(--sp-4)">تحلیل الگوی معاملاتی شما</h3>
+            <div style="display:grid;gap:var(--sp-5)">
+              <div class="risk-row">
+                <div class="rr-head"><span>پایبندی به استراتژی</span><span class="rr-val">۸۷٪</span></div>
+                <div class="progress" data-progress="87"><span></span></div>
+              </div>
+              <div class="risk-row">
+                <div class="rr-head"><span>مدیریت احساسات</span><span class="rr-val">۷۴٪</span></div>
+                <div class="progress" data-progress="74"><span style="background:var(--grad-aurora)"></span></div>
+              </div>
+              <div class="risk-row">
+                <div class="rr-head"><span>عمل به حد ضرر</span><span class="rr-val">۹۵٪</span></div>
+                <div class="progress" data-progress="95"><span style="background:var(--grad-up)"></span></div>
+              </div>
+            </div>
+            <div style="margin-top:var(--sp-6)">
+              <span class="badge badge-gold">پیشنهاد هوش مصنوعی</span>
+              <p style="margin-top:var(--sp-3);font-size:var(--fs-body-s);color:var(--text-secondary)">
+                خروج‌های زودهنگام در پوزیشن‌های سودده، بیشترین هزینه فرصت را ایجاد کرده‌اند. ربات پیشنهاد می‌کند حد سود
+                پلکانی را در استراتژی رنج فعال کنید.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section><!-- ============ K. SECURITY ============ -->
+    <section class="section" id="security">
+      <div class="container">
+        <div class="grid grid-2" style="align-items:center">
+          <div class="sec-rings" data-reveal="zoom" aria-hidden="true">
+            <div class="sec-ring sec-ring-1"></div>
+            <div class="sec-ring sec-ring-2"></div>
+            <div class="sec-ring sec-ring-3"></div>
+            <div class="sec-shield">🔐</div>
+          </div>
+          <div data-reveal>
+            <span class="section-kicker">امنیت</span>
+            <h2 class="t-heading-xl">امنیت در عمق؛ <span class="t-gradient">نه یک قفل نمادین</span></h2>
+            <p class="lead">
+              ایران کوین روی یک معماری امنیتی چندلایه ساخته شده است: رمزنگاری پیشرفته، کلیدهای API با دسترسی محدود،
+              احراز هویت دومرحله‌ای، کنترل دسترسی دقیق و پایش مداوم رفتار.
+            </p>
+            <div class="grid grid-2" style="margin-top:var(--sp-8);gap:var(--sp-4)">
+              <div class="benefit-item" data-reveal style="padding:var(--sp-5)">
+                <div class="b-icon">🔑</div>
+                <div>
+                  <h3 style="font-size:var(--fs-heading-m)">کلیدهای API محافظت‌شده</h3>
+                  <p style="font-size:var(--fs-body-s)">دسترسی فقط برای معامله؛ بدون امکان برداشت وجه</p>
+                </div>
+              </div>
+              <div class="benefit-item" data-reveal style="padding:var(--sp-5)">
+                <div class="b-icon">🛡️</div>
+                <div>
+                  <h3 style="font-size:var(--fs-heading-m)">احراز هویت دومرحله‌ای</h3>
+                  <p style="font-size:var(--fs-body-s)">حفاظت از حساب با تأیید دومرحله‌ای و هشدار ورود</p>
+                </div>
+              </div>
+              <div class="benefit-item" data-reveal style="padding:var(--sp-5)">
+                <div class="b-icon">👁️</div>
+                <div>
+                  <h3 style="font-size:var(--fs-heading-m)">پایش رفتار</h3>
+                  <p style="font-size:var(--fs-body-s)">تشخیص خودکار رفتارهای غیرعادی و قفل امنیتی</p>
+                </div>
+              </div>
+              <div class="benefit-item" data-reveal style="padding:var(--sp-5)">
+                <div class="b-icon">🔒</div>
+                <div>
+                  <h3 style="font-size:var(--fs-heading-m)">رمزنگاری داده‌ها</h3>
+                  <p style="font-size:var(--fs-body-s)">رمزنگاری کامل داده‌ها در حال انتقال و در حالت ذخیره</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ L. PERFORMANCE / SPEED ============ -->
+    <section class="section" id="performance" style="background:linear-gradient(180deg,var(--c-bg) 0%,#F1EEFB 100%)">
+      <div class="container">
+        <div class="section-head t-center" data-reveal>
+          <span class="section-kicker">عملکرد و سرعت</span>
+          <h2 class="t-heading-xl">سرعت، <span class="t-gradient">ثروت است</span></h2>
+          <p class="lead">در بازار ارز دیجیتال، هر میلی‌ثانیه اهمیت دارد. زیرساخت ایران کوین برای حداقل تأخیر طراحی شده است.</p>
+        </div>
+        <div class="proof-stats" style="margin-bottom:var(--sp-12)">
+          <div class="proof-stat" data-reveal>
+            <div class="ps-value">۴<span style="font-size:var(--fs-heading-l)">ms</span></div>
+            <div class="ps-label">میانگین تأخیر اجرای سفارش</div>
+          </div>
+          <div class="proof-stat" data-reveal>
+            <div class="ps-value">۹۹.۹۹٪</div>
+            <div class="ps-label">در دسترس بودن سرویس</div>
+          </div>
+          <div class="proof-stat" data-reveal>
+            <div class="ps-value">۱.۲<span style="font-size:var(--fs-heading-l)">M</span></div>
+            <div class="ps-label">رویداد پردازش‌شده در ثانیه</div>
+          </div>
+          <div class="proof-stat" data-reveal>
+            <div class="ps-value">۲۴/۷</div>
+            <div class="ps-label">پایش بدون توقف بازار</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ M. SUPPORTED EXCHANGES ============ -->
+    <section class="section" id="exchanges">
+      <div class="container">
+        <div class="section-head" data-reveal>
+          <span class="section-kicker">اکوسیستم صرافی‌ها</span>
+          <h2 class="t-heading-xl">اتصال به <span class="t-gradient">اکوسیستم جهانی</span></h2>
+          <p class="lead">ایران کوین با معماری چندصرافی‌ای طراحی شده است. اتصال هر صرافی پس از تأیید رسمی فعال می‌شود و هیچ همکاری اعلام‌نشده‌ای وجود ندارد.</p>
+        </div>
+        <div class="exchange-grid">
+          <div class="exchange-card" data-reveal>
+            <div class="ex-logo" style="background:var(--grad-btc)">₿</div>
+            <div>
+              <div class="ex-name">Binance</div>
+              <div class="ex-sub">در حال بررسی — داده نمایشی</div>
+            </div>
+          </div>
+          <div class="exchange-card" data-reveal>
+            <div class="ex-logo" style="background:var(--grad-brand)">OKX</div>
+            <div>
+              <div class="ex-name">OKX</div>
+              <div class="ex-sub">در حال بررسی — داده نمایشی</div>
+            </div>
+          </div>
+          <div class="exchange-card" data-reveal>
+            <div class="ex-logo" style="background:var(--grad-up)">BY</div>
+            <div>
+              <div class="ex-name">Bybit</div>
+              <div class="ex-sub">در حال بررسی — داده نمایشی</div>
+            </div>
+          </div>
+          <div class="exchange-card" data-reveal>
+            <div class="ex-logo" style="background:var(--grad-aurora)">🪙</div>
+            <div>
+              <div class="ex-name">صرافی‌های ایرانی</div>
+              <div class="ex-sub">پس از تأیید رسمی همکاری</div>
+            </div>
+          </div>
+        </div>
+        <p class="t-caption" style="margin-top:var(--sp-6);text-align:center">
+          برندها صرفاً به‌عنوان نمونه معماری نمایش داده شده‌اند و نشان‌دهنده هیچ همکاری رسمی نیستند.
+        </p>
+      </div>
+    </section>
+
+    <!-- ============ N. TRUST / SOCIAL PROOF ============ -->
+    <section class="section" id="trust" style="background:linear-gradient(180deg,var(--c-bg) 0%,#F1EEFB 100%)">
+      <div class="container">
+        <div class="section-head t-center" data-reveal>
+          <span class="section-kicker">اعتماد کاربران</span>
+          <h2 class="t-heading-xl">معامله‌گران حرفه‌ای، <span class="t-gradient">به ایران کوین اعتماد می‌کنند</span></h2>
+        </div>
+        <div class="proof-stats" style="margin-bottom:var(--sp-12)">
+          <div class="proof-stat" data-reveal>
+            <div class="ps-value" data-count="12800" data-suffix="+" data-duration="2000">۰</div>
+            <div class="ps-label">کاربر فعال</div>
+          </div>
+          <div class="proof-stat" data-reveal>
+            <div class="ps-value" data-count="186000" data-suffix="+" data-duration="2200">۰</div>
+            <div class="ps-label">معامله ثبت‌شده</div>
+          </div>
+          <div class="proof-stat" data-reveal>
+            <div class="ps-value" data-count="97" data-suffix="٪" data-duration="1800">۰</div>
+            <div class="ps-label">رضایت کاربران</div>
+          </div>
+          <div class="proof-stat" data-reveal>
+            <div class="ps-value" data-count="48" data-suffix="+" data-duration="1600">۰</div>
+            <div class="ps-label">استراتژی هوشمند</div>
+          </div>
+        </div>
+        <div class="grid grid-3">
+          <div class="testimonial" data-reveal>
+            <div class="t-stars" aria-label="۵ از ۵">★★★★★</div>
+            <blockquote>«سیگنال‌های هوش مصنوعی ایران کوین کیفیت تصمیم‌گیری من را کاملاً تغییر داد. دیگر با احساس معامله نمی‌کنم.»</blockquote>
+            <div class="t-author">
+              <div class="t-avatar">م.ر</div>
+              <div>
+                <div class="t-name">محمد رضایی</div>
+                <div class="t-role">معامله‌گر حرفه‌ای</div>
+              </div>
+            </div>
+          </div>
+          <div class="testimonial" data-reveal>
+            <div class="t-stars" aria-label="۵ از ۵">★★★★★</div>
+            <blockquote>«مدیریت ریسک هوشمند ایران کوین در ماه‌های پرنوسان بازار، سرمایه من را چند بار نجات داد.»</blockquote>
+            <div class="t-author">
+              <div class="t-avatar" style="background:var(--grad-up)">س.ک</div>
+              <div>
+                <div class="t-name">سارا کریمی</div>
+                <div class="t-role">مدیر سرمایه</div>
+              </div>
+            </div>
+          </div>
+          <div class="testimonial" data-reveal>
+            <div class="t-stars" aria-label="۵ از ۵">★★★★★</div>
+            <blockquote>«ژورنال معاملات و تحلیل الگوی رفتاری، بزرگ‌ترین مزیت ایران کوین است. من رشد واقعی را تجربه کردم.»</blockquote>
+            <div class="t-author">
+              <div class="t-avatar" style="background:var(--grad-gold)">ا.ح</div>
+              <div>
+                <div class="t-name">امیر حسینی</div>
+                <div class="t-role">معامله‌گر تازه‌کار</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <p class="t-caption" style="margin-top:var(--sp-8);text-align:center">تمام آمار و نظرات بالا نمونه نمایشی هستند و برای تولید واقعی نیاز به تأیید دارند.</p>
+      </div>
+    </section><!-- ============ O. PRODUCT BENEFITS ============ -->
+    <section class="section" id="benefits">
+      <div class="container">
+        <div class="section-head t-center" data-reveal>
+          <span class="section-kicker">مزایای محصول</span>
+          <h2 class="t-heading-xl">چرا ایران کوین؟</h2>
+        </div>
+        <div class="grid grid-3">
+          <div class="benefit-item" data-reveal>
+            <div class="b-icon">🤖</div>
+            <div>
+              <h3>معامله خودکار</h3>
+              <p>ربات هوشمند ۲۴ ساعته به‌جای شما بازار را زیر نظر دارد و معامله می‌کند.</p>
+            </div>
+          </div>
+          <div class="benefit-item" data-reveal>
+            <div class="b-icon">📊</div>
+            <div>
+              <h3>تحلیل حرفه‌ای</h3>
+              <p>نمودارها، سیگنال‌ها و تحلیل‌های آماده؛ بدون نیاز به دانش تخصصی.</p>
+            </div>
+          </div>
+          <div class="benefit-item" data-reveal>
+            <div class="b-icon">🛡️</div>
+            <div>
+              <h3>ریسک کنترل‌شده</h3>
+              <p>حفاظت خودکار سرمایه با قوانین سخت‌گیرانه مدیریت ریسک.</p>
+            </div>
+          </div>
+          <div class="benefit-item" data-reveal>
+            <div class="b-icon">⚡</div>
+            <div>
+              <h3>اجرای سریع</h3>
+              <p>ثبت سفارش در چند میلی‌ثانیه با الگوریتم‌های کاهش لغزش قیمت.</p>
+            </div>
+          </div>
+          <div class="benefit-item" data-reveal>
+            <div class="b-icon">📖</div>
+            <div>
+              <h3>ژورنال هوشمند</h3>
+              <p>ثبت خودکار معاملات و یادگیری از الگوهای رفتاری شما.</p>
+            </div>
+          </div>
+          <div class="benefit-item" data-reveal>
+            <div class="b-icon">🔗</div>
+            <div>
+              <h3>چندصرافی‌ای</h3>
+              <p>معماری آماده اتصال به چند صرافی جهانی و داخلی از یک داشبورد.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ P. FINAL SUBSCRIPTION CTA ============ -->
+    <section class="section" id="pricing-cta">
+      <div class="container">
+        <div class="cta-final" data-reveal="zoom">
+          <canvas id="particles-canvas-cta" style="position:absolute;inset:0;z-index:0" aria-hidden="true"></canvas>
+          <div class="cta-inner">
+            <h2>همین امروز معاملات هوشمند را شروع کنید</h2>
+            <p>بدون نیاز به دانش فنی. با پلن آزمایشی رایگان، قدرت هوش مصنوعی ایران کوین را خودتان تجربه کنید.</p>
+            <div class="cta-actions">
+              <a class="btn btn-gold btn-lg" href="pricing.html" data-transition>مشاهده تعرفه‌ها</a>
+              <a class="btn btn-secondary btn-lg" href="dashboard.html" data-transition>پیش‌نمایش داشبورد</a>
+            </div>
+            <div class="cta-mini-note">۷ روز استفاده رایگان · بدون نیاز به کارت بانکی · لغو در هر زمان</div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ============ Q. PREMIUM FOOTER ============ -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <a class="brand" href="index.html">
+            <span class="brand-mark" aria-hidden="true">IC</span>
+            <span class="brand-name">IRAN <b>COIN</b></span>
+          </a>
+          <p>
+            ایران کوین؛ پلتفرم پیشرفته معاملات ارز دیجیتال با هوش مصنوعی.
+            هوش، دقت، سرعت و امنیت در خدمت تصمیم‌های مالی شما.
+          </p>
+        </div>
+        <div class="footer-col">
+          <h4>محصول</h4>
+          <a href="#engine">موتور معاملات</a>
+          <a href="#robot">ربات معامله‌گر</a>
+          <a href="#risk">مدیریت ریسک</a>
+          <a href="#journal">ژورنال معاملات</a>
+        </div>
+        <div class="footer-col">
+          <h4>دسترسی سریع</h4>
+          <a href="pricing.html" data-transition>تعرفه‌ها</a>
+          <a href="dashboard.html" data-transition>داشبورد</a>
+          <a href="#security">امنیت</a>
+          <a href="pricing.html#faq" data-transition>سوالات متداول</a>
+        </div>
+        <div class="footer-col">
+          <h4>ارتباط با ما</h4>
+          <a href="mailto:support@example.com">پشتیبانی</a>
+          <a href="#trust">نظرات کاربران</a>
+          <a href="#exchanges">صرافی‌های متصل</a>
+          <a href="#performance">عملکرد سیستم</a>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <span>© ۱۴۰۵ ایران کوین. تمامی حقوق محفوظ است. — نسخه نمایشی</span>
+        <div class="footer-social">
+          <a href="#" aria-label="تلگرام" data-tip="تلگرام">✈</a>
+          <a href="#" aria-label="اینستاگرام" data-tip="اینستاگرام">◉</a>
+          <a href="#" aria-label="ایکس" data-tip="ایکس">𝕏</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/charts.js"></script>
+  <script src="js/brain.js"></script>
+  <script src="js/particles.js"></script>
+  <script src="js/scroll.js"></script>
+  <script src="js/counters.js"></script>
+  <script src="js/main.js"></script>
+  <script>
+    (function () {
+      "use strict";
+      const charts = window.IRANCOINCharts;
+      if (!charts) return;
+
+      // hero mini sparklines
+      document.querySelectorAll("[data-spark]").forEach(function (el) {
+        charts.renderSpark(el, {
+          seed: parseInt(el.dataset.seed || "7", 10),
+          up: el.dataset.up === "true"
+        });
+      });
+
+      // candlestick charts
+      var candle1 = document.getElementById("candle-svg");
+      if (candle1) {
+        charts.renderCandles(candle1, { seed: 42, count: 42 });
+      }
+      var candle2 = document.getElementById("candle-svg-2");
+      if (candle2) {
+        charts.renderCandles(candle2, { seed: 77, count: 36 });
+      }
+
+      // risk gauge
+      var gauge = document.querySelector("[data-gauge]");
+      if (gauge) {
+        charts.renderGauge(gauge, parseFloat(gauge.dataset.value || "0.5"), {
+          color: gauge.dataset.color || "#7C3AED",
+          label: "سطح ریسک پورتفولیو"
+        });
+      }
+
+      // CTA particles (second canvas instance)
+      var ctaCanvas = document.getElementById("particles-canvas-cta");
+      if (ctaCanvas) {
+        var ctx = ctaCanvas.getContext("2d");
+        var W = 0, H = 0, dpr = 1, parts = [];
+        var colors = [[253, 230, 138], [255, 255, 255], [196, 181, 253]];
+        function resizeCta() {
+          dpr = Math.min(window.devicePixelRatio || 1, 2);
+          var r = ctaCanvas.getBoundingClientRect();
+          W = r.width; H = r.height;
+          ctaCanvas.width = W * dpr;
+          ctaCanvas.height = H * dpr;
+          ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+        }
+        function spawnCta() {
+          parts = [];
+          var n = window.matchMedia("(prefers-reduced-motion: reduce)").matches ? 10 : 40;
+          for (var i = 0; i < n; i++) {
+            parts.push({
+              x: Math.random() * W, y: Math.random() * H,
+              r: 0.8 + Math.random() * 2,
+              vy: -0.05 - Math.random() * 0.2,
+              c: colors[i % colors.length],
+              a: 0.2 + Math.random() * 0.4
+            });
+          }
+        }
+        function drawCta() {
+          ctx.clearRect(0, 0, W, H);
+          for (var i = 0; i < parts.length; i++) {
+            var p = parts[i];
+            p.y += p.vy;
+            if (p.y < -8) { p.y = H + 8; p.x = Math.random() * W; }
+            ctx.fillStyle = "rgba(" + p.c[0] + "," + p.c[1] + "," + p.c[2] + "," + p.a + ")";
+            ctx.beginPath();
+            ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+            ctx.fill();
+          }
+          requestAnimationFrame(drawCta);
+        }
+        resizeCta();
+        spawnCta();
+        drawCta();
+        window.addEventListener("resize", function () {
+          resizeCta();
+          spawnCta();
+        });
+      }
+    })();
+  </script>
+</body>
+</html>

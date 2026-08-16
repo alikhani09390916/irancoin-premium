@@ -1,0 +1,223 @@
+/* ============================================================
+   IRAN COIN — Design Tokens (Figma Design-System Source of Truth)
+   White-premium AI fintech · RTL · ~64 controlled colors
+   ============================================================ */
+
+:root {
+  color-scheme: light;
+
+  /* ---------- Color Tokens (brand + 64-token palette) ---------- */
+  --c-bg: #F6F7FB;
+  --c-bg-soft: #EFF1F8;
+  --c-surface: #FFFFFF;
+  --c-surface-2: #FAFBFF;
+  --c-ink-900: #12142A;
+  --c-ink-800: #1C2040;
+  --c-ink-700: #2A2F57;
+  --c-ink-600: #3D4370;
+  --c-ink-500: #565E8F;
+  --c-ink-400: #7A82B0;
+  --c-ink-300: #A2A9CC;
+  --c-ink-200: #C9CEE4;
+  --c-ink-100: #E4E7F3;
+
+  --c-violet-700: #6D28D9;
+  --c-violet-600: #7C3AED;
+  --c-violet-500: #8B5CF6;
+  --c-violet-400: #A78BFA;
+  --c-violet-300: #C4B5FD;
+  --c-violet-100: #EDE9FE;
+
+  --c-purple-700: #7E22CE;
+  --c-purple-600: #9333EA;
+  --c-purple-500: #A855F7;
+  --c-purple-400: #C084FC;
+  --c-purple-300: #D8B4FE;
+
+  --c-blue-800: #1E40AF;
+  --c-blue-700: #1D4ED8;
+  --c-blue-600: #2563EB;
+  --c-blue-500: #3B82F6;
+  --c-blue-400: #60A5FA;
+  --c-blue-300: #93C5FD;
+  --c-blue-100: #DBEAFE;
+
+  --c-cyan-600: #0891B2;
+  --c-cyan-500: #06B6D4;
+  --c-cyan-400: #22D3EE;
+  --c-cyan-300: #67E8F9;
+  --c-cyan-100: #CFFAFE;
+
+  --c-turquoise-600: #0D9488;
+  --c-turquoise-500: #14B8A6;
+  --c-turquoise-400: #2DD4BF;
+  --c-turquoise-300: #5EEAD4;
+  --c-turquoise-100: #CCFBF1;
+
+  --c-emerald-600: #059669;
+  --c-emerald-500: #10B981;
+  --c-emerald-400: #34D399;
+  --c-emerald-300: #6EE7B7;
+  --c-emerald-100: #D1FAE5;
+
+  --c-gold-600: #B45309;
+  --c-gold-500: #D97706;
+  --c-gold-400: #EAB308;
+  --c-gold-300: #FACC15;
+  --c-gold-200: #FDE68A;
+  --c-gold-100: #FEF3C7;
+
+  --c-rose-600: #E11D48;
+  --c-rose-500: #F43F5E;
+  --c-rose-100: #FFE4E6;
+  --c-amber-500: #F59E0B;
+  --c-amber-100: #FEF3C7;
+
+  --c-white: #FFFFFF;
+  --c-black: #0B0D1C;
+
+  --c-btc: #F7931A;
+  --c-btc-dark: #C96D08;
+  --c-usdt: #26A17B;
+  --c-usdt-dark: #1C7C5E;
+
+  /* ---------- Semantic Tokens ---------- */
+  --text-primary: var(--c-ink-900);
+  --text-secondary: var(--c-ink-600);
+  --text-tertiary: var(--c-ink-400);
+  --text-disabled: var(--c-ink-300);
+  --text-on-accent: var(--c-white);
+  --text-up: var(--c-emerald-600);
+  --text-down: var(--c-rose-600);
+  --text-brand: var(--c-violet-700);
+  --border-default: rgba(28, 32, 64, 0.08);
+  --border-strong: rgba(28, 32, 64, 0.16);
+  --border-glass: rgba(255, 255, 255, 0.65);
+  --bg-glass: rgba(255, 255, 255, 0.55);
+  --bg-glass-strong: rgba(255, 255, 255, 0.78);
+  --bg-glass-soft: rgba(255, 255, 255, 0.38);
+
+  /* ---------- Gradient Tokens ---------- */
+  --grad-brand: linear-gradient(135deg, #7C3AED 0%, #2563EB 55%, #06B6D4 100%);
+  --grad-brand-soft: linear-gradient(135deg, #EDE9FE 0%, #DBEAFE 55%, #CFFAFE 100%);
+  --grad-hero: radial-gradient(1200px 800px at 70% 20%, #EDE9FE 0%, #DBEAFE 35%, #CFFAFE 60%, #F6F7FB 100%);
+  --grad-aurora: linear-gradient(120deg, #A78BFA 0%, #60A5FA 30%, #22D3EE 55%, #2DD4BF 75%, #34D399 100%);
+  --grad-aurora-soft: linear-gradient(120deg, #C4B5FD 0%, #93C5FD 30%, #67E8F9 55%, #5EEAD4 75%, #6EE7B7 100%);
+  --grad-gold: linear-gradient(135deg, #FACC15 0%, #F59E0B 60%, #F97316 100%);
+  --grad-gold-soft: linear-gradient(135deg, #FEF3C7 0%, #FDE68A 60%, #FEE2E2 100%);
+  --grad-up: linear-gradient(135deg, #10B981 0%, #14B8A6 100%);
+  --grad-down: linear-gradient(135deg, #F43F5E 0%, #E11D48 100%);
+  --grad-text: linear-gradient(120deg, #7C3AED 0%, #3B82F6 45%, #0891B2 100%);
+  --grad-text-gold: linear-gradient(120deg, #B45309 0%, #D97706 50%, #B45309 100%);
+  --grad-brain: radial-gradient(circle at 35% 30%, #A78BFA 0%, #7C3AED 35%, #4338CA 70%, #1E1B4B 100%);
+  --grad-btc: radial-gradient(circle at 32% 28%, #FDE68A 0%, #F7931A 45%, #C96D08 100%);
+  --grad-usdt: radial-gradient(circle at 32% 28%, #A7F3D0 0%, #26A17B 45%, #1C7C5E 100%);
+
+  /* ---------- Typography Tokens (Vazirmatn — RTL Persian) ---------- */
+  --font-fa: "Vazirmatn", "IRANSansX", "Segoe UI", Tahoma, sans-serif;
+  --font-num: "Vazirmatn", "JetBrains Mono", "Roboto Mono", monospace;
+
+  --fs-display-xl: clamp(2.75rem, 6vw, 4.75rem);
+  --fs-display-l: clamp(2.25rem, 4.5vw, 3.5rem);
+  --fs-heading-xl: clamp(1.875rem, 3.5vw, 2.75rem);
+  --fs-heading-l: clamp(1.5rem, 2.6vw, 2.125rem);
+  --fs-heading-m: clamp(1.25rem, 2vw, 1.625rem);
+  --fs-body-l: 1.125rem;
+  --fs-body-m: 1rem;
+  --fs-body-s: 0.875rem;
+  --fs-caption: 0.8125rem;
+  --fs-fnum: 1.125rem;
+  --fs-dlabel: 0.75rem;
+  --fs-button: 0.9375rem;
+  --fs-nav: 0.9375rem;
+
+  --lh-display: 1.15;
+  --lh-heading: 1.3;
+  --lh-body: 1.75;
+  --lh-tight: 1.45;
+
+  --fw-regular: 400;
+  --fw-medium: 500;
+  --fw-semibold: 600;
+  --fw-bold: 700;
+  --fw-extrabold: 800;
+
+  --ls-tight: -0.01em;
+  --ls-data: 0.06em;
+
+  /* ---------- Spacing Tokens (4pt grid) ---------- */
+  --sp-1: 0.25rem;
+  --sp-2: 0.5rem;
+  --sp-3: 0.75rem;
+  --sp-4: 1rem;
+  --sp-5: 1.25rem;
+  --sp-6: 1.5rem;
+  --sp-8: 2rem;
+  --sp-10: 2.5rem;
+  --sp-12: 3rem;
+  --sp-16: 4rem;
+  --sp-20: 5rem;
+  --sp-24: 6rem;
+  --sp-32: 8rem;
+  --container: 76rem;
+  --container-narrow: 58rem;
+  --gutter: clamp(1.25rem, 4vw, 3rem);
+
+  /* ---------- Radius Tokens ---------- */
+  --r-xs: 0.5rem;
+  --r-sm: 0.75rem;
+  --r-md: 1rem;
+  --r-lg: 1.5rem;
+  --r-xl: 2rem;
+  --r-2xl: 2.5rem;
+  --r-full: 9999px;
+
+  /* ---------- Shadow Tokens ---------- */
+  --sh-xs: 0 1px 2px rgba(18, 20, 42, 0.06);
+  --sh-sm: 0 2px 8px rgba(18, 20, 42, 0.07);
+  --sh-md: 0 8px 24px rgba(18, 20, 42, 0.09);
+  --sh-lg: 0 16px 48px rgba(18, 20, 42, 0.12);
+  --sh-xl: 0 32px 80px rgba(18, 20, 42, 0.16);
+  --sh-brand: 0 12px 32px rgba(124, 58, 237, 0.28);
+  --sh-brand-lg: 0 20px 56px rgba(37, 99, 235, 0.32);
+  --sh-gold: 0 10px 28px rgba(217, 119, 6, 0.3);
+  --sh-inset-glass: inset 0 1px 0 rgba(255, 255, 255, 0.8);
+
+  /* ---------- Blur Tokens ---------- */
+  --blur-xs: 4px;
+  --blur-sm: 8px;
+  --blur-md: 16px;
+  --blur-lg: 32px;
+  --blur-xl: 64px;
+
+  /* ---------- Border Tokens ---------- */
+  --bw-xs: 1px;
+  --bw-sm: 1.5px;
+  --bw-md: 2px;
+  --bw-lg: 3px;
+
+  /* ---------- Motion Tokens ---------- */
+  --dur-micro: 120ms;
+  --dur-fast: 200ms;
+  --dur-med: 350ms;
+  --dur-slow: 600ms;
+  --dur-hero: 900ms;
+  --dur-cinematic: 1200ms;
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+  --ease-smooth: cubic-bezier(0.4, 0, 0.2, 1);
+  --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+
+  /* ---------- Grid / Breakpoints ---------- */
+  --bp-mobile: 480px;
+  --bp-tablet: 768px;
+  --bp-laptop: 1024px;
+  --bp-desktop: 1280px;
+  --bp-ultra: 1600px;
+
+  /* ---------- Z Tokens ---------- */
+  --z-nav: 100;
+  --z-overlay: 200;
+  --z-modal: 300;
+  --z-toast: 400;
+}
