@@ -203,9 +203,17 @@
   transform: translate(-50%, -50%);
   width: clamp(19rem, 30vw, 26rem);
   aspect-ratio: 1;
-  animation: brain-materialize var(--dur-cinematic) var(--ease-out) both;
+  animation: brain-materialize var(--dur-cinematic) var(--ease-out) both,
+             brain-spin 42s linear infinite;
   animation-delay: 0.35s;
   z-index: 3;
+  transform-style: preserve-3d;
+  perspective: 1400px;
+}
+
+@keyframes brain-spin {
+  from { transform: translate(-50%, -50%) rotateY(0deg); }
+  to { transform: translate(-50%, -50%) rotateY(360deg); }
 }
 
 @keyframes brain-materialize {
