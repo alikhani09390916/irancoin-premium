@@ -44,18 +44,12 @@
   width: 13rem;
   aspect-ratio: 1;
   border-radius: 50%;
-  background: var(--grad-brain);
-  box-shadow: 0 0 80px rgba(124, 58, 237, 0.4), inset 0 0 40px rgba(255, 255, 255, 0.14);
+  background: radial-gradient(circle at 50% 45%, rgba(124, 58, 237, 0.25), rgba(67, 56, 202, 0.1) 55%, transparent 72%);
+  box-shadow: 0 0 70px rgba(124, 58, 237, 0.28);
   display: grid;
   place-items: center;
-  animation: core-rotate 24s linear infinite;
+  animation: brain-breathe 6s var(--ease-in-out) infinite alternate;
   overflow: hidden;
-}
-
-.intel-core span {
-  font-size: 2.5rem;
-  color: rgba(255, 255, 255, 0.9);
-  filter: drop-shadow(0 2px 12px rgba(0, 0, 0, 0.3));
 }
 
 .intel-stat-chips {

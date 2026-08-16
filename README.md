@@ -25,10 +25,9 @@ python3 -m http.server 8899   # از ریشه پروژه
 design/tokens.css      ← منبع واحد توکن‌ها (۶۴+ رنگ، تایپ، موشن) — معادل صفحات فیگما 01-04
 design/base.css        ← بیس RTL و تایپوگرافی
 design/components.css  ← کامپوننت‌ها (معادل صفحه فیگما 05)
-design/hero.css        ← صحنه هیرو: مغز AI، سکه‌ها، کارت‌های شناور (صفحه 06-07)
+design/hero.css        ← صحنه هیرو: مغز AI (SVG)، سکه‌ها، کارت‌های شناور (صفحه 06-07)
 design/sections.css    ← استایل سکشن‌ها + reveal ها
 design/responsive.css  ← موبایل/تبلت/لپ‌تاپ/دسکتاپ/اولترا
-js/brain.js            ← مغز AI: شبکه عصبی سه‌بعدی canvas
 js/particles.js        ← ذرات و جریان داده
 js/charts.js           ← چارت شمعی/اسپارک/گِیج SVG
 js/scroll.js           ← اسکرول سینمایی، پارالاکس، reveal

@@ -8,19 +8,30 @@
   /* ---------- Mobile nav ---------- */
   const burger = $(".nav-burger");
   const navLinks = $(".nav-links");
+  const navScrim = $(".nav-scrim");
   if (burger && navLinks) {
+    const closeNav = () => {
+      burger.setAttribute("aria-expanded", "false");
+      navLinks.classList.remove("is-open");
+      navScrim?.classList.remove("is-open");
+      document.body.style.overflow = "";
+    };
+    const openNav = () => {
+      burger.setAttribute("aria-expanded", "true");
+      navLinks.classList.add("is-open");
+      navScrim?.classList.add("is-open");
+      document.body.style.overflow = "hidden";
+    };
     burger.addEventListener("click", () => {
       const open = burger.getAttribute("aria-expanded") === "true";
-      burger.setAttribute("aria-expanded", String(!open));
-      navLinks.classList.toggle("is-open", !open);
-      document.body.style.overflow = open ? "" : "hidden";
+      open ? closeNav() : openNav();
     });
+    navScrim?.addEventListener("click", closeNav);
     navLinks.addEventListener("click", (e) => {
-      if (e.target.closest("a")) {
-        burger.setAttribute("aria-expanded", "false");
-        navLinks.classList.remove("is-open");
-        document.body.style.overflow = "";
-      }
+      if (e.target.closest("a")) closeNav();
+    });
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "Escape") closeNav();
     });
   }
 

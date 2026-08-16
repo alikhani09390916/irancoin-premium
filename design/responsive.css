@@ -8,13 +8,15 @@
   }
 
   .hero-stats { gap: var(--sp-5); }
-  .hero-visual { height: 30rem; }
+  .hero-visual { height: 27rem; }
   .ai-card { min-width: 8.5rem; padding: var(--sp-3); }
   .ai-card .ac-value { font-size: 0.9375rem; }
   .mc-1 { width: 8rem; }
   .mc-2 { width: 9rem; }
-  .coin { width: 4rem; }
+  .coin { width: 3.4rem; }
   .btn-lg { padding: 0.9375rem 1.75rem; }
+  .ac-2, .ac-4, .mc-2 { display: none; }
+  .brain-wrap { width: clamp(16rem, 80vw, 20rem); }
 }
 
 @media (max-width: 767px) {
@@ -26,6 +28,8 @@
     height: 5px;
   }
   .pay-panel { padding: var(--sp-6); }
+  .hero-visual { height: 32rem; }
+  .brain-label { bottom: -1.75rem; }
 }
 
 @media (min-width: 768px) and (max-width: 1023px) {
