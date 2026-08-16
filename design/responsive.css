@@ -19,6 +19,28 @@
   .brain-wrap { width: clamp(16rem, 80vw, 20rem); }
 }
 
+@media (max-width: 1023px) {
+  .nav-links {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: flex-start;
+    gap: var(--sp-2);
+    padding: var(--sp-2) var(--sp-3);
+    width: auto;
+    background: var(--bg-glass-strong);
+    border: var(--bw-xs) solid var(--border-glass);
+    backdrop-filter: blur(var(--blur-sm));
+    -webkit-backdrop-filter: blur(var(--blur-sm));
+    border-radius: var(--r-lg);
+    box-shadow: var(--sh-sm);
+  }
+
+  .nav-link { padding: var(--sp-2) var(--sp-3); font-size: 0.875rem; }
+  .nav-actions { flex: 0 1 auto; }
+  .nav-actions .btn { padding: 0.625rem 1rem; font-size: 0.8125rem; }
+}
+
 @media (max-width: 767px) {
   .hero-ctas { flex-direction: column; align-items: stretch; }
   .hero-ctas .btn { width: 100%; }

@@ -231,6 +231,12 @@
   align-items: center;
   justify-content: space-between;
   gap: var(--sp-6);
+  flex-wrap: wrap;
+}
+
+@media (max-width: 1023px) {
+  .nav-inner { gap: var(--sp-3); }
+  .nav-actions { flex: 0 1 auto; }
 }
 
 .brand {
@@ -312,81 +318,25 @@
   gap: var(--sp-3);
 }
 
-.nav-burger {
-  display: none;
-  width: 2.75rem;
-  height: 2.75rem;
-  border-radius: var(--r-md);
-  background: var(--bg-glass-strong);
-  border: var(--bw-xs) solid var(--border-glass);
-  place-items: center;
-}
-
-.nav-burger span,
-.nav-burger span::before,
-.nav-burger span::after {
-  content: "";
-  display: block;
-  width: 1.25rem;
-  height: 2px;
-  background: var(--c-ink-800);
-  border-radius: 2px;
-  transition: transform var(--dur-fast) var(--ease-out);
-}
-
-.nav-burger span { position: relative; }
-.nav-burger span::before { position: absolute; top: -6px; }
-.nav-burger span::after { position: absolute; top: 6px; }
-
-.nav-burger[aria-expanded="true"] span { background: transparent; }
-.nav-burger[aria-expanded="true"] span::before { transform: translateY(6px) rotate(45deg); }
-.nav-burger[aria-expanded="true"] span::after { transform: translateY(-6px) rotate(-45deg); }
-
 @media (max-width: 1023px) {
+  .nav-inner { flex-wrap: wrap; align-items: center; }
   .nav-links {
-    position: fixed;
-    inset-block-start: 0;
-    inset-inline-start: 0;
-    height: 100vh;
-    height: 100dvh;
-    width: min(22rem, 85vw);
-    flex-direction: column;
-    align-items: stretch;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
     justify-content: flex-start;
     gap: var(--sp-2);
-    background: rgba(255, 255, 255, 0.92);
-    backdrop-filter: blur(var(--blur-xl));
-    -webkit-backdrop-filter: blur(var(--blur-xl));
-    padding: calc(var(--sp-24)) var(--sp-6) var(--sp-6);
-    transform: translateX(-120%);
-    transition: transform var(--dur-med) var(--ease-out);
-    box-shadow: var(--sh-xl);
-    overflow-y: auto;
+    padding: var(--sp-2) var(--sp-3);
+    width: auto;
+    background: var(--bg-glass-strong);
+    border: var(--bw-xs) solid var(--border-glass);
+    backdrop-filter: blur(var(--blur-sm));
+    -webkit-backdrop-filter: blur(var(--blur-sm));
+    border-radius: var(--r-lg);
+    box-shadow: var(--sh-sm);
   }
 
-  .nav-links.is-open { transform: translateX(0); }
-
-  .nav-link { padding: var(--sp-3) var(--sp-4); font-size: 1rem; }
-
-  .nav-burger { display: grid; }
-}
-
-/* ---------- Nav scrim (mobile drawer backdrop) ---------- */
-.nav-scrim {
-  position: fixed;
-  inset: 0;
-  z-index: calc(var(--z-nav) - 1);
-  background: rgba(18, 20, 42, 0.38);
-  backdrop-filter: blur(2px);
-  -webkit-backdrop-filter: blur(2px);
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity var(--dur-fast) var(--ease-out);
-}
-
-.nav-scrim.is-open {
-  opacity: 1;
-  pointer-events: all;
+  .nav-link { padding: var(--sp-2) var(--sp-3); font-size: 0.875rem; }
 }
 
 @media (max-width: 480px) {

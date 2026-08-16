@@ -5,33 +5,13 @@
   const $ = (s, c = document) => c.querySelector(s);
   const $$ = (s, c = document) => Array.from(c.querySelectorAll(s));
 
-  /* ---------- Mobile nav ---------- */
-  const burger = $(".nav-burger");
+  /* ---------- Mobile nav (always visible, no hamburger) ---------- */
   const navLinks = $(".nav-links");
-  const navScrim = $(".nav-scrim");
-  if (burger && navLinks) {
-    const closeNav = () => {
-      burger.setAttribute("aria-expanded", "false");
-      navLinks.classList.remove("is-open");
-      navScrim?.classList.remove("is-open");
-      document.body.style.overflow = "";
-    };
-    const openNav = () => {
-      burger.setAttribute("aria-expanded", "true");
-      navLinks.classList.add("is-open");
-      navScrim?.classList.add("is-open");
-      document.body.style.overflow = "hidden";
-    };
-    burger.addEventListener("click", () => {
-      const open = burger.getAttribute("aria-expanded") === "true";
-      open ? closeNav() : openNav();
-    });
-    navScrim?.addEventListener("click", closeNav);
+  if (navLinks) {
     navLinks.addEventListener("click", (e) => {
-      if (e.target.closest("a")) closeNav();
-    });
-    document.addEventListener("keydown", (e) => {
-      if (e.key === "Escape") closeNav();
+      if (e.target.closest("a")) {
+        document.body.style.overflow = "";
+      }
     });
   }
 
