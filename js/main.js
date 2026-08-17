@@ -35,35 +35,31 @@
     });
   });
 
-  /* ---------- Billing toggle (pricing) ---------- */
-  const billingBtns = $$(".billing-toggle button");
-  const pricingPrices = $$("[data-price-monthly]");
-  if (billingBtns.length && pricingPrices.length) {
-    const setBilling = (period) => {
-      billingBtns.forEach((b) => {
-        const active = b.dataset.period === period;
-        b.classList.toggle("is-active", active);
-        b.setAttribute("aria-pressed", String(active));
+  /* ---------- Pay methods (pricing) ---------- */
+  const payMethods = $$(".pay-method");
+  if (payMethods.length) {
+    payMethods.forEach((btn) => {
+      btn.addEventListener("click", () => {
+        payMethods.forEach((b) => {
+          b.classList.remove("is-selected");
+          b.setAttribute("aria-pressed", "false");
+        });
+        btn.classList.add("is-selected");
+        btn.setAttribute("aria-pressed", "true");
+
+        const isCrypto = btn.textContent.includes("کریپتو");
+        const cryptoBtn = document.querySelector("[data-crypto-pay]");
+        if (cryptoBtn) {
+          cryptoBtn.closest(".crypto-pay-box").style.display = isCrypto ? "none" : "";
+        }
+
+        const isCard2Card = btn.textContent.includes("کارت به کارت");
+        const card2cardBox = document.querySelectorAll(".crypto-pay-box")[1];
+        if (card2cardBox) {
+          card2cardBox.style.display = isCard2Card ? "none" : "";
+        }
       });
-      pricingPrices.forEach((el) => {
-        const monthly = parseFloat(el.dataset.priceMonthly);
-        const annual = parseFloat(el.dataset.priceAnnual);
-        const value = period === "annual" ? annual : monthly;
-        el.textContent = new Intl.NumberFormat("en-US").format(value);
-        el.dataset.period = period;
-      });
-      const notes = $$("[data-price-note]");
-      notes.forEach((n) => {
-        n.textContent =
-          period === "annual"
-            ? n.dataset.noteAnnual || n.textContent
-            : n.dataset.noteMonthly || n.textContent;
-      });
-    };
-    billingBtns.forEach((b) =>
-      b.addEventListener("click", () => setBilling(b.dataset.period))
-    );
-    setBilling("monthly");
+    });
   }
 
   /* ---------- Plan selection (radio-like cards) ----------
@@ -76,24 +72,12 @@
       if (!btn) return;
       btn.addEventListener("click", () => {
         const plan = card.dataset.plan || "";
-        const period = $(".billing-toggle button.is-active")?.dataset.period || "monthly";
-        const price = card.querySelector("[data-price-monthly]")?.dataset.priceMonthly || "0";
-        window.IRANCOIN.pay(plan, period, price);
+        const prices = { monthly: 29, quarterly: 79, semiannual: 149, annual: 249 };
+        const price = prices[plan] || 29;
+        window.IRANCOIN.pay(plan, "monthly", price);
       });
     });
   }
-
-  /* ---------- Payment method selection ---------- */
-  $$(".pay-method").forEach((m) => {
-    m.addEventListener("click", () => {
-      $$(".pay-method").forEach((x) => {
-        x.classList.remove("is-selected");
-        x.setAttribute("aria-pressed", "false");
-      });
-      m.classList.add("is-selected");
-      m.setAttribute("aria-pressed", "true");
-    });
-  });
 
   /* ---------- Payment form submit (demo) ---------- */
   const payForm = $("#pay-form");
