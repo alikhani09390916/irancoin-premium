@@ -2,6 +2,12 @@
    IRAN COIN — Section Styles (Landing · Pricing · Dashboard)
    ============================================================ */
 
+/* Prevent content overflow globally */
+.section {
+  position: relative;
+  overflow: hidden;
+}
+
 /* ---------- Shared section decoration ---------- */
 .section-glow {
   position: absolute;
@@ -848,6 +854,7 @@
   display: grid;
   grid-template-columns: 16rem 1fr;
   min-height: 100svh;
+  overflow: hidden;
 }
 
 @media (max-width: 1023px) {
@@ -905,6 +912,7 @@
   max-width: 72rem;
   margin-inline: auto;
   width: 100%;
+  overflow: hidden;
 }
 
 .dash-topbar {
