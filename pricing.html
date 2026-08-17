@@ -421,30 +421,52 @@
             <span class="crypto-pay-icon">₿</span>
             <div>
               <div class="crypto-pay-title">پرداخت با ارز دیجیتال</div>
-              <div class="crypto-pay-sub">تتر (USDT TRC20) • بیت‌کوین • اتریوم</div>
+              <div class="crypto-pay-sub">تتر • بیت‌کوین • اتریوم • و ۲۰۰+ ارز دیگر</div>
+            </div>
+          </div>
+          <div class="crypto-pay-body">
+            <p style="font-size:var(--fs-body-s);color:var(--text-secondary);margin-bottom:var(--sp-2)">
+              روی دکمه زیر کلیک کنید، ارز دیجیتال مورد نظر خود را انتخاب کنید و فاکتور پرداخت صادر می‌شود.
+            </p>
+            <button class="btn btn-primary btn-block" type="button" data-crypto-pay="monthly" style="margin-top:var(--sp-3)">
+              <span>پرداخت کریپتو — انتخاب پلن و ارز</span>
+            </button>
+            <div class="crypto-powered">
+              <span>پرداخت امن از طریق</span>
+              <strong>NOWPayments</strong>
+            </div>
+          </div>
+        </div>
+
+        <!-- Card-to-Card Payment Option -->
+        <div class="crypto-pay-box" data-reveal style="margin-top:var(--sp-4)">
+          <div class="crypto-pay-head" style="background:linear-gradient(135deg, rgba(16,185,129,0.06), rgba(6,182,212,0.04))">
+            <span class="crypto-pay-icon" style="background:linear-gradient(135deg,#10B981,#06B6D4)">🏦</span>
+            <div>
+              <div class="crypto-pay-title">کارت به کارت</div>
+              <div class="crypto-pay-sub">انتقال مستقیم به کارت بانکی</div>
             </div>
           </div>
           <div class="crypto-pay-body">
             <div class="crypto-pay-step">
               <span class="crypto-step-num">۱</span>
-              <span>مبلغ اشتراک را به آدرس کیف پول زیر واریز کنید</span>
+              <span>مبلغ اشتراک را به شماره کارت زیر واریز کنید</span>
             </div>
             <div class="crypto-pay-step">
               <span class="crypto-step-num">۲</span>
-              <span>TxID تراکنش را در ایمیل خود ارسال کنید</span>
+              <span>شماره پیگیری و نام خود را به ایمیل support@irancoin.ai ارسال کنید</span>
             </div>
             <div class="crypto-pay-step">
               <span class="crypto-step-num">۳</span>
-              <span>اشتراک شما پس از تأیید خودکار فعال می‌شود</span>
+              <span>اشتراک شما پس از تأیید (حداکثر ۱ ساعت) فعال می‌شود</span>
             </div>
             <div class="crypto-wallet-addr">
-              <div class="t-dlabel">آدرس کیف پول (TRC20)</div>
-              <code class="wallet-code">TXxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx</code>
-              <button class="btn btn-ghost btn-sm" type="button" onclick="navigator.clipboard.writeText(this.previousElementSibling.textContent);this.textContent='کپی شد ✓'">کپی</button>
-            </div>
-            <div class="crypto-powered">
-              <span>پرداخت امن از طریق</span>
-              <strong>NOWPayments</strong>
+              <div class="t-dlabel">شماره کارت بانکی</div>
+              <code class="wallet-code" style="font-size:1rem;letter-spacing:0.1em">5029 0810 8328 5151</code>
+              <div style="display:flex;align-items:center;gap:var(--sp-2);margin-top:var(--sp-2)">
+                <button class="btn btn-ghost btn-sm" type="button" onclick="navigator.clipboard.writeText('5029081083285151');this.textContent='کپی شد ✓'">کپی شماره کارت</button>
+                <span style="font-size:var(--fs-dlabel);color:var(--text-tertiary)">بنام: علی خانی</span>
+              </div>
             </div>
           </div>
         </div>
@@ -518,6 +540,7 @@
   <script src="js/scroll.js"></script>
   <script src="js/counters.js"></script>
   <script src="js/main.js"></script>
+  <script src="js/nowpayments.js"></script>
   <script>
     (function () {
       "use strict";
