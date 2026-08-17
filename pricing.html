@@ -125,7 +125,7 @@
             <div class="pricing-name">۱ ماهه</div>
             <p class="pricing-desc">برای امتحان کردن و دیدن نتیجه</p>
             <div id="price-monthly">
-              <div style="font-size:1.75rem;font-weight:800;background:var(--grad-brand);-webkit-background-clip:text;-webkit-text-fill-color:transparent">$29</div>
+              <div style="font-size:1.75rem;font-weight:800;background:var(--grad-brand);-webkit-background-clip:text;-webkit-text-fill-color:transparent">—</div>
               <div style="font-size:1rem;font-weight:700;color:var(--txt);margin-top:.25rem">در حال بارگذاری...</div>
               <div style="font-size:.75rem;color:var(--txt-dim);margin-top:.25rem">۳۰ روز اشتراک</div>
             </div>
@@ -146,7 +146,7 @@
             <div class="pricing-name">۳ ماهه</div>
             <p class="pricing-desc">برای کسی که جدی شروع کرده</p>
             <div id="price-quarterly">
-              <div style="font-size:1.75rem;font-weight:800;background:var(--grad-brand);-webkit-background-clip:text;-webkit-text-fill-color:transparent">$79</div>
+              <div style="font-size:1.75rem;font-weight:800;background:var(--grad-brand);-webkit-background-clip:text;-webkit-text-fill-color:transparent">—</div>
               <div style="font-size:1rem;font-weight:700;color:var(--txt);margin-top:.25rem">در حال بارگذاری...</div>
               <div style="font-size:.75rem;color:var(--txt-dim);margin-top:.25rem">۹۰ روز اشتراک</div>
             </div>
@@ -168,7 +168,7 @@
             <div class="pricing-name">۶ ماهه</div>
             <p class="pricing-desc">بهترین نسبت قیمت به امکانات</p>
             <div id="price-semiannual">
-              <div style="font-size:1.75rem;font-weight:800;background:var(--grad-brand);-webkit-background-clip:text;-webkit-text-fill-color:transparent">$149</div>
+              <div style="font-size:1.75rem;font-weight:800;background:var(--grad-brand);-webkit-background-clip:text;-webkit-text-fill-color:transparent">—</div>
               <div style="font-size:1rem;font-weight:700;color:var(--txt);margin-top:.25rem">در حال بارگذاری...</div>
               <div style="font-size:.75rem;color:var(--txt-dim);margin-top:.25rem">۱۸۰ روز اشتراک</div>
             </div>
@@ -189,7 +189,7 @@
             <div class="pricing-name">۱ ساله</div>
             <p class="pricing-desc">بیشترین صرفه‌جویی + امکانات ویژه</p>
             <div id="price-annual">
-              <div style="font-size:1.75rem;font-weight:800;background:var(--grad-brand);-webkit-background-clip:text;-webkit-text-fill-color:transparent">$249</div>
+              <div style="font-size:1.75rem;font-weight:800;background:var(--grad-brand);-webkit-background-clip:text;-webkit-text-fill-color:transparent">—</div>
               <div style="font-size:1rem;font-weight:700;color:var(--txt);margin-top:.25rem">در حال بارگذاری...</div>
               <div style="font-size:.75rem;color:var(--txt-dim);margin-top:.25rem">۳۶۵ روز اشتراک</div>
             </div>
@@ -406,7 +406,7 @@
         <div class="glass-card" data-reveal style="margin-bottom:var(--sp-6);text-align:center;padding:var(--sp-5)">
           <div style="color:var(--text-secondary);font-size:var(--fs-dlabel);margin-bottom:var(--sp-2)">پلن انتخابی</div>
           <div style="font-size:var(--fs-heading-l);font-weight:800;color:var(--text-primary)" id="pp-plan-label">۶ ماهه</div>
-          <div style="font-size:var(--fs-heading-m);font-weight:700;background:var(--grad-brand);-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin-top:var(--sp-2)" id="pp-total">$149</div>
+          <div style="font-size:var(--fs-heading-m);font-weight:700;background:var(--grad-brand);-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin-top:var(--sp-2)" id="pp-total">—</div>
         </div>
 
         <div class="glass-card" data-reveal style="margin-bottom:var(--sp-4);transition:all .3s;border:2px solid transparent" id="pay-crypto-card">
@@ -553,7 +553,7 @@
         var label = document.getElementById("pp-plan-label");
         var total = document.getElementById("pp-total");
         if (label) label.textContent = PLAN_LABELS[mappedId] || mappedId;
-        if (total) total.textContent = "$" + (PLAN_PRICES[mappedId] || 149);
+        if (total) total.textContent = "$" + (PLAN_PRICES[mappedId] || "—");
 
         document.querySelectorAll("[data-crypto-pay]").forEach(function(b) { b.dataset.cryptoPay = mappedId; });
         document.querySelectorAll("[data-card2card-pay]").forEach(function(b) { b.dataset.card2cardPay = mappedId; });
@@ -575,6 +575,8 @@
   </script>
 
   <!-- ============ LOGIN / SIGNUP MODAL ============ -->
+  <!-- NOTE: This auth modal is duplicated in index.html. Both pages need it since they're static HTML files.
+       If you change this modal, apply the same change to index.html as well. -->
   <div class="auth-modal-overlay" id="auth-modal" aria-hidden="true" role="dialog" aria-modal="true" aria-label="ورود یا ثبت‌نام">
     <div class="auth-modal">
       <button class="auth-modal-close" id="auth-close" aria-label="بستن">&times;</button>

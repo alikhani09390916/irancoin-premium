@@ -458,6 +458,7 @@
               <div class="cw-price t-up" id="candle-price">$۶۸,۴۲۰ <span style="font-size:var(--fs-body-s)">▲ ۲.۴٪</span></div>
             </div>
             <div id="candle-svg" data-candles></div>
+            <div style="font-size:0.6rem;text-align:center;color:var(--text-secondary);opacity:0.6;padding:0.25rem 0">داده نمونه — نمایشی از عملکرد نمودار</div>
             <div class="cw-tags">
               <span class="badge badge-violet">حمایت: ۶۶,۸۰۰</span>
               <span class="badge badge-cyan">مقاومت: ۷۰,۲۰۰</span>
@@ -629,6 +630,7 @@
             <div class="gauge-label">
               <div class="gauge-value">۲۸٪</div>
               <div class="t-caption">سطح ریسک پورتفولیو</div>
+              <div style="font-size:0.6rem;color:var(--text-secondary);opacity:0.6">داده نمونه</div>
             </div>
           </div>
         </div>
@@ -658,6 +660,7 @@
             </div>
           </div>
           <div id="candle-svg-2" data-candles data-seed="77" data-count="36"></div>
+          <div style="font-size:0.6rem;text-align:center;color:var(--text-secondary);opacity:0.6;padding:0.25rem 0">داده نمونه — نمایشی از عملکرد نمودار</div>
           <div class="cw-tags" style="justify-content:space-between;align-items:center;display:flex;flex-wrap:wrap;gap:var(--sp-2)">
             <div style="display:flex;gap:var(--sp-2);flex-wrap:wrap">
               <span class="badge badge-violet">ارزش پورتفولیو: $۲۴,۸۶۰</span>
@@ -1196,6 +1199,8 @@
   </script>
 
   <!-- ============ LOGIN / SIGNUP MODAL ============ -->
+  <!-- NOTE: This auth modal is duplicated in pricing.html. Both pages need it since they're static HTML files.
+       If you change this modal, apply the same change to pricing.html as well. -->
   <div class="auth-modal-overlay" id="auth-modal" aria-hidden="true" role="dialog" aria-modal="true" aria-label="ورود یا ثبت‌نام">
     <div class="auth-modal">
       <button class="auth-modal-close" id="auth-close" aria-label="بستن">&times;</button>
