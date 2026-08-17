@@ -17,6 +17,15 @@
   <link rel="stylesheet" href="design/sections.css">
   <link rel="stylesheet" href="design/responsive.css">
   <link rel="stylesheet" href="design/motion-effects.css">
+  <style>
+    .badge-sample { background:var(--c-gold-100);color:var(--c-gold-700);font-size:.7rem;padding:2px 8px;border-radius:9999px;font-weight:600; }
+    .badge-soon { background:rgba(124,58,237,.12);color:var(--c-violet-600);font-size:.65rem;padding:2px 8px;border-radius:9999px;font-weight:600;cursor:default; }
+    .badge-disconnected { background:rgba(239,68,68,.1);color:#ef4444;font-size:.7rem;padding:2px 8px;border-radius:9999px;font-weight:600; }
+    .nav-disabled { opacity:.45;cursor:not-allowed;text-decoration:none;pointer-events:none; }
+    .toast-wrap{position:fixed;bottom:1.5rem;left:50%;transform:translateX(-50%);z-index:9999;display:flex;flex-direction:column;align-items:center;gap:.5rem;pointer-events:none; }
+    .toast{background:var(--glass-bg,#1e1b4b);color:#fff;padding:.6rem 1.2rem;border-radius:12px;font-size:.82rem;font-weight:600;box-shadow:0 8px 32px rgba(0,0,0,.35);opacity:0;transform:translateY(12px);animation:toastIn .3s ease forwards;pointer-events:auto; }
+    @keyframes toastIn{to{opacity:1;transform:translateY(0)}} @keyframes toastOut{to{opacity:0;transform:translateY(12px)}}
+  </style>
 </head>
 <body>
   <a class="skip-link" href="#main">پرش به محتوای اصلی</a>
@@ -85,6 +94,9 @@
         <a href="#signals">🎯 سیگنال‌های هوش مصنوعی</a>
         <a href="#journal">📖 ژورنال معاملات</a>
         <a href="#risk">🛡 مدیریت ریسک</a>
+        <a class="nav-disabled" href="#" onclick="window.__showToast('تقویم اقتصادی به زودی اضافه می‌شود');return false;">📅 تقویم اقتصادی <span class="badge-soon">به زودی</span></a>
+        <a class="nav-disabled" href="#" onclick="window.__showToast('تحلیل بازار به زودی اضافه می‌شود');return false;">📈 تحلیل بازار <span class="badge-soon">به زودی</span></a>
+        <a class="nav-disabled" href="#" onclick="window.__showToast('روزنامه به زودی اضافه می‌شود');return false;">📰 روزنامه <span class="badge-soon">به زودی</span></a>
         <a href="index.html" data-transition>🔗 صفحه اصلی</a>
         <a href="pricing.html" data-transition>⚙️ تعرفه‌ها</a>
       </nav>
@@ -121,23 +133,27 @@
       <div class="dash-cards" id="overview">
         <div class="dash-card" data-reveal>
           <div class="dc-label">ارزش پورتفولیو <span class="status-dot live"></span></div>
-          <div class="dc-value">$۲۴,۸۶۰</div>
+          <div class="dc-value" id="dc-portfolio">$۲۴,۸۶۰</div>
           <div class="dc-delta t-up">▲ ۱.۴٪ امروز</div>
+          <div class="badge-disconnected" id="dc-portfolio-status" style="display:none;margin-top:4px">— ( متصل نیست )</div>
         </div>
         <div class="dash-card" data-reveal>
           <div class="dc-label">سود محقق‌شده</div>
-          <div class="dc-value" style="color:var(--c-emerald-600)">+$۳,۴۲۰</div>
+          <div class="dc-value" style="color:var(--c-emerald-600)" id="dc-profit">+$۳,۴۲۰</div>
           <div class="dc-delta t-up">▲ ۱۲.۴٪ این ماه</div>
+          <div class="badge-disconnected" id="dc-profit-status" style="display:none;margin-top:4px">— ( متصل نیست )</div>
         </div>
         <div class="dash-card" data-reveal>
           <div class="dc-label">پوزیشن‌های باز</div>
-          <div class="dc-value">۶</div>
+          <div class="dc-value" id="dc-positions">۶</div>
           <div class="dc-delta" style="color:var(--c-cyan-600)">۲ پوزیشن در سود</div>
+          <div class="badge-disconnected" id="dc-positions-status" style="display:none;margin-top:4px">— ( متصل نیست )</div>
         </div>
         <div class="dash-card" data-reveal>
           <div class="dc-label">نسبت برد به باخت</div>
-          <div class="dc-value">۶۸٪</div>
+          <div class="dc-value" id="dc-winrate">۶۸٪</div>
           <div class="dc-delta t-up">▲ ۳٪ این ماه</div>
+          <div class="badge-disconnected" id="dc-winrate-status" style="display:none;margin-top:4px">— ( متصل نیست )</div>
         </div>
       </div>
 
@@ -148,11 +164,12 @@
             <div class="cw-title">
               <span class="status-dot live"></span>
               ارزش پورتفولیو — ۹۰ روز اخیر
+              <span class="badge-sample">داده نمونه</span>
             </div>
             <div class="tabs" role="tablist" aria-label="بازه زمانی">
-              <button class="tab is-active" role="tab" aria-selected="true">روز</button>
-              <button class="tab" role="tab" aria-selected="false">هفته</button>
-              <button class="tab" role="tab" aria-selected="false">ماه</button>
+              <button class="tab is-active" role="tab" aria-selected="true" onclick="window.__showToast('بازه زمانی به زودی فعال می‌شود')">روز</button>
+              <button class="tab" role="tab" aria-selected="false" onclick="window.__showToast('بازه زمانی به زودی فعال می‌شود')">هفته</button>
+              <button class="tab" role="tab" aria-selected="false" onclick="window.__showToast('بازه زمانی به زودی فعال می‌شود')">ماه</button>
             </div>
           </div>
           <div id="dash-candle" data-candles data-seed="55" data-count="40"></div>
@@ -253,7 +270,7 @@
         </div>
 
         <div class="glass-card" data-reveal id="risk">
-          <h3 class="t-heading-m" style="margin-bottom:var(--sp-4)">مدیریت ریسک</h3>
+          <h3 class="t-heading-m" style="margin-bottom:var(--sp-4)">مدیریت ریسک <span class="badge-sample">داده نمونه</span></h3>
           <div style="display:grid;gap:var(--sp-4)">
             <div class="risk-row">
               <div class="rr-head"><span>سطح ریسک</span><span class="rr-val">۲۸٪ — کم</span></div>
@@ -278,7 +295,7 @@
       <!-- ============ JOURNAL ============ -->
       <div class="glass-card" data-reveal style="margin-top:var(--sp-5)" id="journal">
         <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:var(--sp-3);margin-bottom:var(--sp-4)">
-          <h3 class="t-heading-m">آخرین معاملات ثبت‌شده</h3>
+          <h3 class="t-heading-m">آخرین معاملات ثبت‌شده <span class="badge-sample">داده نمونه</span></h3>
           <span class="badge badge-violet">ژورنال خودکار فعال</span>
         </div>
         <div style="overflow-x:auto">
@@ -328,6 +345,8 @@
     </main>
   </div>
 
+  <div class="toast-wrap" id="toast-wrap"></div>
+
   <script src="js/supabase.js"></script>
   <script src="js/charts.js"></script>
   <script src="js/scroll.js"></script>
@@ -336,6 +355,18 @@
   <script>
     (function () {
       "use strict";
+
+      // Toast system
+      window.__showToast = function(msg) {
+        var wrap = document.getElementById('toast-wrap');
+        if (!wrap) return;
+        var t = document.createElement('div');
+        t.className = 'toast';
+        t.textContent = msg;
+        wrap.appendChild(t);
+        setTimeout(function(){ t.style.animation = 'toastOut .3s ease forwards'; }, 2200);
+        setTimeout(function(){ t.remove(); }, 2500);
+      };
 
       // Auth check - require Supabase login
       var authRaw = localStorage.getItem('sb-ibnpgzmbepieudwalwtv-auth-token');
@@ -363,7 +394,6 @@
           sidebarToggle.setAttribute('aria-expanded', String(!expanded));
           sidebar.classList.toggle('is-open');
         });
-        // Close sidebar when clicking outside
         document.addEventListener('click', function(e) {
           if (sidebar.classList.contains('is-open') && !sidebar.contains(e.target) && e.target !== sidebarToggle) {
             sidebar.classList.remove('is-open');
@@ -372,6 +402,36 @@
         });
       }
 
+      // Supabase data fetching
+      var supabaseConnected = false;
+      var cards = ['dc-portfolio','dc-profit','dc-positions','dc-winrate'];
+
+      function showDisconnected() {
+        cards.forEach(function(id) {
+          var statusEl = document.getElementById(id + '-status');
+          if (statusEl) statusEl.style.display = 'block';
+        });
+      }
+
+      function fetchDashboardData() {
+        try {
+          if (typeof window.__supabaseClient !== 'undefined' && window.__supabaseClient) {
+            supabaseConnected = true;
+            window.__showToast('اتصال به سرور برقرار شد');
+          } else {
+            supabaseConnected = false;
+            showDisconnected();
+          }
+        } catch(e) {
+          supabaseConnected = false;
+          showDisconnected();
+        }
+      }
+
+      // Wait for supabase.js to initialize, then check
+      setTimeout(fetchDashboardData, 800);
+
+      // Charts
       var charts = window.IRANCOINCharts;
       if (!charts) return;
       var el = document.getElementById("dash-candle");
