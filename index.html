@@ -278,6 +278,7 @@
               <div class="hero-stat-label">پایش زنده بازار</div>
             </div>
           </div>
+          <p style="margin-top:0.75rem;font-size:0.7rem;color:var(--text-secondary);opacity:0.7">* پیش‌بینی بر اساس تست‌های اولیه — اعداد واقعی ممکن است متفاوت باشند.</p>
         </div>
 
         <!-- Hero visual scene -->
@@ -315,6 +316,7 @@
             </div>
             <div class="ac-value t-up">+۴.۲٪</div>
             <div class="ac-meta"><span>BTC/USDT</span><span>لحظه‌ای</span></div>
+            <div style="font-size:0.55rem;text-align:center;color:var(--text-secondary);opacity:0.6">داده نمونه</div>
           </div>
 
           <div class="ai-card ac-2 is-float-2" data-parallax="0.24">
@@ -324,6 +326,7 @@
             </div>
             <div class="ac-value">۴ms</div>
             <div class="ac-meta"><span>زیر ۵ میلی‌ثانیه</span></div>
+            <div style="font-size:0.55rem;text-align:center;color:var(--text-secondary);opacity:0.6">داده نمونه</div>
           </div>
 
           <div class="ai-card ac-3 is-float-3" data-parallax="0.18">
@@ -333,6 +336,7 @@
             </div>
             <div class="ac-value t-up">کم</div>
             <div class="ac-meta"><span>منطبق با استراتژی</span></div>
+            <div style="font-size:0.55rem;text-align:center;color:var(--text-secondary);opacity:0.6">داده نمونه</div>
           </div>
 
           <div class="ai-card ac-4 is-float-4" data-parallax="0.22">
@@ -342,6 +346,7 @@
             </div>
             <div class="ac-value t-up">خرید</div>
             <div class="ac-meta"><span>اعتماد ۹۲٪</span></div>
+            <div style="font-size:0.55rem;text-align:center;color:var(--text-secondary);opacity:0.6">داده نمونه</div>
           </div>
 
           <!-- Mini market widgets -->
@@ -349,12 +354,14 @@
             <div class="mc-title"><span>BTC/USDT</span><span class="badge badge-emerald">+۲.۴٪</span></div>
             <div class="mc-svg" data-spark data-seed="11" data-up="true"></div>
             <span class="mc-price t-up">$۶۸,۴۲۰</span>
+            <span style="display:block;font-size:0.6rem;text-align:center;color:var(--text-secondary);opacity:0.6;margin-top:0.25rem">داده نمونه</span>
           </div>
 
           <div class="mini-chart mc-2" data-parallax="0.16">
             <div class="mc-title"><span>ETH/USDT</span><span class="badge badge-rose">-۰.۸٪</span></div>
             <div class="mc-svg" data-spark data-seed="23" data-up="false"></div>
             <span class="mc-price t-down">$۳,۹۸۵</span>
+            <span style="display:block;font-size:0.6rem;text-align:center;color:var(--text-secondary);opacity:0.6;margin-top:0.25rem">داده نمونه</span>
           </div>
         </div>
       </div>
@@ -636,7 +643,8 @@
           <h2 class="t-heading-xl">کنترل کامل، در یک <span class="t-gradient">نمای زنده</span></h2>
           <p class="lead">داشبورد IRANCOiN تمام اطلاعات مهم را در یک نگاه می‌آورد: ارزش پورتفولیو، پوزیشن‌های باز، سیگنال‌ها و عملکرد استراتژی.</p>
         </div>
-        <div class="chart-window" data-reveal style="max-width:72rem;margin-inline:auto">
+        <div class="chart-window" data-reveal style="max-width:72rem;margin-inline:auto;position:relative">
+          <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;pointer-events:none;z-index:2;opacity:0.12;font-size:3rem;font-weight:800;color:var(--c-violet-700);transform:rotate(-20deg);letter-spacing:0.5em">پیش‌نمایش</div>
           <div class="cw-top">
             <div class="cw-title">
               <svg class="brand-mark" viewBox="0 0 200 165" style="width:2rem;height:1.6rem" aria-hidden="true"><use href="#ic-brand"/></svg>
@@ -823,21 +831,22 @@
         <div class="proof-stats" style="margin-bottom:var(--sp-12)">
           <div class="proof-stat" data-reveal>
             <div class="ps-value">۴<span style="font-size:var(--fs-heading-l)">ms</span></div>
-            <div class="ps-label">میانگین تأخیر اجرای سفارش</div>
+            <div class="ps-label">میانگین تأخیر اجرای سفارش *</div>
           </div>
           <div class="proof-stat" data-reveal>
             <div class="ps-value">۹۹.۹۹٪</div>
-            <div class="ps-label">در دسترس بودن سرویس</div>
+            <div class="ps-label">در دسترس بودن سرویس *</div>
           </div>
           <div class="proof-stat" data-reveal>
             <div class="ps-value">۱.۲<span style="font-size:var(--fs-heading-l)">M</span></div>
-            <div class="ps-label">رویداد پردازش‌شده در ثانیه</div>
+            <div class="ps-label">رویداد پردازش‌شده در ثانیه *</div>
           </div>
           <div class="proof-stat" data-reveal>
             <div class="ps-value">۲۴/۷</div>
             <div class="ps-label">پایش بدون توقف بازار</div>
           </div>
         </div>
+        <p style="text-align:center;font-size:0.7rem;color:var(--text-secondary);opacity:0.7;margin-top:calc(-1 * var(--sp-8))">* بر اساس تست‌های اولیه — اعداد نهایی پس از راه‌اندازی کامل اعلام می‌شود.</p>
       </div>
     </section>
 
@@ -909,21 +918,23 @@
         <div class="proof-stats" style="margin-bottom:var(--sp-12)">
           <div class="proof-stat" data-reveal>
             <div class="ps-value" data-count="12800" data-suffix="+" data-duration="2000">۰</div>
-            <div class="ps-label">کاربر فعال</div>
+            <div class="ps-label">هدف: کاربر فعال</div>
           </div>
           <div class="proof-stat" data-reveal>
             <div class="ps-value" data-count="186000" data-suffix="+" data-duration="2200">۰</div>
-            <div class="ps-label">معامله ثبت‌شده</div>
+            <div class="ps-label">هدف: معامله ثبت‌شده</div>
           </div>
           <div class="proof-stat" data-reveal>
             <div class="ps-value" data-count="97" data-suffix="٪" data-duration="1800">۰</div>
-            <div class="ps-label">رضایت کاربران</div>
+            <div class="ps-label">هدف: رضایت کاربران</div>
           </div>
           <div class="proof-stat" data-reveal>
             <div class="ps-value" data-count="48" data-suffix="+" data-duration="1600">۰</div>
-            <div class="ps-label">استراتژی هوشمند</div>
+            <div class="ps-label">هدف: استراتژی هوشمند</div>
           </div>
         </div>
+        <p style="text-align:center;font-size:0.7rem;color:var(--text-secondary);opacity:0.7;margin-top:calc(-1 * var(--sp-8))">* اعداد فوق اهداف پلتفرم هستند و بر اساس برآوردهای اولیه تعیین شده‌اند.</p>
+        <div style="text-align:center;margin-block:var(--sp-6) var(--sp-4)"><span class="badge badge-glass" style="color:var(--text-secondary);font-size:0.75rem">پیش‌نمایش — نمونه نظرات</span></div>
         <div class="grid grid-3">
           <div class="testimonial" data-reveal>
             <div class="t-stars" aria-label="۵ از ۵">★★★★★</div>
