@@ -136,7 +136,7 @@
   if (heroCta) {
     heroCta.addEventListener("click", (e) => {
       e.preventDefault();
-      window.IRANCOIN.pay("pro", "monthly", "29");
+      window.IRANCOIN.pay("monthly", "monthly", "29");
     });
   }
 

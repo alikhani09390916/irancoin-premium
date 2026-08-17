@@ -337,6 +337,23 @@
     (function () {
       "use strict";
 
+      // Auth check - require Supabase login
+      var authRaw = localStorage.getItem('sb-ibnpgzmbepieudwalwtv-auth-token');
+      if (!authRaw) {
+        window.location.href = 'index.html';
+        return;
+      }
+      try {
+        var authData = JSON.parse(authRaw);
+        if (!authData.access_token) {
+          window.location.href = 'index.html';
+          return;
+        }
+      } catch(e) {
+        window.location.href = 'index.html';
+        return;
+      }
+
       // Mobile sidebar toggle
       var sidebarToggle = document.getElementById('dash-sidebar-toggle');
       var sidebar = document.querySelector('.dash-sidebar');

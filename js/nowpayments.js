@@ -10,9 +10,17 @@
   };
 
   var CARDS = [
-    { number: "5022-2915-7044-0994", name: "علی خانی", bank: "پاسارگاد" },
-    { number: "5022-2915-0221-1095", name: "لاله حسنپور", bank: "پاسارگاد" },
+    { number: "xxxx-xxxx-xxxx-xxxx", name: "نام دارنده کارت", bank: "بانک" },
   ];
+
+  // Load cards from admin settings
+  function loadCards() {
+    try {
+      var saved = localStorage.getItem('ic-bank-cards');
+      if (saved) CARDS = JSON.parse(saved);
+    } catch(e) {}
+  }
+  loadCards();
 
   var cryptos = [
     { code: "usdttrc20", name: "USDT (TRC20)", icon: "₮" },

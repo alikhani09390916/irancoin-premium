@@ -661,13 +661,29 @@
     function saveSettingsData(s){ localStorage.setItem('ic-settings',JSON.stringify(s)) }
 
     /* ===== AUTH ===== */
-    window.doLogin = function(){
+    // Password is hashed with SHA-256 for security (never store plaintext)
+    var ADMIN_HASH = 'irancoin-admin-2026';
+    async function hashPassword(pw) {
+      var enc = new TextEncoder().encode(pw);
+      var buf = await crypto.subtle.digest('SHA-256', enc);
+      return Array.from(new Uint8Array(buf)).map(b => b.toString(16).padStart(2,'0')).join('');
+    }
+
+    window.doLogin = async function(){
       var input = document.getElementById('admin-key').value.trim();
       if(!input) return;
-      var storedHash = localStorage.getItem('ic-admin-hash') || ADMIN_HASH;
-      if(input === storedHash || input === ADMIN_HASH){
+      var inputHash = await hashPassword(input);
+      var storedHash = localStorage.getItem('ic-admin-hash');
+      // First login: hash the default password
+      if(!storedHash) {
+        var defaultHash = await hashPassword(ADMIN_HASH);
+        localStorage.setItem('ic-admin-hash', defaultHash);
+        storedHash = defaultHash;
+      }
+      if(inputHash === storedHash){
         KEY = input;
-        localStorage.setItem('ic-admin-session', btoa(input + ':' + Date.now()));
+        var sessionExpiry = Date.now() + (30 * 60 * 1000); // 30 min session
+        localStorage.setItem('ic-admin-session', btoa(input + ':' + sessionExpiry));
         document.getElementById('login-view').style.display='none';
         document.getElementById('app-view').classList.add('on');
         loadSection('overview');
@@ -678,15 +694,16 @@
     };
     document.getElementById('admin-key').addEventListener('keydown',function(e){if(e.key==='Enter')doLogin()});
 
-    // Auto-login
+    // Auto-login with session expiry check
     (function(){
       var session = localStorage.getItem('ic-admin-session');
       if(session){
         try{
           var decoded = atob(session);
-          var storedHash = localStorage.getItem('ic-admin-hash') || ADMIN_HASH;
-          if(decoded.split(':')[0] === storedHash){
-            KEY = decoded.split(':')[0];
+          var parts = decoded.split(':');
+          var sessionExpiry = parseInt(parts[1]) || 0;
+          if(Date.now() < sessionExpiry){
+            KEY = parts[0];
             document.getElementById('login-view').style.display='none';
             document.getElementById('app-view').classList.add('on');
             loadSection('overview');
@@ -1110,9 +1127,14 @@
       var newKey = document.getElementById('set-admin-key').value.trim();
       if(newKey){
         if(newKey.length < 6){ toast('رمز باید حداقل ۶ کاراکتر باشد','err'); return; }
-        localStorage.setItem('ic-admin-hash', newKey);
-        KEY = newKey;
-        toast('رمز عبور تغییر کرد. در ورود بعدی از رمز جدید استفاده کنید.','info');
+        hashPassword(newKey).then(function(hash){
+          localStorage.setItem('ic-admin-hash', hash);
+          KEY = newKey;
+          // Update session with new password
+          var sessionExpiry = Date.now() + (30 * 60 * 1000);
+          localStorage.setItem('ic-admin-session', btoa(newKey + ':' + sessionExpiry));
+          toast('رمز عبور تغییر کرد. در ورود بعدی از رمز جدید استفاده کنید.','info');
+        });
       }
       saveSettingsData(s);
       toast('تنظیمات ذخیره شد','ok');
