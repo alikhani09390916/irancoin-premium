@@ -405,44 +405,180 @@
 }
 
 /* ---------- Exchanges ---------- */
-.exchange-grid {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: var(--sp-4);
+/* ---------- Exchange Carousel ---------- */
+.exchange-carousel-wrap {
+  overflow: hidden;
+  mask-image: linear-gradient(90deg, transparent, black 10%, black 90%, transparent);
+  -webkit-mask-image: linear-gradient(90deg, transparent, black 10%, black 90%, transparent);
 }
 
-@media (max-width: 1023px) { .exchange-grid { grid-template-columns: repeat(2, 1fr); } }
-@media (max-width: 639px) { .exchange-grid { grid-template-columns: 1fr; } }
+.exchange-carousel {
+  overflow: hidden;
+  padding: var(--sp-4) 0;
+}
 
-.exchange-card {
+.ex-track {
+  display: flex;
+  gap: var(--sp-4);
+  width: max-content;
+  animation: carousel-scroll 35s linear infinite;
+}
+
+.ex-track:hover { animation-play-state: paused; }
+
+@keyframes carousel-scroll {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+.ex-item {
   display: flex;
   align-items: center;
-  gap: var(--sp-4);
-  padding: var(--sp-5);
-  border-radius: var(--r-md);
+  gap: var(--sp-3);
+  padding: var(--sp-3) var(--sp-5);
+  border-radius: var(--r-full);
   background: var(--bg-glass);
   border: var(--bw-xs) solid var(--border-glass);
   backdrop-filter: blur(var(--blur-sm));
+  white-space: nowrap;
   transition: all var(--dur-fast) var(--ease-out);
+  flex-shrink: 0;
 }
 
-.exchange-card:hover { transform: translateY(-3px); box-shadow: var(--sh-md); border-color: rgba(124, 58, 237, 0.3); }
+.ex-item:hover {
+  border-color: rgba(124, 58, 237, 0.3);
+  box-shadow: var(--sh-sm);
+  transform: translateY(-2px);
+}
 
-.exchange-card .ex-logo {
-  width: 2.75rem;
-  height: 2.75rem;
-  flex-shrink: 0;
-  border-radius: var(--r-md);
+.ex-pill {
+  width: 2rem;
+  height: 2rem;
+  border-radius: var(--r-sm);
+  background: var(--accent, var(--grad-brand));
   display: grid;
   place-items: center;
+  font-size: 0.6875rem;
   font-weight: var(--fw-extrabold);
-  font-size: 0.8125rem;
   color: var(--c-white);
+  flex-shrink: 0;
   direction: ltr;
 }
 
-.exchange-card .ex-name { font-weight: var(--fw-bold); font-size: var(--fs-body-s); }
-.exchange-card .ex-sub { font-size: var(--fs-dlabel); color: var(--text-tertiary); }
+.ex-item span {
+  font-size: var(--fs-body-s);
+  font-weight: var(--fw-semibold);
+  color: var(--c-ink-700);
+  direction: ltr;
+}
+
+/* ---------- Crypto Payment Box ---------- */
+.crypto-pay-box {
+  margin-top: var(--sp-6);
+  border-radius: var(--r-lg);
+  background: var(--bg-glass);
+  border: var(--bw-xs) solid var(--border-glass);
+  backdrop-filter: blur(var(--blur-sm));
+  overflow: hidden;
+}
+
+.crypto-pay-head {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-4);
+  padding: var(--sp-5) var(--sp-6);
+  background: linear-gradient(135deg, rgba(124, 58, 237, 0.06), rgba(59, 130, 246, 0.04));
+  border-bottom: var(--bw-xs) solid var(--border-glass);
+}
+
+.crypto-pay-icon {
+  width: 3rem;
+  height: 3rem;
+  border-radius: var(--r-md);
+  background: var(--grad-btc);
+  display: grid;
+  place-items: center;
+  font-size: 1.5rem;
+  color: var(--c-white);
+  flex-shrink: 0;
+}
+
+.crypto-pay-title {
+  font-weight: var(--fw-bold);
+  font-size: var(--fs-body-l);
+  color: var(--c-ink-900);
+}
+
+.crypto-pay-sub {
+  font-size: var(--fs-dlabel);
+  color: var(--text-tertiary);
+  margin-top: var(--sp-1);
+}
+
+.crypto-pay-body {
+  padding: var(--sp-5) var(--sp-6);
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-4);
+}
+
+.crypto-pay-step {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-3);
+  font-size: var(--fs-body-s);
+  color: var(--c-ink-700);
+}
+
+.crypto-step-num {
+  width: 1.75rem;
+  height: 1.75rem;
+  border-radius: var(--r-full);
+  background: var(--grad-brand);
+  color: var(--c-white);
+  display: grid;
+  place-items: center;
+  font-size: 0.75rem;
+  font-weight: var(--fw-bold);
+  flex-shrink: 0;
+}
+
+.crypto-wallet-addr {
+  background: rgba(124, 58, 237, 0.04);
+  border-radius: var(--r-md);
+  padding: var(--sp-4);
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-2);
+}
+
+.wallet-code {
+  font-family: var(--font-num);
+  font-size: var(--fs-body-s);
+  color: var(--c-violet-700);
+  background: var(--c-white);
+  padding: var(--sp-3);
+  border-radius: var(--r-sm);
+  border: var(--bw-xs) solid var(--border-glass);
+  word-break: break-all;
+  direction: ltr;
+  text-align: left;
+}
+
+.crypto-powered {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--sp-2);
+  font-size: var(--fs-dlabel);
+  color: var(--text-tertiary);
+  padding-top: var(--sp-3);
+  border-top: var(--bw-xs) solid var(--border-glass);
+}
+
+.crypto-powered strong {
+  color: var(--c-violet-600);
+}
 
 /* ---------- Social proof ---------- */
 .proof-stats {

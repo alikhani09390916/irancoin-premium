@@ -361,6 +361,10 @@
                 <span class="pm-icon">🏦</span>
                 <span>کارت به کارت</span>
               </button>
+              <button type="button" class="pay-method" aria-pressed="false">
+                <span class="pm-icon">₿</span>
+                <span>کریپتو</span>
+              </button>
             </div>
           </div>
 
@@ -385,6 +389,40 @@
             این صفحه نمایشی است و هیچ پرداخت واقعی انجام نمی‌شود.
           </div>
         </form>
+
+        <!-- Crypto Payment Option -->
+        <div class="crypto-pay-box" data-reveal>
+          <div class="crypto-pay-head">
+            <span class="crypto-pay-icon">₿</span>
+            <div>
+              <div class="crypto-pay-title">پرداخت با ارز دیجیتال</div>
+              <div class="crypto-pay-sub">تتر (USDT TRC20) • بیت‌کوین • اتریوم</div>
+            </div>
+          </div>
+          <div class="crypto-pay-body">
+            <div class="crypto-pay-step">
+              <span class="crypto-step-num">۱</span>
+              <span>مبلغ اشتراک را به آدرس کیف پول زیر واریز کنید</span>
+            </div>
+            <div class="crypto-pay-step">
+              <span class="crypto-step-num">۲</span>
+              <span>TxID تراکنش را در ایمیل خود ارسال کنید</span>
+            </div>
+            <div class="crypto-pay-step">
+              <span class="crypto-step-num">۳</span>
+              <span>اشتراک شما پس از تأیید خودکار فعال می‌شود</span>
+            </div>
+            <div class="crypto-wallet-addr">
+              <div class="t-dlabel">آدرس کیف پول (TRC20)</div>
+              <code class="wallet-code">TXxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx</code>
+              <button class="btn btn-ghost btn-sm" type="button" onclick="navigator.clipboard.writeText(this.previousElementSibling.textContent);this.textContent='کپی شد ✓'">کپی</button>
+            </div>
+            <div class="crypto-powered">
+              <span>پرداخت امن از طریق</span>
+              <strong>NOWPayments</strong>
+            </div>
+          </div>
+        </div>
       </div>
     </section>
 
