@@ -1,5 +1,5 @@
 /* ============================================================
-   IRANCOiN 3D Brain Section Styles
+   IRANCOiN 3D Brain Section Styles — Realistic
    ============================================================ */
 
 .brain-scene {
@@ -18,11 +18,25 @@
   position: absolute;
   inset: 0;
   background: radial-gradient(
-    ellipse at 50% 50%,
-    rgba(124, 58, 237, 0.12) 0%,
-    rgba(34, 211, 238, 0.06) 30%,
-    transparent 70%
+    ellipse at 50% 45%,
+    rgba(155, 120, 180, 0.10) 0%,
+    rgba(124, 58, 237, 0.06) 30%,
+    transparent 65%
   );
+  pointer-events: none;
+  z-index: 0;
+}
+
+.brain-scene::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 200px;
+  height: 60px;
+  background: radial-gradient(ellipse, rgba(124, 58, 237, 0.15), transparent 70%);
+  filter: blur(20px);
   pointer-events: none;
   z-index: 0;
 }
@@ -45,92 +59,106 @@
   height: 100% !important;
 }
 
-/* Brain glow overlay */
+/* Brain glow */
 .brain-glow {
   position: absolute;
-  width: 300px;
-  height: 300px;
+  width: 280px;
+  height: 280px;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
   border-radius: 50%;
-  background: radial-gradient(circle, rgba(124, 58, 237, 0.3), transparent 70%);
-  filter: blur(60px);
+  background: radial-gradient(circle,
+    rgba(180, 140, 160, 0.20) 0%,
+    rgba(124, 58, 237, 0.10) 40%,
+    transparent 70%
+  );
+  filter: blur(40px);
   pointer-events: none;
   z-index: 0;
-  animation: brainPulseGlow 4s ease-in-out infinite;
+  animation: brainPulse 5s ease-in-out infinite;
 }
 
-@keyframes brainPulseGlow {
-  0%, 100% { transform: scale(1); opacity: 0.6; }
-  50% { transform: scale(1.15); opacity: 1; }
+@keyframes brainPulse {
+  0%, 100% { transform: translate(-50%, -50%) scale(1); opacity: 0.7; }
+  50% { transform: translate(-50%, -50%) scale(1.12); opacity: 1; }
 }
 
 /* Brain label */
 .brain-label {
   position: absolute;
-  bottom: 20px;
+  bottom: 16px;
   left: 50%;
   transform: translateX(-50%);
   text-align: center;
   z-index: 2;
   pointer-events: none;
+  display: flex;
+  align-items: center;
+  gap: 6px;
 }
 
-.brain-label h3 {
-  font-size: 1.1rem;
-  font-weight: 700;
-  background: linear-gradient(135deg, #7c3aed, #22d3ee);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-  margin-bottom: 4px;
+.brain-label .status-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #34d399;
+  animation: statusBlink 2s ease-in-out infinite;
 }
 
-.brain-label p {
-  font-size: 0.75rem;
-  color: rgba(255, 255, 255, 0.4);
-  letter-spacing: 0.1em;
+.brain-label span:last-child {
+  font-size: 0.7rem;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.5);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
 }
 
-/* Data readouts around brain */
+@keyframes statusBlink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.3; }
+}
+
+/* Data readouts */
 .brain-data-readout {
   position: absolute;
-  padding: 6px 12px;
-  background: rgba(10, 16, 40, 0.8);
-  border: 1px solid rgba(124, 58, 237, 0.2);
-  border-radius: 8px;
-  backdrop-filter: blur(8px);
+  padding: 8px 14px;
+  background: rgba(8, 8, 24, 0.85);
+  border: 1px solid rgba(124, 58, 237, 0.25);
+  border-radius: 10px;
+  backdrop-filter: blur(12px);
   font-family: "JetBrains Mono", "Fira Code", monospace;
-  font-size: 0.65rem;
+  font-size: 0.6rem;
+  line-height: 1.6;
   color: rgba(255, 255, 255, 0.6);
   z-index: 2;
   pointer-events: none;
-  animation: brainDataFade 3s ease-in-out infinite;
+  animation: readoutFade 4s ease-in-out infinite;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
 }
 
-.brain-data-readout:nth-child(1) { top: 15%; left: 5%; animation-delay: 0s; }
-.brain-data-readout:nth-child(2) { top: 15%; right: 5%; animation-delay: 0.5s; }
-.brain-data-readout:nth-child(3) { bottom: 25%; left: 5%; animation-delay: 1s; }
-.brain-data-readout:nth-child(4) { bottom: 25%; right: 5%; animation-delay: 1.5s; }
+.brain-data-readout:nth-child(2) { top: 12%; left: 3%; animation-delay: 0s; }
+.brain-data-readout:nth-child(3) { top: 12%; right: 3%; animation-delay: 1s; }
+.brain-data-readout:nth-child(4) { bottom: 30%; left: 3%; animation-delay: 2s; }
+.brain-data-readout:nth-child(5) { bottom: 30%; right: 3%; animation-delay: 3s; }
 
 .brain-data-readout .val {
   color: #22d3ee;
-  font-weight: 600;
+  font-weight: 700;
 }
 
-.brain-data-readout .val.pink {
-  color: #ec4899;
+.brain-data-readout .val.pink { color: #ec4899; }
+.brain-data-readout .val.green { color: #34d399; }
+.brain-data-readout .val.amber { color: #fbbf24; }
+.brain-data-readout .val.purple { color: #a78bfa; }
+
+.brain-data-readout div {
+  white-space: nowrap;
 }
 
-.brain-data-readout .val.green {
-  color: #34d399;
-}
-
-.brain-data-readout .val.amber {
-  color: #fbbf24;
-}
-
-@keyframes brainDataFade {
-  0%, 100% { opacity: 0.5; }
-  50% { opacity: 0.9; }
+@keyframes readoutFade {
+  0%, 100% { opacity: 0.45; transform: translateY(0); }
+  50% { opacity: 0.85; transform: translateY(-2px); }
 }
 
 /* Hero section with brain */
@@ -157,7 +185,7 @@
   }
 
   .hero-with-brain .brain-col {
-    height: 350px;
+    height: 380px;
     order: -1;
   }
 
@@ -172,7 +200,7 @@
 
 @media (max-width: 768px) {
   .brain-scene {
-    height: 300px;
+    height: 320px;
   }
 
   .hero-with-brain .brain-col {
@@ -181,6 +209,7 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .brain-glow { animation: none; }
-  .brain-data-readout { animation: none; opacity: 0.6; }
+  .brain-glow { animation: none; opacity: 0.6; }
+  .brain-data-readout { animation: none; opacity: 0.5; }
+  .brain-label .status-dot { animation: none; }
 }
