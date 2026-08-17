@@ -1,0 +1,26 @@
+[project]
+id = "ibnpgzmbepieudwalwtv"
+
+[functions.create-invoice]
+verify_jwt = false
+
+[functions.check-payment]
+verify_jwt = false
+
+[functions.check-subscription]
+verify_jwt = false
+
+[functions.ipn-webhook]
+verify_jwt = false
+
+[functions.admin-stats]
+verify_jwt = true
+
+[functions.admin-actions]
+verify_jwt = true
+
+[functions.send-email]
+verify_jwt = false
+
+[functions.submit-card-payment]
+verify_jwt = false
