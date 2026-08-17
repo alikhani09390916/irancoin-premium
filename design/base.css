@@ -25,7 +25,11 @@ body {
   text-align: right;
   overflow-x: clip;
   -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
   text-rendering: optimizeLegibility;
+  font-feature-settings: var(--font-feature-persian);
+  letter-spacing: var(--font-letter-normal);
+  word-spacing: 0.02em;
 }
 
 img,
@@ -215,6 +219,52 @@ h1, h2, h3, h4, h5, h6 {
 
 @media (max-width: 639px) {
   .grid-4, .grid-3, .grid-2 { grid-template-columns: 1fr; }
+}
+
+/* ---------- Typography: bold accents & colors ---------- */
+.b { font-weight: var(--fw-bold); }
+.bx { font-weight: var(--fw-extrabold); }
+.text-violet { color: var(--c-violet-600); }
+.text-cyan { color: var(--c-cyan-600); }
+.text-emerald { color: var(--c-emerald-600); }
+.text-gold { color: var(--c-gold-600); }
+.text-rose { color: var(--c-rose-600); }
+.text-brand { background: var(--grad-brand); -webkit-background-clip: text; background-clip: text; color: transparent; }
+.text-muted { color: var(--text-tertiary); }
+.text-sm { font-size: var(--fs-body-s); }
+.text-xs { font-size: var(--fs-dlabel); }
+.text-center { text-align: center; }
+.lh-tight { line-height: var(--lh-heading); }
+.mt-2 { margin-top: var(--sp-2); }
+.mt-4 { margin-top: var(--sp-4); }
+.mt-6 { margin-top: var(--sp-6); }
+.mb-2 { margin-bottom: var(--sp-2); }
+.mb-4 { margin-bottom: var(--sp-4); }
+.mb-6 { margin-bottom: var(--sp-6); }
+
+/* ---------- Premium font styles ---------- */
+.font-display {
+  font-family: var(--font-fa);
+  font-feature-settings: "ss01" on, "ss02" on, "liga" on, "calt" on, "kern" on;
+  letter-spacing: var(--font-letter-tight);
+}
+
+.font-heading {
+  font-family: var(--font-fa);
+  font-feature-settings: "ss01" on, "ss02" on, "liga" on, "calt" on;
+  letter-spacing: var(--font-letter-normal);
+}
+
+.font-body {
+  font-family: var(--font-fa);
+  font-feature-settings: "liga" on, "calt" on;
+  letter-spacing: var(--font-letter-normal);
+}
+
+.font-nav {
+  font-family: var(--font-fa);
+  font-feature-settings: "ss01" on, "liga" on;
+  letter-spacing: var(--font-letter-wide);
 }
 
 /* ---------- Data / financial number style ---------- */

@@ -117,6 +117,12 @@
   --font-fa: "Vazirmatn", "IRANSansX", "Segoe UI", Tahoma, sans-serif;
   --font-num: "Vazirmatn", "JetBrains Mono", "Roboto Mono", monospace;
 
+  /* Premium font tuning */
+  --font-letter-tight: -0.01em;
+  --font-letter-normal: 0;
+  --font-letter-wide: 0.02em;
+  --font-feature-persian: "ss01" on, "ss02" on, "liga" on, "calt" on;
+
   --fs-display-xl: clamp(2.75rem, 6vw, 4.75rem);
   --fs-display-l: clamp(2.25rem, 4.5vw, 3.5rem);
   --fs-heading-xl: clamp(1.875rem, 3.5vw, 2.75rem);
