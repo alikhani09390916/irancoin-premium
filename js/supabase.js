@@ -1,4 +1,4 @@
-// js/supabase.js — Supabase Client for IRAN COIN
+// js/supabase.js — Supabase Client for IRANCOiN
 const SUPABASE_URL = 'https://ibnpgzmbepieudwalwtv.supabase.co';
 const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImlibnBnem1iZXBpZXVkd2Fsd3R2Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODY4NDE5MzcsImV4cCI6MjEwMjQxNzkzN30.Ayeyo4ifmUr9kV6sCI_2-JtT81QxLL45znknrddoB5E';
 const SUPABASE_FUNCTIONS_URL = SUPABASE_URL + '/functions/v1';

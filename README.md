@@ -1,4 +1,4 @@
-# IRAN COIN — Premium AI Fintech Experience
+# IRANCOiN — Premium AI Fintech Experience
 
 پروژه مستقل (جدا از irancoin-saas) — اجرای Master Prompt V2 مطابق `1.md` به‌صورت Design-as-Code تحت ساختار فیگما.
 

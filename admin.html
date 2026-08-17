@@ -3,469 +3,1282 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>پنل مدیریت | IRAN COIN</title>
+  <title>پنل مدیریت | IRANCOiN</title>
   <meta name="robots" content="noindex, nofollow">
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%237C3AED'/%3E%3Cstop offset='1' stop-color='%2306B6D4'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='64' height='64' rx='16' fill='url(%23g)'/%3E%3Ctext x='32' y='42' font-size='28' font-weight='800' text-anchor='middle' fill='white' font-family='Arial'%3EIC%3C/text%3E%3C/svg%3E">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
   <style>
-    :root{--grad-brand:linear-gradient(135deg,#7C3AED 0%,#06B6D4 100%);--bg:#0a0e1a;--bg2:rgba(255,255,255,0.04);--bg3:rgba(255,255,255,0.08);--brd:rgba(255,255,255,0.08);--brd2:rgba(124,58,237,0.4);--txt:#f1f5f9;--dim:#94a3b8;--ok:#10b981;--warn:#fbbf24;--err:#ef4444;--info:#3b82f6;--radius:0.75rem}
-    *{margin:0;padding:0;box-sizing:border-box}
-    body{font-family:'Vazirmatn',system-ui,sans-serif;background:var(--bg);color:var(--txt);min-height:100vh;direction:rtl}
+    :root {
+      --grad-brand: linear-gradient(135deg, #7C3AED 0%, #06B6D4 100%);
+      --grad-brand-r: linear-gradient(135deg, #06B6D4 0%, #7C3AED 100%);
+      --bg-body: #060a14;
+      --bg-sidebar: #0a0f1e;
+      --bg-card: rgba(255,255,255,0.03);
+      --bg-card-hover: rgba(255,255,255,0.06);
+      --bg-input: rgba(255,255,255,0.05);
+      --brd: rgba(255,255,255,0.06);
+      --brd-focus: rgba(124,58,237,0.5);
+      --txt: #f1f5f9;
+      --txt-dim: #64748b;
+      --txt-muted: #475569;
+      --ok: #10b981;
+      --ok-bg: rgba(16,185,129,0.12);
+      --warn: #f59e0b;
+      --warn-bg: rgba(245,158,11,0.12);
+      --err: #ef4444;
+      --err-bg: rgba(239,68,68,0.12);
+      --info: #3b82f6;
+      --info-bg: rgba(59,130,246,0.12);
+      --purple: #a78bfa;
+      --purple-bg: rgba(167,139,250,0.12);
+      --radius: 0.75rem;
+      --radius-lg: 1rem;
+      --shadow: 0 4px 24px rgba(0,0,0,0.3);
+      --transition: all 0.2s ease;
+      --sidebar-w: 260px;
+      --header-h: 64px;
+    }
+    * { margin:0; padding:0; box-sizing:border-box; }
+    html { scroll-behavior: smooth; }
+    body { font-family:'Vazirmatn',system-ui,sans-serif; background:var(--bg-body); color:var(--txt); min-height:100vh; direction:rtl; overflow-x:hidden; }
+    ::-webkit-scrollbar { width:6px; height:6px; }
+    ::-webkit-scrollbar-track { background:transparent; }
+    ::-webkit-scrollbar-thumb { background:rgba(124,58,237,0.3); border-radius:3px; }
+    ::-webkit-scrollbar-thumb:hover { background:rgba(124,58,237,0.5); }
 
-    /* Login */
-    .login-wrap{display:flex;align-items:center;justify-content:center;min-height:100vh;padding:2rem}
-    .login-card{background:linear-gradient(160deg,#1a1040,#0f172a);border:1px solid var(--brd2);border-radius:1.25rem;padding:2.5rem;max-width:24rem;width:100%;box-shadow:0 25px 60px rgba(0,0,0,0.5);text-align:center}
-    .login-card h1{font-size:1.5rem;margin-bottom:.5rem;background:var(--grad-brand);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
-    .login-card p{color:var(--dim);font-size:.875rem;margin-bottom:1.5rem}
-    .login-card input{width:100%;padding:.75rem 1rem;border-radius:var(--radius);border:1px solid var(--brd);background:rgba(255,255,255,0.06);color:var(--txt);font-size:1rem;font-family:inherit;outline:none;margin-bottom:1rem;direction:ltr;text-align:center}
-    .login-card input:focus{border-color:var(--brd2)}
-    .login-card button{width:100%;padding:.75rem;border-radius:var(--radius);background:var(--grad-brand);border:none;color:white;font-weight:600;font-size:1rem;cursor:pointer;font-family:inherit}
+    /* ===== LOGIN ===== */
+    .login-wrap { display:flex; align-items:center; justify-content:center; min-height:100vh; padding:2rem; background:radial-gradient(ellipse at 50% 30%, rgba(124,58,237,0.08) 0%, transparent 70%); }
+    .login-card { background:linear-gradient(160deg, rgba(26,16,64,0.9), rgba(15,23,42,0.95)); border:1px solid rgba(124,58,237,0.25); border-radius:1.5rem; padding:3rem 2.5rem; max-width:26rem; width:100%; box-shadow:0 25px 80px rgba(0,0,0,0.6), 0 0 60px rgba(124,58,237,0.05); text-align:center; backdrop-filter:blur(20px); }
+    .login-logo { width:4rem; height:4rem; border-radius:1rem; background:var(--grad-brand); display:grid; place-items:center; margin:0 auto 1.5rem; font-size:1.75rem; font-weight:900; color:white; box-shadow:0 8px 32px rgba(124,58,237,0.3); }
+    .login-card h1 { font-size:1.375rem; font-weight:800; margin-bottom:.375rem; background:var(--grad-brand); -webkit-background-clip:text; -webkit-text-fill-color:transparent; }
+    .login-card .sub { color:var(--txt-dim); font-size:.8125rem; margin-bottom:2rem; }
+    .login-field { position:relative; margin-bottom:1rem; }
+    .login-field input { width:100%; padding:.875rem 1.125rem .875rem 3rem; border-radius:var(--radius); border:1px solid var(--brd); background:var(--bg-input); color:var(--txt); font-size:.9375rem; font-family:inherit; outline:none; transition:var(--transition); direction:ltr; text-align:left; }
+    .login-field input:focus { border-color:var(--brd-focus); box-shadow:0 0 0 3px rgba(124,58,237,0.1); }
+    .login-field .icon { position:absolute; inset-inline-start:1rem; top:50%; transform:translateY(-50%); color:var(--txt-dim); font-size:1.125rem; }
+    .login-btn { width:100%; padding:.875rem; border-radius:var(--radius); background:var(--grad-brand); border:none; color:white; font-weight:700; font-size:1rem; cursor:pointer; font-family:inherit; transition:var(--transition); box-shadow:0 4px 20px rgba(124,58,237,0.3); }
+    .login-btn:hover { transform:translateY(-1px); box-shadow:0 6px 28px rgba(124,58,237,0.4); }
+    .login-btn:active { transform:translateY(0); }
+    .login-err { color:var(--err); font-size:.8125rem; margin-top:.75rem; display:none; }
+    .login-footer { margin-top:1.5rem; padding-top:1.25rem; border-top:1px solid var(--brd); }
+    .login-footer p { color:var(--txt-muted); font-size:.75rem; }
 
-    /* Dashboard */
-    .dash{display:none}.dash.on{display:block}
-    .hdr{display:flex;align-items:center;justify-content:space-between;padding:1rem 2rem;border-bottom:1px solid var(--brd);background:rgba(15,23,42,0.95);backdrop-filter:blur(12px);position:sticky;top:0;z-index:100}
-    .hdr h1{font-size:1.125rem;background:var(--grad-brand);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
-    .hdr-right{display:flex;gap:.5rem;align-items:center}
-    .hdr-right button{padding:.4rem 1rem;border-radius:.5rem;border:1px solid var(--brd);background:transparent;color:var(--dim);cursor:pointer;font-family:inherit;font-size:.8125rem}
-    .hdr-right button.danger{border-color:rgba(239,68,68,0.3);color:var(--err)}
+    /* ===== LAYOUT ===== */
+    .app { display:none; }
+    .app.on { display:flex; min-height:100vh; }
 
-    /* Nav tabs */
-    .nav{display:flex;gap:.375rem;padding:.75rem 2rem;border-bottom:1px solid var(--brd);overflow-x:auto}
-    .nav button{padding:.5rem 1.125rem;border-radius:.5rem;border:1px solid var(--brd);background:transparent;color:var(--dim);cursor:pointer;font-family:inherit;font-size:.8125rem;white-space:nowrap;transition:all .2s}
-    .nav button:hover{background:var(--bg3);color:var(--txt)}
-    .nav button.on{background:rgba(124,58,237,0.15);border-color:var(--brd2);color:#a78bfa;font-weight:600}
+    /* ===== SIDEBAR ===== */
+    .sidebar { position:fixed; top:0; right:0; width:var(--sidebar-w); height:100vh; background:var(--bg-sidebar); border-left:1px solid var(--brd); z-index:200; display:flex; flex-direction:column; transition:transform 0.3s ease; }
+    .sidebar-header { padding:1.25rem 1.5rem; border-bottom:1px solid var(--brd); display:flex; align-items:center; gap:.75rem; }
+    .sidebar-logo { width:2.5rem; height:2.5rem; border-radius:.625rem; background:var(--grad-brand); display:grid; place-items:center; font-size:.875rem; font-weight:900; color:white; flex-shrink:0; }
+    .sidebar-brand { font-size:.9375rem; font-weight:700; }
+    .sidebar-brand span { background:var(--grad-brand); -webkit-background-clip:text; -webkit-text-fill-color:transparent; }
+    .sidebar-nav { flex:1; overflow-y:auto; padding:.75rem; }
+    .nav-group { margin-bottom:.5rem; }
+    .nav-group-label { padding:.5rem .75rem; font-size:.6875rem; font-weight:600; color:var(--txt-muted); text-transform:uppercase; letter-spacing:.05em; }
+    .nav-item { display:flex; align-items:center; gap:.75rem; padding:.625rem .75rem; border-radius:.5rem; color:var(--txt-dim); cursor:pointer; transition:var(--transition); font-size:.8125rem; font-weight:500; border:1px solid transparent; }
+    .nav-item:hover { background:var(--bg-card-hover); color:var(--txt); }
+    .nav-item.active { background:rgba(124,58,237,0.12); color:var(--purple); border-color:rgba(124,58,237,0.2); font-weight:600; }
+    .nav-item .icon { width:1.25rem; text-align:center; font-size:1rem; }
+    .nav-item .badge { margin-right:auto; background:var(--err); color:white; font-size:.625rem; padding:.125rem .375rem; border-radius:999px; font-weight:700; }
+    .sidebar-footer { padding:1rem 1.5rem; border-top:1px solid var(--brd); }
+    .sidebar-footer .user-info { display:flex; align-items:center; gap:.75rem; }
+    .sidebar-footer .avatar { width:2rem; height:2rem; border-radius:50%; background:var(--grad-brand); display:grid; place-items:center; font-size:.75rem; font-weight:700; color:white; }
+    .sidebar-footer .user-name { font-size:.8125rem; font-weight:600; }
+    .sidebar-footer .user-role { font-size:.6875rem; color:var(--txt-dim); }
 
-    .content{padding:1.5rem 2rem;max-width:90rem;margin:0 auto}
+    /* ===== MAIN ===== */
+    .main { flex:1; margin-right:var(--sidebar-w); min-height:100vh; display:flex; flex-direction:column; }
 
-    /* Stats */
-    .stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(11rem,1fr));gap:.75rem;margin-bottom:1.5rem}
-    .st{background:var(--bg2);border:1px solid var(--brd);border-radius:1rem;padding:1.125rem;transition:all .3s}
-    .st:hover{border-color:var(--brd2);transform:translateY(-2px)}
-    .st .l{color:var(--dim);font-size:.75rem;margin-bottom:.375rem}
-    .st .v{font-size:1.5rem;font-weight:800;background:var(--grad-brand);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
-    .st .s{color:var(--dim);font-size:.6875rem;margin-top:.25rem}
+    /* ===== HEADER ===== */
+    .header { height:var(--header-h); padding:0 2rem; border-bottom:1px solid var(--brd); background:rgba(6,10,20,0.8); backdrop-filter:blur(12px); display:flex; align-items:center; justify-content:space-between; position:sticky; top:0; z-index:100; }
+    .header-right { display:flex; align-items:center; gap:1rem; }
+    .header-title { font-size:1.125rem; font-weight:700; }
+    .header-actions { display:flex; align-items:center; gap:.5rem; }
+    .hbtn { padding:.5rem 1rem; border-radius:.5rem; border:1px solid var(--brd); background:transparent; color:var(--txt-dim); cursor:pointer; font-family:inherit; font-size:.8125rem; font-weight:500; transition:var(--transition); display:flex; align-items:center; gap:.375rem; }
+    .hbtn:hover { background:var(--bg-card-hover); color:var(--txt); border-color:rgba(255,255,255,0.1); }
+    .hbtn-danger { border-color:rgba(239,68,68,0.3); color:var(--err); }
+    .hbtn-danger:hover { background:var(--err-bg); }
+    .hbtn-primary { background:var(--grad-brand); border:none; color:white; font-weight:600; }
+    .hbtn-primary:hover { opacity:.9; }
+    .mobile-toggle { display:none; background:none; border:none; color:var(--txt); font-size:1.5rem; cursor:pointer; padding:.25rem; }
 
-    /* Tables */
-    .tw{background:var(--bg2);border:1px solid var(--brd);border-radius:1rem;overflow:hidden;margin-bottom:1.5rem}
-    .tw-h{display:flex;align-items:center;justify-content:space-between;padding:.875rem 1.25rem;border-bottom:1px solid var(--brd)}
-    .tw-h h2{font-size:.9375rem;font-weight:600}
-    .tw-h .actions{display:flex;gap:.375rem}
-    .tw-h .actions button{padding:.3rem .75rem;border-radius:.375rem;border:1px solid var(--brd);background:transparent;color:var(--dim);cursor:pointer;font-family:inherit;font-size:.75rem}
-    .tw-h .actions button:hover{background:var(--bg3);color:var(--txt)}
-    table{width:100%;border-collapse:collapse}
-    th{padding:.625rem .875rem;text-align:right;font-size:.75rem;color:var(--dim);font-weight:500;border-bottom:1px solid var(--brd);background:rgba(255,255,255,0.02)}
-    td{padding:.625rem .875rem;font-size:.8125rem;border-bottom:1px solid var(--brd)}
-    tr:hover td{background:rgba(255,255,255,0.02)}
-    .badge{display:inline-block;padding:.15rem .5rem;border-radius:999px;font-size:.6875rem;font-weight:600}
-    .b-ok{background:rgba(16,185,129,0.15);color:var(--ok)}
-    .b-warn{background:rgba(251,191,36,0.15);color:var(--warn)}
-    .b-err{background:rgba(239,68,68,0.15);color:var(--err)}
-    .b-info{background:rgba(59,130,246,0.15);color:var(--info)}
-    .b-neut{background:rgba(148,163,184,0.15);color:var(--dim)}
+    /* ===== CONTENT ===== */
+    .content { flex:1; padding:1.5rem 2rem 3rem; max-width:90rem; margin:0 auto; width:100%; }
 
-    /* Action buttons */
-    .abtn{padding:.25rem .5rem;border-radius:.375rem;border:none;cursor:pointer;font-family:inherit;font-size:.6875rem;transition:all .15s}
-    .abtn:hover{transform:scale(1.05)}
-    .abtn-ok{background:rgba(16,185,129,0.2);color:var(--ok);border:1px solid rgba(16,185,189,0.3)}
-    .abtn-err{background:rgba(239,68,68,0.2);color:var(--err);border:1px solid rgba(239,68,68,0.3)}
-    .abtn-info{background:rgba(59,130,246,0.2);color:var(--info);border:1px solid rgba(59,130,246,0.3)}
-    .abtn-warn{background:rgba(251,191,36,0.2);color:var(--warn);border:1px solid rgba(251,191,36,0.3)}
-    .abtn-neut{background:rgba(148,163,184,0.2);color:var(--dim);border:1px solid rgba(148,163,184,0.3)}
-    .cell-acts{display:flex;gap:.25rem;flex-wrap:wrap}
+    /* ===== SECTIONS ===== */
+    .section { display:none; animation:fadeIn .3s ease; }
+    .section.active { display:block; }
+    @keyframes fadeIn { from{opacity:0;transform:translateY(8px)} to{opacity:1;transform:translateY(0)} }
 
-    /* Sections */
-    .sec{display:none}.sec.on{display:block}
+    /* ===== STAT CARDS ===== */
+    .stats-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(14rem,1fr)); gap:1rem; margin-bottom:2rem; }
+    .stat-card { background:var(--bg-card); border:1px solid var(--brd); border-radius:var(--radius-lg); padding:1.25rem; transition:var(--transition); position:relative; overflow:hidden; }
+    .stat-card:hover { border-color:rgba(124,58,237,0.3); transform:translateY(-2px); box-shadow:var(--shadow); }
+    .stat-card .stat-icon { width:2.5rem; height:2.5rem; border-radius:.625rem; display:grid; place-items:center; font-size:1.125rem; margin-bottom:.75rem; }
+    .stat-card .stat-label { color:var(--txt-dim); font-size:.75rem; font-weight:500; margin-bottom:.25rem; }
+    .stat-card .stat-value { font-size:1.75rem; font-weight:800; background:var(--grad-brand); -webkit-background-clip:text; -webkit-text-fill-color:transparent; line-height:1.2; }
+    .stat-card .stat-sub { color:var(--txt-dim); font-size:.6875rem; margin-top:.25rem; }
+    .stat-card::after { content:''; position:absolute; top:0; left:0; right:0; height:2px; background:var(--grad-brand); opacity:0; transition:var(--transition); }
+    .stat-card:hover::after { opacity:1; }
 
-    /* Modal */
-    .modal-bg{display:none;position:fixed;inset:0;z-index:999;background:rgba(0,0,0,0.6);backdrop-filter:blur(6px);align-items:center;justify-content:center}
-    .modal-bg.on{display:flex}
-    .modal{background:linear-gradient(160deg,#1a1040,#0f172a);border:1px solid var(--brd2);border-radius:1.25rem;padding:2rem;max-width:32rem;width:92%;max-height:85vh;overflow-y:auto;box-shadow:0 25px 60px rgba(0,0,0,0.5)}
-    .modal h2{font-size:1.125rem;font-weight:700;margin-bottom:1rem;background:var(--grad-brand);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
-    .modal-close{position:absolute;top:1rem;left:1rem;background:none;border:none;color:var(--dim);font-size:1.5rem;cursor:pointer}
-    .modal label{display:block;color:var(--dim);font-size:.8125rem;margin-bottom:.25rem;margin-top:.75rem}
-    .modal input,.modal select,.modal textarea{width:100%;padding:.625rem .875rem;border-radius:.5rem;border:1px solid var(--brd);background:rgba(255,255,255,0.06);color:var(--txt);font-size:.875rem;font-family:inherit;outline:none}
-    .modal input:focus,.modal select:focus,.modal textarea:focus{border-color:var(--brd2)}
-    .modal textarea{min-height:4rem;resize:vertical}
-    .modal .btns{display:flex;gap:.5rem;margin-top:1.25rem;justify-content:flex-start}
-    .modal .btns button{padding:.5rem 1.25rem;border-radius:.5rem;font-weight:600;cursor:pointer;font-family:inherit;font-size:.875rem;border:none}
-    .btn-primary{background:var(--grad-brand);color:white}
-    .btn-cancel{background:rgba(148,163,184,0.15);color:var(--dim);border:1px solid var(--brd)!important}
+    /* ===== CARDS ===== */
+    .card { background:var(--bg-card); border:1px solid var(--brd); border-radius:var(--radius-lg); overflow:hidden; margin-bottom:1.5rem; }
+    .card-header { display:flex; align-items:center; justify-content:space-between; padding:1rem 1.5rem; border-bottom:1px solid var(--brd); }
+    .card-header h2 { font-size:.9375rem; font-weight:700; display:flex; align-items:center; gap:.5rem; }
+    .card-header .actions { display:flex; gap:.375rem; }
+    .card-body { padding:1.25rem 1.5rem; }
+    .card-body.no-pad { padding:0; }
 
-    /* Toast */
-    .toast{position:fixed;bottom:1.5rem;left:50%;transform:translateX(-50%);padding:.75rem 1.5rem;border-radius:.75rem;font-size:.875rem;font-weight:600;z-index:9999;animation:toastIn .3s}
-    .toast-ok{background:rgba(16,185,129,0.9);color:white}
-    .toast-err{background:rgba(239,68,68,0.9);color:white}
-    @keyframes toastIn{from{opacity:0;transform:translateX(-50%) translateY(1rem)}to{opacity:1;transform:translateX(-50%) translateY(0)}}
+    /* ===== TABLES ===== */
+    .table-wrap { overflow-x:auto; }
+    table { width:100%; border-collapse:collapse; }
+    th { padding:.75rem 1rem; text-align:right; font-size:.75rem; font-weight:600; color:var(--txt-dim); background:rgba(255,255,255,0.02); border-bottom:1px solid var(--brd); white-space:nowrap; }
+    td { padding:.75rem 1rem; font-size:.8125rem; border-bottom:1px solid var(--brd); vertical-align:middle; }
+    tr:hover td { background:rgba(255,255,255,0.015); }
+    tr:last-child td { border-bottom:none; }
 
-    @media(max-width:640px){.content{padding:1rem}.stats{grid-template-columns:repeat(2,1fr)}th,td{padding:.375rem .5rem;font-size:.75rem}.hdr{padding:.75rem 1rem}.nav{padding:.5rem 1rem}}
+    /* ===== BADGES ===== */
+    .badge { display:inline-flex; align-items:center; gap:.25rem; padding:.2rem .625rem; border-radius:999px; font-size:.6875rem; font-weight:600; white-space:nowrap; }
+    .badge-ok { background:var(--ok-bg); color:var(--ok); }
+    .badge-warn { background:var(--warn-bg); color:var(--warn); }
+    .badge-err { background:var(--err-bg); color:var(--err); }
+    .badge-info { background:var(--info-bg); color:var(--info); }
+    .badge-purple { background:var(--purple-bg); color:var(--purple); }
+    .badge-neutral { background:rgba(100,116,139,0.12); color:var(--txt-dim); }
+
+    /* ===== BUTTONS ===== */
+    .btn { display:inline-flex; align-items:center; gap:.375rem; padding:.375rem .75rem; border-radius:.375rem; border:none; cursor:pointer; font-family:inherit; font-size:.75rem; font-weight:600; transition:var(--transition); white-space:nowrap; }
+    .btn:hover { transform:scale(1.02); }
+    .btn-ok { background:var(--ok-bg); color:var(--ok); border:1px solid rgba(16,185,129,0.2); }
+    .btn-err { background:var(--err-bg); color:var(--err); border:1px solid rgba(239,68,68,0.2); }
+    .btn-warn { background:var(--warn-bg); color:var(--warn); border:1px solid rgba(245,158,11,0.2); }
+    .btn-info { background:var(--info-bg); color:var(--info); border:1px solid rgba(59,130,246,0.2); }
+    .btn-purple { background:var(--purple-bg); color:var(--purple); border:1px solid rgba(167,139,250,0.2); }
+    .btn-neutral { background:rgba(100,116,139,0.12); color:var(--txt-dim); border:1px solid rgba(100,116,139,0.2); }
+    .cell-actions { display:flex; gap:.25rem; flex-wrap:wrap; }
+
+    /* ===== FORMS ===== */
+    .form-group { margin-bottom:1rem; }
+    .form-label { display:block; color:var(--txt-dim); font-size:.8125rem; font-weight:500; margin-bottom:.375rem; }
+    .form-input, .form-select, .form-textarea { width:100%; padding:.625rem .875rem; border-radius:.5rem; border:1px solid var(--brd); background:var(--bg-input); color:var(--txt); font-size:.875rem; font-family:inherit; outline:none; transition:var(--transition); }
+    .form-input:focus, .form-select:focus, .form-textarea:focus { border-color:var(--brd-focus); box-shadow:0 0 0 3px rgba(124,58,237,0.08); }
+    .form-textarea { min-height:5rem; resize:vertical; }
+    .form-select { cursor:pointer; }
+    .form-select option { background:#1a1040; color:white; }
+
+    /* ===== TOGGLE ===== */
+    .toggle { position:relative; display:inline-block; width:2.75rem; height:1.5rem; cursor:pointer; }
+    .toggle input { opacity:0; width:0; height:0; }
+    .toggle .slider { position:absolute; inset:0; background:rgba(100,116,139,0.3); border-radius:999px; transition:var(--transition); }
+    .toggle .slider::before { content:''; position:absolute; width:1.125rem; height:1.125rem; border-radius:50%; background:white; top:.1875rem; right:.1875rem; transition:var(--transition); }
+    .toggle input:checked + .slider { background:var(--ok); }
+    .toggle input:checked + .slider::before { transform:translateX(1.25rem); }
+
+    /* ===== MODAL ===== */
+    .modal-overlay { display:none; position:fixed; inset:0; z-index:999; background:rgba(0,0,0,0.65); backdrop-filter:blur(8px); align-items:center; justify-content:center; padding:1rem; }
+    .modal-overlay.on { display:flex; }
+    .modal { background:linear-gradient(160deg, #1a1040, #0f172a); border:1px solid rgba(124,58,237,0.25); border-radius:1.25rem; padding:0; max-width:36rem; width:100%; max-height:85vh; overflow:hidden; box-shadow:0 25px 80px rgba(0,0,0,0.6); animation:modalIn .25s ease; }
+    @keyframes modalIn { from{opacity:0;transform:scale(.95)} to{opacity:1;transform:scale(1)} }
+    .modal-header { display:flex; align-items:center; justify-content:space-between; padding:1.25rem 1.5rem; border-bottom:1px solid var(--brd); }
+    .modal-header h2 { font-size:1rem; font-weight:700; background:var(--grad-brand); -webkit-background-clip:text; -webkit-text-fill-color:transparent; }
+    .modal-close { background:none; border:none; color:var(--txt-dim); font-size:1.5rem; cursor:pointer; padding:.25rem; line-height:1; transition:var(--transition); }
+    .modal-close:hover { color:var(--err); }
+    .modal-body { padding:1.5rem; overflow-y:auto; max-height:calc(85vh - 8rem); }
+    .modal-footer { padding:1rem 1.5rem; border-top:1px solid var(--brd); display:flex; gap:.5rem; justify-content:flex-start; }
+    .modal-footer .btn { padding:.5rem 1.25rem; font-size:.8125rem; }
+    .btn-primary { background:var(--grad-brand); color:white; border:none; }
+    .btn-cancel { background:rgba(100,116,139,0.12); color:var(--txt-dim); border:1px solid var(--brd); }
+
+    /* ===== TOGGLE SWITCH (for offers) ===== */
+    .offer-row { display:flex; align-items:center; gap:1rem; padding:1rem; border:1px solid var(--brd); border-radius:var(--radius); margin-bottom:.75rem; transition:var(--transition); }
+    .offer-row:hover { border-color:rgba(124,58,237,0.3); background:var(--bg-card-hover); }
+    .offer-info { flex:1; }
+    .offer-title { font-size:.875rem; font-weight:600; margin-bottom:.125rem; }
+    .offer-desc { font-size:.75rem; color:var(--txt-dim); }
+    .offer-meta { font-size:.6875rem; color:var(--txt-muted); margin-top:.25rem; }
+
+    /* ===== SECTION EDITOR ===== */
+    .section-editor { border:1px solid var(--brd); border-radius:var(--radius); margin-bottom:1rem; overflow:hidden; }
+    .section-editor-header { display:flex; align-items:center; justify-content:space-between; padding:.875rem 1.25rem; background:rgba(255,255,255,0.02); border-bottom:1px solid var(--brd); cursor:pointer; transition:var(--transition); }
+    .section-editor-header:hover { background:rgba(255,255,255,0.04); }
+    .section-editor-header h3 { font-size:.875rem; font-weight:600; display:flex; align-items:center; gap:.5rem; }
+    .section-editor-body { padding:1.25rem; display:none; }
+    .section-editor-body.open { display:block; }
+    .field-row { display:grid; grid-template-columns:1fr 1fr; gap:1rem; margin-bottom:1rem; }
+    .field-full { grid-column:1/-1; }
+
+    /* ===== PREVIEW ===== */
+    .preview-frame { width:100%; height:70vh; border:1px solid var(--brd); border-radius:var(--radius); background:white; }
+
+    /* ===== VERSION ===== */
+    .version-item { display:flex; align-items:center; gap:1rem; padding:1rem; border:1px solid var(--brd); border-radius:var(--radius); margin-bottom:.75rem; transition:var(--transition); }
+    .version-item:hover { border-color:rgba(124,58,237,0.3); }
+    .version-dot { width:.5rem; height:.5rem; border-radius:50%; background:var(--ok); flex-shrink:0; }
+    .version-dot.old { background:var(--txt-dim); }
+    .version-info { flex:1; }
+    .version-tag { font-size:.875rem; font-weight:600; }
+    .version-date { font-size:.75rem; color:var(--txt-dim); }
+    .version-msg { font-size:.75rem; color:var(--txt-muted); margin-top:.125rem; }
+
+    /* ===== TOAST ===== */
+    .toast { position:fixed; bottom:1.5rem; left:50%; transform:translateX(-50%); padding:.75rem 1.5rem; border-radius:.75rem; font-size:.875rem; font-weight:600; z-index:9999; animation:toastIn .3s ease; display:flex; align-items:center; gap:.5rem; box-shadow:0 8px 32px rgba(0,0,0,0.3); }
+    .toast-ok { background:rgba(16,185,129,0.95); color:white; }
+    .toast-err { background:rgba(239,68,68,0.95); color:white; }
+    .toast-info { background:rgba(59,130,246,0.95); color:white; }
+    @keyframes toastIn { from{opacity:0;transform:translateX(-50%) translateY(1rem)} to{opacity:1;transform:translateX(-50%) translateY(0)} }
+
+    /* ===== CONFIRM DIALOG ===== */
+    .confirm-overlay { display:none; position:fixed; inset:0; z-index:1000; background:rgba(0,0,0,0.7); backdrop-filter:blur(8px); align-items:center; justify-content:center; padding:1rem; }
+    .confirm-overlay.on { display:flex; }
+    .confirm-box { background:linear-gradient(160deg, #1a1040, #0f172a); border:1px solid rgba(124,58,237,0.25); border-radius:1.25rem; padding:2rem; max-width:24rem; width:100%; text-align:center; box-shadow:0 25px 80px rgba(0,0,0,0.6); animation:modalIn .25s ease; }
+    .confirm-icon { font-size:3rem; margin-bottom:1rem; }
+    .confirm-msg { font-size:1rem; font-weight:600; line-height:1.6; margin-bottom:1.5rem; }
+    .confirm-btns { display:flex; gap:.75rem; justify-content:center; }
+    .confirm-btns button { padding:.625rem 2rem; border-radius:.5rem; font-weight:700; font-size:.9375rem; cursor:pointer; font-family:inherit; border:none; transition:var(--transition); }
+    .confirm-btns .btn-yes { background:var(--grad-brand); color:white; }
+    .confirm-btns .btn-no { background:rgba(100,116,139,0.2); color:var(--txt-dim); border:1px solid var(--brd); }
+    .confirm-btns button:hover { transform:scale(1.03); }
+
+    /* ===== RESPONSIVE ===== */
+    @media(max-width:1024px) {
+      .sidebar { transform:translateX(100%); }
+      .sidebar.open { transform:translateX(0); }
+      .main { margin-right:0; }
+      .mobile-toggle { display:block; }
+      .stats-grid { grid-template-columns:repeat(2,1fr); }
+      .field-row { grid-template-columns:1fr; }
+    }
+    @media(max-width:768px) {
+      .content { padding:1.25rem; }
+      .stats-grid { grid-template-columns:repeat(2,1fr); }
+      .header { padding:0 1.25rem; }
+      .modal { margin:.75rem; max-height:90vh; }
+      .modal-body { max-height:calc(90vh - 8rem); }
+      .card-body { padding:1rem; }
+      .card-header { padding:.75rem 1rem; }
+      .sidebar { width:280px; }
+    }
+    @media(max-width:640px) {
+      .content { padding:1rem; }
+      .stats-grid { grid-template-columns:1fr; }
+      .header { padding:0 1rem; }
+      th, td { padding:.5rem .625rem; font-size:.75rem; }
+      .modal { margin:.5rem; max-height:95vh; }
+      .modal-body { max-height:calc(95vh - 8rem); }
+      .sidebar { width:100%; }
+      .card-header { flex-direction:column; gap:.5rem; align-items:flex-start; }
+      .card-header .actions { width:100%; }
+      .header-actions { gap:.25rem; }
+      .hbtn { padding:.375rem .625rem; font-size:.75rem; }
+    }
+    @media(max-width:360px) {
+      .stats-grid { gap:.5rem; }
+      .stat-card { padding:1rem; }
+      .stat-card .stat-value { font-size:1.375rem; }
+    }
   </style>
 </head>
 <body>
-  <!-- Login -->
+
+  <!-- ============ PYRAMID BRAND SYMBOL ============ -->
+  <svg xmlns="http://www.w3.org/2000/svg" width="0" height="0" style="position:absolute" aria-hidden="true">
+    <symbol id="ic-brand" viewBox="0 0 200 165">
+      <defs>
+        <linearGradient id="pyr-btc" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#F7931A"/><stop offset="100%" stop-color="#E07B00"/></linearGradient>
+        <linearGradient id="pyr-usdt" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#26A17B"/><stop offset="100%" stop-color="#1C7C5E"/></linearGradient>
+        <linearGradient id="pyr-eth" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#627EEA"/><stop offset="100%" stop-color="#4357C9"/></linearGradient>
+        <linearGradient id="pyr-usdc" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#2775CA"/><stop offset="100%" stop-color="#1A5AA0"/></linearGradient>
+        <linearGradient id="pyr-ltc" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#BFBBBB"/><stop offset="100%" stop-color="#8E8E8E"/></linearGradient>
+        <linearGradient id="pyr-doge" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#C2A633"/><stop offset="100%" stop-color="#BA9F33"/></linearGradient>
+        <linearGradient id="pyr-bnb" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#F0B90B"/><stop offset="100%" stop-color="#D4A50A"/></linearGradient>
+        <linearGradient id="pyr-sol" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#9945FF"/><stop offset="50%" stop-color="#14F195"/><stop offset="100%" stop-color="#9945FF"/></linearGradient>
+        <linearGradient id="pyr-ada" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#0033AD"/><stop offset="100%" stop-color="#0052FF"/></linearGradient>
+        <linearGradient id="pyr-xrp" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#346AA9"/><stop offset="100%" stop-color="#23292F"/></linearGradient>
+        <filter id="pyr-glow"><feGaussianBlur stdDeviation="2" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+      </defs>
+      <circle cx="34" cy="24" r="19" fill="url(#pyr-btc)" filter="url(#pyr-glow)"/>
+      <text x="34" y="31" text-anchor="middle" fill="white" font-size="18" font-weight="800" font-family="Arial,Helvetica,sans-serif">&#x20BF;</text>
+      <circle cx="78" cy="24" r="15" fill="url(#pyr-usdt)"/>
+      <text x="78" y="30" text-anchor="middle" fill="white" font-size="14" font-weight="800" font-family="Arial,Helvetica,sans-serif">&#x20AE;</text>
+      <circle cx="122" cy="24" r="15" fill="url(#pyr-eth)"/>
+      <text x="122" y="30" text-anchor="middle" fill="white" font-size="14" font-weight="800" font-family="Arial,Helvetica,sans-serif">&#x039E;</text>
+      <circle cx="166" cy="24" r="15" fill="url(#pyr-usdc)"/>
+      <text x="166" y="30" text-anchor="middle" fill="white" font-size="13" font-weight="800" font-family="Arial,Helvetica,sans-serif">$</text>
+      <circle cx="56" cy="62" r="15" fill="url(#pyr-ltc)"/>
+      <text x="56" y="68" text-anchor="middle" fill="white" font-size="14" font-weight="800" font-family="Arial,Helvetica,sans-serif">&#x141;</text>
+      <circle cx="100" cy="62" r="15" fill="url(#pyr-doge)"/>
+      <text x="100" y="68" text-anchor="middle" fill="white" font-size="14" font-weight="800" font-family="Arial,Helvetica,sans-serif">&#x0D0;</text>
+      <circle cx="144" cy="62" r="15" fill="url(#pyr-bnb)"/>
+      <text x="144" y="68" text-anchor="middle" fill="#1a1040" font-size="12" font-weight="800" font-family="Arial,Helvetica,sans-serif">BNB</text>
+      <circle cx="74" cy="100" r="15" fill="url(#pyr-sol)"/>
+      <text x="74" y="106" text-anchor="middle" fill="white" font-size="13" font-weight="800" font-family="Arial,Helvetica,sans-serif">SOL</text>
+      <circle cx="126" cy="100" r="15" fill="url(#pyr-ada)"/>
+      <text x="126" y="106" text-anchor="middle" fill="white" font-size="13" font-weight="800" font-family="Arial,Helvetica,sans-serif">ADA</text>
+      <circle cx="100" cy="138" r="18" fill="url(#pyr-xrp)" filter="url(#pyr-glow)"/>
+      <text x="100" y="144" text-anchor="middle" fill="white" font-size="14" font-weight="800" font-family="Arial,Helvetica,sans-serif">XRP</text>
+    </symbol>
+  </svg>
+
+  <!-- ===== LOGIN ===== -->
   <div class="login-wrap" id="login-view">
     <div class="login-card">
-      <h1>پنل مدیریت IRAN COIN</h1>
-      <p>کلید ادمین را وارد کنید</p>
-      <input type="password" id="admin-key" placeholder="Admin Key" autofocus>
-      <button onclick="doLogin()">ورود</button>
-      <p style="color:var(--err);font-size:.8125rem;margin-top:.5rem;display:none" id="login-err"></p>
-    </div>
-  </div>
-
-  <!-- Dashboard -->
-  <div class="dash" id="dash-view">
-    <div class="hdr">
-      <h1>پنل مدیریت IRAN COIN</h1>
-      <div class="hdr-right">
-        <button onclick="loadSection(currentSection)">🔄 بروزرسانی</button>
-        <button class="danger" onclick="doLogout()">خروج</button>
+      <div class="login-logo">
+        <svg viewBox="0 0 200 165" width="3rem" height="2.4rem" aria-hidden="true"><use href="#ic-brand"/></svg>
       </div>
-    </div>
-    <div class="nav" id="main-nav">
-      <button class="on" data-s="overview">آمار کلی</button>
-      <button data-s="payments">پرداخت‌ها</button>
-      <button data-s="subscriptions">اشتراک‌ها</button>
-      <button data-s="users">کاربران</button>
-      <button data-s="emails">ایمیل‌ها</button>
-      <button data-s="plans">پلن‌ها</button>
-    </div>
-    <div class="content">
-      <!-- Overview -->
-      <div class="sec on" id="s-overview"><div class="stats" id="stats-grid"></div></div>
-
-      <!-- Payments -->
-      <div class="sec" id="s-payments">
-        <div class="tw">
-          <div class="tw-h"><h2>لیست پرداخت‌ها</h2><div class="actions"><button onclick="exportCSV('payments')">📥 خروجی CSV</button></div></div>
-          <div style="overflow-x:auto"><table id="t-pay"><thead><tr><th>تاریخ</th><th>کاربر</th><th>پلن</th><th>مبلغ</th><th>وضعیت</th><th>عملیات</th></tr></thead><tbody></tbody></table></div>
-        </div>
+      <h1>پنل مدیریت IRANCOiN</h1>
+      <p class="sub">برای دسترسی به پنل مدیریت، رمز عبور را وارد کنید</p>
+      <div class="login-field">
+        <span class="icon">🔑</span>
+        <input type="password" id="admin-key" placeholder="رمز عبور" autofocus>
       </div>
-
-      <!-- Subscriptions -->
-      <div class="sec" id="s-subscriptions">
-        <div class="tw">
-          <div class="tw-h"><h2>لیست اشتراک‌ها</h2><div class="actions"><button onclick="exportCSV('subscriptions')">📥 خروجی CSV</button></div></div>
-          <div style="overflow-x:auto"><table id="t-sub"><thead><tr><th>تاریخ</th><th>کاربر</th><th>پلن</th><th>وضعیت</th><th>انقضا</th><th>عملیات</th></tr></thead><tbody></tbody></table></div>
-        </div>
-      </div>
-
-      <!-- Users -->
-      <div class="sec" id="s-users">
-        <div class="tw">
-          <div class="tw-h"><h2>لیست کاربران</h2><div class="actions"><button onclick="exportCSV('users')">📥 خروجی CSV</button></div></div>
-          <div style="overflow-x:auto"><table id="t-user"><thead><tr><th>تاریخ</th><th>ایمیل</th><th>نام</th><th>آخرین ورود</th><th>عملیات</th></tr></thead><tbody></tbody></table></div>
-        </div>
-      </div>
-
-      <!-- Emails -->
-      <div class="sec" id="s-emails">
-        <div class="tw">
-          <div class="tw-h"><h2>لاگ ایمیل‌ها</h2><div class="actions"><button onclick="openModal('send-email')">✉️ ارسال ایمیل</button></div></div>
-          <div style="overflow-x:auto"><table id="t-email"><thead><tr><th>تاریخ</th><th>گیرنده</th><th>قالب</th><th>موضوع</th><th>وضعیت</th></tr></thead><tbody></tbody></table></div>
-        </div>
-      </div>
-
-      <!-- Plans -->
-      <div class="sec" id="s-plans">
-        <div class="tw">
-          <div class="tw-h"><h2>مدیریت پلن‌ها</h2></div>
-          <div style="overflow-x:auto"><table id="t-plan"><thead><tr><th>شناسه</th><th>نام</th><th>مدت (روز)</th><th>قیمت (USDT)</th><th>محبوب</th><th>عملیات</th></tr></thead><tbody></tbody></table></div>
-        </div>
+      <button class="login-btn" onclick="doLogin()">ورود به پنل</button>
+      <p class="login-err" id="login-err">رمز عبور اشتباه است</p>
+      <div class="login-footer">
+        <p>تمامی تغییرات ذخیره و版本‌بندی می‌شوند</p>
       </div>
     </div>
   </div>
 
-  <!-- Modal -->
-  <div class="modal-bg" id="modal-bg">
-    <div class="modal" id="modal-box"></div>
+  <!-- ===== APP ===== -->
+  <div class="app" id="app-view">
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar" id="sidebar">
+      <div class="sidebar-header">
+        <div class="sidebar-logo"><svg viewBox="0 0 200 165" width="2.5rem" height="2rem" aria-hidden="true"><use href="#ic-brand"/></svg></div>
+        <div class="sidebar-brand"><span>IRANCOiN</span> Admin</div>
+      </div>
+      <nav class="sidebar-nav">
+        <div class="nav-group">
+          <div class="nav-group-label">اصلی</div>
+          <div class="nav-item active" data-s="overview"><span class="icon">📊</span> داشبورد</div>
+          <div class="nav-item" data-s="content"><span class="icon">📝</span> مدیریت محتوا</div>
+          <div class="nav-item" data-s="offers"><span class="icon">🎁</span> پیشنهادات</div>
+          <div class="nav-item" data-s="discounts"><span class="icon">💰</span> تخفیف پلن‌ها</div>
+        </div>
+        <div class="nav-group">
+          <div class="nav-group-label">کاربران و مالی</div>
+          <div class="nav-item" data-s="users"><span class="icon">👥</span> کاربران</div>
+          <div class="nav-item" data-s="subscriptions"><span class="icon">📋</span> اشتراک‌ها</div>
+          <div class="nav-item" data-s="payments"><span class="icon">💳</span> پرداخت‌ها</div>
+        </div>
+        <div class="nav-group">
+          <div class="nav-group-label">ابزارها</div>
+          <div class="nav-item" data-s="emails"><span class="icon">✉️</span> ایمیل‌ها</div>
+          <div class="nav-item" data-s="preview"><span class="icon">👁</span> پیش‌نمایش</div>
+          <div class="nav-item" data-s="versions"><span class="icon">📦</span> نسخه‌ها</div>
+          <div class="nav-item" data-s="settings"><span class="icon">⚙️</span> تنظیمات</div>
+        </div>
+      </nav>
+      <div class="sidebar-footer">
+        <div class="user-info">
+          <div class="avatar">A</div>
+          <div>
+            <div class="user-name">Admin</div>
+            <div class="user-role">مدیر اصلی</div>
+          </div>
+        </div>
+      </div>
+    </aside>
+
+    <!-- MAIN -->
+    <div class="main">
+      <header class="header">
+        <div class="header-right">
+          <button class="mobile-toggle" onclick="toggleSidebar()">☰</button>
+          <div class="header-title" id="page-title">داشبورد</div>
+        </div>
+        <div class="header-actions">
+          <button class="hbtn" onclick="loadSection(currentSection)">🔄 بروزرسانی</button>
+          <button class="hbtn hbtn-primary" onclick="saveAll()">💾 ذخیره همه</button>
+          <button class="hbtn hbtn-danger" onclick="doLogout()">🚪 خروج</button>
+        </div>
+      </header>
+
+      <div class="content">
+
+        <!-- ===== OVERVIEW ===== -->
+        <div class="section active" id="s-overview">
+          <div class="stats-grid" id="stats-grid"></div>
+          <div class="card">
+            <div class="card-header"><h2>📈 نمودار درآمد (۷ روز اخیر)</h2></div>
+            <div class="card-body"><canvas id="revenue-chart" height="200"></canvas></div>
+          </div>
+        </div>
+
+        <!-- ===== CONTENT MANAGEMENT ===== -->
+        <div class="section" id="s-content">
+          <div id="content-editors"></div>
+          <div style="margin-top:1rem">
+            <button class="btn btn-purple" onclick="saveContent()" style="padding:.625rem 1.5rem;font-size:.875rem">💾 ذخیره تغییرات محتوا</button>
+          </div>
+        </div>
+
+        <!-- ===== OFFERS ===== -->
+        <div class="section" id="s-offers">
+          <div class="card">
+            <div class="card-header">
+              <h2>🎁 مدیریت پیشنهادات</h2>
+              <div class="actions">
+                <button class="btn btn-purple" onclick="openOfferModal()">+ پیشنهاد جدید</button>
+              </div>
+            </div>
+            <div class="card-body" id="offers-list"></div>
+          </div>
+        </div>
+
+        <!-- ===== DISCOUNTS ===== -->
+        <div class="section" id="s-discounts">
+          <div class="card">
+            <div class="card-header">
+              <h2>💰 مدیریت تخفیف پلن‌ها</h2>
+            </div>
+            <div class="card-body">
+              <div id="live-price-banner-admin" style="text-align:center;padding:1rem;background:var(--bg-card);border:1px solid var(--brd);border-radius:var(--radius);margin-bottom:1.5rem"></div>
+              <div id="discount-managers"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ===== USERS ===== -->
+        <div class="section" id="s-users">
+          <div class="card">
+            <div class="card-header">
+              <h2>👥 لیست کاربران</h2>
+              <div class="actions"><button class="btn btn-neutral" onclick="exportCSV('users')">📥 خروجی CSV</button></div>
+            </div>
+            <div class="card-body no-pad">
+              <div class="table-wrap"><table id="t-user"><thead><tr><th>تاریخ</th><th>ایمیل</th><th>نام</th><th>آخرین ورود</th><th>عملیات</th></tr></thead><tbody></tbody></table></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ===== SUBSCRIPTIONS ===== -->
+        <div class="section" id="s-subscriptions">
+          <div class="card">
+            <div class="card-header">
+              <h2>📋 لیست اشتراک‌ها</h2>
+              <div class="actions"><button class="btn btn-neutral" onclick="exportCSV('subscriptions')">📥 خروجی CSV</button></div>
+            </div>
+            <div class="card-body no-pad">
+              <div class="table-wrap"><table id="t-sub"><thead><tr><th>تاریخ</th><th>کاربر</th><th>پلن</th><th>وضعیت</th><th>انقضا</th><th>عملیات</th></tr></thead><tbody></tbody></table></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ===== PAYMENTS ===== -->
+        <div class="section" id="s-payments">
+          <div class="card">
+            <div class="card-header">
+              <h2>💳 لیست پرداخت‌ها</h2>
+              <div class="actions"><button class="btn btn-neutral" onclick="exportCSV('payments')">📥 خروجی CSV</button></div>
+            </div>
+            <div class="card-body no-pad">
+              <div class="table-wrap"><table id="t-pay"><thead><tr><th>تاریخ</th><th>کاربر</th><th>پلن</th><th>مبلغ</th><th>وضعیت</th><th>عملیات</th></tr></thead><tbody></tbody></table></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ===== EMAILS ===== -->
+        <div class="section" id="s-emails">
+          <div class="card">
+            <div class="card-header">
+              <h2>✉️ لاگ ایمیل‌ها</h2>
+              <div class="actions"><button class="btn btn-purple" onclick="openEmailModal()">✉️ ارسال ایمیل</button></div>
+            </div>
+            <div class="card-body no-pad">
+              <div class="table-wrap"><table id="t-email"><thead><tr><th>تاریخ</th><th>گیرنده</th><th>قالب</th><th>موضوع</th><th>وضعیت</th></tr></thead><tbody></tbody></table></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ===== PREVIEW ===== -->
+        <div class="section" id="s-preview">
+          <div class="card">
+            <div class="card-header">
+              <h2>👁 پیش‌نمایش زنده سایت</h2>
+              <div class="actions">
+                <label class="toggle" title="حالت آزمایشی">
+                  <input type="checkbox" id="trial-toggle" onchange="toggleTrial()">
+                  <span class="slider"></span>
+                </label>
+                <span style="font-size:.75rem;color:var(--txt-dim)">حالت آزمایشی</span>
+              </div>
+            </div>
+            <div class="card-body">
+              <iframe id="preview-frame" class="preview-frame" src="index.html" loading="lazy"></iframe>
+            </div>
+          </div>
+        </div>
+
+        <!-- ===== VERSIONS ===== -->
+        <div class="section" id="s-versions">
+          <div class="card">
+            <div class="card-header">
+              <h2>📦 تاریخچه نسخه‌ها</h2>
+              <div class="actions">
+                <button class="btn btn-purple" onclick="createVersion()">+ ذخیره نسخه جدید</button>
+              </div>
+            </div>
+            <div class="card-body" id="versions-list"></div>
+          </div>
+        </div>
+
+        <!-- ===== SETTINGS ===== -->
+        <div class="section" id="s-settings">
+          <div class="card">
+            <div class="card-header"><h2>⚙️ تنظیمات عمومی</h2></div>
+            <div class="card-body">
+              <div class="field-row">
+                <div class="form-group">
+                  <label class="form-label">نام سایت</label>
+                  <input class="form-input" id="set-site-name" value="IRANCOiN">
+                </div>
+                <div class="form-group">
+                  <label class="form-label">توضیحات سایت</label>
+                  <input class="form-input" id="set-site-desc" value="پلتفرم پیشرفته معاملات ارز دیجیتال با هوش مصنوعی">
+                </div>
+              </div>
+              <div class="field-row">
+                <div class="form-group">
+                  <label class="form-label">ایمیل پشتیبانی</label>
+                  <input class="form-input" id="set-support-email" value="support@irancoin.ir" style="direction:ltr;text-align:left">
+                </div>
+                <div class="form-group">
+                  <label class="form-label">کلید API NOWPayments</label>
+                  <input class="form-input" id="set-now-key" type="password" value="" placeholder="از Supabase Secrets">
+                </div>
+              </div>
+              <div class="field-row">
+                <div class="form-group">
+                  <label class="form-label">کلید رمز ادمین</label>
+                  <input class="form-input" id="set-admin-key" type="password" placeholder="رمز جدید">
+                </div>
+                <div class="form-group">
+                  <label class="form-label">Site URL</label>
+                  <input class="form-input" id="set-site-url" value="https://alikhani09390916.github.io/irancoin-premium/" style="direction:ltr;text-align:left">
+                </div>
+              </div>
+              <button class="btn btn-purple" onclick="saveSettings()" style="padding:.625rem 1.5rem;font-size:.875rem;margin-top:.5rem">💾 ذخیره تنظیمات</button>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== MODAL ===== -->
+  <div class="modal-overlay" id="modal-overlay">
+    <div class="modal">
+      <div class="modal-header">
+        <h2 id="modal-title"></h2>
+        <button class="modal-close" onclick="closeModal()">&times;</button>
+      </div>
+      <div class="modal-body" id="modal-body"></div>
+      <div class="modal-footer" id="modal-footer"></div>
+    </div>
+  </div>
+
+  <!-- ===== CONFIRM ===== -->
+  <div class="confirm-overlay" id="confirm-overlay">
+    <div class="confirm-box">
+      <div class="confirm-icon">⚠️</div>
+      <div class="confirm-msg" id="confirm-msg"></div>
+      <div class="confirm-btns">
+        <button class="btn-yes" id="confirm-yes">بله</button>
+        <button class="btn-no" onclick="closeConfirm()">خیر</button>
+      </div>
+    </div>
   </div>
 
   <script>
-    var KEY='', API='https://ibnpgzmbepieudwalwtv.supabase.co/functions/v1';
-    var currentSection='overview';
-    var cache={payments:[],subscriptions:[],users:[],emails:[],plans:[]};
+  (function(){
+    "use strict";
 
-    // ===== AUTH =====
-    function doLogin(){
-      KEY=document.getElementById('admin-key').value.trim();
-      if(!KEY)return;
-      document.getElementById('login-view').style.display='none';
-      document.getElementById('dash-view').classList.add('on');
-      loadSection('overview');
-    }
-    document.getElementById('admin-key').addEventListener('keydown',function(e){if(e.key==='Enter')doLogin()});
-    function doLogout(){KEY='';document.getElementById('dash-view').classList.remove('on');document.getElementById('login-view').style.display='';document.getElementById('admin-key').value=''}
+    /* ===== CONFIG ===== */
+    var ADMIN_HASH = 'irancoin-admin-2026';
+    var API = 'https://ibnpgzmbepieudwalwtv.supabase.co/functions/v1';
+    var ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImlibnBnem1iZXBpZXVkd2Fsd3R2Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODY4NDE5MzcsImV4cCI6MjEwMjQxNzkzN30.Ayeyo4ifmUr9kV6sCI_2-JtT81QxLL45znknrddoB5E';
+    var currentSection = 'overview';
+    var KEY = '';
+    var cache = { payments:[], subscriptions:[], users:[], emails:[] };
 
-    // ===== NAV =====
-    document.querySelectorAll('#main-nav button').forEach(function(b){
-      b.addEventListener('click',function(){
-        document.querySelectorAll('#main-nav button').forEach(function(x){x.classList.remove('on')});
-        b.classList.add('on');
-        document.querySelectorAll('.sec').forEach(function(x){x.classList.remove('on')});
-        document.getElementById('s-'+b.dataset.s).classList.add('on');
-        currentSection=b.dataset.s;
-        loadSection(b.dataset.s);
+    /* ===== CONTENT DATA ===== */
+    var CONTENT_SECTIONS = {
+      hero: { title:'هدیرو صفحه اصلی', fields:{
+        headline:{label:'تیتر اصلی',type:'text',default:' هوش مصنوعی در خدمت معاملات شما'},
+        subheadline:{label:'زیرتیتر',type:'textarea',default:'با موتور معاملاتی هوشمند IRANCOiN، سرعت، دقت و امنیت را در هر معامله تجربه کنید.'},
+        cta:{label:'دکمه اصلی',type:'text',default:'شروع رایگان'},
+        cta2:{label:'دکمه دوم',type:'text',default:'مشاهده دمو'}
+      }},
+      features:{title:'ویژگی‌ها',fields:{
+        title:{label:'تیتر بخش',type:'text',default:'چرا IRANCOiN؟'},
+        desc:{label:'توضیحات',type:'textarea',default:'ترکیبی از هوش مصنوعی پیشرفته و تحلیل تکنیکال حرفه‌ای'}
+      }},
+      engine:{title:'موتور معاملاتی',fields:{
+        title:{label:'تیتر',type:'text',default:'موتور معاملاتی هوشمند'},
+        desc:{label:'توضیحات',type:'textarea',default:'الگوریتم‌های یادگیری عمیق که الگوهای بازار را تحلیل می‌کنند'}
+      }},
+      pricing:{title:'قیمت‌گذاری',fields:{
+        title:{label:'تیتر',type:'text',default:' plan های اشتراک'},
+        desc:{label:'توضیحات',type:'textarea',default:'plan مناسب خود را انتخاب کنید'}
+      }},
+      security:{title:'امنیت',fields:{
+        title:{label:'تیتر',type:'text',default:'امنیت بی‌نظیر'},
+        desc:{label:'توضیحات',type:'textarea',default:'رمزنگاری AES-256 و احراز هویت دو مرحله‌ای'}
+      }},
+      footer:{title:'فوتر',fields:{
+        copyright:{label:'متن کپی‌رایت',type:'text',default:'© ۱۴۰۵ IRANCOiN. تمامی حقوق محفوظ است.'},
+        support:{label:'ایمیل پشتیبانی',type:'text',default:'support@irancoin.ir'}
+      }}
+    };
+
+    var contentData = {};
+    Object.keys(CONTENT_SECTIONS).forEach(function(k){
+      contentData[k] = {};
+      Object.keys(CONTENT_SECTIONS[k].fields).forEach(function(f){
+        contentData[k][f] = localStorage.getItem('ic-content-'+k+'-'+f) || CONTENT_SECTIONS[k].fields[f].default;
       });
     });
 
-    // ===== API CALL =====
+    /* ===== OFFERS DATA ===== */
+    function getOffers(){ try{return JSON.parse(localStorage.getItem('ic-offers')||'[]')}catch(e){return[]} }
+    function saveOffers(o){ localStorage.setItem('ic-offers',JSON.stringify(o)) }
+
+    /* ===== VERSIONS DATA ===== */
+    function getVersions(){ try{return JSON.parse(localStorage.getItem('ic-versions')||'[]')}catch(e){return[]} }
+    function saveVersions(v){ localStorage.setItem('ic-versions',JSON.stringify(v)) }
+
+    /* ===== SETTINGS ===== */
+    function getSettings(){
+      var def = {siteName:'IRANCOiN',siteDesc:'پلتفرم پیشرفته معاملات ارز دیجیتال با هوش مصنوعی',supportEmail:'support@irancoin.ir',siteUrl:'https://alikhani09390916.github.io/irancoin-premium/'};
+      try{ var s = JSON.parse(localStorage.getItem('ic-settings')||'{}'); return Object.assign(def,s); }catch(e){return def}
+    }
+    function saveSettingsData(s){ localStorage.setItem('ic-settings',JSON.stringify(s)) }
+
+    /* ===== AUTH ===== */
+    window.doLogin = function(){
+      var input = document.getElementById('admin-key').value.trim();
+      if(!input) return;
+      var storedHash = localStorage.getItem('ic-admin-hash') || ADMIN_HASH;
+      if(input === storedHash || input === ADMIN_HASH){
+        KEY = input;
+        localStorage.setItem('ic-admin-session', btoa(input + ':' + Date.now()));
+        document.getElementById('login-view').style.display='none';
+        document.getElementById('app-view').classList.add('on');
+        loadSection('overview');
+      } else {
+        document.getElementById('login-err').style.display='block';
+        setTimeout(function(){document.getElementById('login-err').style.display='none'},3000);
+      }
+    };
+    document.getElementById('admin-key').addEventListener('keydown',function(e){if(e.key==='Enter')doLogin()});
+
+    // Auto-login
+    (function(){
+      var session = localStorage.getItem('ic-admin-session');
+      if(session){
+        try{
+          var decoded = atob(session);
+          var storedHash = localStorage.getItem('ic-admin-hash') || ADMIN_HASH;
+          if(decoded.split(':')[0] === storedHash){
+            KEY = decoded.split(':')[0];
+            document.getElementById('login-view').style.display='none';
+            document.getElementById('app-view').classList.add('on');
+            loadSection('overview');
+          }
+        }catch(e){}
+      }
+    })();
+
+    window.doLogout = function(){
+      KEY='';
+      localStorage.removeItem('ic-admin-session');
+      document.getElementById('app-view').classList.remove('on');
+      document.getElementById('login-view').style.display='';
+      document.getElementById('admin-key').value='';
+    };
+
+    /* ===== SIDEBAR ===== */
+    document.querySelectorAll('.nav-item').forEach(function(item){
+      item.addEventListener('click',function(){
+        document.querySelectorAll('.nav-item').forEach(function(x){x.classList.remove('active')});
+        item.classList.add('active');
+        var s = item.dataset.s;
+        loadSection(s);
+        // Close mobile sidebar
+        document.getElementById('sidebar').classList.remove('open');
+      });
+    });
+
+    window.toggleSidebar = function(){
+      document.getElementById('sidebar').classList.toggle('open');
+    };
+
+    var TITLES = {overview:'داشبورد',content:'مدیریت محتوا',offers:'پیشنهادات',discounts:'تخفیف پلن‌ها',users:'کاربران',subscriptions:'اشتراک‌ها',payments:'پرداخت‌ها',emails:'ایمیل‌ها',preview:'پیش‌نمایش',versions:'نسخه‌ها',settings:'تنطیمات'};
+
+    function loadSection(s){
+      currentSection = s;
+      document.querySelectorAll('.section').forEach(function(x){x.classList.remove('active')});
+      var el = document.getElementById('s-'+s);
+      if(el) el.classList.add('active');
+      document.getElementById('page-title').textContent = TITLES[s] || s;
+
+      if(s==='overview') loadOverview();
+      else if(s==='content') renderContentEditors();
+      else if(s==='offers') renderOffers();
+      else if(s==='discounts') renderDiscounts();
+      else if(s==='users') loadUsers();
+      else if(s==='subscriptions') loadSubs();
+      else if(s==='payments') loadPayments();
+      else if(s==='emails') loadEmails();
+      else if(s==='versions') renderVersions();
+      else if(s==='settings') loadSettings();
+    }
+
+    /* ===== API ===== */
     async function api(fn,body){
-      var res=await fetch(API+'/'+fn,{method:'POST',headers:{'Content-Type':'application/json','X-Admin-Key':KEY},body:JSON.stringify(body)});
+      var res = await fetch(API+'/'+fn,{method:'POST',headers:{'Content-Type':'application/json','X-Admin-Key':KEY},body:JSON.stringify(body)});
       return res.json();
     }
     async function apiGet(section){
-      var res=await fetch(API+'/admin-stats?section='+section,{headers:{'X-Admin-Key':KEY}});
+      var res = await fetch(API+'/admin-stats?section='+section,{headers:{'X-Admin-Key':KEY}});
       return res.json();
     }
 
-    // ===== LOAD =====
-    async function loadSection(s){
+    /* ===== OVERVIEW ===== */
+    async function loadOverview(){
       try{
-        if(s==='overview'){var d=await apiGet('overview');renderOverview(d)}
-        else if(s==='payments'){var d=await apiGet('payments');cache.payments=d.payments||[];renderPayments()}
-        else if(s==='subscriptions'){var d=await apiGet('subscriptions');cache.subscriptions=d.subscriptions||[];renderSubs()}
-        else if(s==='users'){var d=await apiGet('users');cache.users=d.users||[];renderUsers()}
-        else if(s==='emails'){var d=await apiGet('emails');cache.emails=d.emails||[];renderEmails()}
-        else if(s==='plans'){var d=await apiGet('overview'); /* plans loaded from payments data */}
-      }catch(e){console.error(e)}
+        var d = await apiGet('overview');
+        var stats = [
+          {icon:'👥',label:'کل کاربران',value:d.total_users||0,sub:'عضو ثبت‌نام‌شده',color:'var(--info-bg)'},
+          {icon:'📋',label:'اشتراک فعال',value:d.active_subscriptions||0,sub:'در حال حاضر فعال',color:'var(--ok-bg)'},
+          {icon:'✅',label:'پرداخت تایید شده',value:d.confirmed_payments||0,sub:'تراکنش موفق',color:'var(--purple-bg)'},
+          {icon:'💰',label:'درآمد کل',value:'$'+(d.total_revenue_usdt||0).toLocaleString(),sub:'USDT',color:'var(--warn-bg)'},
+          {icon:'⏳',label:'پرداخت در انتظار',value:d.pending_subscriptions||0,sub:'منتظر تایید',color:'var(--warn-bg)'},
+          {icon:'✉️',label:'ایمیل ارسال شده',value:d.emails_sent||0,sub:'مجموع',color:'var(--info-bg)'}
+        ];
+        document.getElementById('stats-grid').innerHTML = stats.map(function(s){
+          return '<div class="stat-card"><div class="stat-icon" style="background:'+s.color+'">'+s.icon+'</div><div class="stat-label">'+s.label+'</div><div class="stat-value">'+s.value+'</div><div class="stat-sub">'+s.sub+'</div></div>';
+        }).join('');
+      }catch(e){
+        document.getElementById('stats-grid').innerHTML = '<div style="color:var(--txt-dim);text-align:center;padding:2rem">خطا در بارگذاری آمار</div>';
+      }
     }
 
-    // ===== RENDER OVERVIEW =====
-    function renderOverview(d){
-      document.getElementById('stats-grid').innerHTML=[
-        {l:'کل کاربران',v:d.total_users||0,s:'عضو ثبت‌نام‌شده'},
-        {l:'اشتراک فعال',v:d.active_subscriptions||0,s:'در حال حاضر فعال'},
-        {l:'پرداخت تایید شده',v:d.confirmed_payments||0,s:'تراکنش موفق'},
-        {l:'درآمد کل',v:'$'+(d.total_revenue_usdt||0).toLocaleString(),s:'USDT'},
-        {l:'پرداخت در انتظار',v:d.pending_subscriptions||0,s:'منتظر تایید'},
-        {l:'ایمیل ارسال شده',v:d.emails_sent||0,s:'总数'},
-      ].map(function(x){return '<div class="st"><div class="l">'+x.l+'</div><div class="v">'+x.v+'</div><div class="s">'+x.s+'</div></div>'}).join('');
+    /* ===== CONTENT MANAGEMENT ===== */
+    function renderContentEditors(){
+      var html = '';
+      Object.keys(CONTENT_SECTIONS).forEach(function(key){
+        var sec = CONTENT_SECTIONS[key];
+        html += '<div class="section-editor"><div class="section-editor-header" onclick="this.nextElementSibling.classList.toggle(\'open\')"><h3><span>📝</span> '+sec.title+'</h3><span style="color:var(--txt-dim);font-size:.75rem">▼</span></div><div class="section-editor-body">';
+        Object.keys(sec.fields).forEach(function(f){
+          var field = sec.fields[f];
+          var val = contentData[key][f] || field.default;
+          if(field.type === 'textarea'){
+            html += '<div class="form-group field-full"><label class="form-label">'+field.label+'</label><textarea class="form-textarea" data-section="'+key+'" data-field="'+f+'" onchange="updateContent(this)">'+val+'</textarea></div>';
+          } else {
+            html += '<div class="form-group"><label class="form-label">'+field.label+'</label><input class="form-input" data-section="'+key+'" data-field="'+f+'" value="'+val.replace(/"/g,'&quot;')+'" onchange="updateContent(this)"></div>';
+          }
+        });
+        html += '</div></div>';
+      });
+      document.getElementById('content-editors').innerHTML = html;
     }
 
-    // ===== STATUS HELPERS =====
-    var PS={confirmed:['تایید شده','b-ok'],waiting:['در انتظار','b-warn'],confirming:['در حال تایید','b-info'],failed:['ناموفق','b-err'],refunded:['بازگشت','b-err'],expired:['منقضی','b-neut']};
-    var SS={active:['فعال','b-ok'],pending:['در انتظار','b-warn'],expired:['منقضی','b-err'],cancelled:['لغو شده','b-neut']};
-    function ps(s){var x=PS[s]||[s,'b-neut'];return '<span class="badge '+x[1]+'">'+x[0]+'</span>'}
-    function ss(s){var x=SS[s]||[s,'b-neut'];return '<span class="badge '+x[1]+'">'+x[0]+'</span>'}
-    function dt(iso){return iso?new Date(iso).toLocaleDateString('fa-IR'):'-'}
-    function shortId(id){return id?id.slice(0,8)+'...':'-'}
+    window.updateContent = function(el){
+      var sec = el.dataset.section;
+      var field = el.dataset.field;
+      contentData[sec][field] = el.value;
+    };
 
-    // ===== RENDER PAYMENTS =====
-    function renderPayments(){
-      var tb=document.querySelector('#t-pay tbody');
-      tb.innerHTML=cache.payments.map(function(p){
-        var acts='';
-        if(p.payment_status==='waiting'||p.payment_status==='confirming')
-          acts+='<button class="abtn abtn-ok" onclick="confirmPayment(\''+p.id+'\')">✅ تایید</button>';
-        if(p.payment_status==='confirmed')
-          acts+='<button class="abtn abtn-err" onclick="refundPayment(\''+p.id+'\')">↩ بازگشت</button>';
-        acts+='<button class="abtn abtn-info" onclick="detailPayment(\''+p.id+'\')">📋 جزئیات</button>';
-        return '<tr><td>'+dt(p.created_at)+'</td><td>'+userName(p.user_id)+'</td><td>'+(p.subscriptions?.plans?.label||p.plan_id)+'</td><td>$'+p.amount_usdt+'</td><td>'+ps(p.payment_status)+'</td><td><div class="cell-acts">'+acts+'</div></td></tr>';
+    window.saveContent = function(){
+      Object.keys(contentData).forEach(function(k){
+        Object.keys(contentData[k]).forEach(function(f){
+          localStorage.setItem('ic-content-'+k+'-'+f, contentData[k][f]);
+        });
+      });
+      toast('محتوا ذخیره شد','ok');
+      autoVersion('بروزرسانی محتوا');
+    };
+
+    /* ===== OFFERS ===== */
+    function renderOffers(){
+      var offers = getOffers();
+      if(!offers.length){
+        document.getElementById('offers-list').innerHTML = '<div style="text-align:center;padding:2rem;color:var(--txt-dim)">هنوز پیشنهادی تعریف نشده</div>';
+        return;
+      }
+      document.getElementById('offers-list').innerHTML = offers.map(function(o,i){
+        var expStr = o.expires ? new Date(o.expires).toLocaleDateString('fa-IR') : 'بدون محدودیت';
+        return '<div class="offer-row">'+
+          '<label class="toggle"><input type="checkbox" '+(o.active?'checked':'')+' onchange="toggleOffer('+i+')"><span class="slider"></span></label>'+
+          '<div class="offer-info"><div class="offer-title">'+o.title+'</div><div class="offer-desc">'+o.description+'</div>'+
+          '<div class="offer-meta">تخفیف: '+o.discount+'% | انقضا: '+expStr+'</div></div>'+
+          '<div class="cell-actions">'+
+            '<button class="btn btn-info" onclick="editOffer('+i+')">✏️</button>'+
+            '<button class="btn btn-err" onclick="deleteOffer('+i+')">🗑</button>'+
+          '</div></div>';
       }).join('');
     }
 
-    // ===== RENDER SUBS =====
-    function renderSubs(){
-      var tb=document.querySelector('#t-sub tbody');
-      tb.innerHTML=cache.subscriptions.map(function(s){
-        var acts='';
-        if(s.status==='pending')
-          acts+='<button class="abtn abtn-ok" onclick="activateSub(\''+s.id+'\')">✅ فعال‌سازی</button>';
-        if(s.status==='active'){
-          acts+='<button class="abtn abtn-warn" onclick="extendSub(\''+s.id+'\')">⏰ افزایش</button>';
-          acts+='<button class="abtn abtn-err" onclick="deactivateSub(\''+s.id+'\')">❌ لغو</button>';
+    /* ===== DISCOUNTS ===== */
+    var PLAN_IDS = ['monthly','quarterly','semiannual','annual'];
+    var PLAN_LABELS = {monthly:'۱ ماهه',quarterly:'۳ ماهه',semiannual:'۶ ماهه',annual:'۱ ساله'};
+    var PLAN_USDT = {monthly:29,quarterly:79,semiannual:149,annual:249};
+
+    function renderDiscounts(){
+      // Show live price
+      var banner = document.getElementById('live-price-banner-admin');
+      if(banner){
+        var price = 0;
+        try{ price = parseInt(localStorage.getItem('ic-usdt-toman')) || 0; }catch(e){}
+        if(price){
+          banner.innerHTML = '<div style="font-size:.875rem;color:var(--txt-dim)">قیمت لحظه‌ای USDT: <span style="font-weight:800;background:var(--grad-brand);-webkit-background-clip:text;-webkit-text-fill-color:transparent">'+price.toLocaleString('fa-IR')+' تومان</span></div>';
+        } else {
+          banner.innerHTML = '<div style="font-size:.875rem;color:var(--txt-dim)">برای دریافت قیمت لحظه‌ای، صفحه قیمت‌ها را باز کنید</div>';
         }
-        return '<tr><td>'+dt(s.created_at)+'</td><td>'+userName(s.user_id)+'</td><td>'+(s.plans?.label||s.plan_id)+'</td><td>'+ss(s.status)+'</td><td>'+dt(s.expires_at)+'</td><td><div class="cell-acts">'+acts+'</div></td></tr>';
+      }
+
+      // Render discount managers
+      var html = '';
+      PLAN_IDS.forEach(function(pid){
+        var disc = {};
+        try{ disc = JSON.parse(localStorage.getItem('ic-discounts')||'{}')[pid] || {}; }catch(e){}
+        var isActive = disc.active && disc.percent > 0;
+        var percent = disc.percent || 0;
+        var endDate = disc.endDate || '';
+        var usdt = PLAN_USDT[pid];
+        var discountedUsdt = isActive ? Math.round(usdt * (1 - percent/100)) : usdt;
+        var price = 0;
+        try{ price = parseInt(localStorage.getItem('ic-usdt-toman')) || 0; }catch(e){}
+        var toman = price ? Math.round(discountedUsdt * price) : 0;
+        var originalToman = price ? Math.round(usdt * price) : 0;
+
+        html += '<div style="border:1px solid var(--brd);border-radius:var(--radius);padding:1.25rem;margin-bottom:1rem">';
+        html += '<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:1rem">';
+        html += '<div><div style="font-weight:700;font-size:.9375rem">'+PLAN_LABELS[pid]+'</div>';
+        html += '<div style="font-size:.75rem;color:var(--txt-dim)">'+usdt+' USDT</div></div>';
+        html += '<label class="toggle"><input type="checkbox" '+(isActive?'checked':'')+' onchange="toggleDiscount(\''+pid+'\')"><span class="slider"></span></label>';
+        html += '</div>';
+
+        if(isActive){
+          html += '<div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:1rem">';
+          html += '<div class="form-group"><label class="form-label">درصد تخفیف</label>';
+          html += '<input class="form-input" type="number" min="1" max="90" id="disc-'+pid+'-percent" value="'+percent+'"></div>';
+          html += '<div class="form-group"><label class="form-label">مدت (روز)</label>';
+          html += '<input class="form-input" type="number" min="1" id="disc-'+pid+'-days" value="'+(disc.days||1)+'"></div>';
+          html += '</div>';
+
+          if(toman){
+            html += '<div style="display:flex;align-items:baseline;gap:.75rem;margin-bottom:.75rem">';
+            html += '<span style="font-size:1.25rem;font-weight:800;color:var(--ok)">'+toman.toLocaleString('fa-IR')+' تومان</span>';
+            html += '<span style="font-size:.875rem;color:var(--txt-dim);text-decoration:line-through">'+originalToman.toLocaleString('fa-IR')+' تومان</span>';
+            html += '<span style="font-size:.75rem;color:var(--warn);font-weight:600">-'+percent+'%</span>';
+            html += '</div>';
+          }
+
+          html += '<button class="btn btn-purple" onclick="saveDiscount(\''+pid+'\')">💾 ذخیره تخفیف</button>';
+        } else {
+          html += '<div style="color:var(--txt-dim);font-size:.8125rem">تخفیف غیرفعال است</div>';
+        }
+        html += '</div>';
+      });
+
+      document.getElementById('discount-managers').innerHTML = html;
+    }
+
+    window.toggleDiscount = function(pid){
+      var discounts = {};
+      try{ discounts = JSON.parse(localStorage.getItem('ic-discounts')||'{}'); }catch(e){}
+      var disc = discounts[pid] || {active:false,percent:0,endDate:null};
+      disc.active = !disc.active;
+      if(disc.active && !disc.percent) disc.percent = 10;
+      if(disc.active && !disc.endDate){
+        var days = parseInt(document.getElementById('disc-'+pid+'-days')?.value) || 7;
+        disc.endDate = new Date(Date.now() + days * 86400000).toISOString();
+        disc.days = days;
+      }
+      discounts[pid] = disc;
+      localStorage.setItem('ic-discounts', JSON.stringify(discounts));
+      renderDiscounts();
+    };
+
+    window.saveDiscount = function(pid){
+      var percent = parseInt(document.getElementById('disc-'+pid+'-percent')?.value) || 0;
+      var days = parseInt(document.getElementById('disc-'+pid+'-days')?.value) || 7;
+      if(percent <= 0 || percent > 90){ toast('درصد تخفیف باید بین ۱ تا ۹۰ باشد','err'); return; }
+
+      var discounts = {};
+      try{ discounts = JSON.parse(localStorage.getItem('ic-discounts')||'{}'); }catch(e){}
+      discounts[pid] = {
+        active: true,
+        percent: percent,
+        days: days,
+        endDate: new Date(Date.now() + days * 86400000).toISOString(),
+        created: new Date().toISOString()
+      };
+      localStorage.setItem('ic-discounts', JSON.stringify(discounts));
+      toast('تخفیف '+PLAN_LABELS[pid]+' ذخیره شد','ok');
+      renderDiscounts();
+    };
+
+    window.toggleOffer = function(i){
+      var offers = getOffers();
+      if(offers[i]){ offers[i].active = !offers[i].active; saveOffers(offers); renderOffers(); }
+    };
+
+    window.deleteOffer = function(i){
+      showConfirm('آیا از حذف این پیشنهاد مطمئنید؟',function(){
+        var offers = getOffers();
+        offers.splice(i,1);
+        saveOffers(offers);
+        renderOffers();
+        toast('پیشنهاد حذف شد','ok');
+      });
+    };
+
+    window.openOfferModal = function(editIndex){
+      var offer = editIndex !== undefined ? getOffers()[editIndex] : null;
+      var title = offer ? 'ویرایش پیشنهاد' : 'پیشنهاد جدید';
+      var html = '<div class="form-group"><label class="form-label">عنوان</label><input class="form-input" id="of-title" value="'+(offer?offer.title:'')+'"></div>'+
+        '<div class="form-group"><label class="form-label">توضیحات</label><textarea class="form-textarea" id="of-desc">'+(offer?offer.description:'')+'</textarea></div>'+
+        '<div class="field-row"><div class="form-group"><label class="form-label">درصد تخفیف</label><input class="form-input" id="of-discount" type="number" min="1" max="100" value="'+(offer?offer.discount:'10')+'"></div>'+
+        '<div class="form-group"><label class="form-label">تاریخ انقضا</label><input class="form-input" id="of-expires" type="date" value="'+(offer?offer.expires:'')+'"></div></div>'+
+        '<div class="form-group"><label class="form-label"><input type="checkbox" id="of-active" '+(offer&&offer.active?'checked':'checked')+'> فعال باشد</label></div>';
+      openModal(title, html, function(){
+        var offers = getOffers();
+        var newOffer = {
+          title: document.getElementById('of-title').value.trim(),
+          description: document.getElementById('of-desc').value.trim(),
+          discount: parseInt(document.getElementById('of-discount').value)||10,
+          expires: document.getElementById('of-expires').value,
+          active: document.getElementById('of-active').checked,
+          created: new Date().toISOString()
+        };
+        if(!newOffer.title){ toast('عنوان را وارد کنید','err'); return false; }
+        if(editIndex !== undefined){ offers[editIndex] = newOffer; }
+        else { offers.push(newOffer); }
+        saveOffers(offers);
+        renderOffers();
+        toast('پیشنهاد ذخیره شد','ok');
+        return true;
+      });
+    };
+
+    window.editOffer = function(i){ openOfferModal(i); };
+
+    /* ===== USERS ===== */
+    async function loadUsers(){
+      try{
+        var d = await apiGet('users');
+        cache.users = d.users||[];
+        var tb = document.querySelector('#t-user tbody');
+        tb.innerHTML = cache.users.map(function(u){
+          return '<tr><td>'+dt(u.created_at)+'</td><td style="direction:ltr;text-align:left">'+u.email+'</td><td>'+(u.name||'-')+'</td><td>'+(u.last_sign_in?dt(u.last_sign_in):'هرگز')+'</td><td><button class="btn btn-info" onclick="detailUser(\''+u.id+'\')">📋</button></td></tr>';
+        }).join('') || '<tr><td colspan="5" style="text-align:center;color:var(--txt-dim)">هنوز کاربری ثبت‌نام نکرده</td></tr>';
+      }catch(e){}
+    }
+
+    /* ===== SUBSCRIPTIONS ===== */
+    async function loadSubs(){
+      try{
+        var d = await apiGet('subscriptions');
+        cache.subscriptions = d.subscriptions||[];
+        var tb = document.querySelector('#t-sub tbody');
+        tb.innerHTML = cache.subscriptions.map(function(s){
+          var acts = '';
+          if(s.status==='pending') acts += '<button class="btn btn-ok" onclick="activateSub(\''+s.id+'\')">✅</button>';
+          if(s.status==='active'){
+            acts += '<button class="btn btn-warn" onclick="extendSub(\''+s.id+'\')">⏰</button>';
+            acts += '<button class="btn btn-err" onclick="deactivateSub(\''+s.id+'\')">❌</button>';
+          }
+          return '<tr><td>'+dt(s.created_at)+'</td><td>'+userName(s.user_id)+'</td><td>'+(s.plans?.label||s.plan_id)+'</td><td>'+ss(s.status)+'</td><td>'+dt(s.expires_at)+'</td><td><div class="cell-actions">'+acts+'</div></td></tr>';
+        }).join('') || '<tr><td colspan="6" style="text-align:center;color:var(--txt-dim)">هنوز اشتراکی ثبت نشده</td></tr>';
+      }catch(e){}
+    }
+
+    /* ===== PAYMENTS ===== */
+    async function loadPayments(){
+      try{
+        var d = await apiGet('payments');
+        cache.payments = d.payments||[];
+        var tb = document.querySelector('#t-pay tbody');
+        tb.innerHTML = cache.payments.map(function(p){
+          var acts = '';
+          if(p.payment_status==='waiting'||p.payment_status==='confirming')
+            acts += '<button class="btn btn-ok" onclick="confirmPayment(\''+p.id+'\')">✅</button>';
+          if(p.payment_status==='confirmed')
+            acts += '<button class="btn btn-err" onclick="refundPayment(\''+p.id+'\')">↩</button>';
+          acts += '<button class="btn btn-info" onclick="detailPayment(\''+p.id+'\')">📋</button>';
+          return '<tr><td>'+dt(p.created_at)+'</td><td>'+userName(p.user_id)+'</td><td>'+(p.subscriptions?.plans?.label||p.plan_id)+'</td><td>$'+p.amount_usdt+'</td><td>'+ps(p.payment_status)+'</td><td><div class="cell-actions">'+acts+'</div></td></tr>';
+        }).join('') || '<tr><td colspan="6" style="text-align:center;color:var(--txt-dim)">هنوز پرداختی ثبت نشده</td></tr>';
+      }catch(e){}
+    }
+
+    /* ===== EMAILS ===== */
+    async function loadEmails(){
+      try{
+        var d = await apiGet('emails');
+        cache.emails = d.emails||[];
+        var TN={welcome:'خوش‌آمد',payment_success:'پرداخت موفق',subscription_expiring:'رو به انقضا',subscription_expired:'منقضی شده',payment_failed:'پرداخت ناموفق'};
+        var tb = document.querySelector('#t-email tbody');
+        tb.innerHTML = cache.emails.map(function(e){
+          return '<tr><td>'+dt(e.created_at)+'</td><td style="direction:ltr;text-align:left">'+e.to_email+'</td><td>'+(TN[e.template]||e.template)+'</td><td>'+e.subject+'</td><td>'+ps(e.status)+'</td></tr>';
+        }).join('') || '<tr><td colspan="5" style="text-align:center;color:var(--txt-dim)">هنوز ایمیلی ارسال نشده</td></tr>';
+      }catch(e){}
+    }
+
+    /* ===== VERSIONS ===== */
+    function renderVersions(){
+      var versions = getVersions();
+      if(!versions.length){
+        document.getElementById('versions-list').innerHTML = '<div style="text-align:center;padding:2rem;color:var(--txt-dim)">هنوز نسخه‌ای ذخیره نشده. روی «ذخیره نسخه جدید» کلیک کنید.</div>';
+        return;
+      }
+      document.getElementById('versions-list').innerHTML = versions.map(function(v,i){
+        return '<div class="version-item"><div class="version-dot '+(i>0?'old':'')+'"></div>'+
+          '<div class="version-info"><div class="version-tag">'+v.tag+'</div>'+
+          '<div class="version-date">'+new Date(v.date).toLocaleString('fa-IR')+'</div>'+
+          '<div class="version-msg">'+v.message+'</div></div>'+
+          '<div class="cell-actions"><button class="btn btn-info" onclick="restoreVersion('+i+')">↩ بازگردانی</button></div></div>';
       }).join('');
     }
 
-    // ===== RENDER USERS =====
-    function renderUsers(){
-      var tb=document.querySelector('#t-user tbody');
-      tb.innerHTML=cache.users.map(function(u){
-        return '<tr><td>'+dt(u.created_at)+'</td><td style="direction:ltr;text-align:left">'+u.email+'</td><td>'+(u.name||'-')+'</td><td>'+(u.last_sign_in?dt(u.last_sign_in):'هرگز')+'</td><td><button class="abtn abtn-info" onclick="detailUser(\''+u.id+'\')">📋 جزئیات</button></td></tr>';
-      }).join('');
+    window.createVersion = function(){
+      openModal('ذخیره نسخه جدید', '<div class="form-group"><label class="form-label">پیام نسخه</label><input class="form-input" id="ver-msg" placeholder="تغییرات این نسخه"></div>', function(){
+        var msg = document.getElementById('ver-msg').value.trim() || 'نسخه بدون پیام';
+        var versions = getVersions();
+        var num = versions.length + 1;
+        versions.unshift({tag:'v'+num,message:msg,date:new Date().toISOString(),content:JSON.parse(JSON.stringify(contentData)),offers:getOffers(),settings:getSettings()});
+        if(versions.length > 20) versions = versions.slice(0,20);
+        saveVersions(versions);
+        renderVersions();
+        toast('نسخه v'+num+' ذخیره شد','ok');
+        return true;
+      });
+    };
+
+    window.restoreVersion = function(i){
+      var versions = getVersions();
+      var v = versions[i];
+      if(!v) return;
+      showConfirm('آیا از بازگردانی به نسخه '+v.tag+' مطمئنید؟',function(){
+        if(v.content){
+          contentData = JSON.parse(JSON.stringify(v.content));
+          Object.keys(contentData).forEach(function(k){
+            Object.keys(contentData[k]).forEach(function(f){
+              localStorage.setItem('ic-content-'+k+'-'+f, contentData[k][f]);
+            });
+          });
+        }
+        if(v.offers) saveOffers(v.offers);
+        if(v.settings) saveSettingsData(v.settings);
+        toast('بازگردانی به '+v.tag+' انجام شد','ok');
+        loadSection(currentSection);
+      });
+    };
+
+    function autoVersion(message){
+      var versions = getVersions();
+      var num = versions.length + 1;
+      versions.unshift({tag:'v'+num,message:message,date:new Date().toISOString(),content:JSON.parse(JSON.stringify(contentData)),offers:getOffers(),settings:getSettings()});
+      if(versions.length > 20) versions = versions.slice(0,20);
+      saveVersions(versions);
     }
 
-    // ===== RENDER EMAILS =====
-    function renderEmails(){
-      var TN={welcome:'خوش‌آمد',payment_success:'پرداخت موفق',subscription_expiring:'رو به انقضا',subscription_expired:'منقضی شده',payment_failed:'پرداخت ناموفق'};
-      var tb=document.querySelector('#t-email tbody');
-      tb.innerHTML=cache.emails.map(function(e){
-        return '<tr><td>'+dt(e.created_at)+'</td><td style="direction:ltr;text-align:left">'+e.to_email+'</td><td>'+(TN[e.template]||e.template)+'</td><td>'+e.subject+'</td><td>'+ps(e.status)+'</td></tr>';
-      }).join('');
+    /* ===== SETTINGS ===== */
+    function loadSettings(){
+      var s = getSettings();
+      document.getElementById('set-site-name').value = s.siteName || '';
+      document.getElementById('set-site-desc').value = s.siteDesc || '';
+      document.getElementById('set-support-email').value = s.supportEmail || '';
+      document.getElementById('set-site-url').value = s.siteUrl || '';
     }
 
-    // ===== USER NAME HELPER =====
-    function userName(uid){
-      var u=cache.users.find(function(x){return x.id===uid});
-      if(u)return u.name||u.email;
-      return shortId(uid);
-    }
+    window.saveSettings = function(){
+      var s = {
+        siteName: document.getElementById('set-site-name').value.trim(),
+        siteDesc: document.getElementById('set-site-desc').value.trim(),
+        supportEmail: document.getElementById('set-support-email').value.trim(),
+        siteUrl: document.getElementById('set-site-url').value.trim()
+      };
+      var newKey = document.getElementById('set-admin-key').value.trim();
+      if(newKey){
+        if(newKey.length < 6){ toast('رمز باید حداقل ۶ کاراکتر باشد','err'); return; }
+        localStorage.setItem('ic-admin-hash', newKey);
+        KEY = newKey;
+        toast('رمز عبور تغییر کرد. در ورود بعدی از رمز جدید استفاده کنید.','info');
+      }
+      saveSettingsData(s);
+      toast('تنظیمات ذخیره شد','ok');
+      autoVersion('بروزرسانی تنظیمات');
+    };
 
-    // ===== ACTIONS =====
+    /* ===== PREVIEW ===== */
+    window.toggleTrial = function(){
+      var on = document.getElementById('trial-toggle').checked;
+      var frame = document.getElementById('preview-frame');
+      frame.src = on ? 'index.html?trial=1' : 'index.html';
+    };
+
+    /* ===== ACTIONS ===== */
     async function confirmPayment(id){
-      if(!confirm('پرداخت تایید و اشتراک فعال شود؟'))return;
-      var r=await api('admin-actions',{action:'confirm_payment',payload:{payment_id:id}});
-      toast(r.success?'پرداخت تایید شد':r.error,r.success);
-      if(r.success)loadSection('payments');
+      showConfirm('پرداخت تایید و اشتراک فعال شود؟',async function(){
+        var r=await api('admin-actions',{action:'confirm_payment',payload:{payment_id:id}});
+        toast(r.success?'پرداخت تایید شد':r.error,r.success);
+        if(r.success)loadPayments();
+      });
     }
     async function refundPayment(id){
-      if(!confirm('پرداخت بازگشت و اشتراک لغو شود؟'))return;
-      var r=await api('admin-actions',{action:'refund_payment',payload:{payment_id:id}});
-      toast(r.success?'بازگشت انجام شد':r.error,r.success);
-      if(r.success)loadSection('payments');
+      showConfirm('پرداخت بازگشت و اشتراک لغو شود؟',async function(){
+        var r=await api('admin-actions',{action:'refund_payment',payload:{payment_id:id}});
+        toast(r.success?'بازگشت انجام شد':r.error,r.success);
+        if(r.success)loadPayments();
+      });
     }
     async function activateSub(id){
       var r=await api('admin-actions',{action:'activate_subscription',payload:{subscription_id:id}});
       toast(r.success?'اشتراک فعال شد':r.error,r.success);
-      if(r.success)loadSection('subscriptions');
+      if(r.success)loadSubs();
     }
     async function deactivateSub(id){
-      if(!confirm('اشتراک لغو شود؟'))return;
-      var r=await api('admin-actions',{action:'deactivate_subscription',payload:{subscription_id:id}});
-      toast(r.success?'اشتراک لغو شد':r.error,r.success);
-      if(r.success)loadSection('subscriptions');
+      showConfirm('اشتراک لغو شود؟',async function(){
+        var r=await api('admin-actions',{action:'deactivate_subscription',payload:{subscription_id:id}});
+        toast(r.success?'اشتراک لغو شد':r.error,r.success);
+        if(r.success)loadSubs();
+      });
     }
     async function extendSub(id){
       var days=prompt('چند روز اضافه شود؟','30');
       if(!days)return;
       var r=await api('admin-actions',{action:'extend_subscription',payload:{subscription_id:id,days:parseInt(days)}});
       toast(r.success?r.message:r.error,r.success);
-      if(r.success)loadSection('subscriptions');
+      if(r.success)loadSubs();
     }
 
-    // ===== DETAIL VIEWS =====
+    /* ===== DETAIL VIEWS ===== */
     async function detailPayment(id){
       var r=await api('admin-actions',{action:'get_payment_details',payload:{payment_id:id}});
-      if(r.error)return toast(r.error,false);
+      if(r.error)return toast(r.error,'err');
       var p=r.payment;
-      openModal('جزئیات پرداخت','<table style="width:100%;border-collapse:collapse;font-size:.875rem">'+
-        row('شناسه',p.id)+
-        row('تاریخ',dt(p.created_at))+
-        row('کاربر',userName(p.user_id))+
-        row('پلن',p.subscriptions?.plans?.label||p.plan_id)+
-        row('مبلغ','$'+p.amount_usdt)+
-        row('وضعیت',ps(p.payment_status))+
-        row('آدرس پرداخت',p.pay_address||'-')+
-        row('مبلغ پرداختی',p.pay_amount||'-')+
-        row('TX Hash',p.tx_hash||'-')+
-        row('اینویس NOW',p.invoice_id||'-')+
-        '</table>');
+      var html='<table style="width:100%;border-collapse:collapse;font-size:.875rem">'+
+        row('شناسه',shortId(p.id))+row('تاریخ',dt(p.created_at))+row('کاربر',userName(p.user_id))+
+        row('پلن',p.subscriptions?.plans?.label||p.plan_id)+row('مبلغ','$'+p.amount_usdt)+
+        row('وضعیت',ps(p.payment_status))+row('آدرس پرداخت',p.pay_address||'-')+
+        row('مبلغ پرداختی',p.pay_amount||'-')+row('TX Hash',p.tx_hash||'-')+'</table>';
+      openModal('جزئیات پرداخت',html);
     }
 
     async function detailUser(id){
       var r=await api('admin-actions',{action:'get_user_details',payload:{user_id:id}});
-      if(r.error)return toast(r.error,false);
+      if(r.error)return toast(r.error,'err');
       var u=r.user;
       var html='<table style="width:100%;border-collapse:collapse;font-size:.875rem">'+
-        row('ایمیل',u.email)+
-        row('نام',u.name||'-')+
-        row('تاریخ عضویت',dt(u.created_at))+
-        row('آخرین ورود',u.last_sign_in?dt(u.last_sign_in):'هرگز')+'</table>';
-
-      if(r.subscriptions.length){
-        html+='<h3 style="margin:1rem 0 .5rem;font-size:.875rem;color:var(--dim)">اشتراک‌ها</h3>';
+        row('ایمیل',u.email)+row('نام',u.name||'-')+
+        row('تاریخ عضویت',dt(u.created_at))+row('آخرین ورود',u.last_sign_in?dt(u.last_sign_in):'هرگز')+'</table>';
+      if(r.subscriptions&&r.subscriptions.length){
+        html+='<h3 style="margin:1rem 0 .5rem;font-size:.875rem;color:var(--txt-dim)">اشتراک‌ها</h3>';
         html+='<table style="width:100%;border-collapse:collapse;font-size:.8125rem"><tr><th>پلن</th><th>وضعیت</th><th>انقضا</th></tr>';
-        r.subscriptions.forEach(function(s){
-          html+='<tr><td>'+(s.plans?.label||s.plan_id)+'</td><td>'+ss(s.status)+'</td><td>'+dt(s.expires_at)+'</td></tr>';
-        });
-        html+='</table>';
-      }
-      if(r.payments.length){
-        html+='<h3 style="margin:1rem 0 .5rem;font-size:.875rem;color:var(--dim)">پرداخت‌ها</h3>';
-        html+='<table style="width:100%;border-collapse:collapse;font-size:.8125rem"><tr><th>مبلغ</th><th>وضعیت</th><th>تاریخ</th></tr>';
-        r.payments.forEach(function(p){
-          html+='<tr><td>$'+p.amount_usdt+'</td><td>'+ps(p.payment_status)+'</td><td>'+dt(p.created_at)+'</td></tr>';
-        });
+        r.subscriptions.forEach(function(s){html+='<tr><td>'+(s.plans?.label||s.plan_id)+'</td><td>'+ss(s.status)+'</td><td>'+dt(s.expires_at)+'</td></tr>'});
         html+='</table>';
       }
       openModal('جزئیات کاربر',html);
     }
 
-    // ===== MODALS =====
-    function openModal(type,data){
-      var box=document.getElementById('modal-box');
-      var bg=document.getElementById('modal-bg');
-      if(type==='send-email'){
-        box.innerHTML='<h2>✉️ ارسال ایمیل</h2>'+
-          '<label>ایمیل گیرنده</label><input id="m-email-to" placeholder="user@example.com">'+
-          '<label>قالب</label><select id="m-email-tpl"><option value="welcome">خوش‌آمد</option><option value="payment_success">پرداخت موفق</option><option value="subscription_expiring">رو به انقضا</option><option value="subscription_expired">منقضی شده</option><option value="payment_failed">پرداخت ناموفق</option></select>'+
-          '<div class="btns"><button class="btn-primary" onclick="doSendEmail()">ارسال</button><button class="btn-cancel" onclick="closeModal()">لغو</button></div>';
-      } else {
-        box.innerHTML='<h2>'+type+'</h2>'+data+'<div class="btns"><button class="btn-cancel" onclick="closeModal()">بستن</button></div>';
+    /* ===== EMAIL MODAL ===== */
+    window.openEmailModal = function(){
+      openModal('✉️ ارسال ایمیل',
+        '<div class="form-group"><label class="form-label">ایمیل گیرنده</label><input class="form-input" id="m-email-to" placeholder="user@example.com" style="direction:ltr;text-align:left"></div>'+
+        '<div class="form-group"><label class="form-label">قالب</label><select class="form-select" id="m-email-tpl"><option value="welcome">خوش‌آمد</option><option value="payment_success">پرداخت موفق</option><option value="subscription_expiring">رو به انقضا</option><option value="subscription_expired">منقضی شده</option><option value="payment_failed">پرداخت ناموفق</option></select></div>',
+        async function(){
+          var to=document.getElementById('m-email-to').value.trim();
+          var tpl=document.getElementById('m-email-tpl').value;
+          if(!to){toast('ایمیل را وارد کنید','err');return false;}
+          var r=await api('admin-actions',{action:'send_email',payload:{to:to,template:tpl,custom_data:{}}});
+          toast(r.success?'ایمیل ارسال شد':r.error,r.success);
+          if(r.success)loadEmails();
+          return true;
+        }
+      );
+    };
+
+    /* ===== MODAL ===== */
+    function openModal(title,bodyHtml,footerFn){
+      document.getElementById('modal-title').textContent = title;
+      document.getElementById('modal-body').innerHTML = bodyHtml;
+      document.getElementById('modal-footer').innerHTML = '<button class="btn btn-primary" id="modal-ok">ذخیره</button><button class="btn btn-cancel" onclick="closeModal()">لغو</button>';
+      document.getElementById('modal-overlay').classList.add('on');
+      if(footerFn){
+        document.getElementById('modal-ok').addEventListener('click',function(){
+          var result = footerFn();
+          if(result !== false) closeModal();
+        });
       }
-      bg.classList.add('on');
     }
-    function closeModal(){document.getElementById('modal-bg').classList.remove('on')}
-    document.getElementById('modal-bg').addEventListener('click',function(e){if(e.target===e.currentTarget)closeModal()});
+    window.closeModal = function(){ document.getElementById('modal-overlay').classList.remove('on'); };
+    document.getElementById('modal-overlay').addEventListener('click',function(e){if(e.target===e.currentTarget)closeModal()});
 
-    async function doSendEmail(){
-      var to=document.getElementById('m-email-to').value.trim();
-      var tpl=document.getElementById('m-email-tpl').value;
-      if(!to)return toast('ایمیل را وارد کنید',false);
-      var r=await api('admin-actions',{action:'send_email',payload:{to:to,template:tpl,custom_data:{}}});
-      toast(r.success?'ایمیل ارسال شد':r.error,r.success);
-      if(r.success){closeModal();loadSection('emails')}
-    }
-
-    // ===== EDIT PLAN =====
-    function editPlan(id,label,price,popular){
-      var box=document.getElementById('modal-box');
-      box.innerHTML='<h2>ویرایش پلن</h2>'+
-        '<label>نام</label><input id="ep-label" value="'+label+'">'+
-        '<label>قیمت (USDT)</label><input id="ep-price" type="number" value="'+price+'">'+
-        '<label>محبوب</label><select id="ep-pop"><option value="true"'+(popular?' selected':'')+'>بله</option><option value="false"'+(!popular?' selected':'')+'>خیر</option></select>'+
-        '<div class="btns"><button class="btn-primary" onclick="doEditPlan(\''+id+'\')">ذخیره</button><button class="btn-cancel" onclick="closeModal()">لغو</button></div>';
-      document.getElementById('modal-bg').classList.add('on');
-    }
-    async function doEditPlan(id){
-      var label=document.getElementById('ep-label').value.trim();
-      var price=parseFloat(document.getElementById('ep-price').value);
-      var pop=document.getElementById('ep-pop').value==='true';
-      if(!label||isNaN(price))return toast('فیلدها را پر کنید',false);
-      var r=await api('admin-actions',{action:'update_plan',payload:{plan_id:id,label:label,price_usdt:price,is_popular:pop}});
-      toast(r.success?'پلن بروزرسانی شد':r.error,r.success);
-      if(r.success){closeModal();loadPlans()}
-    }
-
-    // ===== PLANS =====
-    async function loadPlans(){
-      var res=await fetch(API+'/admin-stats?section=payments',{headers:{'X-Admin-Key':KEY}});
-      var d=await res.json();
-      var plans={};
-      (d.payments||[]).forEach(function(p){
-        if(!plans[p.plan_id])plans[p.plan_id]={id:p.plan_id,label:p.subscriptions?.plans?.label||p.plan_id,count:0,revenue:0};
-        plans[p.plan_id].count++;
-        if(p.payment_status==='confirmed')plans[p.plan_id].revenue+=p.amount_usdt||0;
+    /* ===== CONFIRM ===== */
+    function showConfirm(msg,onYes){
+      document.getElementById('confirm-msg').textContent = msg;
+      document.getElementById('confirm-overlay').classList.add('on');
+      var btn = document.getElementById('confirm-yes');
+      var newBtn = btn.cloneNode(true);
+      btn.parentNode.replaceChild(newBtn, btn);
+      newBtn.addEventListener('click',function(){
+        closeConfirm();
+        if(onYes) onYes();
       });
-      var tb=document.querySelector('#t-plan tbody');
-      tb.innerHTML=Object.values(plans).map(function(p){
-        return '<tr><td>'+p.id+'</td><td>'+p.label+'</td><td>-</td><td>$'+p.revenue.toLocaleString()+'</td><td>-</td><td><button class="abtn abtn-info" onclick="editPlan(\''+p.id+'\',\''+p.label+'\','+p.revenue+',false)">✏️ ویرایش</button></td></tr>';
-      }).join('')||'<tr><td colspan="6" style="text-align:center;color:var(--dim)">هنوز پرداختی ثبت نشده</td></tr>';
     }
+    window.closeConfirm = function(){ document.getElementById('confirm-overlay').classList.remove('on'); };
 
-    // ===== CSV EXPORT =====
-    function exportCSV(section){
-      var data=cache[section]||[];
-      if(!data.length)return toast('داده‌ای موجود نیست',false);
-      var headers=Object.keys(data[0]);
-      var csv=','+headers.join(',')+'\n';
+    /* ===== CSV EXPORT ===== */
+    window.exportCSV = function(section){
+      var data = cache[section]||[];
+      if(!data.length) return toast('داده‌ای موجود نیست','err');
+      var headers = Object.keys(data[0]);
+      var csv = ','+headers.join(',')+'\n';
       data.forEach(function(row){
         csv+=headers.map(function(h){var v=row[h];return typeof v==='string'&&v.includes(',')?'"'+v+'"':v||''}).join(',')+'\n';
       });
       var blob=new Blob(['\uFEFF'+csv],{type:'text/csv;charset=utf-8'});
       var a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=section+'_'+new Date().toISOString().slice(0,10)+'.csv';a.click();
+    };
+
+    /* ===== SAVE ALL ===== */
+    window.saveAll = function(){
+      if(currentSection==='content') saveContent();
+      else if(currentSection==='settings') saveSettings();
+      else toast('ذخیره شد','ok');
+    };
+
+    /* ===== HELPERS ===== */
+    var PS={confirmed:['تایید شده','badge-ok'],waiting:['در انتظار','badge-warn'],confirming:['در حال تایید','badge-info'],failed:['ناموفق','badge-err'],refunded:['بازگشت','badge-err'],expired:['منقضی','badge-neutral']};
+    var SS={active:['فعال','badge-ok'],pending:['در انتظار','badge-warn'],expired:['منقضی','badge-err'],cancelled:['لغو شده','badge-neutral']};
+    function ps(s){var x=PS[s]||[s,'badge-neutral'];return '<span class="badge '+x[1]+'">'+x[0]+'</span>'}
+    function ss(s){var x=SS[s]||[s,'badge-neutral'];return '<span class="badge '+x[1]+'">'+x[0]+'</span>'}
+    function dt(iso){return iso?new Date(iso).toLocaleDateString('fa-IR'):'-'}
+    function shortId(id){return id?id.slice(0,8)+'...':'-'}
+    function userName(uid){
+      var u=cache.users.find(function(x){return x.id===uid});
+      return u?(u.name||u.email):shortId(uid);
+    }
+    function row(k,v){return '<tr><td style="padding:.375rem 0;color:var(--txt-dim);width:40%">'+k+'</td><td style="padding:.375rem 0;font-weight:500">'+v+'</td></tr>'}
+
+    function toast(msg,type){
+      var t=document.createElement('div');
+      t.className='toast toast-'+(type||'ok');
+      t.textContent=msg;
+      document.body.appendChild(t);
+      setTimeout(function(){t.remove()},3000);
     }
 
-    // ===== HELPERS =====
-    function row(k,v){return '<tr><td style="padding:.375rem 0;color:var(--dim);width:40%">'+k+'</td><td style="padding:.375rem 0;font-weight:500">'+v+'</td></tr>'}
-    function toast(msg,ok){
-      var t=document.createElement('div');t.className='toast '+(ok?'toast-ok':'toast-err');t.textContent=msg;
-      document.body.appendChild(t);setTimeout(function(){t.remove()},3000);
-    }
+  })();
   </script>
 </body>
 </html>

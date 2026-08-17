@@ -1,4 +1,4 @@
-/* IRAN COIN — SVG candlestick & line chart generators */
+/* IRANCOiN — SVG candlestick & line chart generators */
 (function () {
   "use strict";
 

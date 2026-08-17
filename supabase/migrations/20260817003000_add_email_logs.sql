@@ -1,4 +1,4 @@
--- IRAN COIN — Add email_logs table + admin views
+-- IRANCOiN — Add email_logs table + admin views
 
 CREATE TABLE IF NOT EXISTS email_logs (
   id              UUID PRIMARY KEY DEFAULT gen_random_uuid(),

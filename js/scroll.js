@@ -1,4 +1,4 @@
-/* IRAN COIN — Scroll engine: reveals, parallax, active states */
+/* IRANCOiN — Scroll engine: reveals, parallax, active states */
 (function () {
   "use strict";
 

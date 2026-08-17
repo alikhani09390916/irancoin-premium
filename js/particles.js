@@ -1,4 +1,4 @@
-/* IRAN COIN — Ambient particles & data streams (hero + cta) */
+/* IRANCOiN — Ambient particles & data streams (hero + cta) */
 (function () {
   "use strict";
 

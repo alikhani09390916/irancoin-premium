@@ -1,7 +1,113 @@
 /* ============================================================
-   IRAN COIN — Responsive System (Mobile · Tablet · Laptop · Desktop · Ultra)
+   IRANCOiN — Responsive System
+   Mobile · Small Phone · Tablet · Laptop · Desktop · Ultra
+   Breakpoints: 360 / 480 / 640 / 768 / 1024 / 1600 / 2400
    ============================================================ */
 
+/* ---------- Hamburger menu (mobile) ---------- */
+.nav-hamburger {
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  gap: 5px;
+  width: 2.25rem;
+  height: 2.25rem;
+  padding: 0.4rem;
+  cursor: pointer;
+  background: none;
+  border: none;
+  z-index: calc(var(--z-nav) + 10);
+}
+
+.nav-hamburger span {
+  display: block;
+  width: 100%;
+  height: 2px;
+  background: var(--c-ink-700);
+  border-radius: 2px;
+  transition: transform var(--dur-fast) var(--ease-out),
+              opacity var(--dur-fast) var(--ease-out);
+}
+
+.nav-hamburger.is-open span:nth-child(1) {
+  transform: translateY(7px) rotate(45deg);
+}
+.nav-hamburger.is-open span:nth-child(2) {
+  opacity: 0;
+}
+.nav-hamburger.is-open span:nth-child(3) {
+  transform: translateY(-7px) rotate(-45deg);
+}
+
+@media (max-width: 1023px) {
+  .nav-hamburger {
+    display: flex;
+  }
+}
+
+/* Mobile nav open state */
+@media (max-width: 1023px) {
+  .nav-links.is-open {
+    display: flex !important;
+    flex-wrap: wrap;
+    position: absolute;
+    top: 100%;
+    inset-inline: 0;
+    z-index: calc(var(--z-nav) + 5);
+    background: rgba(255, 255, 255, 0.96);
+    backdrop-filter: blur(var(--blur-lg));
+    -webkit-backdrop-filter: blur(var(--blur-lg));
+    border-bottom: var(--bw-xs) solid var(--border-default);
+    box-shadow: var(--sh-md);
+    padding: var(--sp-4);
+    gap: var(--sp-2);
+  }
+
+  .nav-links.is-open .nav-link {
+    width: 100%;
+    text-align: center;
+    padding: var(--sp-3) var(--sp-4);
+  }
+
+  .nav-links.is-open .nav-login-btn {
+    width: 100%;
+  }
+}
+
+/* ---------- 360px — Small phones ---------- */
+@media (max-width: 360px) {
+  :root {
+    --fs-display-xl: 2rem;
+    --fs-display-l: 1.75rem;
+    --fs-heading-xl: 1.5rem;
+    --fs-heading-l: 1.25rem;
+    --fs-heading-m: 1.125rem;
+    --gutter: 1rem;
+  }
+
+  .hero-stats { gap: var(--sp-3); flex-direction: column; }
+  .hero-stat { padding: var(--sp-2) var(--sp-3); }
+  .hero-visual { height: 22rem; }
+  .ai-card { min-width: 7rem; padding: var(--sp-2); font-size: 0.8125rem; }
+  .ai-card .ac-value { font-size: 0.8125rem; }
+  .mc-1, .mc-2 { width: 7rem; }
+  .coin { width: 2.8rem; }
+  .btn-lg { padding: 0.8125rem 1.5rem; font-size: 0.875rem; }
+  .ac-2, .ac-3, .ac-4, .mc-2 { display: none; }
+  .brain-wrap { width: clamp(14rem, 85vw, 18rem); }
+  .pricing-card { padding: var(--sp-4); }
+  .pricing-price { font-size: 2rem; }
+  .faq-item { margin-bottom: var(--sp-2); }
+  .cta-final { padding: var(--sp-6) var(--sp-4); }
+  .cta-final h2 { font-size: 1.25rem; }
+
+  /* Dashboard */
+  .dash-shell { flex-direction: column; }
+  .dash-sidebar { width: 100%; height: auto; position: relative; }
+  .dash-main { margin: 0; }
+}
+
+/* ---------- 480px — Mobile ---------- */
 @media (max-width: 480px) {
   :root {
     --fs-display-xl: 2.5rem;
@@ -20,8 +126,125 @@
   .brain-wrap { width: clamp(16rem, 80vw, 20rem); }
   .pricing-card { padding: var(--sp-6); }
   .faq-item { margin-bottom: var(--sp-2); }
+
+  /* Auth modal mobile */
+  .auth-modal-overlay .auth-modal {
+    max-width: 100%;
+    margin: var(--sp-3);
+    max-height: 95vh;
+  }
+
+  /* Dashboard cards */
+  .dash-cards {
+    grid-template-columns: 1fr !important;
+  }
+
+  .dash-grid-2,
+  .dash-grid-3 {
+    grid-template-columns: 1fr !important;
+  }
+
+  .dash-grid-3 > .glass-card[style*="grid-column"] {
+    grid-column: span 1 !important;
+  }
+
+  .dash-topbar {
+    flex-direction: column;
+    gap: var(--sp-3);
+    align-items: stretch;
+  }
+
+  .dash-topbar .btn {
+    width: 100%;
+    text-align: center;
+  }
 }
 
+/* ---------- 640px — Large phones / small tablets ---------- */
+@media (max-width: 640px) {
+  .hero-ctas { flex-direction: column; align-items: stretch; }
+  .hero-ctas .btn { width: 100%; }
+  .scroll-hint { display: none; }
+  .brain-ring::after {
+    width: 5px;
+    height: 5px;
+  }
+  .pay-panel { padding: var(--sp-6); }
+  .hero-visual { height: 30rem; }
+  .brain-label { bottom: -1.75rem; }
+  .section-head { margin-bottom: var(--sp-10); }
+  .cta-final { padding: var(--sp-8) var(--sp-5); }
+  .cmp-table { font-size: 0.8125rem; }
+  .cmp-table th, .cmp-table td { padding: var(--sp-3) var(--sp-4); }
+
+  /* Pricing grid */
+  .pricing-grid-4 {
+    grid-template-columns: 1fr;
+    max-width: 24rem;
+    margin-inline: auto;
+  }
+
+  /* Auth modal */
+  .auth-modal-overlay .auth-modal {
+    margin: var(--sp-2);
+    padding: var(--sp-5);
+    border-radius: 1rem;
+  }
+
+  /* Dashboard */
+  .dash-topbar {
+    padding: var(--sp-3);
+  }
+
+  .dash-table {
+    font-size: 0.8125rem;
+  }
+
+  .dash-table th,
+  .dash-table td {
+    padding: var(--sp-2) var(--sp-3);
+  }
+
+  .chart-window .cw-tags {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .chart-window .tabs {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+}
+
+/* ---------- 768px — Tablet ---------- */
+@media (max-width: 767px) {
+  .hero-ctas { flex-direction: column; align-items: stretch; }
+  .hero-ctas .btn { width: 100%; }
+  .scroll-hint { display: none; }
+  .brain-ring::after {
+    width: 5px;
+    height: 5px;
+  }
+  .pay-panel { padding: var(--sp-6); }
+  .hero-visual { height: 32rem; }
+  .brain-label { bottom: -1.75rem; }
+  .section-head { margin-bottom: var(--sp-10); }
+  .cta-final { padding: var(--sp-8) var(--sp-5); }
+  .cmp-table { font-size: 0.8125rem; }
+  .cmp-table th, .cmp-table td { padding: var(--sp-3) var(--sp-4); }
+
+  /* Auth modal */
+  .auth-modal-overlay .auth-modal {
+    margin: var(--sp-3);
+    max-height: 90vh;
+  }
+}
+
+@media (min-width: 768px) and (max-width: 1023px) {
+  .hero-visual { height: 34rem; }
+}
+
+/* ---------- 1024px — Laptop (tablet sidebar) ---------- */
 @media (max-width: 1023px) {
   .nav-links {
     display: flex;
@@ -44,40 +267,52 @@
   .nav-actions .btn { padding: 0.625rem 1rem; font-size: 0.8125rem; }
 }
 
-@media (max-width: 767px) {
-  .hero-ctas { flex-direction: column; align-items: stretch; }
-  .hero-ctas .btn { width: 100%; }
-  .scroll-hint { display: none; }
-  .brain-ring::after {
-    width: 5px;
-    height: 5px;
-  }
-  .pay-panel { padding: var(--sp-6); }
-  .hero-visual { height: 32rem; }
-  .brain-label { bottom: -1.75rem; }
-  .section-head { margin-bottom: var(--sp-10); }
-  .cta-final { padding: var(--sp-8) var(--sp-5); }
-  .cmp-table { font-size: 0.8125rem; }
-  .cmp-table th, .cmp-table td { padding: var(--sp-3) var(--sp-4); }
-}
-
-@media (min-width: 768px) and (max-width: 1023px) {
-  .hero-visual { height: 34rem; }
-}
-
+/* ---------- 1600px — Ultra-wide ---------- */
 @media (min-width: 1600px) {
   .hero-inner { width: min(100% - (var(--gutter) * 2), 96rem); }
   .hero-visual { height: 44rem; }
 }
 
+/* ---------- 240px — Massive displays ---------- */
 @media (min-width: 2400px) {
   .hero { font-size: 1.05em; }
 }
 
+/* ---------- prefers-reduced-motion ---------- */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  .hero-orb,
+  .brain-ring,
+  .intel-ring,
+  .brain-scanline,
+  .nn-link,
+  .nn-dot,
+  .status-dot::after,
+  .pricing-flag,
+  .progress::after,
+  .page-veil {
+    animation: none !important;
+  }
+
+  .hero-bg::before,
+  .hero-bg::after {
+    animation: none !important;
+  }
+}
+
 /* ---------- Print ---------- */
 @media print {
-  .nav, .scroll-hint, .hero-visual, .page-veil,
-  .exchange-carousel-wrap, .particles-canvas {
+  .nav, .nav-hamburger, .scroll-hint, .hero-visual, .page-veil,
+  .exchange-carousel-wrap, .particles-canvas,
+  .dash-sidebar, .dash-topbar .btn {
     display: none !important;
   }
   body { background: #fff; color: #111; }
@@ -88,4 +323,5 @@
     box-shadow: none;
     backdrop-filter: none;
   }
+  .dash-shell .dash-main { margin: 0; }
 }

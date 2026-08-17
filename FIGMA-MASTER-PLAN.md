@@ -1,4 +1,4 @@
-# IRAN COIN — FIGMA MASTER PLAN (سند مرجع طراحی)
+# IRANCOiN — FIGMA MASTER PLAN (سند مرجع طراحی)
 
 > اجرای Master Prompt V2 (1.md) به‌صورت Design-as-Code تحت نظارت سیستم دیزاین فیگما.
 > توکن فیگما (`api.figma.com/v1/me`) معتبر است، اما **REST API فیگما فقط خواندنی است** و امکان ساخت فایل `.figma` ندارد؛
@@ -8,7 +8,7 @@
 
 | صفحه فیگما | محتوا | معادل پیاده‌سازی |
 |---|---|---|
-| ۰۰ — Cover | جلد و برند IRAN COIN | `index.html` برندمارک + veil |
+| ۰۰ — Cover | جلد و برند IRANCOiN | `index.html` برندمارک + veil |
 | 01 — Master Frame | نمای کلی سیستم (برند، رنگ، تایپ، مغز AI، سکه‌ها، چارت، کارت، موشن، اسپیسینگ) | `design/tokens.css` + این سند |
 | 02 — Design Tokens | Color / Gradient / Typography / Spacing / Radius / Shadow / Blur / Border / Motion | `design/tokens.css` |
 | 03 — Typography | Display XL→Caption، Financial Numbers، Data Labels، Buttons، Nav | `design/base.css` |
@@ -68,4 +68,4 @@
 
 - هیچ همکاری صرافی‌ای ادعا نشده (همه «در حال بررسی — داده نمایشی»)
 - قیمت‌ها و آمار نمونه هستند و برچسب «نسخه نمایشی» دارند
-- برند فقط IRAN COIN / ایران کوین — بدون نماد سیاسی/پرچم
+- برند فقط IRANCOiN / ایران کوین — بدون نماد سیاسی/پرچم

@@ -1,5 +1,5 @@
 /* ============================================================
-   IRAN COIN — Component System (Figma components → CSS)
+   IRANCOiN — Component System (Figma components → CSS)
    Buttons · Glass Cards · Badges · Navbar · Footer · Pricing
    ============================================================ */
 
@@ -317,10 +317,17 @@
   font-size: 1.0625rem;
   font-weight: var(--fw-extrabold);
   letter-spacing: -0.01em;
-  color: var(--c-ink-900);
+  background: var(--grad-brand);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
 }
 
-.brand-name b { color: var(--c-violet-600); }
+.nav-login-btn {
+  background: var(--grad-brand);
+  color: white !important;
+  border: none;
+}
 
 .nav-links {
   display: flex;
@@ -382,9 +389,6 @@
   .nav-link { padding: var(--sp-2) var(--sp-3); font-size: 0.875rem; white-space: nowrap; }
   .nav-actions { flex: 0 0 auto; }
   .nav-actions .btn { padding: 0.625rem 1rem; font-size: 0.8125rem; }
-}
-
-  .nav-link { padding: var(--sp-2) var(--sp-3); font-size: 0.875rem; }
 }
 
 @media (max-width: 480px) {

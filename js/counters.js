@@ -1,4 +1,4 @@
-/* IRAN COIN — Animated counters (stats reveal) */
+/* IRANCOiN — Animated counters (stats reveal) */
 (function () {
   "use strict";
 

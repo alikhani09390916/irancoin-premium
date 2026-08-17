@@ -91,7 +91,7 @@ serve(async (req) => {
       pay_currency: pay_currency || "usdttrc20",
       ipn_callback_url: ipnCallbackUrl,
       order_id: subscription.id,
-      order_description: `IRAN COIN ${plan.label} Subscription`,
+      order_description: `IRANCOiN ${plan.label} Subscription`,
     };
 
     const nowRes = await fetch(`${NOWPAYMENTS_API}/invoice`, {

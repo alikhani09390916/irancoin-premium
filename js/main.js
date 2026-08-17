@@ -1,4 +1,4 @@
-/* IRAN COIN — Main interaction engine */
+/* IRANCOiN — Main interaction engine */
 (function () {
   "use strict";
 

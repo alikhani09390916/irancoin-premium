@@ -1,4 +1,4 @@
-/* IRAN COIN — Payment System (Crypto + Card-to-Card) */
+/* IRANCOiN — Payment System (Crypto + Card-to-Card) */
 (function () {
   "use strict";
 
@@ -148,7 +148,7 @@
           '<span style="color:#10b981;font-size:0.6875rem;font-weight:600">فعال</span>' +
         '</div>' +
         '<div style="display:flex;align-items:center;gap:0.75rem">' +
-          '<div style="width:3rem;height:2rem;border-radius:0.375rem;background:linear-gradient(135deg,#10b981,#06b6d4);display:grid;place-items:center;font-size:0.6875rem;color:white;font-weight:700">IRAN<br>COIN</div>' +
+          '<div style="width:3rem;height:2rem;border-radius:0.375rem;background:linear-gradient(135deg,#10b981,#06b6d4);display:grid;place-items:center;font-size:0.6rem;color:white;font-weight:700;letter-spacing:0.02em">IRANCOiN</div>' +
           '<div style="flex:1">' +
             '<div style="color:white;font-weight:600;font-size:0.9375rem;direction:ltr;text-align:left;font-family:monospace;letter-spacing:0.05em">' + c.number + '</div>' +
             '<div style="color:rgba(255,255,255,0.5);font-size:0.75rem;margin-top:0.25rem">بنام: <strong style="color:rgba(255,255,255,0.8)">' + c.name + '</strong></div>' +

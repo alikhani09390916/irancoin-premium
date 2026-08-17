@@ -1,5 +1,5 @@
 // supabase/functions/send-email/index.ts
-// Email notification system for IRAN COIN
+// Email notification system for IRANCOiN
 // Triggered by webhook or called directly
 
 import { serve } from "https://deno.land/std@0.168.0/http/server.ts";
@@ -16,13 +16,13 @@ const corsHeaders = {
 // Email templates
 const templates: Record<string, (data: any) => { subject: string; html: string }> = {
   welcome: (data) => ({
-    subject: "به IRAN COIN خوش آمدید!",
+    subject: "به IRANCOiN خوش آمدید!",
     html: `
       <div dir="rtl" style="font-family:system-ui,sans-serif;max-width:600px;margin:0 auto;padding:2rem;background:#0f172a;color:#e2e8f0;border-radius:1rem">
         <div style="text-align:center;margin-bottom:2rem">
-          <div style="font-size:2rem;font-weight:800;background:linear-gradient(135deg,#7C3AED,#06B6D4);-webkit-background-clip:text;-webkit-text-fill-color:transparent">IRAN COIN</div>
+          <div style="font-size:2rem;font-weight:800;background:linear-gradient(135deg,#7C3AED,#06B6D4);-webkit-background-clip:text;-webkit-text-fill-color:transparent">IRANCOiN</div>
         </div>
-        <h1 style="color:white;font-size:1.5rem;text-align:center">به IRAN COIN خوش آمدید ${data.name || ""}!</h1>
+        <h1 style="color:white;font-size:1.5rem;text-align:center">به IRANCOiN خوش آمدید ${data.name || ""}!</h1>
         <p style="color:#94a3b8;line-height:1.8;font-size:1rem">
           حساب شما با موفقیت ساخته شد. شما می‌توانید از پلتفرم هوشمند معاملات ارز دیجیتال ما استفاده کنید.
         </p>
@@ -30,7 +30,7 @@ const templates: Record<string, (data: any) => { subject: string; html: string }
           <a href="${data.site_url}/pricing.html" style="background:linear-gradient(135deg,#7C3AED,#06B6D4);color:white;padding:0.75rem 2rem;border-radius:0.75rem;text-decoration:none;font-weight:600">خرید اشتراک</a>
         </div>
         <p style="color:#64748b;font-size:0.8125rem;text-align:center;border-top:1px solid rgba(124,58,237,0.2);padding-top:1rem">
-          IRAN COIN — پلتفرم هوشمند معاملات ارز دیجیتال
+          IRANCOiN — پلتفرم هوشمند معاملات ارز دیجیتال
         </p>
       </div>
     `,
@@ -41,7 +41,7 @@ const templates: Record<string, (data: any) => { subject: string; html: string }
     html: `
       <div dir="rtl" style="font-family:system-ui,sans-serif;max-width:600px;margin:0 auto;padding:2rem;background:#0f172a;color:#e2e8f0;border-radius:1rem">
         <div style="text-align:center;margin-bottom:2rem">
-          <div style="font-size:2rem;font-weight:800;background:linear-gradient(135deg,#7C3AED,#06B6D4);-webkit-background-clip:text;-webkit-text-fill-color:transparent">IRAN COIN</div>
+          <div style="font-size:2rem;font-weight:800;background:linear-gradient(135deg,#7C3AED,#06B6D4);-webkit-background-clip:text;-webkit-text-fill-color:transparent">IRANCOiN</div>
         </div>
         <div style="text-align:center;font-size:3rem;margin:1rem 0">✅</div>
         <h1 style="color:white;font-size:1.5rem;text-align:center">پرداخت تایید شد!</h1>
@@ -60,7 +60,7 @@ const templates: Record<string, (data: any) => { subject: string; html: string }
           <a href="${data.site_url}/dashboard.html" style="background:linear-gradient(135deg,#7C3AED,#06B6D4);color:white;padding:0.75rem 2rem;border-radius:0.75rem;text-decoration:none;font-weight:600">ورود به داشبورد</a>
         </div>
         <p style="color:#64748b;font-size:0.8125rem;text-align:center;border-top:1px solid rgba(124,58,237,0.2);padding-top:1rem">
-          IRAN COIN — پلتفرم هوشمند معاملات ارز دیجیتال
+          IRANCOiN — پلتفرم هوشمند معاملات ارز دیجیتال
         </p>
       </div>
     `,
@@ -71,7 +71,7 @@ const templates: Record<string, (data: any) => { subject: string; html: string }
     html: `
       <div dir="rtl" style="font-family:system-ui,sans-serif;max-width:600px;margin:0 auto;padding:2rem;background:#0f172a;color:#e2e8f0;border-radius:1rem">
         <div style="text-align:center;margin-bottom:2rem">
-          <div style="font-size:2rem;font-weight:800;background:linear-gradient(135deg,#7C3AED,#06B6D4);-webkit-background-clip:text;-webkit-text-fill-color:transparent">IRAN COIN</div>
+          <div style="font-size:2rem;font-weight:800;background:linear-gradient(135deg,#7C3AED,#06B6D4);-webkit-background-clip:text;-webkit-text-fill-color:transparent">IRANCOiN</div>
         </div>
         <div style="text-align:center;font-size:3rem;margin:1rem 0">⏰</div>
         <h1 style="color:white;font-size:1.5rem;text-align:center">اشتراک رو به انقضا</h1>
@@ -85,7 +85,7 @@ const templates: Record<string, (data: any) => { subject: string; html: string }
           <a href="${data.site_url}/pricing.html" style="background:linear-gradient(135deg,#7C3AED,#06B6D4);color:white;padding:0.75rem 2rem;border-radius:0.75rem;text-decoration:none;font-weight:600">تمدید اشتراک</a>
         </div>
         <p style="color:#64748b;font-size:0.8125rem;text-align:center;border-top:1px solid rgba(124,58,237,0.2);padding-top:1rem">
-          IRAN COIN — پلتفرم هوشمند معاملات ارز دیجیتال
+          IRANCOiN — پلتفرم هوشمند معاملات ارز دیجیتال
         </p>
       </div>
     `,
@@ -96,7 +96,7 @@ const templates: Record<string, (data: any) => { subject: string; html: string }
     html: `
       <div dir="rtl" style="font-family:system-ui,sans-serif;max-width:600px;margin:0 auto;padding:2rem;background:#0f172a;color:#e2e8f0;border-radius:1rem">
         <div style="text-align:center;margin-bottom:2rem">
-          <div style="font-size:2rem;font-weight:800;background:linear-gradient(135deg,#7C3AED,#06B6D4);-webkit-background-clip:text;-webkit-text-fill-color:transparent">IRAN COIN</div>
+          <div style="font-size:2rem;font-weight:800;background:linear-gradient(135deg,#7C3AED,#06B6D4);-webkit-background-clip:text;-webkit-text-fill-color:transparent">IRANCOiN</div>
         </div>
         <div style="text-align:center;font-size:3rem;margin:1rem 0">❌</div>
         <h1 style="color:white;font-size:1.5rem;text-align:center">اشتراک منقضی شد</h1>
@@ -107,7 +107,7 @@ const templates: Record<string, (data: any) => { subject: string; html: string }
           <a href="${data.site_url}/pricing.html" style="background:linear-gradient(135deg,#7C3AED,#06B6D4);color:white;padding:0.75rem 2rem;border-radius:0.75rem;text-decoration:none;font-weight:600">خرید اشتراک جدید</a>
         </div>
         <p style="color:#64748b;font-size:0.8125rem;text-align:center;border-top:1px solid rgba(124,58,237,0.2);padding-top:1rem">
-          IRAN COIN — پلتفرم هوشمند معاملات ارز دیجیتال
+          IRANCOiN — پلتفرم هوشمند معاملات ارز دیجیتال
         </p>
       </div>
     `,
@@ -118,7 +118,7 @@ const templates: Record<string, (data: any) => { subject: string; html: string }
     html: `
       <div dir="rtl" style="font-family:system-ui,sans-serif;max-width:600px;margin:0 auto;padding:2rem;background:#0f172a;color:#e2e8f0;border-radius:1rem">
         <div style="text-align:center;margin-bottom:2rem">
-          <div style="font-size:2rem;font-weight:800;background:linear-gradient(135deg,#7C3AED,#06B6D4);-webkit-background-clip:text;-webkit-text-fill-color:transparent">IRAN COIN</div>
+          <div style="font-size:2rem;font-weight:800;background:linear-gradient(135deg,#7C3AED,#06B6D4);-webkit-background-clip:text;-webkit-text-fill-color:transparent">IRANCOiN</div>
         </div>
         <div style="text-align:center;font-size:3rem;margin:1rem 0">❌</div>
         <h1 style="color:white;font-size:1.5rem;text-align:center">پرداخت ناموفق</h1>
@@ -129,7 +129,7 @@ const templates: Record<string, (data: any) => { subject: string; html: string }
           <a href="${data.site_url}/pricing.html" style="background:linear-gradient(135deg,#7C3AED,#06B6D4);color:white;padding:0.75rem 2rem;border-radius:0.75rem;text-decoration:none;font-weight:600">تلاش مجدد</a>
         </div>
         <p style="color:#64748b;font-size:0.8125rem;text-align:center;border-top:1px solid rgba(124,58,237,0.2);padding-top:1rem">
-          IRAN COIN — پلتفرم هوشمند معاملات ارز دیجیتال
+          IRANCOiN — پلتفرم هوشمند معاملات ارز دیجیتال
         </p>
       </div>
     `,

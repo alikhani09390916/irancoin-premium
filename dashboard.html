@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>داشبورد پیش‌نمایش | ایران کوین</title>
-  <meta name="description" content="پیش‌نمایش داشبورد ایران کوین — پورتفولیو، پوزیشن‌ها، سیگنال‌های هوش مصنوعی و تحلیل بازار.">
+  <title>داشبورد | IRANCOiN</title>
+  <meta name="description" content="داشبورد IRANCOiN — پورتفولیو، پوزیشن‌ها، سیگنال‌های هوش مصنوعی و تحلیل بازار.">
   <meta name="theme-color" content="#7C3AED">
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%237C3AED'/%3E%3Cstop offset='1' stop-color='%2306B6D4'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='64' height='64' rx='16' fill='url(%23g)'/%3E%3Ctext x='32' y='42' font-size='28' font-weight='800' text-anchor='middle' fill='white' font-family='Arial'%3EIC%3C/text%3E%3C/svg%3E">
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -20,45 +20,49 @@
 <body>
   <a class="skip-link" href="#main">پرش به محتوای اصلی</a>
 
-  <!-- Brand Symbol -->
+  <!-- ============ PYRAMID BRAND SYMBOL ============ -->
   <svg xmlns="http://www.w3.org/2000/svg" width="0" height="0" style="position:absolute" aria-hidden="true">
-    <symbol id="ic-brand" viewBox="0 0 120 120">
+    <symbol id="ic-brand" viewBox="0 0 200 165">
       <defs>
-        <linearGradient id="ic-bg" x1="0" y1="0" x2="1" y2="1">
-          <stop offset="0" stop-color="#A78BFA"/>
-          <stop offset="0.5" stop-color="#7C3AED"/>
-          <stop offset="1" stop-color="#4338CA"/>
-        </linearGradient>
-        <linearGradient id="ic-ring" x1="0" y1="0" x2="1" y2="1">
-          <stop offset="0" stop-color="#C4B5FD"/>
-          <stop offset="1" stop-color="#8B5CF6"/>
-        </linearGradient>
-        <linearGradient id="ic-sheen" x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0" stop-color="#ffffff" stop-opacity="0.6"/>
-          <stop offset="0.5" stop-color="#ffffff" stop-opacity="0.1"/>
-          <stop offset="1" stop-color="#ffffff" stop-opacity="0"/>
-        </linearGradient>
-        <filter id="ic-glow">
-          <feGaussianBlur stdDeviation="3" result="blur"/>
-          <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
-        </filter>
+        <linearGradient id="pyr-btc" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#F7931A"/><stop offset="100%" stop-color="#E07B00"/></linearGradient>
+        <linearGradient id="pyr-usdt" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#26A17B"/><stop offset="100%" stop-color="#1C7C5E"/></linearGradient>
+        <linearGradient id="pyr-eth" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#627EEA"/><stop offset="100%" stop-color="#4357C9"/></linearGradient>
+        <linearGradient id="pyr-usdc" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#2775CA"/><stop offset="100%" stop-color="#1A5AA0"/></linearGradient>
+        <linearGradient id="pyr-ltc" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#BFBBBB"/><stop offset="100%" stop-color="#8E8E8E"/></linearGradient>
+        <linearGradient id="pyr-doge" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#C2A633"/><stop offset="100%" stop-color="#BA9F33"/></linearGradient>
+        <linearGradient id="pyr-bnb" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#F0B90B"/><stop offset="100%" stop-color="#D4A50A"/></linearGradient>
+        <linearGradient id="pyr-sol" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#9945FF"/><stop offset="50%" stop-color="#14F195"/><stop offset="100%" stop-color="#9945FF"/></linearGradient>
+        <linearGradient id="pyr-ada" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#0033AD"/><stop offset="100%" stop-color="#0052FF"/></linearGradient>
+        <linearGradient id="pyr-xrp" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#346AA9"/><stop offset="100%" stop-color="#23292F"/></linearGradient>
+        <filter id="pyr-glow"><feGaussianBlur stdDeviation="2" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
       </defs>
-      <circle cx="60" cy="60" r="56" fill="none" stroke="url(#ic-ring)" stroke-width="2.5" opacity="0.6"/>
-      <circle cx="60" cy="60" r="48" fill="none" stroke="url(#ic-ring)" stroke-width="1" opacity="0.3"/>
-      <circle cx="60" cy="60" r="44" fill="url(#ic-bg)"/>
-      <ellipse cx="52" cy="42" rx="24" ry="20" fill="url(#ic-sheen)" opacity="0.5"/>
-      <text x="60" y="68" text-anchor="middle" font-family="Arial,Helvetica,sans-serif" font-size="32" font-weight="800" fill="white" letter-spacing="-1" filter="url(#ic-glow)">IC</text>
-      <circle cx="60" cy="4" r="2.5" fill="#A78BFA"/>
-      <circle cx="60" cy="116" r="2.5" fill="#A78BFA"/>
-      <circle cx="4" cy="60" r="2.5" fill="#8B5CF6"/>
-      <circle cx="116" cy="60" r="2.5" fill="#8B5CF6"/>
+      <circle cx="34" cy="24" r="19" fill="url(#pyr-btc)" filter="url(#pyr-glow)"/>
+      <text x="34" y="31" text-anchor="middle" fill="white" font-size="18" font-weight="800" font-family="Arial,Helvetica,sans-serif">&#x20BF;</text>
+      <circle cx="78" cy="24" r="15" fill="url(#pyr-usdt)"/>
+      <text x="78" y="30" text-anchor="middle" fill="white" font-size="14" font-weight="800" font-family="Arial,Helvetica,sans-serif">&#x20AE;</text>
+      <circle cx="122" cy="24" r="15" fill="url(#pyr-eth)"/>
+      <text x="122" y="30" text-anchor="middle" fill="white" font-size="14" font-weight="800" font-family="Arial,Helvetica,sans-serif">&#x039E;</text>
+      <circle cx="166" cy="24" r="15" fill="url(#pyr-usdc)"/>
+      <text x="166" y="30" text-anchor="middle" fill="white" font-size="13" font-weight="800" font-family="Arial,Helvetica,sans-serif">$</text>
+      <circle cx="56" cy="62" r="15" fill="url(#pyr-ltc)"/>
+      <text x="56" y="68" text-anchor="middle" fill="white" font-size="14" font-weight="800" font-family="Arial,Helvetica,sans-serif">&#x141;</text>
+      <circle cx="100" cy="62" r="15" fill="url(#pyr-doge)"/>
+      <text x="100" y="68" text-anchor="middle" fill="white" font-size="14" font-weight="800" font-family="Arial,Helvetica,sans-serif">&#x0D0;</text>
+      <circle cx="144" cy="62" r="15" fill="url(#pyr-bnb)"/>
+      <text x="144" y="68" text-anchor="middle" fill="#1a1040" font-size="12" font-weight="800" font-family="Arial,Helvetica,sans-serif">BNB</text>
+      <circle cx="74" cy="100" r="15" fill="url(#pyr-sol)"/>
+      <text x="74" y="106" text-anchor="middle" fill="white" font-size="13" font-weight="800" font-family="Arial,Helvetica,sans-serif">SOL</text>
+      <circle cx="126" cy="100" r="15" fill="url(#pyr-ada)"/>
+      <text x="126" y="106" text-anchor="middle" fill="white" font-size="13" font-weight="800" font-family="Arial,Helvetica,sans-serif">ADA</text>
+      <circle cx="100" cy="138" r="18" fill="url(#pyr-xrp)" filter="url(#pyr-glow)"/>
+      <text x="100" y="144" text-anchor="middle" fill="white" font-size="14" font-weight="800" font-family="Arial,Helvetica,sans-serif">XRP</text>
     </symbol>
   </svg>
 
   <div class="page-veil" id="page-veil" aria-hidden="true">
     <div class="veil-brand">
-      <svg class="brand-mark" viewBox="0 0 120 120" width="2.5rem" height="2.5rem" aria-hidden="true"><use href="#ic-brand"/></svg>
-      <span>ایران کوین</span>
+      <svg class="brand-mark" viewBox="0 0 200 165" width="2.8rem" height="2.2rem" aria-hidden="true"><use href="#ic-brand"/></svg>
+      <span>IRANCOiN</span>
     </div>
   </div>
 
@@ -69,9 +73,9 @@
   <div class="dash-shell">
     <!-- ============ SIDEBAR ============ -->
     <aside class="dash-sidebar" aria-label="ناوبری داشبورد">
-      <a class="brand" href="index.html" data-transition aria-label="ایران کوین — صفحه اصلی">
-        <svg class="brand-mark" viewBox="0 0 120 120" width="2.5rem" height="2.5rem" aria-hidden="true"><use href="#ic-brand"/></svg>
-        <span class="brand-name">IRAN <b>COIN</b></span>
+      <a class="brand" href="index.html" data-transition aria-label="IRANCOiN — صفحه اصلی">
+        <svg class="brand-mark" viewBox="0 0 200 165" width="2.8rem" height="2.2rem" aria-hidden="true"><use href="#ic-brand"/></svg>
+        <span class="brand-name">IRANCOiN</span>
       </a>
 
       <nav class="dash-nav" aria-label="منوی داشبورد">
@@ -102,8 +106,9 @@
     <main class="dash-main" id="main">
       <div class="dash-topbar">
         <div class="dash-greeting" data-reveal>
+          <button class="mobile-toggle" id="dash-sidebar-toggle" aria-label="باز کردن منو" aria-expanded="false">☰</button>
           <h1>خوش آمدید 👋</h1>
-          <p>این داشبورد یک پیش‌نمایش نمایشی است — داده‌ها نمونه هستند.</p>
+          <p>داشبورد معاملاتی هوشمند IRANCOiN</p>
         </div>
         <div style="display:flex;gap:var(--sp-3);flex-wrap:wrap">
           <a class="btn btn-primary btn-sm" href="pricing.html" data-transition>ارتقای اشتراک</a>
@@ -196,7 +201,8 @@
       <div class="dash-grid-3">
         <div class="glass-card" data-reveal style="grid-column:span 2">
           <h3 class="t-heading-m" style="margin-bottom:var(--sp-4)" id="positions">پوزیشن‌های باز</h3>
-          <table class="dash-table">
+          <div style="overflow-x:auto">
+          <table class="dash-table" style="min-width:40rem">
             <thead>
               <tr>
                 <th>جفت ارز</th>
@@ -242,6 +248,7 @@
               </tr>
             </tbody>
           </table>
+          </div>
         </div>
 
         <div class="glass-card" data-reveal id="risk">
@@ -273,7 +280,8 @@
           <h3 class="t-heading-m">آخرین معاملات ثبت‌شده</h3>
           <span class="badge badge-violet">ژورنال خودکار فعال</span>
         </div>
-        <table class="dash-table">
+        <div style="overflow-x:auto">
+        <table class="dash-table" style="min-width:36rem">
           <thead>
             <tr>
               <th>تاریخ</th>
@@ -314,6 +322,7 @@
             </tr>
           </tbody>
         </table>
+        </div>
       </div>
     </main>
   </div>
@@ -326,6 +335,25 @@
   <script>
     (function () {
       "use strict";
+
+      // Mobile sidebar toggle
+      var sidebarToggle = document.getElementById('dash-sidebar-toggle');
+      var sidebar = document.querySelector('.dash-sidebar');
+      if (sidebarToggle && sidebar) {
+        sidebarToggle.addEventListener('click', function() {
+          var expanded = sidebarToggle.getAttribute('aria-expanded') === 'true';
+          sidebarToggle.setAttribute('aria-expanded', String(!expanded));
+          sidebar.classList.toggle('is-open');
+        });
+        // Close sidebar when clicking outside
+        document.addEventListener('click', function(e) {
+          if (sidebar.classList.contains('is-open') && !sidebar.contains(e.target) && e.target !== sidebarToggle) {
+            sidebar.classList.remove('is-open');
+            sidebarToggle.setAttribute('aria-expanded', 'false');
+          }
+        });
+      }
+
       var charts = window.IRANCOINCharts;
       if (!charts) return;
       var el = document.getElementById("dash-candle");

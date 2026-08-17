@@ -1,4 +1,4 @@
--- IRAN COIN — Fix: Drop and recreate all tables
+-- IRANCOiN — Fix: Drop and recreate all tables
 -- Clean slate after partial migration
 
 DROP TRIGGER IF EXISTS on_auth_user_created ON auth.users;
