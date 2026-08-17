@@ -8,6 +8,7 @@
   }
 
   .hero-stats { gap: var(--sp-5); }
+  .hero-stat { padding: var(--sp-3) var(--sp-4); }
   .hero-visual { height: 27rem; }
   .ai-card { min-width: 8.5rem; padding: var(--sp-3); }
   .ai-card .ac-value { font-size: 0.9375rem; }
@@ -17,6 +18,8 @@
   .btn-lg { padding: 0.9375rem 1.75rem; }
   .ac-2, .ac-4, .mc-2 { display: none; }
   .brain-wrap { width: clamp(16rem, 80vw, 20rem); }
+  .pricing-card { padding: var(--sp-6); }
+  .faq-item { margin-bottom: var(--sp-2); }
 }
 
 @media (max-width: 1023px) {
@@ -52,6 +55,10 @@
   .pay-panel { padding: var(--sp-6); }
   .hero-visual { height: 32rem; }
   .brain-label { bottom: -1.75rem; }
+  .section-head { margin-bottom: var(--sp-10); }
+  .cta-final { padding: var(--sp-8) var(--sp-5); }
+  .cmp-table { font-size: 0.8125rem; }
+  .cmp-table th, .cmp-table td { padding: var(--sp-3) var(--sp-4); }
 }
 
 @media (min-width: 768px) and (max-width: 1023px) {
@@ -69,9 +76,16 @@
 
 /* ---------- Print ---------- */
 @media print {
-  .nav, .scroll-hint, .hero-visual, .page-veil {
+  .nav, .scroll-hint, .hero-visual, .page-veil,
+  .exchange-carousel-wrap, .particles-canvas {
     display: none !important;
   }
-  body { background: #fff; }
+  body { background: #fff; color: #111; }
   .section { padding-block: 1rem; }
+  .glass-card, .pricing-card, .dash-card {
+    background: #fff;
+    border: 1px solid #ddd;
+    box-shadow: none;
+    backdrop-filter: none;
+  }
 }

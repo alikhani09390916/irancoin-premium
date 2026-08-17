@@ -32,6 +32,16 @@
   animation: atmosphere 14s ease-in-out infinite alternate;
 }
 
+.hero-bg::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(30rem 20rem at 30% 20%, rgba(124, 58, 237, 0.08), transparent 50%),
+    radial-gradient(20rem 15rem at 70% 70%, rgba(34, 211, 238, 0.06), transparent 50%);
+  animation: atmosphere 18s ease-in-out infinite alternate-reverse;
+}
+
 @keyframes atmosphere {
   0% { opacity: 0.65; transform: scale(1); }
   100% { opacity: 1; transform: scale(1.06); }
@@ -154,6 +164,18 @@
 .hero-stat {
   animation: hl-from-left var(--dur-cinematic) var(--ease-out) both;
   animation-delay: 2.2s;
+  padding: var(--sp-4) var(--sp-5);
+  border-radius: var(--r-md);
+  background: rgba(255,255,255,0.45);
+  border: 1px solid rgba(124,58,237,0.08);
+  backdrop-filter: blur(8px);
+  transition: transform var(--dur-fast) var(--ease-out),
+              box-shadow var(--dur-fast) var(--ease-out);
+}
+
+.hero-stat:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 16px rgba(124,58,237,0.1);
 }
 
 .hero-stat:nth-child(2) { animation-delay: 2.35s; }
@@ -168,12 +190,16 @@
   display: flex;
   align-items: baseline;
   gap: var(--sp-1);
+  background: var(--grad-brand);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
 }
 
 .hero-stat-value small {
   font-size: var(--fs-caption);
   font-weight: var(--fw-semibold);
-  color: var(--text-tertiary);
+  -webkit-text-fill-color: var(--text-tertiary);
 }
 
 .hero-stat-label {
@@ -188,6 +214,18 @@
   height: clamp(30rem, 42vw, 40rem);
   perspective: 1100px;
   overflow: hidden;
+}
+
+.hero-visual::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 10%;
+  right: 10%;
+  height: 8rem;
+  background: radial-gradient(ellipse, rgba(124,58,237,0.12) 0%, transparent 70%);
+  filter: blur(20px);
+  pointer-events: none;
 }
 
 .scene-layer {
@@ -366,6 +404,7 @@
   border-radius: 50%;
   z-index: 4;
   transform-style: preserve-3d;
+  filter: drop-shadow(0 0 12px rgba(201, 109, 8, 0.2));
 }
 
 .coin::before,
@@ -477,6 +516,11 @@
   padding: var(--sp-4) var(--sp-5);
   min-width: 10.5rem;
   animation: card-arrive var(--dur-cinematic) var(--ease-out) both;
+  transition: box-shadow var(--dur-fast) var(--ease-out);
+}
+
+.ai-card:hover {
+  box-shadow: var(--sh-lg), var(--sh-inset-glass), 0 0 20px rgba(124,58,237,0.12);
 }
 
 @keyframes card-arrive {

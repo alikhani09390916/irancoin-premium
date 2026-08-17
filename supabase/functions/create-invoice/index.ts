@@ -6,7 +6,6 @@ import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
 
 const NOWPAYMENTS_API = "https://api.nowpayments.io/v1";
 const NOW_API_KEY = Deno.env.get("NOWPAYMENTS_API_KEY")!;
-const NOW_PUBLIC_KEY = Deno.env.get("NOWPAYMENTS_PUBLIC_KEY")!;
 const SUPABASE_URL = Deno.env.get("SUPABASE_URL")!;
 const SUPABASE_SERVICE_KEY = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!;
 const SITE_URL = Deno.env.get("SITE_URL") || "https://alikhani09390916.github.io/irancoin-premium";
@@ -17,23 +16,23 @@ const corsHeaders = {
 };
 
 serve(async (req) => {
-  // Handle CORS preflight
   if (req.method === "OPTIONS") {
     return new Response("ok", { headers: corsHeaders });
   }
 
   try {
-    const { plan_id, user_email, user_name } = await req.json();
+    const { plan_id, pay_currency, user_email, user_name } = await req.json();
 
-    if (!plan_id || !user_email) {
+    if (!plan_id) {
       return new Response(
-        JSON.stringify({ error: "plan_id and user_email are required" }),
+        JSON.stringify({ error: "plan_id is required" }),
         { status: 400, headers: { ...corsHeaders, "Content-Type": "application/json" } }
       );
     }
 
-    // Get plan details from DB
     const supabase = createClient(SUPABASE_URL, SUPABASE_SERVICE_KEY);
+
+    // Get plan details
     const { data: plan, error: planErr } = await supabase
       .from("plans")
       .select("*")
@@ -47,53 +46,50 @@ serve(async (req) => {
       );
     }
 
-    // Get or create Supabase user
-    let user_id: string;
-    const { data: existingUsers } = await supabase.auth.admin.listUsers();
-    const existingUser = existingUsers?.users?.find((u: any) => u.email === user_email);
+    // Get or create user
+    let user_id: string | null = null;
+    let user_email_final = user_email || "";
 
-    if (existingUser) {
-      user_id = existingUser.id;
-    } else {
-      const { data: newUser, error: createErr } = await supabase.auth.admin.createUser({
-        email: user_email,
-        password: crypto.randomUUID(), // random password - user will reset
-        email_confirm: true,
-        user_metadata: { full_name: user_name || "" },
+    const authHeader = req.headers.get("Authorization");
+    if (authHeader) {
+      const supabaseUser = createClient(SUPABASE_URL, SUPABASE_SERVICE_KEY, {
+        global: { headers: { Authorization: authHeader } },
       });
-      if (createErr || !newUser?.user) {
-        return new Response(
-          JSON.stringify({ error: "Failed to create user" }),
-          { status: 500, headers: { ...corsHeaders, "Content-Type": "application/json" } }
-        );
+      const { data: { user } } = await supabaseUser.auth.getUser();
+      if (user) {
+        user_id = user.id;
+        user_email_final = user.email || user_email_final;
       }
-      user_id = newUser.user.id;
     }
 
     // Create subscription (pending)
+    const subscriptionData: any = {
+      plan_id,
+      status: "pending",
+    };
+    if (user_id) subscriptionData.user_id = user_id;
+
     const { data: subscription, error: subErr } = await supabase
       .from("subscriptions")
-      .insert({
-        user_id,
-        plan_id,
-        status: "pending",
-      })
+      .insert(subscriptionData)
       .select()
       .single();
 
     if (subErr) {
       return new Response(
-        JSON.stringify({ error: "Failed to create subscription" }),
+        JSON.stringify({ error: "Failed to create subscription", details: subErr.message }),
         { status: 500, headers: { ...corsHeaders, "Content-Type": "application/json" } }
       );
     }
 
     // Create NOWPayments invoice
-    const invoiceBody = {
+    const ipnCallbackUrl = `${SUPABASE_URL}/functions/v1/ipn-webhook`;
+
+    const invoiceBody: any = {
       price_amount: plan.price_usdt,
       price_currency: "usd",
-      pay_currency: "usdttrc20",
-      ipn_callback_url: `${SITE_URL}/.netlify/functions/ipn-webok`, // will be updated
+      pay_currency: pay_currency || "usdttrc20",
+      ipn_callback_url: ipnCallbackUrl,
       order_id: subscription.id,
       order_description: `IRAN COIN ${plan.label} Subscription`,
     };
@@ -116,9 +112,8 @@ serve(async (req) => {
       );
     }
 
-    // Update payment record with invoice ID
-    await supabase.from("payments").insert({
-      user_id,
+    // Create payment record
+    const paymentData: any = {
       subscription_id: subscription.id,
       plan_id,
       amount_usdt: plan.price_usdt,
@@ -126,7 +121,11 @@ serve(async (req) => {
       payment_status: "waiting",
       pay_address: nowData.pay_address,
       pay_amount: nowData.pay_amount,
-    });
+      currency: pay_currency || "usdttrc20",
+    };
+    if (user_id) paymentData.user_id = user_id;
+
+    await supabase.from("payments").insert(paymentData);
 
     return new Response(
       JSON.stringify({
@@ -134,6 +133,7 @@ serve(async (req) => {
         invoice_id: nowData.id,
         pay_address: nowData.pay_address,
         pay_amount: nowData.pay_amount,
+        subscription_id: subscription.id,
         plan_label: plan.label,
         price_usdt: plan.price_usdt,
       }),

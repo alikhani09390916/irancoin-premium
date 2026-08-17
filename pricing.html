@@ -571,6 +571,7 @@
     </div>
   </footer>
 
+  <script src="js/supabase.js"></script>
   <script src="js/scroll.js"></script>
   <script src="js/counters.js"></script>
   <script src="js/main.js"></script>
@@ -689,6 +690,8 @@
       var loginForm = document.getElementById('auth-login');
       var signupForm = document.getElementById('auth-signup');
       var switchBtns = modal.querySelectorAll('[data-goto]');
+      var loginSubmit = loginForm.querySelector('button[type="submit"]');
+      var signupSubmit = signupForm.querySelector('button[type="submit"]');
 
       function openModal(tab) {
         modal.classList.add('is-open');
@@ -714,6 +717,89 @@
       closeBtn.addEventListener('click', closeModal);
       modal.addEventListener('click', function(e){ if(e.target === modal) closeModal(); });
       document.addEventListener('keydown', function(e){ if(e.key === 'Escape' && modal.classList.contains('is-open')) closeModal(); });
+
+      function setLoading(btn, loading) {
+        btn.disabled = loading;
+        btn.dataset.origText = btn.dataset.origText || btn.textContent;
+        btn.textContent = loading ? 'در حال پردازش...' : btn.dataset.origText;
+      }
+
+      function showError(form, msg) {
+        var old = form.querySelector('.auth-error');
+        if (old) old.remove();
+        var p = document.createElement('p');
+        p.className = 'auth-error';
+        p.style.cssText = 'color:#ef4444;font-size:0.8125rem;margin:0.5rem 0 0;text-align:center';
+        p.textContent = msg;
+        form.appendChild(p);
+      }
+
+      function clearError(form) {
+        var old = form.querySelector('.auth-error');
+        if (old) old.remove();
+      }
+
+      loginForm.addEventListener('submit', async function(e) {
+        e.preventDefault();
+        clearError(loginForm);
+        var email = document.getElementById('login-email').value.trim();
+        var pass = document.getElementById('login-pass').value;
+        if (!email || !pass) return showError(loginForm, 'ایمیل و رمز را وارد کنید');
+
+        setLoading(loginSubmit, true);
+        try {
+          var res = await fetch((window.IC.supabase.url || 'https://ibnpgzmbepieudwalwtv.supabase.co') + '/auth/v1/token?grant_type=password', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json', 'apikey': window.IC.supabase.anonKey },
+            body: JSON.stringify({ email: email, password: pass })
+          });
+          var data = await res.json();
+          if (!res.ok) throw new Error(data.error_description || data.msg || 'ورود ناموفق');
+          localStorage.setItem('sb-ibnpgzmbepieudwalwtv-auth-token', JSON.stringify(data));
+          closeModal();
+          window.location.reload();
+        } catch (err) {
+          showError(loginForm, err.message || 'خطا در ورود');
+        } finally {
+          setLoading(loginSubmit, false);
+        }
+      });
+
+      signupForm.addEventListener('submit', async function(e) {
+        e.preventDefault();
+        clearError(signupForm);
+        var name = document.getElementById('signup-name').value.trim();
+        var email = document.getElementById('signup-email').value.trim();
+        var pass = document.getElementById('signup-pass').value;
+        if (!email || !pass) return showError(signupForm, 'ایمیل و رمز را وارد کنید');
+        if (pass.length < 8) return showError(signupForm, 'رمز باید حداقل ۸ کاراکتر باشد');
+
+        setLoading(signupSubmit, true);
+        try {
+          var res = await fetch((window.IC.supabase.url || 'https://ibnpgzmbepieudwalwtv.supabase.co') + '/auth/v1/signup', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json', 'apikey': window.IC.supabase.anonKey },
+            body: JSON.stringify({ email: email, password: pass, data: { full_name: name } })
+          });
+          var data = await res.json();
+          if (!res.ok) throw new Error(data.error_description || data.msg || 'ثبت‌نام ناموفق');
+          if (data.access_token) {
+            localStorage.setItem('sb-ibnpgzmbepieudwalwtv-auth-token', JSON.stringify(data));
+            closeModal();
+            window.location.reload();
+          } else {
+            clearError(signupForm);
+            var p = document.createElement('p');
+            p.style.cssText = 'color:#10b981;font-size:0.8125rem;margin:0.5rem 0 0;text-align:center';
+            p.textContent = 'ایمیل تایید برای شما ارسال شد. لطفاً ایمیل خود را بررسی کنید.';
+            signupForm.appendChild(p);
+          }
+        } catch (err) {
+          showError(signupForm, err.message || 'خطا در ثبت‌نام');
+        } finally {
+          setLoading(signupSubmit, false);
+        }
+      });
 
       var navLogin = document.getElementById('nav-login');
       if(navLogin) navLogin.addEventListener('click', function(e){ e.preventDefault(); openModal('login'); });
