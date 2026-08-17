@@ -16,7 +16,9 @@
   <link rel="stylesheet" href="design/hero.css">
   <link rel="stylesheet" href="design/sections.css">
   <link rel="stylesheet" href="design/responsive.css">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
   <link rel="stylesheet" href="design/motion-effects.css">
+  <link rel="stylesheet" href="design/brain3d.css">
   <style>
     .badge-sample { background:var(--c-gold-100);color:var(--c-gold-700);font-size:.7rem;padding:2px 8px;border-radius:9999px;font-weight:600; }
     .badge-soon { background:rgba(124,58,237,.12);color:var(--c-violet-600);font-size:.65rem;padding:2px 8px;border-radius:9999px;font-weight:600;cursor:default; }
@@ -123,7 +125,8 @@
           <h1>خوش آمدید 👋</h1>
           <p>داشبورد معاملاتی هوشمند IRANCOiN</p>
         </div>
-        <div style="display:flex;gap:var(--sp-3);flex-wrap:wrap">
+        <div style="display:flex;gap:var(--sp-3);flex-wrap:wrap;align-items:center">
+          <div id="brain-3d-container" class="brain-scene" style="width:80px;height:80px;border-radius:50%;overflow:hidden" role="img" aria-label="مغز هوش مصنوعی"></div>
           <a class="btn btn-primary btn-sm" href="pricing.html" data-transition>ارتقای اشتراک</a>
           <a class="btn btn-secondary btn-sm" href="index.html" data-transition>خروج</a>
         </div>
@@ -352,6 +355,7 @@
   <script src="js/scroll.js"></script>
   <script src="js/counters.js"></script>
   <script src="js/main.js"></script>
+  <script defer src="js/brain3d.js"></script>
   <script>
     (function () {
       "use strict";

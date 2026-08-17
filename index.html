@@ -16,7 +16,9 @@
   <link rel="stylesheet" href="design/hero.css">
   <link rel="stylesheet" href="design/sections.css">
   <link rel="stylesheet" href="design/responsive.css">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
   <link rel="stylesheet" href="design/motion-effects.css">
+  <link rel="stylesheet" href="design/brain3d.css">
 </head>
 <body>
   <a class="skip-link" href="#main">پرش به محتوای اصلی</a>
@@ -283,17 +285,25 @@
 
         <!-- Hero visual scene -->
         <div class="hero-visual" id="hero-visual" aria-hidden="true">
-          <!-- AI Brain -->
+          <!-- 3D Brain -->
           <div class="brain-wrap">
             <div class="brain-glow"></div>
-            <div class="brain-core">
-              <svg class="brain-art" viewBox="0 0 200 170" aria-hidden="true">
-                <use href="#brain-art-symbol"/>
-              </svg>
-              <div class="brain-ring brain-ring-r1"></div>
-              <div class="brain-ring brain-ring-r2"></div>
-              <div class="brain-ring brain-ring-r3"></div>
-              <div class="brain-ring brain-ring-r4"></div>
+            <div id="brain-3d-container" class="brain-scene" role="img" aria-label="مغز هوش مصنوعی IRANCOiN — نمایش سه‌بعدی شبکه عصبی"></div>
+            <div class="brain-data-readout" aria-hidden="true">
+              <div>SIGNAL <span class="val">+۴.۲٪</span></div>
+              <div>LATENCY <span class="val green">4ms</span></div>
+            </div>
+            <div class="brain-data-readout" aria-hidden="true">
+              <div>WIN RATE <span class="val pink">67.8٪</span></div>
+              <div>RISK <span class="val amber">متوسط</span></div>
+            </div>
+            <div class="brain-data-readout" aria-hidden="true">
+              <div>NEURONS <span class="val">80</span></div>
+              <div>ACTIVE <span class="val green">●</span></div>
+            </div>
+            <div class="brain-data-readout" aria-hidden="true">
+              <div>DEPTH <span class="val pink">5L</span></div>
+              <div>FLOPS <span class="val">2.4T</span></div>
             </div>
             <div class="brain-label"><span class="status-dot live"></span> هسته هوش مصنوعی</div>
           </div>
@@ -1114,6 +1124,7 @@
   <script src="js/counters.js"></script>
   <script src="js/main.js"></script>
   <script src="js/price.js"></script>
+  <script defer src="js/brain3d.js"></script>
   <script>
     (function () {
       "use strict";
