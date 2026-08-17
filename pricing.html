@@ -377,132 +377,56 @@
     </section>
 
     <!-- ============ PAYMENT PANEL ============ -->
-    <section class="section" id="pay-panel">
-      <div class="container">
+    <section class="section" id="pay-panel" style="background:linear-gradient(180deg,var(--c-bg) 0%,#F1EEFB 100%)">
+      <div class="container-narrow">
         <div class="section-head t-center" data-reveal>
           <span class="section-kicker">پرداخت امن</span>
-          <h2 class="t-heading-xl">تکمیل اشتراک</h2>
+          <h2 class="t-heading-xl">روش پرداخت خود را انتخاب کنید</h2>
         </div>
-        <form class="pay-panel" id="pay-form" novalidate>
-          <div class="pp-summary" data-reveal>
-            <div>
-              <div class="t-dlabel">پلن انتخابی</div>
-              <div class="pp-plan" id="pp-plan-label">حرفه‌ای</div>
+
+        <div class="glass-card" data-reveal style="margin-bottom:var(--sp-6);text-align:center;padding:var(--sp-5)">
+          <div style="color:var(--text-secondary);font-size:var(--fs-dlabel);margin-bottom:var(--sp-2)">پلن انتخابی</div>
+          <div style="font-size:var(--fs-heading-l);font-weight:800;color:var(--text-primary)" id="pp-plan-label">۶ ماهه</div>
+          <div style="font-size:var(--fs-heading-m);font-weight:700;background:var(--grad-brand);-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin-top:var(--sp-2)" id="pp-total">$149</div>
+        </div>
+
+        <div class="glass-card" data-reveal style="margin-bottom:var(--sp-4);transition:all .3s;border:2px solid transparent" id="pay-crypto-card">
+          <div style="display:flex;align-items:center;gap:1rem">
+            <div style="width:3.5rem;height:3.5rem;border-radius:0.75rem;background:linear-gradient(135deg,#7C3AED,#06B6D4);display:grid;place-items:center;font-size:1.75rem;flex-shrink:0">₿</div>
+            <div style="flex:1">
+              <div style="font-weight:700;font-size:1.0625rem;color:var(--text-primary)">پرداخت با ارز دیجیتال</div>
+              <div style="color:var(--text-secondary);font-size:0.8125rem;margin-top:0.25rem">تتر • بیت‌کوین • اتریوم • و ۲۰۰+ ارز دیگر</div>
             </div>
-            <div>
-              <div class="t-dlabel">مبلغ قابل پرداخت</div>
-              <div class="pp-price" id="pp-total">۲۹ دلار / ماه</div>
-            </div>
-          </div>
-
-          <div class="pp-field" data-reveal>
-            <label for="pay-name">نام و نام خانوادگی</label>
-            <input id="pay-name" name="name" type="text" placeholder="مثلاً: علی محمدی" autocomplete="name" required>
-          </div>
-
-          <div class="pp-field" data-reveal>
-            <label for="pay-email">ایمیل</label>
-            <input id="pay-email" name="email" type="email" placeholder="you@example.com" autocomplete="email" required>
-          </div>
-
-          <div class="pp-field" data-reveal>
-            <label>روش پرداخت</label>
-            <div class="pay-methods" role="group" aria-label="روش پرداخت">
-              <button type="button" class="pay-method is-selected" aria-pressed="true">
-                <span class="pm-icon">💳</span>
-                <span>کارت بانکی</span>
-              </button>
-              <button type="button" class="pay-method" aria-pressed="false">
-                <span class="pm-icon">₮</span>
-                <span>تتر (USDT)</span>
-              </button>
-              <button type="button" class="pay-method" aria-pressed="false">
-                <span class="pm-icon">🏦</span>
-                <span>کارت به کارت</span>
-              </button>
-              <button type="button" class="pay-method" aria-pressed="false">
-                <span class="pm-icon">₿</span>
-                <span>کریپتو</span>
-              </button>
+            <div style="text-align:left">
+              <div style="color:var(--text-tertiary);font-size:0.75rem">پرداخت امن از طریق</div>
+              <div style="font-weight:700;color:#a78bfa;font-size:0.875rem">NOWPayments</div>
             </div>
           </div>
-
-          <div class="pp-row">
-            <div class="pp-field" data-reveal>
-              <label for="pay-card">شماره کارت (نمایشی)</label>
-              <input id="pay-card" name="card" type="text" inputmode="numeric" placeholder="0000 0000 0000 0000" data-mask-card>
-            </div>
-            <div class="pp-field" data-reveal>
-              <label for="pay-cvv">کد امنیتی (نمایشی)</label>
-              <input id="pay-cvv" name="cvv" type="text" inputmode="numeric" maxlength="4" placeholder="CVV2" data-mask-cvv>
-            </div>
-          </div>
-
-          <button class="btn btn-primary btn-lg btn-block" type="submit" id="pay-submit" data-reveal>
-            <span class="btn-spinner" aria-hidden="true"></span>
-            پرداخت و فعال‌سازی اشتراک
+          <button class="btn btn-primary btn-block" type="button" data-crypto-pay="monthly" style="margin-top:var(--sp-4)">
+            <span>انتخاب ارز دیجیتال و پرداخت</span>
           </button>
-
-          <div class="secure-note" data-reveal>
-            <span>🔒</span>
-            این صفحه نمایشی است و هیچ پرداخت واقعی انجام نمی‌شود.
-          </div>
-        </form>
-
-        <!-- Crypto Payment Option -->
-        <div class="crypto-pay-box" data-reveal>
-          <div class="crypto-pay-head">
-            <span class="crypto-pay-icon">₿</span>
-            <div>
-              <div class="crypto-pay-title">پرداخت با ارز دیجیتال</div>
-              <div class="crypto-pay-sub">تتر • بیت‌کوین • اتریوم • و ۲۰۰+ ارز دیگر</div>
-            </div>
-          </div>
-          <div class="crypto-pay-body">
-            <p style="font-size:var(--fs-body-s);color:var(--text-secondary);margin-bottom:var(--sp-2)">
-              روی دکمه زیر کلیک کنید، ارز دیجیتال مورد نظر خود را انتخاب کنید و فاکتور پرداخت صادر می‌شود.
-            </p>
-            <button class="btn btn-primary btn-block" type="button" data-crypto-pay="monthly" style="margin-top:var(--sp-3)">
-              <span>پرداخت کریپتو — انتخاب پلن و ارز</span>
-            </button>
-            <div class="crypto-powered">
-              <span>پرداخت امن از طریق</span>
-              <strong>NOWPayments</strong>
-            </div>
-          </div>
         </div>
 
-        <!-- Card-to-Card Payment Option -->
-        <div class="crypto-pay-box" data-reveal style="margin-top:var(--sp-4)">
-          <div class="crypto-pay-head" style="background:linear-gradient(135deg, rgba(16,185,129,0.06), rgba(6,182,212,0.04))">
-            <span class="crypto-pay-icon" style="background:linear-gradient(135deg,#10B981,#06B6D4)">🏦</span>
-            <div>
-              <div class="crypto-pay-title">کارت به کارت</div>
-              <div class="crypto-pay-sub">انتقال مستقیم به کارت بانکی</div>
+        <div class="glass-card" data-reveal style="margin-bottom:var(--sp-4);transition:all .3s;border:2px solid transparent">
+          <div style="display:flex;align-items:center;gap:1rem">
+            <div style="width:3.5rem;height:3.5rem;border-radius:0.75rem;background:linear-gradient(135deg,#10b981,#06b6d4);display:grid;place-items:center;font-size:1.75rem;flex-shrink:0">🏦</div>
+            <div style="flex:1">
+              <div style="font-weight:700;font-size:1.0625rem;color:var(--text-primary)">پرداخت کارت به کارت</div>
+              <div style="color:var(--text-secondary);font-size:0.8125rem;margin-top:0.25rem">انتقال مستقیم به کارت بانک پاسارگاد</div>
+            </div>
+            <div style="text-align:left">
+              <div style="color:var(--text-tertiary);font-size:0.75rem">تأیید تا</div>
+              <div style="font-weight:700;color:#10b981;font-size:0.875rem">۱ ساعت</div>
             </div>
           </div>
-          <div class="crypto-pay-body">
-            <div class="crypto-pay-step">
-              <span class="crypto-step-num">۱</span>
-              <span>مبلغ اشتراک را به شماره کارت زیر واریز کنید</span>
-            </div>
-            <div class="crypto-pay-step">
-              <span class="crypto-step-num">۲</span>
-              <span>شماره پیگیری و نام خود را به ایمیل support@irancoin.ai ارسال کنید</span>
-            </div>
-            <div class="crypto-pay-step">
-              <span class="crypto-step-num">۳</span>
-              <span>اشتراک شما پس از تأیید (حداکثر ۱ ساعت) فعال می‌شود</span>
-            </div>
-            <div class="crypto-wallet-addr">
-              <div class="t-dlabel">شماره کارت بانکی</div>
-              <code class="wallet-code" style="font-size:1rem;letter-spacing:0.1em">5029 0810 8328 5151</code>
-              <div style="display:flex;align-items:center;gap:var(--sp-2);margin-top:var(--sp-2)">
-                <button class="btn btn-ghost btn-sm" type="button" onclick="navigator.clipboard.writeText('5029081083285151');this.textContent='کپی شد ✓'">کپی شماره کارت</button>
-                <span style="font-size:var(--fs-dlabel);color:var(--text-tertiary)">بنام: علی خانی</span>
-              </div>
-            </div>
-          </div>
+          <button class="btn btn-block" type="button" data-card2card-pay="monthly" style="margin-top:var(--sp-4);background:linear-gradient(135deg,rgba(16,185,129,0.15),rgba(6,182,212,0.1));border:1px solid rgba(16,185,129,0.3);color:#10b981;font-weight:600">
+            <span>پرداخت کارت به کارت</span>
+          </button>
+        </div>
+
+        <div class="secure-note" data-reveal style="text-align:center;margin-top:var(--sp-4)">
+          <span>🔒</span>
+          تمام پرداخت‌ها با رمزنگاری پیشرفته محافظت می‌شوند.
         </div>
       </div>
     </section>
@@ -654,6 +578,7 @@
           <input type="password" id="login-pass" placeholder="••••••••" required autocomplete="current-password">
         </div>
         <button type="submit" class="btn btn-primary btn-lg" style="width:100%">ورود</button>
+        <p style="text-align:left;margin:0.5rem 0"><button type="button" class="auth-link" onclick="var email=prompt('ایمیل خود را وارد کنید:');if(email)fetch((window.IC?.supabase?.url||'https://ibnpgzmbepieudwalwtv.supabase.co')+'/auth/v1/recover',{method:'POST',headers:{'Content-Type':'application/json','apikey':window.IC?.supabase?.anonKey||''},body:JSON.stringify({email:email)}).then(function(){alert('لینک بازیابی رمز ارسال شد.')})">رمز عبور را فراموش کردم</button></p>
         <p class="auth-switch">حساب ندارید؟ <button type="button" class="auth-link" data-goto="signup">ثبت‌نام کنید</button></p>
       </form>
 
@@ -676,8 +601,8 @@
 
       <div class="auth-divider"><span>یا</span></div>
 
-      <button class="btn btn-secondary btn-lg" style="width:100%;display:flex;align-items:center;justify-content:center;gap:0.5rem" onclick="window.location.href='dashboard.html'">
-        <span>👁</span> مشاهده داشبورد (پیش‌نمایش)
+      <button class="btn btn-secondary btn-lg" style="width:100%;display:flex;align-items:center;justify-content:center;gap:0.5rem" onclick="window.ICPayments?.showAuthModal('login')">
+        <span>🔐</span> ورود یا ثبت‌نام
       </button>
     </div>
   </div>

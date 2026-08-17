@@ -79,22 +79,7 @@
     });
   }
 
-  /* ---------- Payment form submit (demo) ---------- */
-  const payForm = $("#pay-form");
-  if (payForm) {
-    payForm.addEventListener("submit", (e) => {
-      e.preventDefault();
-      const btn = $("#pay-submit");
-      if (!btn) return;
-      btn.classList.add("is-loading");
-      btn.setAttribute("disabled", "true");
-      setTimeout(() => {
-        btn.classList.remove("is-loading");
-        btn.removeAttribute("disabled");
-        showToast("پرداخت آزمایشی با موفقیت انجام شد. اشتراک شما فعال شد ✓");
-      }, 1600);
-    });
-  }
+  /* ---------- Payment form submit (removed — handled by nowpayments.js) ---------- */
 
   /* ---------- Toast ---------- */
   function showToast(message) {
