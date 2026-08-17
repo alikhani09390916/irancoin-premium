@@ -167,11 +167,54 @@
     <div data-scroll-progress style="height:100%;background:var(--grad-brand);width:0%;border-radius:0 0 4px 0;"></div>
   </div>
 
+  <!-- Brand Symbol -->
+  <svg xmlns="http://www.w3.org/2000/svg" width="0" height="0" style="position:absolute" aria-hidden="true">
+    <symbol id="ic-brand" viewBox="0 0 120 120">
+      <defs>
+        <linearGradient id="ic-bg" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0" stop-color="#A78BFA"/>
+          <stop offset="0.5" stop-color="#7C3AED"/>
+          <stop offset="1" stop-color="#4338CA"/>
+        </linearGradient>
+        <linearGradient id="ic-ring" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0" stop-color="#C4B5FD"/>
+          <stop offset="1" stop-color="#8B5CF6"/>
+        </linearGradient>
+        <linearGradient id="ic-sheen" x1="0" y1="0" x2="0" y2="1">
+          <stop offset="0" stop-color="#ffffff" stop-opacity="0.6"/>
+          <stop offset="0.5" stop-color="#ffffff" stop-opacity="0.1"/>
+          <stop offset="1" stop-color="#ffffff" stop-opacity="0"/>
+        </linearGradient>
+        <filter id="ic-glow">
+          <feGaussianBlur stdDeviation="3" result="blur"/>
+          <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+        </filter>
+      </defs>
+      <!-- outer ring -->
+      <circle cx="60" cy="60" r="56" fill="none" stroke="url(#ic-ring)" stroke-width="2.5" opacity="0.6"/>
+      <!-- inner ring -->
+      <circle cx="60" cy="60" r="48" fill="none" stroke="url(#ic-ring)" stroke-width="1" opacity="0.3"/>
+      <!-- coin body -->
+      <circle cx="60" cy="60" r="44" fill="url(#ic-bg)"/>
+      <!-- highlight -->
+      <ellipse cx="52" cy="42" rx="24" ry="20" fill="url(#ic-sheen)" opacity="0.5"/>
+      <!-- IC letters -->
+      <text x="60" y="68" text-anchor="middle" font-family="Arial,Helvetica,sans-serif" font-size="32" font-weight="800" fill="white" letter-spacing="-1" filter="url(#ic-glow)">IC</text>
+      <!-- decorative dots on ring -->
+      <circle cx="60" cy="4" r="2.5" fill="#A78BFA"/>
+      <circle cx="60" cy="116" r="2.5" fill="#A78BFA"/>
+      <circle cx="4" cy="60" r="2.5" fill="#8B5CF6"/>
+      <circle cx="116" cy="60" r="2.5" fill="#8B5CF6"/>
+    </symbol>
+  </svg>
+
   <!-- ============ A. PREMIUM NAVIGATION ============ -->
   <header class="nav" id="nav">
     <div class="container nav-inner">
       <a class="brand" href="index.html" aria-label="ایران کوین — صفحه اصلی">
-        <span class="brand-mark" aria-hidden="true">IC</span>
+        <svg class="brand-mark" viewBox="0 0 120 120" aria-hidden="true" width="2.5rem" height="2.5rem">
+          <use href="#ic-brand"/>
+        </svg>
         <span class="brand-name">IRAN <b>COIN</b></span>
       </a>
 

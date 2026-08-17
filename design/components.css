@@ -249,31 +249,13 @@
 .brand-mark {
   width: 2.5rem;
   height: 2.5rem;
-  border-radius: var(--r-md);
-  background: var(--grad-brand);
-  display: grid;
-  place-items: center;
-  color: var(--c-white);
-  font-weight: var(--fw-extrabold);
-  font-size: 1.0625rem;
-  box-shadow: var(--sh-brand);
-  position: relative;
-  overflow: hidden;
+  display: block;
+  filter: drop-shadow(0 2px 8px rgba(124, 58, 237, 0.35));
+  flex-shrink: 0;
+  transition: transform var(--dur-fast) var(--ease-out);
 }
 
-.brand-mark::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(120deg, transparent 30%, rgba(255, 255, 255, 0.5) 50%, transparent 70%);
-  transform: translateX(-120%);
-  animation: sheen 4.5s var(--ease-in-out) infinite;
-}
-
-@keyframes sheen {
-  0%, 55% { transform: translateX(-120%); }
-  85%, 100% { transform: translateX(120%); }
-}
+.brand:hover .brand-mark { transform: scale(1.05); }
 
 .brand-name {
   font-size: 1.0625rem;
