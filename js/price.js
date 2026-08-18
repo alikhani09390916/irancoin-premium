@@ -210,7 +210,7 @@
     var html = '';
     if (hasDiscount) {
       html += '<div style="position:absolute;top:.75rem;left:.75rem;background:linear-gradient(135deg,#dc2626,#ea580c);color:white;padding:.25rem .625rem;border-radius:999px;font-size:.6875rem;font-weight:700;display:flex;align-items:center;gap:.25rem">';
-      html += '⏳ ' + pricing.discount + '% تخفیف';
+      html += '<i class="fa-solid fa-clock"></i> ' + pricing.discount + '% تخفیف';
       html += '</div>';
       html += '<div style="position:absolute;top:.75rem;right:.75rem;font-size:.75rem;color:var(--txt-dim)">⏰ مدت محدود</div>';
     }
@@ -235,7 +235,7 @@
 
     if (hasDiscount && pricing.endDate) {
       html += '<div style="margin-top:.75rem;padding-top:.75rem;border-top:1px solid var(--brd)">';
-      html += '<div style="font-size:.6875rem;color:var(--txt-dim);margin-bottom:.375rem;text-align:center">⏳ مدت محدود</div>';
+      html += '<div style="font-size:.6875rem;color:var(--txt-dim);margin-bottom:.375rem;text-align:center"><i class="fa-solid fa-clock"></i> مدت محدود</div>';
       html += '<div id="cd-' + planId + '"></div>';
       html += '</div>';
     }

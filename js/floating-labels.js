@@ -17,10 +17,10 @@
   // DEFAULT LABELS
   // ============================================================
   var DEFAULT_LABELS = [
-    { id: "fl-signal",   text: "SIGNAL +4.2%",  icon: "📊", color: "#a78bfa", bg: "rgba(124,58,237,0.15)", border: "rgba(124,58,237,0.35)" },
-    { id: "fl-speed",    text: "LATENCY 4ms",   icon: "⚡", color: "#22d3ee", bg: "rgba(34,211,238,0.15)",  border: "rgba(34,211,238,0.35)" },
-    { id: "fl-winrate",  text: "WIN RATE 67.8%", icon: "🎯", color: "#34d399", bg: "rgba(52,211,153,0.15)",  border: "rgba(52,211,153,0.35)" },
-    { id: "fl-uptime",   text: "UPTIME 99.97%",  icon: "●",  color: "#eab308", bg: "rgba(234,179,8,0.15)",   border: "rgba(234,179,8,0.35)" },
+    { id: "fl-signal",   text: "SIGNAL +4.2%",  icon: '<i class="fa-solid fa-chart-line"></i>', color: "#a78bfa", bg: "rgba(124,58,237,0.15)", border: "rgba(124,58,237,0.35)" },
+    { id: "fl-speed",    text: "LATENCY 4ms",   icon: '<i class="fa-solid fa-bolt"></i>', color: "#22d3ee", bg: "rgba(34,211,238,0.15)",  border: "rgba(34,211,238,0.35)" },
+    { id: "fl-winrate",  text: "WIN RATE 67.8%", icon: '<i class="fa-solid fa-bullseye"></i>', color: "#34d399", bg: "rgba(52,211,153,0.15)",  border: "rgba(52,211,153,0.35)" },
+    { id: "fl-uptime",   text: "UPTIME 99.97%",  icon: '<i class="fa-solid fa-circle-check"></i>',  color: "#eab308", bg: "rgba(234,179,8,0.15)",   border: "rgba(234,179,8,0.35)" },
   ];
 
   // ============================================================

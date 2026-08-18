@@ -401,7 +401,7 @@
     overlay.id = "ic-payment-modal";
     overlay.style.cssText = "position:fixed;inset:0;z-index:9999;display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,0.7);backdrop-filter:blur(10px)";
     overlay.innerHTML = '<div style="background:linear-gradient(160deg,#1a1040,#0f172a);border-radius:1.25rem;border:1px solid rgba(16,185,129,0.3);padding:2.5rem;max-width:22rem;width:92%;text-align:center;box-shadow:0 25px 60px rgba(0,0,0,0.5)">' +
-      '<div style="font-size:3rem;margin-bottom:1rem">✅</div>' +
+      '<div style="font-size:3rem;margin-bottom:1rem"><i class="fa-solid fa-check-circle"></i></div>' +
       '<p style="color:white;font-size:1rem;line-height:1.6;margin-bottom:1.5rem">' + msg + '</p>' +
       '<button onclick="this.closest(\'div[style]\').parentElement.remove()" style="background:linear-gradient(135deg,#7C3AED,#06B6D4);color:white;border:none;padding:0.75rem 2rem;border-radius:0.75rem;font-weight:600;cursor:pointer;font-size:0.9375rem;font-family:inherit">بستن</button>' +
     '</div>';

@@ -9,6 +9,10 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  
+  <!-- Font Awesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  
   <style>
     :root {
       --grad-brand: linear-gradient(135deg, #7C3AED 0%, #06B6D4 100%);
@@ -380,23 +384,23 @@
       <nav class="sidebar-nav">
         <div class="nav-group">
           <div class="nav-group-label">اصلی</div>
-          <div class="nav-item active" data-s="overview"><span class="icon">📊</span> داشبورد</div>
-          <div class="nav-item" data-s="content"><span class="icon">📝</span> مدیریت محتوا</div>
-          <div class="nav-item" data-s="offers"><span class="icon">🎁</span> پیشنهادات</div>
-          <div class="nav-item" data-s="discounts"><span class="icon">💰</span> تخفیف پلن‌ها</div>
+          <div class="nav-item active" data-s="overview"><span class="icon"><i class="fa-solid fa-chart-pie"></i></span> داشبورد</div>
+          <div class="nav-item" data-s="content"><span class="icon"><i class="fa-solid fa-file-lines"></i></span> مدیریت محتوا</div>
+          <div class="nav-item" data-s="offers"><span class="icon"><i class="fa-solid fa-gift"></i></span> پیشنهادات</div>
+          <div class="nav-item" data-s="discounts"><span class="icon"><i class="fa-solid fa-coins"></i></span> تخفیف پلن‌ها</div>
         </div>
         <div class="nav-group">
           <div class="nav-group-label">کاربران و مالی</div>
-          <div class="nav-item" data-s="users"><span class="icon">👥</span> کاربران</div>
-          <div class="nav-item" data-s="subscriptions"><span class="icon">📋</span> اشتراک‌ها</div>
-          <div class="nav-item" data-s="payments"><span class="icon">💳</span> پرداخت‌ها</div>
+          <div class="nav-item" data-s="users"><span class="icon"><i class="fa-solid fa-users"></i></span> کاربران</div>
+          <div class="nav-item" data-s="subscriptions"><span class="icon"><i class="fa-solid fa-clipboard-list"></i></span> اشتراک‌ها</div>
+          <div class="nav-item" data-s="payments"><span class="icon"><i class="fa-solid fa-credit-card"></i></span> پرداخت‌ها</div>
         </div>
         <div class="nav-group">
           <div class="nav-group-label">ابزارها</div>
-          <div class="nav-item" data-s="emails"><span class="icon">✉️</span> ایمیل‌ها</div>
+          <div class="nav-item" data-s="emails"><span class="icon"><i class="fa-solid fa-envelope"></i></span> ایمیل‌ها</div>
           <div class="nav-item" data-s="preview"><span class="icon">👁</span> پیش‌نمایش</div>
           <div class="nav-item" data-s="versions"><span class="icon">📦</span> نسخه‌ها</div>
-          <div class="nav-item" data-s="settings"><span class="icon">⚙️</span> تنظیمات</div>
+          <div class="nav-item" data-s="settings"><span class="icon"><i class="fa-solid fa-gear"></i></span> تنظیمات</div>
         </div>
       </nav>
       <div class="sidebar-footer">
@@ -436,7 +440,7 @@
         <div class="section active" id="s-overview">
           <div class="stats-grid" id="stats-grid"></div>
           <div class="card">
-            <div class="card-header"><h2>📈 نمودار درآمد (۷ روز اخیر)</h2></div>
+            <div class="card-header"><h2><i class="fa-solid fa-chart-line"></i> نمودار درآمد (۷ روز اخیر)</h2></div>
             <div class="card-body"><canvas id="revenue-chart" height="200"></canvas></div>
           </div>
         </div>
@@ -453,7 +457,7 @@
         <div class="section" id="s-offers">
           <div class="card">
             <div class="card-header">
-              <h2>🎁 مدیریت پیشنهادات</h2>
+              <h2><i class="fa-solid fa-gift"></i> مدیریت پیشنهادات</h2>
               <div class="actions">
                 <button class="btn btn-purple" onclick="openOfferModal()">+ پیشنهاد جدید</button>
               </div>
@@ -466,7 +470,7 @@
         <div class="section" id="s-discounts">
           <div class="card">
             <div class="card-header">
-              <h2>💰 مدیریت تخفیف پلن‌ها</h2>
+              <h2><i class="fa-solid fa-coins"></i> مدیریت تخفیف پلن‌ها</h2>
             </div>
             <div class="card-body">
               <div id="live-price-banner-admin" style="text-align:center;padding:1rem;background:var(--bg-card);border:1px solid var(--brd);border-radius:var(--radius);margin-bottom:1.5rem"></div>
@@ -479,7 +483,7 @@
         <div class="section" id="s-users">
           <div class="card">
             <div class="card-header">
-              <h2>👥 لیست کاربران</h2>
+              <h2><i class="fa-solid fa-users"></i> لیست کاربران</h2>
               <div class="actions"><button class="btn btn-neutral" onclick="exportCSV('users')">📥 خروجی CSV</button></div>
             </div>
             <div class="card-body no-pad">
@@ -492,7 +496,7 @@
         <div class="section" id="s-subscriptions">
           <div class="card">
             <div class="card-header">
-              <h2>📋 لیست اشتراک‌ها</h2>
+              <h2><i class="fa-solid fa-clipboard-list"></i> لیست اشتراک‌ها</h2>
               <div class="actions"><button class="btn btn-neutral" onclick="exportCSV('subscriptions')">📥 خروجی CSV</button></div>
             </div>
             <div class="card-body no-pad">
@@ -505,7 +509,7 @@
         <div class="section" id="s-payments">
           <div class="card">
             <div class="card-header">
-              <h2>💳 لیست پرداخت‌ها</h2>
+              <h2><i class="fa-solid fa-credit-card"></i> لیست پرداخت‌ها</h2>
               <div class="actions"><button class="btn btn-neutral" onclick="exportCSV('payments')">📥 خروجی CSV</button></div>
             </div>
             <div class="card-body no-pad">
@@ -518,8 +522,8 @@
         <div class="section" id="s-emails">
           <div class="card">
             <div class="card-header">
-              <h2>✉️ لاگ ایمیل‌ها</h2>
-              <div class="actions"><button class="btn btn-purple" onclick="openEmailModal()">✉️ ارسال ایمیل</button></div>
+              <h2><i class="fa-solid fa-envelope"></i> لاگ ایمیل‌ها</h2>
+              <div class="actions"><button class="btn btn-purple" onclick="openEmailModal()"><i class="fa-solid fa-envelope"></i> ارسال ایمیل</button></div>
             </div>
             <div class="card-body no-pad">
               <div class="table-wrap"><table id="t-email"><thead><tr><th>تاریخ</th><th>گیرنده</th><th>قالب</th><th>موضوع</th><th>وضعیت</th></tr></thead><tbody></tbody></table></div>
@@ -565,7 +569,7 @@
         <!-- ===== SETTINGS ===== -->
         <div class="section" id="s-settings">
           <div class="card">
-            <div class="card-header"><h2>⚙️ تنظیمات عمومی</h2></div>
+            <div class="card-header"><h2><i class="fa-solid fa-gear"></i> تنظیمات عمومی</h2></div>
             <div class="card-body">
               <div class="field-row">
                 <div class="form-group">
@@ -604,7 +608,7 @@
           <!-- ===== BANK CARDS MANAGEMENT ===== -->
           <div class="card">
             <div class="card-header">
-              <h2>💳 مدیریت کارت‌های بانکی</h2>
+              <h2><i class="fa-solid fa-credit-card"></i> مدیریت کارت‌های بانکی</h2>
               <div class="actions">
                 <button class="btn btn-purple" onclick="openBankCardModal()">+ کارت جدید</button>
               </div>
@@ -828,12 +832,12 @@
       try{
         var d = await apiGet('overview');
         var stats = [
-          {icon:'👥',label:'کل کاربران',value:d.total_users||0,sub:'عضو ثبت‌نام‌شده',color:'var(--info-bg)'},
-          {icon:'📋',label:'اشتراک فعال',value:d.active_subscriptions||0,sub:'در حال حاضر فعال',color:'var(--ok-bg)'},
-          {icon:'✅',label:'پرداخت تایید شده',value:d.confirmed_payments||0,sub:'تراکنش موفق',color:'var(--purple-bg)'},
-          {icon:'💰',label:'درآمد کل',value:'$'+(d.total_revenue_usdt||0).toLocaleString(),sub:'USDT',color:'var(--warn-bg)'},
-          {icon:'⏳',label:'پرداخت در انتظار',value:d.pending_subscriptions||0,sub:'منتظر تایید',color:'var(--warn-bg)'},
-          {icon:'✉️',label:'ایمیل ارسال شده',value:d.emails_sent||0,sub:'مجموع',color:'var(--info-bg)'}
+          {icon:'<i class="fa-solid fa-users"></i>',label:'کل کاربران',value:d.total_users||0,sub:'عضو ثبت‌نام‌شده',color:'var(--info-bg)'},
+          {icon:'<i class="fa-solid fa-clipboard-list"></i>',label:'اشتراک فعال',value:d.active_subscriptions||0,sub:'در حال حاضر فعال',color:'var(--ok-bg)'},
+          {icon:'<i class="fa-solid fa-check-circle"></i>',label:'پرداخت تایید شده',value:d.confirmed_payments||0,sub:'تراکنش موفق',color:'var(--purple-bg)'},
+          {icon:'<i class="fa-solid fa-coins"></i>',label:'درآمد کل',value:'$'+(d.total_revenue_usdt||0).toLocaleString(),sub:'USDT',color:'var(--warn-bg)'},
+          {icon:'<i class="fa-solid fa-clock"></i>',label:'پرداخت در انتظار',value:d.pending_subscriptions||0,sub:'منتظر تایید',color:'var(--warn-bg)'},
+          {icon:'<i class="fa-solid fa-envelope"></i>',label:'ایمیل ارسال شده',value:d.emails_sent||0,sub:'مجموع',color:'var(--info-bg)'}
         ];
         document.getElementById('stats-grid').innerHTML = stats.map(function(s){
           return '<div class="stat-card"><div class="stat-icon" style="background:'+s.color+'">'+s.icon+'</div><div class="stat-label">'+s.label+'</div><div class="stat-value">'+s.value+'</div><div class="stat-sub">'+s.sub+'</div></div>';
@@ -973,7 +977,7 @@
       var html = '';
       Object.keys(CONTENT_SECTIONS).forEach(function(key){
         var sec = CONTENT_SECTIONS[key];
-        html += '<div class="section-editor"><div class="section-editor-header" onclick="this.nextElementSibling.classList.toggle(\'open\')"><h3><span>📝</span> '+sec.title+'</h3><span style="color:var(--txt-dim);font-size:.75rem">▼</span></div><div class="section-editor-body">';
+        html += '<div class="section-editor"><div class="section-editor-header" onclick="this.nextElementSibling.classList.toggle(\'open\')"><h3><span><i class="fa-solid fa-file-lines"></i></span> '+sec.title+'</h3><span style="color:var(--txt-dim);font-size:.75rem">▼</span></div><div class="section-editor-body">';
         Object.keys(sec.fields).forEach(function(f){
           var field = sec.fields[f];
           var val = contentData[key][f] || field.default;
@@ -1187,11 +1191,11 @@
         cache.users = d.users||[];
         var tb = document.querySelector('#t-user tbody');
         if(!cache.users.length){
-          showTableError('t-user', 5, '👥', 'هنوز کاربری ثبت‌نام نکرده');
+          showTableError('t-user', 5, '<i class="fa-solid fa-users"></i>', 'هنوز کاربری ثبت‌نام نکرده');
           return;
         }
         tb.innerHTML = cache.users.map(function(u){
-          return '<tr><td>'+dt(u.created_at)+'</td><td style="direction:ltr;text-align:left">'+u.email+'</td><td>'+(u.name||'-')+'</td><td>'+(u.last_sign_in?dt(u.last_sign_in):'هرگز')+'</td><td><button class="btn btn-info" onclick="detailUser(\''+u.id+'\')">📋</button></td></tr>';
+          return '<tr><td>'+dt(u.created_at)+'</td><td style="direction:ltr;text-align:left">'+u.email+'</td><td>'+(u.name||'-')+'</td><td>'+(u.last_sign_in?dt(u.last_sign_in):'هرگز')+'</td><td><button class="btn btn-info" onclick="detailUser(\''+u.id+'\')"><i class="fa-solid fa-clipboard-list"></i></button></td></tr>';
         }).join('');
       }catch(e){
         showTableError('t-user', 5, '⚠️', 'خطا در بارگذاری کاربران. اتصال API را بررسی کنید.');
@@ -1206,15 +1210,15 @@
         cache.subscriptions = d.subscriptions||[];
         var tb = document.querySelector('#t-sub tbody');
         if(!cache.subscriptions.length){
-          showTableError('t-sub', 6, '📋', 'هنوز اشتراکی ثبت نشده');
+          showTableError('t-sub', 6, '<i class="fa-solid fa-clipboard-list"></i>', 'هنوز اشتراکی ثبت نشده');
           return;
         }
         tb.innerHTML = cache.subscriptions.map(function(s){
           var acts = '';
-          if(s.status==='pending') acts += '<button class="btn btn-ok" onclick="activateSub(\''+s.id+'\')">✅</button>';
+          if(s.status==='pending') acts += '<button class="btn btn-ok" onclick="activateSub(\''+s.id+'\')"><i class="fa-solid fa-check-circle"></i></button>';
           if(s.status==='active'){
             acts += '<button class="btn btn-warn" onclick="extendSub(\''+s.id+'\')">⏰</button>';
-            acts += '<button class="btn btn-err" onclick="deactivateSub(\''+s.id+'\')">❌</button>';
+            acts += '<button class="btn btn-err" onclick="deactivateSub(\''+s.id+'\')"><i class="fa-solid fa-times-circle"></i></button>';
           }
           return '<tr><td>'+dt(s.created_at)+'</td><td>'+userName(s.user_id)+'</td><td>'+(s.plans?.label||s.plan_id)+'</td><td>'+ss(s.status)+'</td><td>'+dt(s.expires_at)+'</td><td><div class="cell-actions">'+acts+'</div></td></tr>';
         }).join('');
@@ -1231,16 +1235,16 @@
         cache.payments = d.payments||[];
         var tb = document.querySelector('#t-pay tbody');
         if(!cache.payments.length){
-          showTableError('t-pay', 6, '💳', 'هنوز پرداختی ثبت نشده');
+          showTableError('t-pay', 6, '<i class="fa-solid fa-credit-card"></i>', 'هنوز پرداختی ثبت نشده');
           return;
         }
         tb.innerHTML = cache.payments.map(function(p){
           var acts = '';
           if(p.payment_status==='waiting'||p.payment_status==='confirming')
-            acts += '<button class="btn btn-ok" onclick="confirmPayment(\''+p.id+'\')">✅</button>';
+            acts += '<button class="btn btn-ok" onclick="confirmPayment(\''+p.id+'\')"><i class="fa-solid fa-check-circle"></i></button>';
           if(p.payment_status==='confirmed')
             acts += '<button class="btn btn-err" onclick="refundPayment(\''+p.id+'\')">↩</button>';
-          acts += '<button class="btn btn-info" onclick="detailPayment(\''+p.id+'\')">📋</button>';
+          acts += '<button class="btn btn-info" onclick="detailPayment(\''+p.id+'\')"><i class="fa-solid fa-clipboard-list"></i></button>';
           return '<tr><td>'+dt(p.created_at)+'</td><td>'+userName(p.user_id)+'</td><td>'+(p.subscriptions?.plans?.label||p.plan_id)+'</td><td>$'+p.amount_usdt+'</td><td>'+ps(p.payment_status)+'</td><td><div class="cell-actions">'+acts+'</div></td></tr>';
         }).join('');
       }catch(e){
@@ -1257,7 +1261,7 @@
         var TN={welcome:'خوش‌آمد',payment_success:'پرداخت موفق',subscription_expiring:'رو به انقضا',subscription_expired:'منقضی شده',payment_failed:'پرداخت ناموفق'};
         var tb = document.querySelector('#t-email tbody');
         if(!cache.emails.length){
-          showTableError('t-email', 5, '✉️', 'هنوز ایمیلی ارسال نشده');
+          showTableError('t-email', 5, '<i class="fa-solid fa-envelope"></i>', 'هنوز ایمیلی ارسال نشده');
           return;
         }
         tb.innerHTML = cache.emails.map(function(e){
@@ -1371,13 +1375,13 @@
       var el = document.getElementById('bank-cards-list');
       if(!el) return;
       if(!cards.length){
-        el.innerHTML = '<div class="table-empty"><div class="icon">💳</div><div class="msg">هنوز کارت بانکی تعریف نشده. روی «کارت جدید» کلیک کنید.</div></div>';
+        el.innerHTML = '<div class="table-empty"><div class="icon"><i class="fa-solid fa-credit-card"></i></div><div class="msg">هنوز کارت بانکی تعریف نشده. روی «کارت جدید» کلیک کنید.</div></div>';
         return;
       }
       el.innerHTML = cards.map(function(c,i){
         var masked = c.number ? c.number.replace(/(\d{4})/g, '$1 ').trim() : '****';
         return '<div class="bank-card-item">'+
-          '<div class="bank-card-icon">💳</div>'+
+          '<div class="bank-card-icon"><i class="fa-solid fa-credit-card"></i></div>'+
           '<div class="bank-card-info">'+
             '<div class="bank-card-number">'+masked+'</div>'+
             '<div class="bank-card-name">'+(c.name||'-')+'</div>'+
@@ -1513,7 +1517,7 @@
 
     /* ===== EMAIL MODAL ===== */
     window.openEmailModal = function(){
-      openModal('✉️ ارسال ایمیل',
+      openModal('<i class="fa-solid fa-envelope"></i> ارسال ایمیل',
         '<div class="form-group"><label class="form-label">ایمیل گیرنده</label><input class="form-input" id="m-email-to" placeholder="user@example.com" style="direction:ltr;text-align:left"></div>'+
         '<div class="form-group"><label class="form-label">قالب</label><select class="form-select" id="m-email-tpl"><option value="welcome">خوش‌آمد</option><option value="payment_success">پرداخت موفق</option><option value="subscription_expiring">رو به انقضا</option><option value="subscription_expired">منقضی شده</option><option value="payment_failed">پرداخت ناموفق</option></select></div>',
         async function(){
