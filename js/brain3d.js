@@ -114,7 +114,8 @@
     var vtx = new THREE.Vector3();
 
     function hash3(x, y, z) {
-      return (Math.sin(x * 127.1 + y * 311.7 + z * 74.7) * 43758.5453) % 1;
+      var n = Math.sin(x * 127.1 + y * 311.7 + z * 74.7) * 43758.5453;
+      return n - Math.floor(n);
     }
     function noise3(x, y, z) {
       var ix = Math.floor(x), iy = Math.floor(y), iz = Math.floor(z);
