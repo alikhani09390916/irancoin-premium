@@ -41,43 +41,51 @@ class IranCoin3D {
     renderer.setSize(container.clientWidth, container.clientHeight);
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
     renderer.setClearColor(0x000000, 0);
+    renderer.toneMapping = THREE.ACESFilmicToneMapping;
+    renderer.toneMappingExposure = 1.5;
     container.appendChild(renderer.domElement);
 
-    // Lighting
-    const ambientLight = new THREE.AmbientLight(0x404040, 0.5);
+    // Strong lighting
+    const ambientLight = new THREE.AmbientLight(0xffffff, 0.8);
     scene.add(ambientLight);
 
-    const directionalLight = new THREE.DirectionalLight(0xffffff, 1);
+    const directionalLight = new THREE.DirectionalLight(0xffffff, 2);
     directionalLight.position.set(5, 10, 5);
     scene.add(directionalLight);
 
-    const pointLight1 = new THREE.PointLight(0x7C3AED, 2, 20);
-    pointLight1.position.set(-3, 2, 3);
+    const pointLight1 = new THREE.PointLight(0x7C3AED, 3, 30);
+    pointLight1.position.set(-4, 3, 4);
     scene.add(pointLight1);
 
-    const pointLight2 = new THREE.PointLight(0x22D3EE, 2, 20);
-    pointLight2.position.set(3, 2, -3);
+    const pointLight2 = new THREE.PointLight(0x22D3EE, 3, 30);
+    pointLight2.position.set(4, 3, -4);
     scene.add(pointLight2);
 
-    // Crypto coins
+    const pointLight3 = new THREE.PointLight(0xffffff, 2, 20);
+    pointLight3.position.set(0, 5, 0);
+    scene.add(pointLight3);
+
+    // Crypto coins - using emissive materials for visibility
     const coins = [];
     const coinData = [
-      { color: 0xF7931A, size: 0.8, pos: [-3, 1, 0], symbol: 'BTC' },
-      { color: 0x26A17B, size: 0.6, pos: [-1.5, 0.5, 1], symbol: 'USDT' },
-      { color: 0x627EEA, size: 0.7, pos: [0, 1.5, -1], symbol: 'ETH' },
-      { color: 0xF0B90B, size: 0.5, pos: [1.5, 0.8, 0.5], symbol: 'BNB' },
-      { color: 0x9945FF, size: 0.55, pos: [3, 1.2, -0.5], symbol: 'SOL' },
-      { color: 0x0033AD, size: 0.45, pos: [-2, -0.5, -1], symbol: 'ADA' },
-      { color: 0xC2A633, size: 0.5, pos: [2, -0.3, 1], symbol: 'DOGE' },
-      { color: 0x346AA9, size: 0.55, pos: [0, 0, 2], symbol: 'XRP' },
+      { color: 0xF7931A, emissive: 0xF7931A, size: 0.8, pos: [-3, 0.5, 0], symbol: 'BTC' },
+      { color: 0x26A17B, emissive: 0x26A17B, size: 0.6, pos: [-1.5, 0, 1], symbol: 'USDT' },
+      { color: 0x627EEA, emissive: 0x627EEA, size: 0.7, pos: [0, 1, -1], symbol: 'ETH' },
+      { color: 0xF0B90B, emissive: 0xF0B90B, size: 0.5, pos: [1.5, 0.3, 0.5], symbol: 'BNB' },
+      { color: 0x9945FF, emissive: 0x9945FF, size: 0.55, pos: [3, 0.7, -0.5], symbol: 'SOL' },
+      { color: 0x0033AD, emissive: 0x0033AD, size: 0.45, pos: [-2, -0.5, -1], symbol: 'ADA' },
+      { color: 0xC2A633, emissive: 0xC2A633, size: 0.5, pos: [2, -0.3, 1], symbol: 'DOGE' },
+      { color: 0x346AA9, emissive: 0x346AA9, size: 0.55, pos: [0, -0.5, 2], symbol: 'XRP' },
     ];
 
     coinData.forEach((data, i) => {
-      const geometry = new THREE.CylinderGeometry(data.size, data.size, 0.1, 32);
+      const geometry = new THREE.CylinderGeometry(data.size, data.size, 0.15, 32);
       const material = new THREE.MeshStandardMaterial({
         color: data.color,
-        metalness: 0.8,
-        roughness: 0.2,
+        emissive: data.emissive,
+        emissiveIntensity: 0.3,
+        metalness: 0.9,
+        roughness: 0.1,
       });
       const coin = new THREE.Mesh(geometry, material);
       coin.position.set(...data.pos);
@@ -91,11 +99,11 @@ class IranCoin3D {
       coins.push(coin);
 
       // Add glow ring
-      const ringGeometry = new THREE.TorusGeometry(data.size + 0.1, 0.02, 16, 100);
+      const ringGeometry = new THREE.TorusGeometry(data.size + 0.15, 0.03, 16, 100);
       const ringMaterial = new THREE.MeshBasicMaterial({ 
         color: data.color, 
         transparent: true, 
-        opacity: 0.3 
+        opacity: 0.5 
       });
       const ring = new THREE.Mesh(ringGeometry, ringMaterial);
       ring.position.copy(coin.position);
@@ -107,12 +115,12 @@ class IranCoin3D {
     const lineMaterial = new THREE.LineBasicMaterial({ 
       color: 0x7C3AED, 
       transparent: true, 
-      opacity: 0.3 
+      opacity: 0.4 
     });
 
     for (let i = 0; i < coins.length; i++) {
       for (let j = i + 1; j < coins.length; j++) {
-        if (Math.random() > 0.5) continue;
+        if (Math.random() > 0.6) continue;
         const points = [coins[i].position, coins[j].position];
         const geometry = new THREE.BufferGeometry().setFromPoints(points);
         const line = new THREE.Line(geometry, lineMaterial);
@@ -120,7 +128,7 @@ class IranCoin3D {
       }
     }
 
-    camera.position.z = 6;
+    camera.position.z = 7;
 
     this.scenes.hero = { scene, camera, renderer, coins };
   }
@@ -225,15 +233,25 @@ class IranCoin3D {
     renderer.setSize(container.clientWidth, container.clientHeight);
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
     renderer.setClearColor(0x000000, 0);
+    renderer.toneMapping = THREE.ACESFilmicToneMapping;
+    renderer.toneMappingExposure = 1.5;
     container.appendChild(renderer.domElement);
 
-    // Lighting
-    const ambientLight = new THREE.AmbientLight(0x404040, 0.5);
+    // Strong lighting
+    const ambientLight = new THREE.AmbientLight(0xffffff, 0.8);
     scene.add(ambientLight);
 
-    const directionalLight = new THREE.DirectionalLight(0xffffff, 1);
+    const directionalLight = new THREE.DirectionalLight(0xffffff, 2);
     directionalLight.position.set(5, 10, 5);
     scene.add(directionalLight);
+
+    const pointLight1 = new THREE.PointLight(0x7C3AED, 3, 30);
+    pointLight1.position.set(-4, 5, 4);
+    scene.add(pointLight1);
+
+    const pointLight2 = new THREE.PointLight(0x22D3EE, 3, 30);
+    pointLight2.position.set(4, 5, -4);
+    scene.add(pointLight2);
 
     // Portfolio bars (3D bar chart)
     const bars = [];
@@ -249,8 +267,10 @@ class IranCoin3D {
       const geometry = new THREE.BoxGeometry(0.6, data.height, 0.6);
       const material = new THREE.MeshStandardMaterial({
         color: data.color,
-        metalness: 0.5,
-        roughness: 0.3,
+        emissive: data.color,
+        emissiveIntensity: 0.3,
+        metalness: 0.6,
+        roughness: 0.2,
       });
       const bar = new THREE.Mesh(geometry, material);
       bar.position.set(data.pos[0], data.height / 2, data.pos[2]);
