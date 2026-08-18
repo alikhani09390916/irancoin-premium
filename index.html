@@ -19,8 +19,76 @@
   <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
   <link rel="stylesheet" href="design/motion-effects.css">
   <script src="js/floating-labels.js" defer></script>
+
+  <!-- Google Tag Manager -->
+  <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+  new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+  j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+  'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+  })(window,document,'script','dataLayer','GT-TNCHQ3DV');</script>
+  <!-- End Google Tag Manager -->
+
+  <!-- Google Analytics 4 -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-B8593EW2TM"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-B8593EW2TM', {
+      page_title: document.title,
+      page_location: window.location.href,
+      custom_map: {
+        dimension1: 'user_type',
+        dimension2: 'crypto_asset',
+        dimension3: 'payment_method',
+      },
+      send_page_view: true,
+      cookie_flags: 'SameSite=None;Secure',
+      anonymize_ip: true,
+      linker: {
+        domains: ['irancoin.ir', 'app.irancoin.ir'],
+      },
+    });
+
+    // IRANCOIN Analytics SDK
+    window.IranCoinAnalytics = {
+      trackEvent: function(name, params) {
+        gtag('event', name, params || {});
+      },
+      trackSubscription: function(plan, amount) {
+        gtag('event', 'subscription', {
+          plan_name: plan,
+          value: amount,
+          currency: 'USD',
+        });
+      },
+      trackSignal: function(action, asset) {
+        gtag('event', 'signal_interaction', {
+          action: action,
+          crypto_asset: asset,
+        });
+      },
+      trackPurchase: function(asset, amount, method) {
+        gtag('event', 'purchase', {
+          crypto_asset: asset,
+          transaction_amount: amount,
+          payment_method: method,
+          currency: 'USD',
+        });
+      },
+      trackPageView: function(page) {
+        gtag('event', 'page_view', { page_title: page });
+      },
+    };
+  </script>
+  <!-- End Google Analytics 4 -->
 </head>
 <body>
+  <!-- Google Tag Manager (noscript) -->
+  <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GT-TNCHQ3DV"
+  height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+  <!-- End Google Tag Manager (noscript) -->
+
   <a class="skip-link" href="#main">پرش به محتوای اصلی</a>
 
   <!-- Page transition veil -->
