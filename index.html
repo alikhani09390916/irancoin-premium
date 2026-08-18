@@ -18,15 +18,7 @@
   <link rel="stylesheet" href="design/responsive.css">
   <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
   <link rel="stylesheet" href="design/motion-effects.css">
-  <link rel="stylesheet" href="design/ai-core-float.css">
-  <script type="importmap">
-  {
-    "imports": {
-      "three": "https://unpkg.com/three@0.160.0/build/three.module.js",
-      "three/addons/": "https://unpkg.com/three@0.160.0/examples/jsm/"
-    }
-  }
-  </script>
+  <script src="js/floating-labels.js" defer></script>
 </head>
 <body>
   <a class="skip-link" href="#main">پرش به محتوای اصلی</a>
@@ -293,12 +285,7 @@
 
         <!-- Hero visual scene -->
         <div class="hero-visual" id="hero-visual" aria-hidden="true">
-          <!-- 3D Brain -->
-          <div class="brain-wrap">
-            <div class="brain-glow"></div>
-            <div id="ai-core-stage" class="brain-scene" role="img" aria-label="مغز هوش مصنوعی IRANCOiN — نمایش سه‌بعدی شبکه عصبی"></div>
-            <div class="brain-label"><span class="status-dot live"></span> هسته هوش مصنوعی</div>
-          </div>
+          <!-- Center area — intentionally empty (modular slot) -->
 
           <!-- Bitcoin -->
           <div class="coin coin-btc coin-float-idle" data-parallax="0.14">
@@ -1116,26 +1103,6 @@
   <script src="js/counters.js"></script>
   <script src="js/main.js"></script>
   <script src="js/price.js"></script>
-  <script type="module">
-    import { initAICoreBrain } from "./js/ai-brain-scene.js";
-    const stage = document.getElementById("ai-core-stage");
-    if (stage) {
-      initAICoreBrain(stage, {
-        items: [
-          { type: "glyph", glyph: "\u20BF" },
-          { type: "stat", label: "SIGNAL", value: "+4.2%" },
-          { type: "stat", label: "LATENCY", value: "4ms" },
-          { type: "glyph", glyph: "\u039E" },
-          { type: "stat", label: "WIN RATE", value: "67.8%" },
-          { type: "stat", label: "RISK", value: "\u0645\u062A\u0648\u0633\u0637" },
-          { type: "stat", label: "NEURONS", value: "80" },
-          { type: "stat", label: "ACTIVE", value: "\u25CF" },
-          { type: "stat", label: "DEPTH", value: "5L" },
-          { type: "stat", label: "FLOPS", value: "2.4T" },
-        ],
-      });
-    }
-  </script>
   <script>
     (function () {
       "use strict";

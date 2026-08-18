@@ -28,6 +28,11 @@
   }
 }
 
+@keyframes brain-breathe {
+  from { transform: scale(0.98); }
+  to { transform: scale(1.02); }
+}
+
 /* ---------- AI Intelligence (brain detail) ---------- */
 .intel-visual {
   position: relative;

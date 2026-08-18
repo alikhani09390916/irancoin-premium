@@ -235,164 +235,40 @@
   place-items: center;
 }
 
-/* ---------- AI Brain ---------- */
-.brain-wrap {
+/* ---------- Floating AI labels ---------- */
+.floating-label {
   position: absolute;
-  inset: 50% auto auto 50%;
-  transform: translate(-50%, -50%);
-  width: clamp(19rem, 30vw, 26rem);
-  aspect-ratio: 1;
-  animation: brain-materialize var(--dur-cinematic) var(--ease-out) both;
-  animation-delay: 0.35s;
-  z-index: 3;
-  transform-style: preserve-3d;
-  perspective: 1400px;
-}
-
-@keyframes brain-spin {
-  from { transform: translate(-50%, -50%) rotateY(0deg); }
-  to { transform: translate(-50%, -50%) rotateY(360deg); }
-}
-
-@keyframes brain-materialize {
-  0% { opacity: 0; transform: translate(-50%, -50%) scale(0.55); filter: blur(16px); }
-  100% { opacity: 1; transform: translate(-50%, -50%) scale(1); filter: blur(0); }
-}
-
-.brain-glow {
-  position: absolute;
-  inset: -18%;
-  border-radius: 50%;
-  background: radial-gradient(circle, rgba(124, 58, 237, 0.4), rgba(59, 130, 246, 0.22) 45%, transparent 70%);
-  filter: blur(var(--blur-md));
-  animation: glow-breathe 5s var(--ease-in-out) infinite alternate;
-}
-
-@keyframes glow-breathe {
-  from { opacity: 0.6; transform: scale(0.96); }
-  to { opacity: 1; transform: scale(1.05); }
-}
-
-.brain-core {
-  position: absolute;
-  inset: 0;
-  border-radius: 50%;
-  background:
-    radial-gradient(circle at 50% 45%, rgba(124, 58, 237, 0.32), rgba(67, 56, 202, 0.12) 55%, transparent 72%);
-  animation: brain-breathe 6s var(--ease-in-out) infinite alternate;
-  overflow: hidden;
-  display: grid;
-  place-items: center;
-}
-
-@keyframes brain-breathe {
-  from { transform: scale(0.98); }
-  to { transform: scale(1.02); }
-}
-
-/* ---------- Brain illustration (SVG art) ---------- */
-.brain-art {
-  position: absolute;
-  inset: 4% 6% 10%;
-  width: 88%;
-  height: 86%;
-  filter: drop-shadow(0 16px 28px rgba(76, 29, 149, 0.4));
-  overflow: visible;
-}
-
-.brain-art-sm {
-  position: relative;
-  width: 72%;
-  height: 72%;
-  filter: drop-shadow(0 12px 22px rgba(76, 29, 149, 0.4));
-}
-
-.nn-dot {
-  animation: nn-pulse 2.8s var(--ease-in-out) infinite;
-  animation-delay: var(--d, 0s);
-  transform-box: fill-box;
-  transform-origin: center;
-}
-
-@keyframes nn-pulse {
-  0%, 100% { opacity: 0.45; transform: scale(0.75); }
-  50% { opacity: 1; transform: scale(1.3); }
-}
-
-.nn-link {
-  stroke-dasharray: 5 9;
-  animation: nn-flow 4s linear infinite;
-  animation-delay: var(--d, 0s);
-}
-
-@keyframes nn-flow { to { stroke-dashoffset: -42; } }
-
-.brain-scanline {
-  animation: scanline-drift 7s linear infinite;
-  transform-box: fill-box;
-}
-
-@keyframes scanline-drift {
-  from { transform: translateY(-4%); opacity: 0.15; }
-  50% { opacity: 0.7; }
-  to { transform: translateY(4%); opacity: 0.15; }
-}
-
-/* ---------- Orbit rings ---------- */
-.brain-ring {
-  position: absolute;
-  inset: 0;
-  border-radius: 50%;
-  border: 1.5px solid rgba(196, 181, 253, 0.5);
-}
-
-.brain-ring-r1 { transform: rotateX(72deg) rotateZ(0deg); }
-.brain-ring-r2 { transform: rotateX(72deg) rotateZ(60deg); }
-.brain-ring-r3 { transform: rotateX(72deg) rotateZ(120deg); }
-.brain-ring-r4 { transform: rotateY(90deg); }
-
-.brain-ring::after {
-  content: "";
-  position: absolute;
-  top: -3px;
-  inset-inline-start: 50%;
-  width: 6px;
-  height: 6px;
-  border-radius: var(--r-full);
-  background: var(--c-cyan-300);
-  box-shadow: 0 0 12px var(--c-cyan-400);
-  animation: ring-node 8s linear infinite;
-}
-
-.brain-ring-r1::after { animation-delay: 0s; }
-.brain-ring-r2::after { animation-delay: 1.3s; }
-.brain-ring-r3::after { animation-delay: 2.6s; }
-.brain-ring-r4::after { animation-delay: 3.9s; }
-
-@keyframes ring-node {
-  from { transform: rotate(0deg) translateX(calc(clamp(9.5rem, 15vw, 13rem))) rotate(0deg); }
-  to { transform: rotate(360deg) translateX(calc(clamp(9.5rem, 15vw, 13rem))) rotate(-360deg); }
-}
-
-.brain-label {
-  position: absolute;
-  inset-inline-start: 50%;
-  bottom: -2.5rem;
-  transform: translateX(50%);
-  background: var(--bg-glass-strong);
-  border: var(--bw-xs) solid var(--border-glass);
-  backdrop-filter: blur(var(--blur-sm));
-  padding: var(--sp-2) var(--sp-4);
-  border-radius: var(--r-full);
-  font-size: var(--fs-dlabel);
-  font-weight: var(--fw-semibold);
-  color: var(--c-violet-700);
-  display: flex;
+  top: 0;
+  left: 0;
+  display: inline-flex;
   align-items: center;
-  gap: var(--sp-2);
+  gap: 0.4rem;
+  padding: 0.4rem 0.75rem;
+  border-radius: var(--r-full);
+  background: var(--fl-bg, rgba(124,58,237,0.12));
+  border: 1px solid var(--fl-border, rgba(124,58,237,0.3));
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  color: var(--fl-color, var(--c-violet-500));
+  font-family: var(--ff-body);
+  font-size: 0.65rem;
+  font-weight: var(--fw-semibold);
+  letter-spacing: 0.04em;
   white-space: nowrap;
-  box-shadow: var(--sh-sm);
-  z-index: 4;
+  pointer-events: none;
+  z-index: 2;
+  box-shadow:
+    0 2px 8px rgba(0,0,0,0.15),
+    0 0 20px rgba(124,58,237,0.08);
+  transition: opacity 0.3s ease;
+  will-change: transform;
+}
+.fl-icon {
+  font-size: 0.7rem;
+  line-height: 1;
+}
+.fl-text {
+  line-height: 1;
 }
 
 /* ---------- Bitcoin / Tether 3D coins ---------- */
@@ -683,7 +559,7 @@
 @media (prefers-reduced-motion: reduce) {
   .hero-title .hl-1, .hero-title .hl-2, .hero-title .hl-3,
   .hero-sub, .hero-ctas, .hero-stat,
-  .brain-wrap, .coin, .ai-card, .mini-chart {
+  .coin, .ai-card, .mini-chart, .floating-label {
     animation: none !important;
     opacity: 1 !important;
     transform: none !important;

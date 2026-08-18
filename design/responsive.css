@@ -94,7 +94,6 @@
   .coin { width: 2.8rem; }
   .btn-lg { padding: 0.8125rem 1.5rem; font-size: 0.875rem; }
   .ac-2, .ac-3, .ac-4, .mc-2 { display: none; }
-  .brain-wrap { width: clamp(14rem, 85vw, 18rem); }
   .pricing-card { padding: var(--sp-4); }
   .pricing-price { font-size: 2rem; }
   .faq-item { margin-bottom: var(--sp-2); }
@@ -123,7 +122,6 @@
   .coin { width: 3.4rem; }
   .btn-lg { padding: 0.9375rem 1.75rem; }
   .ac-2, .ac-4, .mc-2 { display: none; }
-  .brain-wrap { width: clamp(16rem, 80vw, 20rem); }
   .pricing-card { padding: var(--sp-6); }
   .faq-item { margin-bottom: var(--sp-2); }
 
@@ -165,13 +163,8 @@
   .hero-ctas { flex-direction: column; align-items: stretch; }
   .hero-ctas .btn { width: 100%; }
   .scroll-hint { display: none; }
-  .brain-ring::after {
-    width: 5px;
-    height: 5px;
-  }
   .pay-panel { padding: var(--sp-6); }
   .hero-visual { height: 30rem; }
-  .brain-label { bottom: -1.75rem; }
   .section-head { margin-bottom: var(--sp-10); }
   .cta-final { padding: var(--sp-8) var(--sp-5); }
   .cmp-table { font-size: 0.8125rem; }
@@ -221,13 +214,8 @@
   .hero-ctas { flex-direction: column; align-items: stretch; }
   .hero-ctas .btn { width: 100%; }
   .scroll-hint { display: none; }
-  .brain-ring::after {
-    width: 5px;
-    height: 5px;
-  }
   .pay-panel { padding: var(--sp-6); }
   .hero-visual { height: 32rem; }
-  .brain-label { bottom: -1.75rem; }
   .section-head { margin-bottom: var(--sp-10); }
   .cta-final { padding: var(--sp-8) var(--sp-5); }
   .cmp-table { font-size: 0.8125rem; }
@@ -290,11 +278,7 @@
   }
 
   .hero-orb,
-  .brain-ring,
   .intel-ring,
-  .brain-scanline,
-  .nn-link,
-  .nn-dot,
   .status-dot::after,
   .pricing-flag,
   .progress::after,
@@ -324,4 +308,14 @@
     backdrop-filter: none;
   }
   .dash-shell .dash-main { margin: 0; }
+}
+
+/* ---------- Floating labels responsive ---------- */
+@media (max-width: 767px) {
+  .floating-label {
+    font-size: 0.55rem;
+    padding: 0.3rem 0.6rem;
+    gap: 0.3rem;
+  }
+  .fl-icon { font-size: 0.6rem; }
 }
