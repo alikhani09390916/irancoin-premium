@@ -20,6 +20,10 @@
   <link rel="stylesheet" href="design/motion-effects.css">
   <script src="js/floating-labels.js" defer></script>
 
+  <!-- Three.js -->
+  <script src="https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.min.js" defer></script>
+  <script src="js/three-scenes.js" defer></script>
+
   <!-- Google Tag Manager -->
   <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
   new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
@@ -353,8 +357,9 @@
 
         <!-- Hero visual scene -->
         <div class="hero-visual" id="hero-visual" aria-hidden="true">
-          <!-- Center area — intentionally empty (modular slot) -->
-
+          <!-- 3D Canvas -->
+          <div id="hero-3d" style="position:absolute;inset:0;z-index:1;"></div>
+          
           <!-- Bitcoin -->
           <div class="coin coin-btc coin-float-idle" data-parallax="0.14">
             <div class="coin-symbol">₿</div>
@@ -449,6 +454,9 @@
             </div>
           </div>
           <div class="intel-visual" data-reveal="zoom" aria-hidden="true">
+            <!-- 3D Brain Canvas -->
+            <div id="brain-3d" style="position:absolute;inset:0;z-index:1;"></div>
+            
             <div class="intel-ring intel-ring-1"></div>
             <div class="intel-ring intel-ring-2"></div>
             <div class="intel-ring intel-ring-3"></div>
@@ -703,6 +711,9 @@
           <p class="lead">داشبورد IRANCOiN تمام اطلاعات مهم را در یک نگاه می‌آورد: ارزش پورتفولیو، پوزیشن‌های باز، سیگنال‌ها و عملکرد استراتژی.</p>
         </div>
         <div class="chart-window" data-reveal style="max-width:72rem;margin-inline:auto;position:relative">
+          <!-- 3D Dashboard Canvas -->
+          <div id="dashboard-3d" style="position:absolute;inset:0;z-index:1;height:300px;"></div>
+          
           <div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;pointer-events:none;z-index:2;opacity:0.12;font-size:3rem;font-weight:800;color:var(--c-violet-700);transform:rotate(-20deg);letter-spacing:0.5em">پیش‌نمایش</div>
           <div class="cw-top">
             <div class="cw-title">
@@ -1456,5 +1467,8 @@
       window.ICAuth = { open: openModal, close: closeModal };
     })();
   </script>
+
+  <!-- 3D Particles Background -->
+  <div id="particles-3d" style="position:fixed;inset:0;z-index:-1;pointer-events:none;"></div>
 </body>
 </html>
