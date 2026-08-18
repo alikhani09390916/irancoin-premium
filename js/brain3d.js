@@ -270,10 +270,12 @@
     function addFloatingItem(obj3D, basePos) {
       obj3D.position.copy(basePos);
       floatingGroup.add(obj3D);
+      var amp = randFloat(BOB_AMP[0], BOB_AMP[1]);
+      if (prefersReducedMotion) amp *= 0.3; // 70% reduction
       floatingItems.push({
         obj: obj3D,
         baseY: basePos.y,
-        amplitude: randFloat(BOB_AMP[0], BOB_AMP[1]),
+        amplitude: amp,
         frequency: randFloat(BOB_FREQ[0], BOB_FREQ[1]),
         phase: Math.random() * Math.PI * 2,
       });
@@ -316,14 +318,15 @@
 
       // Value
       ctx.fillStyle = "#F5F5F7";
-      ctx.font = "bold 28px JetBrains Mono, monospace";
+      ctx.font = "bold 28px monospace";
       ctx.textAlign = "center";
-      ctx.fillText(value, 128, 55);
+      ctx.textBaseline = "middle";
+      ctx.fillText(value, 128, 48);
 
       // Label
       ctx.fillStyle = "rgba(245,245,247,0.6)";
-      ctx.font = "600 13px JetBrains Mono, monospace";
-      ctx.fillText(label, 128, 85);
+      ctx.font = "600 12px monospace";
+      ctx.fillText(label, 128, 80);
 
       var tex = new THREE.CanvasTexture(canvas);
       var textGeo = new THREE.PlaneGeometry(0.5, 0.25);
@@ -431,7 +434,8 @@
       size: 0.025, vertexColors: true, transparent: true, opacity: 0.5,
       blending: THREE.AdditiveBlending, depthWrite: false,
     });
-    scene.add(new THREE.Points(pGeo, pMat));
+    var particlesObj = new THREE.Points(pGeo, pMat);
+    scene.add(particlesObj);
 
     // ===== 3) ANIMATION LOOP =====
     var clock = new THREE.Clock();
@@ -468,9 +472,8 @@
       }
 
       // --- Particles orbit ---
-      var pp2 = scene.children.find(function (c) { return c.isPoints; });
-      if (pp2) {
-        var pa = pp2.geometry.attributes.position;
+      if (particlesObj) {
+        var pa = particlesObj.geometry.attributes.position;
         for (var pi2 = 0; pi2 < pCount; pi2++) {
           var sp = pSpeeds[pi2];
           sp.t += sp.speed;
