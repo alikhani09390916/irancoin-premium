@@ -269,7 +269,8 @@
     overlay.id = "ic-auth-modal";
     overlay.style.cssText = "position:fixed;inset:0;z-index:9999;display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,0.7);backdrop-filter:blur(10px);animation:fadeIn .25s";
 
-    overlay.innerHTML = '<div style="background:linear-gradient(160deg,#1a1040,#0f172a);border-radius:1.25rem;border:1px solid rgba(124,58,237,0.3);padding:2rem;max-width:24rem;width:92%;box-shadow:0 25px 60px rgba(0,0,0,0.5)">' +
+    overlay.innerHTML = '<div style="background:linear-gradient(160deg,#1a1040,#0f172a);border-radius:1.25rem;border:1px solid rgba(124,58,237,0.3);padding:2rem;max-width:24rem;width:92%;box-shadow:0 25px 60px rgba(0,0,0,0.5);position:relative">' +
+      '<button id="ic-modal-close" style="position:absolute;top:1rem;left:1rem;background:none;border:none;color:rgba(255,255,255,0.4);font-size:1.25rem;cursor:pointer;padding:0.25rem;line-height:1">&times;</button>' +
       '<div style="text-align:center;margin-bottom:1.5rem">' +
         '<div style="width:3rem;height:3rem;border-radius:0.75rem;background:linear-gradient(135deg,#7C3AED,#06B6D4);display:grid;place-items:center;margin:0 auto 0.75rem;font-size:1.5rem"><i class="fa-solid fa-shield-halved"></i></div>' +
         '<div style="color:white;font-weight:700;font-size:1.125rem" id="auth-title">ورود به حساب</div>' +

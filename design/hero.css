@@ -250,7 +250,7 @@
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
   color: var(--fl-color, var(--c-violet-500));
-  font-family: var(--ff-body);
+  font-family: var(--font-fa);
   font-size: 0.65rem;
   font-weight: var(--fw-semibold);
   letter-spacing: 0.04em;

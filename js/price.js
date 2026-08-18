@@ -8,6 +8,7 @@
   var PRICE_TS_KEY = 'ic-price-timestamp';
   var DISCOUNT_KEY = 'ic-discounts';
   var REFRESH_INTERVAL = 60000; // 1 minute
+  var countdownIntervals = {};
 
   var PLANS = {
     monthly:    { usdt: 29,  label: '۱ ماهه',  days: 30 },
@@ -245,7 +246,8 @@
     // Start countdown if needed
     if (hasDiscount && pricing.endDate) {
       renderCountdown(pricing.endDate, 'cd-' + planId);
-      setInterval(function() {
+      if (countdownIntervals[planId]) clearInterval(countdownIntervals[planId]);
+      countdownIntervals[planId] = setInterval(function() {
         renderCountdown(pricing.endDate, 'cd-' + planId);
         // Auto-deactivate if expired
         var cd = getCountdown(pricing.endDate);

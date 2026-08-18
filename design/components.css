@@ -277,7 +277,7 @@
 .nav-links {
   display: flex;
   align-items: center;
-  gap: var(--sp-1);
+  gap: var(--sp-2);
   flex-wrap: nowrap;
   overflow-x: auto;
   overflow-y: hidden;
@@ -300,6 +300,7 @@
   align-items: center;
   gap: var(--sp-3);
   direction: ltr;
+  position: relative;
 }
 
 .brand-mark {
@@ -327,12 +328,6 @@
   background: var(--grad-brand);
   color: white !important;
   border: none;
-}
-
-.nav-links {
-  display: flex;
-  align-items: center;
-  gap: var(--sp-2);
 }
 
 .nav-link {
@@ -822,7 +817,8 @@
 
 .field input:focus,
 .field select:focus {
-  outline: none;
+  outline: 2px solid var(--c-violet-500);
+  outline-offset: 2px;
   border-color: var(--c-violet-500);
   box-shadow: 0 0 0 4px rgba(124, 58, 237, 0.15);
 }
