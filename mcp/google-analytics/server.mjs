@@ -24,12 +24,14 @@ const GA_CONFIG = {
   // Service account credentials (to be configured)
   serviceAccountEmail: process.env.GA_SERVICE_ACCOUNT_EMAIL || "",
   privateKey: process.env.GA_PRIVATE_KEY || "",
-  // GA4 Property ID
-  propertyId: process.env.GA_PROPERTY_ID || "",
+  // GA4 Property ID / Stream ID
+  propertyId: process.env.GA_PROPERTY_ID || "15456453891",
   // Measurement ID (GA4 Web)
-  measurementId: process.env.GA_MEASUREMENT_ID || "",
+  measurementId: process.env.GA_MEASUREMENT_ID || "G-B8593EW2TM",
   // API Key for public data
   apiKey: process.env.GA_API_KEY || "",
+  // Website URL
+  websiteUrl: "http://www.alikhani09390916.github.io/irancoin-premium",
 };
 
 // ============================================================
