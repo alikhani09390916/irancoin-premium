@@ -23,12 +23,12 @@
   loadCards();
 
   var cryptos = [
-    { code: "usdttrc20", name: "USDT (TRC20)", icon: "₮" },
-    { code: "btc", name: "Bitcoin", icon: "₿" },
-    { code: "eth", name: "Ethereum", icon: "Ξ" },
-    { code: "usdc", name: "USDC", icon: "$" },
-    { code: "ltc", name: "Litecoin", icon: "Ł" },
-    { code: "doge", name: "Dogecoin", icon: "Ð" },
+    { code: "usdttrc20", name: "USDT (TRC20)", icon: '<i class="fa-solid fa-dollar-sign"></i>' },
+    { code: "btc", name: "Bitcoin", icon: '<i class="fa-brands fa-bitcoin"></i>' },
+    { code: "eth", name: "Ethereum", icon: '<i class="fa-brands fa-ethereum"></i>' },
+    { code: "usdc", name: "USDC", icon: '<i class="fa-solid fa-dollar-sign"></i>' },
+    { code: "ltc", name: "Litecoin", icon: '<i class="fa-solid fa-coins"></i>' },
+    { code: "doge", name: "Dogecoin", icon: '<i class="fa-brands fa-dog"></i>' },
   ];
 
   function apiBase() {
@@ -97,7 +97,7 @@
     overlay.innerHTML = '<div style="background:linear-gradient(160deg,#1a1040,#0f172a);border-radius:1.25rem;border:1px solid rgba(124,58,237,0.3);padding:2rem;max-width:26rem;width:92%;box-shadow:0 25px 60px rgba(0,0,0,0.5)">' +
       '<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:1.5rem">' +
         '<div style="display:flex;align-items:center;gap:0.75rem">' +
-          '<div style="width:2.5rem;height:2.5rem;border-radius:0.5rem;background:linear-gradient(135deg,#7C3AED,#06B6D4);display:grid;place-items:center;font-size:1.25rem">₿</div>' +
+          '<div style="width:2.5rem;height:2.5rem;border-radius:0.5rem;background:linear-gradient(135deg,#7C3AED,#06B6D4);display:grid;place-items:center;font-size:1.25rem"><i class="fa-brands fa-bitcoin"></i></div>' +
           '<div><div style="color:white;font-weight:700;font-size:1.0625rem">پرداخت با ارز دیجیتال</div><div style="color:rgba(255,255,255,0.4);font-size:0.75rem">NOWPayments</div></div>' +
         '</div>' +
         '<button id="ic-modal-close" style="background:none;border:none;color:rgba(255,255,255,0.4);font-size:1.5rem;cursor:pointer;padding:0.25rem">&times;</button>' +
@@ -169,7 +169,7 @@
     overlay.innerHTML = '<div style="background:linear-gradient(160deg,#1a1040,#0f172a);border-radius:1.25rem;border:1px solid rgba(16,185,129,0.3);padding:2rem;max-width:28rem;width:92%;box-shadow:0 25px 60px rgba(0,0,0,0.5);max-height:90vh;overflow-y:auto">' +
       '<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:1.5rem">' +
         '<div style="display:flex;align-items:center;gap:0.75rem">' +
-          '<div style="width:2.5rem;height:2.5rem;border-radius:0.5rem;background:linear-gradient(135deg,#10b981,#06b6d4);display:grid;place-items:center;font-size:1.25rem">🏦</div>' +
+          '<div style="width:2.5rem;height:2.5rem;border-radius:0.5rem;background:linear-gradient(135deg,#10b981,#06b6d4);display:grid;place-items:center;font-size:1.25rem"><i class="fa-solid fa-building-columns"></i></div>' +
           '<div><div style="color:white;font-weight:700;font-size:1.0625rem">پرداخت کارت به کارت</div><div style="color:rgba(255,255,255,0.4);font-size:0.75rem">بانک پاسارگاد</div></div>' +
         '</div>' +
         '<button id="ic-modal-close" style="background:none;border:none;color:rgba(255,255,255,0.4);font-size:1.5rem;cursor:pointer;padding:0.25rem">&times;</button>' +
@@ -187,7 +187,7 @@
       '<div style="margin-top:1rem">' +
         '<div style="color:rgba(255,255,255,0.7);font-size:0.8125rem;margin-bottom:0.5rem;font-weight:600">فیش واریزی (اسکرین‌شات)</div>' +
         '<label for="ic-receipt" style="display:flex;flex-direction:column;align-items:center;justify-content:center;padding:1.5rem;border:2px dashed rgba(255,255,255,0.12);border-radius:0.75rem;cursor:pointer;transition:all .2s;background:rgba(255,255,255,0.02)">' +
-          '<div style="font-size:1.5rem;margin-bottom:0.5rem">📷</div>' +
+          '<div style="font-size:1.5rem;margin-bottom:0.5rem"><i class="fa-solid fa-camera"></i></div>' +
           '<div style="color:rgba(255,255,255,0.5);font-size:0.8125rem">کلیک کنید یا فایل را بکشید</div>' +
           '<div id="ic-receipt-name" style="color:#10b981;font-size:0.75rem;margin-top:0.375rem;display:none"></div>' +
           '<input type="file" id="ic-receipt" accept="image/*" style="display:none">' +
