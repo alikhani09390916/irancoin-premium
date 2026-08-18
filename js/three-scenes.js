@@ -79,34 +79,77 @@ class IranCoin3D {
     ];
 
     coinData.forEach((data, i) => {
-      const geometry = new THREE.CylinderGeometry(data.size, data.size, 0.15, 32);
-      const material = new THREE.MeshStandardMaterial({
+      // Create coin with ridged edge
+      const coinGroup = new THREE.Group();
+      
+      // Main coin body
+      const bodyGeometry = new THREE.CylinderGeometry(data.size, data.size, 0.2, 64);
+      const bodyMaterial = new THREE.MeshStandardMaterial({
         color: data.color,
         emissive: data.emissive,
-        emissiveIntensity: 0.3,
+        emissiveIntensity: 0.4,
+        metalness: 0.95,
+        roughness: 0.05,
+      });
+      const body = new THREE.Mesh(bodyGeometry, bodyMaterial);
+      coinGroup.add(body);
+
+      // Ridged edge (torus around the coin)
+      const ridgeGeometry = new THREE.TorusGeometry(data.size, 0.05, 16, 64);
+      const ridgeMaterial = new THREE.MeshStandardMaterial({
+        color: data.color,
+        emissive: data.emissive,
+        emissiveIntensity: 0.5,
+        metalness: 0.95,
+        roughness: 0.05,
+      });
+      const ridge = new THREE.Mesh(ridgeGeometry, ridgeMaterial);
+      ridge.rotation.x = Math.PI / 2;
+      coinGroup.add(ridge);
+
+      // Inner circle (face detail)
+      const innerGeometry = new THREE.CylinderGeometry(data.size * 0.7, data.size * 0.7, 0.22, 64);
+      const innerMaterial = new THREE.MeshStandardMaterial({
+        color: data.color,
+        emissive: data.emissive,
+        emissiveIntensity: 0.6,
         metalness: 0.9,
         roughness: 0.1,
       });
-      const coin = new THREE.Mesh(geometry, material);
-      coin.position.set(...data.pos);
-      coin.rotation.x = Math.PI / 2;
-      coin.userData = { 
+      const inner = new THREE.Mesh(innerGeometry, innerMaterial);
+      coinGroup.add(inner);
+
+      // Center symbol (text-like detail)
+      const centerGeometry = new THREE.CylinderGeometry(data.size * 0.35, data.size * 0.35, 0.24, 32);
+      const centerMaterial = new THREE.MeshStandardMaterial({
+        color: 0xffffff,
+        emissive: 0xffffff,
+        emissiveIntensity: 0.3,
+        metalness: 0.8,
+        roughness: 0.2,
+      });
+      const center = new THREE.Mesh(centerGeometry, centerMaterial);
+      coinGroup.add(center);
+
+      coinGroup.position.set(...data.pos);
+      coinGroup.rotation.x = Math.PI / 2;
+      coinGroup.userData = { 
         originalY: data.pos[1],
         speed: 0.5 + Math.random() * 0.5,
         phase: Math.random() * Math.PI * 2
       };
-      scene.add(coin);
-      coins.push(coin);
+      scene.add(coinGroup);
+      coins.push(coinGroup);
 
       // Add glow ring
-      const ringGeometry = new THREE.TorusGeometry(data.size + 0.15, 0.03, 16, 100);
+      const ringGeometry = new THREE.TorusGeometry(data.size + 0.2, 0.04, 16, 100);
       const ringMaterial = new THREE.MeshBasicMaterial({ 
         color: data.color, 
         transparent: true, 
-        opacity: 0.5 
+        opacity: 0.6 
       });
       const ring = new THREE.Mesh(ringGeometry, ringMaterial);
-      ring.position.copy(coin.position);
+      ring.position.copy(coinGroup.position);
       ring.rotation.x = Math.PI / 2;
       scene.add(ring);
     });
