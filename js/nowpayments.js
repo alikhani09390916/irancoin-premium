@@ -205,7 +205,7 @@
     overlay.querySelectorAll(".ic-copy-card").forEach(function(btn) {
       btn.addEventListener("click", function() {
         navigator.clipboard.writeText(btn.dataset.num);
-        btn.textContent = "کپی شد ✓";
+        btn.textContent = "کپی شد \u2713";
         setTimeout(function() { btn.textContent = "کپی"; }, 2000);
       });
     });
@@ -214,7 +214,7 @@
     var receiptName = overlay.querySelector("#ic-receipt-name");
     receiptInput.addEventListener("change", function() {
       if (receiptInput.files.length) {
-        receiptName.textContent = "✓ " + receiptInput.files[0].name;
+        receiptName.textContent = "<i class=\"fa-solid fa-check\"></i> " + receiptInput.files[0].name;
         receiptName.style.display = "block";
       }
     });
@@ -271,7 +271,7 @@
 
     overlay.innerHTML = '<div style="background:linear-gradient(160deg,#1a1040,#0f172a);border-radius:1.25rem;border:1px solid rgba(124,58,237,0.3);padding:2rem;max-width:24rem;width:92%;box-shadow:0 25px 60px rgba(0,0,0,0.5)">' +
       '<div style="text-align:center;margin-bottom:1.5rem">' +
-        '<div style="width:3rem;height:3rem;border-radius:0.75rem;background:linear-gradient(135deg,#7C3AED,#06B6D4);display:grid;place-items:center;margin:0 auto 0.75rem;font-size:1.5rem">🔐</div>' +
+        '<div style="width:3rem;height:3rem;border-radius:0.75rem;background:linear-gradient(135deg,#7C3AED,#06B6D4);display:grid;place-items:center;margin:0 auto 0.75rem;font-size:1.5rem"><i class="fa-solid fa-shield-halved"></i></div>' +
         '<div style="color:white;font-weight:700;font-size:1.125rem" id="auth-title">ورود به حساب</div>' +
       '</div>' +
       '<div style="display:flex;gap:0.5rem;margin-bottom:1.25rem">' +

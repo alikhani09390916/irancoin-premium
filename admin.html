@@ -361,7 +361,7 @@
       <h1>پنل مدیریت IRANCOiN</h1>
       <p class="sub">برای دسترسی به پنل مدیریت، رمز عبور را وارد کنید</p>
       <div class="login-field">
-        <span class="icon">🔑</span>
+        <span class="icon"><i class="fa-solid fa-key"></i></span>
         <input type="password" id="admin-key" placeholder="رمز عبور" autofocus>
       </div>
       <button class="login-btn" onclick="doLogin()">ورود به پنل</button>
@@ -398,8 +398,8 @@
         <div class="nav-group">
           <div class="nav-group-label">ابزارها</div>
           <div class="nav-item" data-s="emails"><span class="icon"><i class="fa-solid fa-envelope"></i></span> ایمیل‌ها</div>
-          <div class="nav-item" data-s="preview"><span class="icon">👁</span> پیش‌نمایش</div>
-          <div class="nav-item" data-s="versions"><span class="icon">📦</span> نسخه‌ها</div>
+          <div class="nav-item" data-s="preview"><span class="icon"><i class="fa-solid fa-eye"></i></span> پیش‌نمایش</div>
+          <div class="nav-item" data-s="versions"><span class="icon"><i class="fa-solid fa-box-archive"></i></span> نسخه‌ها</div>
           <div class="nav-item" data-s="settings"><span class="icon"><i class="fa-solid fa-gear"></i></span> تنظیمات</div>
         </div>
       </nav>
@@ -422,9 +422,9 @@
           <div class="header-title" id="page-title">داشبورد</div>
         </div>
         <div class="header-actions">
-          <button class="hbtn" onclick="loadSection(currentSection)">🔄 بروزرسانی</button>
-          <button class="hbtn hbtn-primary" onclick="saveAll()">💾 ذخیره همه</button>
-          <button class="hbtn hbtn-danger" onclick="doLogout()">🚪 خروج</button>
+          <button class="hbtn" onclick="loadSection(currentSection)"><i class="fa-solid fa-rotate"></i> بروزرسانی</button>
+          <button class="hbtn hbtn-primary" onclick="saveAll()"><i class="fa-solid fa-floppy-disk"></i> ذخیره همه</button>
+          <button class="hbtn hbtn-danger" onclick="doLogout()"><i class="fa-solid fa-right-from-bracket"></i> خروج</button>
         </div>
       </header>
 
@@ -432,7 +432,7 @@
 
         <!-- ===== LOCAL STORAGE NOTICE ===== -->
         <div class="notice-banner" id="localStorageNotice">
-          <span class="icon">⚠️</span>
+          <span class="icon"><i class="fa-solid fa-triangle-exclamation"></i></span>
           <span>تغییرات در مرورگر ذخیره می‌شوند. برای اعمال روی سایت، فایل‌ها را مجدداً deploy کنید.</span>
         </div>
 
@@ -449,7 +449,7 @@
         <div class="section" id="s-content">
           <div id="content-editors"></div>
           <div style="margin-top:1rem">
-            <button class="btn btn-purple" onclick="saveContent()" style="padding:.625rem 1.5rem;font-size:.875rem">💾 ذخیره تغییرات محتوا</button>
+            <button class="btn btn-purple" onclick="saveContent()" style="padding:.625rem 1.5rem;font-size:.875rem"><i class="fa-solid fa-floppy-disk"></i> ذخیره تغییرات محتوا</button>
           </div>
         </div>
 
@@ -484,7 +484,7 @@
           <div class="card">
             <div class="card-header">
               <h2><i class="fa-solid fa-users"></i> لیست کاربران</h2>
-              <div class="actions"><button class="btn btn-neutral" onclick="exportCSV('users')">📥 خروجی CSV</button></div>
+              <div class="actions"><button class="btn btn-neutral" onclick="exportCSV('users')"><i class="fa-solid fa-download"></i> خروجی CSV</button></div>
             </div>
             <div class="card-body no-pad">
               <div class="table-wrap"><table id="t-user"><thead><tr><th>تاریخ</th><th>ایمیل</th><th>نام</th><th>آخرین ورود</th><th>عملیات</th></tr></thead><tbody></tbody></table></div>
@@ -497,7 +497,7 @@
           <div class="card">
             <div class="card-header">
               <h2><i class="fa-solid fa-clipboard-list"></i> لیست اشتراک‌ها</h2>
-              <div class="actions"><button class="btn btn-neutral" onclick="exportCSV('subscriptions')">📥 خروجی CSV</button></div>
+              <div class="actions"><button class="btn btn-neutral" onclick="exportCSV('subscriptions')"><i class="fa-solid fa-download"></i> خروجی CSV</button></div>
             </div>
             <div class="card-body no-pad">
               <div class="table-wrap"><table id="t-sub"><thead><tr><th>تاریخ</th><th>کاربر</th><th>پلن</th><th>وضعیت</th><th>انقضا</th><th>عملیات</th></tr></thead><tbody></tbody></table></div>
@@ -510,7 +510,7 @@
           <div class="card">
             <div class="card-header">
               <h2><i class="fa-solid fa-credit-card"></i> لیست پرداخت‌ها</h2>
-              <div class="actions"><button class="btn btn-neutral" onclick="exportCSV('payments')">📥 خروجی CSV</button></div>
+              <div class="actions"><button class="btn btn-neutral" onclick="exportCSV('payments')"><i class="fa-solid fa-download"></i> خروجی CSV</button></div>
             </div>
             <div class="card-body no-pad">
               <div class="table-wrap"><table id="t-pay"><thead><tr><th>تاریخ</th><th>کاربر</th><th>پلن</th><th>مبلغ</th><th>وضعیت</th><th>عملیات</th></tr></thead><tbody></tbody></table></div>
@@ -535,7 +535,7 @@
         <div class="section" id="s-preview">
           <div class="card">
             <div class="card-header">
-              <h2>👁 پیش‌نمایش زنده سایت</h2>
+              <h2><i class="fa-solid fa-eye"></i> پیش‌نمایش زنده سایت</h2>
               <div class="actions">
                 <label class="toggle" title="حالت آزمایشی">
                   <input type="checkbox" id="trial-toggle" onchange="toggleTrial()">
@@ -554,13 +554,13 @@
         <div class="section" id="s-versions">
           <div class="card">
             <div class="card-header">
-              <h2>📦 تاریخچه نسخه‌ها</h2>
+              <h2><i class="fa-solid fa-box-archive"></i> تاریخچه نسخه‌ها</h2>
               <div class="actions">
                 <button class="btn btn-purple" onclick="createVersion()">+ ذخیره نسخه جدید</button>
               </div>
             </div>
             <div class="card-body">
-              <p style="font-size:.75rem;color:var(--txt-dim);margin-bottom:1rem">⚠️ تاریخچه نسخه‌ها فقط در مرورگر ذخیره می‌شوند و با پاک کردن کش حذف خواهند شد.</p>
+              <p style="font-size:.75rem;color:var(--txt-dim);margin-bottom:1rem"><i class="fa-solid fa-triangle-exclamation"></i> تاریخچه نسخه‌ها فقط در مرورگر ذخیره می‌شوند و با پاک کردن کش حذف خواهند شد.</p>
               <div id="versions-list"></div>
             </div>
           </div>
@@ -601,7 +601,7 @@
                   <input class="form-input" id="set-site-url" value="https://alikhani09390916.github.io/irancoin-premium/" style="direction:ltr;text-align:left">
                 </div>
               </div>
-              <button class="btn btn-purple" onclick="saveSettings()" style="padding:.625rem 1.5rem;font-size:.875rem;margin-top:.5rem">💾 ذخیره تنظیمات</button>
+              <button class="btn btn-purple" onclick="saveSettings()" style="padding:.625rem 1.5rem;font-size:.875rem;margin-top:.5rem"><i class="fa-solid fa-floppy-disk"></i> ذخیره تنظیمات</button>
             </div>
           </div>
 
@@ -636,7 +636,7 @@
   <!-- ===== CONFIRM ===== -->
   <div class="confirm-overlay" id="confirm-overlay">
     <div class="confirm-box">
-      <div class="confirm-icon">⚠️</div>
+      <div class="confirm-icon"><i class="fa-solid fa-triangle-exclamation"></i></div>
       <div class="confirm-msg" id="confirm-msg"></div>
       <div class="confirm-btns">
         <button class="btn-yes" id="confirm-yes">بله</button>
@@ -1022,8 +1022,8 @@
           '<div class="offer-info"><div class="offer-title">'+o.title+'</div><div class="offer-desc">'+o.description+'</div>'+
           '<div class="offer-meta">تخفیف: '+o.discount+'% | انقضا: '+expStr+'</div></div>'+
           '<div class="cell-actions">'+
-            '<button class="btn btn-info" onclick="editOffer('+i+')">✏️</button>'+
-            '<button class="btn btn-err" onclick="deleteOffer('+i+')">🗑</button>'+
+            '<button class="btn btn-info" onclick="editOffer('+i+')"><i class="fa-solid fa-pen"></i></button>'+
+            '<button class="btn btn-err" onclick="deleteOffer('+i+')"><i class="fa-solid fa-trash"></i></button>'+
           '</div></div>';
       }).join('');
     }
@@ -1084,7 +1084,7 @@
             html += '</div>';
           }
 
-          html += '<button class="btn btn-purple" onclick="saveDiscount(\''+pid+'\')">💾 ذخیره تخفیف</button>';
+          html += '<button class="btn btn-purple" onclick="saveDiscount(\''+pid+'\')"><i class="fa-solid fa-floppy-disk"></i> ذخیره تخفیف</button>';
         } else {
           html += '<div style="color:var(--txt-dim);font-size:.8125rem">تخفیف غیرفعال است</div>';
         }
@@ -1198,7 +1198,7 @@
           return '<tr><td>'+dt(u.created_at)+'</td><td style="direction:ltr;text-align:left">'+u.email+'</td><td>'+(u.name||'-')+'</td><td>'+(u.last_sign_in?dt(u.last_sign_in):'هرگز')+'</td><td><button class="btn btn-info" onclick="detailUser(\''+u.id+'\')"><i class="fa-solid fa-clipboard-list"></i></button></td></tr>';
         }).join('');
       }catch(e){
-        showTableError('t-user', 5, '⚠️', 'خطا در بارگذاری کاربران. اتصال API را بررسی کنید.');
+        showTableError('t-user', 5, '<i class="fa-solid fa-triangle-exclamation"></i>', 'خطا در بارگذاری کاربران. اتصال API را بررسی کنید.');
       }
     }
 
@@ -1223,7 +1223,7 @@
           return '<tr><td>'+dt(s.created_at)+'</td><td>'+userName(s.user_id)+'</td><td>'+(s.plans?.label||s.plan_id)+'</td><td>'+ss(s.status)+'</td><td>'+dt(s.expires_at)+'</td><td><div class="cell-actions">'+acts+'</div></td></tr>';
         }).join('');
       }catch(e){
-        showTableError('t-sub', 6, '⚠️', 'خطا در بارگذاری اشتراک‌ها. اتصال API را بررسی کنید.');
+        showTableError('t-sub', 6, '<i class="fa-solid fa-triangle-exclamation"></i>', 'خطا در بارگذاری اشتراک‌ها. اتصال API را بررسی کنید.');
       }
     }
 
@@ -1243,12 +1243,12 @@
           if(p.payment_status==='waiting'||p.payment_status==='confirming')
             acts += '<button class="btn btn-ok" onclick="confirmPayment(\''+p.id+'\')"><i class="fa-solid fa-check-circle"></i></button>';
           if(p.payment_status==='confirmed')
-            acts += '<button class="btn btn-err" onclick="refundPayment(\''+p.id+'\')">↩</button>';
+            acts += '<button class="btn btn-err" onclick="refundPayment(\''+p.id+'\')"><i class="fa-solid fa-rotate-left"></i></button>';
           acts += '<button class="btn btn-info" onclick="detailPayment(\''+p.id+'\')"><i class="fa-solid fa-clipboard-list"></i></button>';
           return '<tr><td>'+dt(p.created_at)+'</td><td>'+userName(p.user_id)+'</td><td>'+(p.subscriptions?.plans?.label||p.plan_id)+'</td><td>$'+p.amount_usdt+'</td><td>'+ps(p.payment_status)+'</td><td><div class="cell-actions">'+acts+'</div></td></tr>';
         }).join('');
       }catch(e){
-        showTableError('t-pay', 6, '⚠️', 'خطا در بارگذاری پرداخت‌ها. اتصال API را بررسی کنید.');
+        showTableError('t-pay', 6, '<i class="fa-solid fa-triangle-exclamation"></i>', 'خطا در بارگذاری پرداخت‌ها. اتصال API را بررسی کنید.');
       }
     }
 
@@ -1268,7 +1268,7 @@
           return '<tr><td>'+dt(e.created_at)+'</td><td style="direction:ltr;text-align:left">'+e.to_email+'</td><td>'+(TN[e.template]||e.template)+'</td><td>'+e.subject+'</td><td>'+ps(e.status)+'</td></tr>';
         }).join('');
       }catch(e){
-        showTableError('t-email', 5, '⚠️', 'خطا در بارگذاری ایمیل‌ها. اتصال API را بررسی کنید.');
+        showTableError('t-email', 5, '<i class="fa-solid fa-triangle-exclamation"></i>', 'خطا در بارگذاری ایمیل‌ها. اتصال API را بررسی کنید.');
       }
     }
 
@@ -1284,7 +1284,7 @@
           '<div class="version-info"><div class="version-tag">'+v.tag+'</div>'+
           '<div class="version-date">'+new Date(v.date).toLocaleString('fa-IR')+'</div>'+
           '<div class="version-msg">'+v.message+'</div></div>'+
-          '<div class="cell-actions"><button class="btn btn-info" onclick="restoreVersion('+i+')">↩ بازگردانی</button></div></div>';
+          '<div class="cell-actions"><button class="btn btn-info" onclick="restoreVersion('+i+')"><i class="fa-solid fa-rotate-left"></i> بازگردانی</button></div></div>';
       }).join('');
     }
 
@@ -1388,8 +1388,8 @@
             '<div class="bank-card-bank">'+(c.bank||'-')+'</div>'+
           '</div>'+
           '<div class="cell-actions">'+
-            '<button class="btn btn-info" onclick="editBankCard('+i+')">✏️</button>'+
-            '<button class="btn btn-err" onclick="deleteBankCard('+i+')">🗑</button>'+
+            '<button class="btn btn-info" onclick="editBankCard('+i+')"><i class="fa-solid fa-pen"></i></button>'+
+            '<button class="btn btn-err" onclick="deleteBankCard('+i+')"><i class="fa-solid fa-trash"></i></button>'+
           '</div>'+
         '</div>';
       }).join('');

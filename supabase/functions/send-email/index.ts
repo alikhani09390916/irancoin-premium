@@ -43,7 +43,7 @@ const templates: Record<string, (data: any) => { subject: string; html: string }
         <div style="text-align:center;margin-bottom:2rem">
           <div style="font-size:2rem;font-weight:800;background:linear-gradient(135deg,#7C3AED,#06B6D4);-webkit-background-clip:text;-webkit-text-fill-color:transparent">IRANCOiN</div>
         </div>
-        <div style="text-align:center;font-size:3rem;margin:1rem 0">✅</div>
+        <div style="text-align:center;font-size:3rem;margin:1rem 0"><span style="color:#10b981">&#10004;</span></div>
         <h1 style="color:white;font-size:1.5rem;text-align:center">پرداخت تایید شد!</h1>
         <div style="background:rgba(124,58,237,0.1);border:1px solid rgba(124,58,237,0.2);border-radius:0.75rem;padding:1.25rem;margin:1.5rem 0">
           <table style="width:100%;color:#e2e8f0;font-size:0.9375rem;border-collapse:collapse">

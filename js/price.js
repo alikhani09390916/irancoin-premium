@@ -182,7 +182,7 @@
       '</div>' +
       (isDanger ?
         '<div style="margin-top:.5rem;text-align:center;color:' + colors.bg + ';font-size:.75rem;font-weight:600;display:flex;align-items:center;justify-content:center;gap:.375rem">' +
-          '<span style="animation:cdBlink 1s ease-in-out infinite">⚠️</span> زمان باقی‌مانده رو به پایان است!' +
+          '<span style="animation:cdBlink 1s ease-in-out infinite"><i class="fa-solid fa-triangle-exclamation"></i></span> زمان باقی‌مانده رو به پایان است!' +
         '</div>' : '');
   }
 
