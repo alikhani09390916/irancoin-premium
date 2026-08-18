@@ -106,7 +106,7 @@
   border-radius: var(--r-lg);
   background: var(--bg-glass);
   border: var(--bw-xs) solid var(--border-glass);
-  backdrop-filter: blur(var(--blur-sm));
+  -webkit-backdrop-filter: blur(var(--blur-sm));
   transition: transform var(--dur-med) var(--ease-out), box-shadow var(--dur-med) var(--ease-out);
 }
 
@@ -157,7 +157,7 @@
   border-radius: var(--r-xl);
   background: var(--bg-glass);
   border: var(--bw-xs) solid var(--border-glass);
-  backdrop-filter: blur(var(--blur-md));
+  -webkit-backdrop-filter: blur(var(--blur-md));
   box-shadow: var(--sh-lg), var(--sh-inset-glass);
   padding: var(--sp-6);
   overflow: hidden;
@@ -215,7 +215,7 @@
   border-radius: var(--r-md);
   background: var(--bg-glass);
   border: var(--bw-xs) solid var(--border-glass);
-  backdrop-filter: blur(var(--blur-sm));
+  -webkit-backdrop-filter: blur(var(--blur-sm));
 }
 
 .signal-item .si-icon {
@@ -267,7 +267,7 @@
   border-radius: var(--r-lg);
   background: var(--bg-glass);
   border: var(--bw-xs) solid var(--border-glass);
-  backdrop-filter: blur(var(--blur-sm));
+  -webkit-backdrop-filter: blur(var(--blur-sm));
   transition: transform var(--dur-med) var(--ease-out), box-shadow var(--dur-med) var(--ease-out);
 }
 
@@ -406,7 +406,7 @@
   border-radius: var(--r-md);
   background: var(--bg-glass);
   border: var(--bw-xs) solid var(--border-glass);
-  backdrop-filter: blur(var(--blur-sm));
+  -webkit-backdrop-filter: blur(var(--blur-sm));
 }
 
 .journal-entry .je-side {
@@ -451,6 +451,10 @@
   animation: carousel-scroll 35s linear infinite;
 }
 
+[dir="rtl"] .ex-track {
+  animation-name: carousel-scroll-rtl;
+}
+
 .ex-track:hover {
   animation-play-state: paused;
   filter: brightness(1.05);
@@ -461,6 +465,11 @@
   100% { transform: translateX(-50%); }
 }
 
+@keyframes carousel-scroll-rtl {
+  0% { transform: translateX(-50%); }
+  100% { transform: translateX(0); }
+}
+
 .ex-item {
   display: flex;
   align-items: center;
@@ -469,7 +478,7 @@
   border-radius: var(--r-full);
   background: var(--bg-glass);
   border: var(--bw-xs) solid var(--border-glass);
-  backdrop-filter: blur(var(--blur-sm));
+  -webkit-backdrop-filter: blur(var(--blur-sm));
   white-space: nowrap;
   transition: all var(--dur-fast) var(--ease-out);
   flex-shrink: 0;
@@ -508,7 +517,7 @@
   border-radius: var(--r-lg);
   background: var(--bg-glass);
   border: var(--bw-xs) solid var(--border-glass);
-  backdrop-filter: blur(var(--blur-sm));
+  -webkit-backdrop-filter: blur(var(--blur-sm));
   overflow: hidden;
 }
 
@@ -643,7 +652,7 @@
   border-radius: var(--r-lg);
   background: var(--bg-glass);
   border: var(--bw-xs) solid var(--border-glass);
-  backdrop-filter: blur(var(--blur-md));
+  -webkit-backdrop-filter: blur(var(--blur-md));
   display: grid;
   gap: var(--sp-4);
 }
@@ -672,7 +681,7 @@
   border-radius: var(--r-lg);
   background: var(--bg-glass);
   border: var(--bw-xs) solid var(--border-glass);
-  backdrop-filter: blur(var(--blur-sm));
+  -webkit-backdrop-filter: blur(var(--blur-sm));
   transition: transform var(--dur-med) var(--ease-out), box-shadow var(--dur-med) var(--ease-out);
 }
 
@@ -811,7 +820,7 @@
   background: var(--bg-glass-strong);
   border: var(--bw-xs) solid var(--border-glass);
   border-radius: var(--r-xl);
-  backdrop-filter: blur(var(--blur-md));
+  -webkit-backdrop-filter: blur(var(--blur-md));
   box-shadow: var(--sh-lg), var(--sh-inset-glass);
   padding: var(--sp-8);
 }
@@ -905,7 +914,7 @@
   top: 0;
   height: 100svh;
   background: rgba(255, 255, 255, 0.75);
-  backdrop-filter: blur(var(--blur-md));
+  -webkit-backdrop-filter: blur(var(--blur-md));
   border-inline-end: var(--bw-xs) solid var(--border-default);
   padding: var(--sp-6) var(--sp-5);
   display: flex;
@@ -937,7 +946,8 @@
     transition: transform 0.3s var(--ease-out);
     z-index: calc(var(--z-nav) + 50);
     background: rgba(255, 255, 255, 0.96);
-    backdrop-filter: blur(var(--blur-lg));
+    -webkit-backdrop-filter: blur(var(--blur-lg));
+    -webkit-backdrop-filter: blur(var(--blur-lg));
     border-inline-end: var(--bw-xs) solid var(--border-default);
     box-shadow: -8px 0 32px rgba(0, 0, 0, 0.12);
     overflow-y: auto;
@@ -1036,7 +1046,7 @@
   border-radius: var(--r-lg);
   background: var(--bg-glass);
   border: var(--bw-xs) solid var(--border-glass);
-  backdrop-filter: blur(var(--blur-md));
+  -webkit-backdrop-filter: blur(var(--blur-md));
   transition: transform var(--dur-fast) var(--ease-out),
               box-shadow var(--dur-fast) var(--ease-out),
               border-color var(--dur-fast) var(--ease-out);

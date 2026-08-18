@@ -464,7 +464,6 @@
 
 .pricing-card:hover {
   animation: none;
-  transform: translateY(-8px) scale(1.01);
 }
 
 .pricing-card.is-recommended {
@@ -489,13 +488,6 @@
 /* --- Glass Cards: Scroll Reveal Stagger --- */
 .glass-card[data-reveal] {
   transition-delay: var(--reveal-delay, 0ms);
-}
-
-/* --- Feature Cards: Enhanced Hover --- */
-.glass-card:hover {
-  transform: translateY(-6px) scale(1.01);
-  box-shadow: var(--sh-lg), var(--sh-inset-glass),
-              0 0 30px rgba(124, 58, 237, 0.08);
 }
 
 /* --- Stats / Proof Cards: Counter Shine --- */
@@ -1016,6 +1008,11 @@ button:focus-visible,
   .nn-dot,
   .nn-link,
   .intel-node,
+  .intel-ring,
+  .hero-orb,
+  .hero-bg::before,
+  .hero-bg::after,
+  .page-veil,
   .status-dot::after,
   .progress::after,
   .progress > span,

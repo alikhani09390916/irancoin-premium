@@ -3,10 +3,10 @@
   "use strict";
 
   var PLANS = {
-    "1m":  { amount: 29,  label: "۱ ماهه", days: 30 },
-    "3m":  { amount: 79,  label: "۳ ماهه", days: 90 },
-    "6m":  { amount: 149, label: "۶ ماهه", days: 180 },
-    "1yr": { amount: 249, label: "۱ ساله", days: 365 },
+    monthly:    { amount: 29,  label: "۱ ماهه", days: 30 },
+    quarterly:  { amount: 79,  label: "۳ ماهه", days: 90 },
+    semiannual: { amount: 149, label: "۶ ماهه", days: 180 },
+    annual:     { amount: 249, label: "۱ ساله", days: 365 },
   };
 
   var CARDS = [
@@ -417,9 +417,6 @@
       btn.addEventListener("click", function() {
         var card = btn.closest(".pricing-card");
         var planId = card.dataset.plan;
-        // Map old plan names to new IDs
-        var planMap = { monthly: "1m", quarterly: "3m", semiannual: "6m", annual: "1yr" };
-        var mappedId = planMap[planId] || planId;
 
         // Scroll to payment panel
         var panel = document.getElementById("pay-panel");
@@ -427,9 +424,9 @@
           panel.scrollIntoView({ behavior: "smooth", block: "start" });
           // Update plan label
           var label = document.getElementById("pp-plan-label");
-          if (label) label.textContent = PLANS[mappedId]?.label || planId;
+          if (label) label.textContent = PLANS[planId]?.label || planId;
           var total = document.getElementById("pp-total");
-          if (total) total.textContent = "$" + (PLANS[mappedId]?.amount || 0);
+          if (total) total.textContent = "$" + (PLANS[planId]?.amount || 0);
         }
       });
     });

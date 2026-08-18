@@ -266,32 +266,6 @@
   .hero { font-size: 1.05em; }
 }
 
-/* ---------- prefers-reduced-motion ---------- */
-@media (prefers-reduced-motion: reduce) {
-  *,
-  *::before,
-  *::after {
-    animation-duration: 0.01ms !important;
-    animation-iteration-count: 1 !important;
-    transition-duration: 0.01ms !important;
-    scroll-behavior: auto !important;
-  }
-
-  .hero-orb,
-  .intel-ring,
-  .status-dot::after,
-  .pricing-flag,
-  .progress::after,
-  .page-veil {
-    animation: none !important;
-  }
-
-  .hero-bg::before,
-  .hero-bg::after {
-    animation: none !important;
-  }
-}
-
 /* ---------- Print ---------- */
 @media print {
   .nav, .nav-hamburger, .scroll-hint, .hero-visual, .page-veil,
