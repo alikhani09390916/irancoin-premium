@@ -98,6 +98,10 @@
     topLight.position.set(0, 6, 0);
     scene.add(topLight);
 
+    // Debug: log lights
+    console.log("[IRANCOiN Brain] lights: ambient OK, key intensity:", keyLight.intensity,
+      "fill intensity:", fillLight.intensity, "rim intensity:", rimLight.intensity);
+
     // ===== BRAIN GROUP =====
     var brainGroup = new THREE.Group();
     scene.add(brainGroup);
@@ -219,30 +223,19 @@
       side: THREE.DoubleSide,
     });
 
-    // Fresnel rim-light via onBeforeCompile
-    brainMat.onBeforeCompile = function (shader) {
-      shader.uniforms.uFP = { value: 2.5 };
-      shader.uniforms.uFI = { value: 1.5 };
-      shader.vertexShader = shader.vertexShader.replace(
-        "#include <common>",
-        "#include <common>\nvarying vec3 vWN; varying vec3 vWP;"
-      );
-      shader.vertexShader = shader.vertexShader.replace(
-        "#include <begin_vertex>",
-        "#include <begin_vertex>\nvWN = normalize(mat3(modelMatrix) * normal); vWP = (modelMatrix * vec4(position,1.0)).xyz;"
-      );
-      shader.fragmentShader = shader.fragmentShader.replace(
-        "#include <common>",
-        "#include <common>\nuniform float uFP; uniform float uFI;"
-      );
-      shader.fragmentShader = shader.fragmentShader.replace(
-        "#include <dithering_fragment>",
-        "vec3 vd=normalize(cameraPosition-vWP); float fr=pow(1.0-max(dot(vd,vWN),0.0),uFP);\n" +
-        "gl_FragColor.rgb += fr*uFI*vec3(0.486,0.227,0.929);\n#include <dithering_fragment>"
-      );
-    };
+    var brainMesh = new THREE.Mesh(brainGeo, brainMat);
+    brainMesh.scale.set(1, 1, 1);
+    brainGroup.add(brainMesh);
 
-    brainGroup.add(new THREE.Mesh(brainGeo, brainMat));
+    // Debug: log geometry info
+    brainGeo.computeBoundingBox();
+    var bb = brainGeo.boundingBox;
+    console.log("[IRANCOiN Brain] geometry:", brainGeo.type,
+      "vertices:", pos.count,
+      "bbox min:", bb.min.x.toFixed(2), bb.min.y.toFixed(2), bb.min.z.toFixed(2),
+      "bbox max:", bb.max.x.toFixed(2), bb.max.y.toFixed(2), bb.max.z.toFixed(2));
+    console.log("[IRANCOiN Brain] scale:", brainMesh.scale.x, brainMesh.scale.y, brainMesh.scale.z);
+    console.log("[IRANCOiN Brain] material:", brainMat.type);
 
     // Glow shell
     var glowMat = new THREE.MeshBasicMaterial({
