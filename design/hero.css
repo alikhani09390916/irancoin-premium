@@ -242,8 +242,7 @@
   transform: translate(-50%, -50%);
   width: clamp(19rem, 30vw, 26rem);
   aspect-ratio: 1;
-  animation: brain-materialize var(--dur-cinematic) var(--ease-out) both,
-             brain-spin 42s linear infinite;
+  animation: brain-materialize var(--dur-cinematic) var(--ease-out) both;
   animation-delay: 0.35s;
   z-index: 3;
   transform-style: preserve-3d;

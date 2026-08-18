@@ -1,10 +1,71 @@
 /**
  * ai-core-float.css
- * Styling for the floating candle glyphs / stat cards rendered by
- * ai-brain-scene.js via CSS2DRenderer.
- *
- * Tokens match 03_DESIGN_SPEC.md / the site's existing #7C3AED theme.
+ * Styling for the AI Core brain scene + floating candle/stat cards.
  */
+
+/* ===== Brain Scene Container ===== */
+.brain-scene {
+  position: relative;
+  width: 100%;
+  height: 520px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.brain-scene::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+    ellipse at 50% 45%,
+    rgba(124, 58, 237, 0.08) 0%,
+    rgba(124, 58, 237, 0.03) 35%,
+    transparent 65%
+  );
+  pointer-events: none;
+  z-index: 0;
+}
+
+.brain-scene::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 250px;
+  height: 80px;
+  background: radial-gradient(ellipse, rgba(124, 58, 237, 0.10), transparent 70%);
+  filter: blur(25px);
+  pointer-events: none;
+  z-index: 0;
+}
+
+#ai-core-stage {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  z-index: 1;
+}
+
+#ai-core-stage canvas {
+  display: block;
+  width: 100% !important;
+  height: 100% !important;
+}
+
+@media (max-width: 1024px) {
+  .brain-scene { height: 400px; }
+}
+
+@media (max-width: 768px) {
+  .brain-scene { height: 320px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .brain-label .status-dot { animation: none; }
+}
 
 .ai-core-float-card {
   min-width: 120px;
