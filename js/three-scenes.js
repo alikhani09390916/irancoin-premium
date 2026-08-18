@@ -27,6 +27,27 @@ class IranCoin3D {
     this.animate();
   }
 
+  // Color helper functions
+  colorToHex(color) {
+    return '#' + color.toString(16).padStart(6, '0');
+  }
+
+  lightenColor(color, percent) {
+    const num = parseInt(this.colorToHex(color).slice(1), 16);
+    const r = Math.min(255, (num >> 16) + Math.round(255 * percent / 100));
+    const g = Math.min(255, ((num >> 8) & 0x00FF) + Math.round(255 * percent / 100));
+    const b = Math.min(255, (num & 0x0000FF) + Math.round(255 * percent / 100));
+    return `rgb(${r},${g},${b})`;
+  }
+
+  darkenColor(color, percent) {
+    const num = parseInt(this.colorToHex(color).slice(1), 16);
+    const r = Math.max(0, (num >> 16) - Math.round(255 * percent / 100));
+    const g = Math.max(0, ((num >> 8) & 0x00FF) - Math.round(255 * percent / 100));
+    const b = Math.max(0, (num & 0x0000FF) - Math.round(255 * percent / 100));
+    return `rgb(${r},${g},${b})`;
+  }
+
   // ============================================================
   // HERO SCENE - Floating Crypto Coins
   // ============================================================
@@ -79,17 +100,60 @@ class IranCoin3D {
     ];
 
     coinData.forEach((data, i) => {
+      // Create coin texture with canvas
+      const canvas = document.createElement('canvas');
+      canvas.width = 512;
+      canvas.height = 512;
+      const ctx = canvas.getContext('2d');
+      
+      // Background gradient
+      const gradient = ctx.createRadialGradient(256, 256, 0, 256, 256, 256);
+      gradient.addColorStop(0, this.lightenColor(data.color, 30));
+      gradient.addColorStop(0.7, this.colorToHex(data.color));
+      gradient.addColorStop(1, this.darkenColor(data.color, 30));
+      ctx.fillStyle = gradient;
+      ctx.beginPath();
+      ctx.arc(256, 256, 256, 0, Math.PI * 2);
+      ctx.fill();
+      
+      // Inner circle
+      ctx.beginPath();
+      ctx.arc(256, 256, 180, 0, Math.PI * 2);
+      ctx.strokeStyle = this.lightenColor(data.color, 50);
+      ctx.lineWidth = 8;
+      ctx.stroke();
+      
+      // Symbol
+      ctx.fillStyle = '#ffffff';
+      ctx.font = 'bold 200px Arial';
+      ctx.textAlign = 'center';
+      ctx.textBaseline = 'middle';
+      ctx.fillText(data.symbol, 256, 260);
+      
+      // Shine effect
+      const shineGradient = ctx.createLinearGradient(100, 100, 400, 400);
+      shineGradient.addColorStop(0, 'rgba(255,255,255,0.4)');
+      shineGradient.addColorStop(0.5, 'rgba(255,255,255,0)');
+      shineGradient.addColorStop(1, 'rgba(255,255,255,0.1)');
+      ctx.fillStyle = shineGradient;
+      ctx.beginPath();
+      ctx.arc(256, 256, 250, 0, Math.PI * 2);
+      ctx.fill();
+      
+      const texture = new THREE.CanvasTexture(canvas);
+      texture.needsUpdate = true;
+
       // Create coin with ridged edge
       const coinGroup = new THREE.Group();
       
-      // Main coin body
+      // Main coin body with texture
       const bodyGeometry = new THREE.CylinderGeometry(data.size, data.size, 0.2, 64);
       const bodyMaterial = new THREE.MeshStandardMaterial({
-        color: data.color,
+        map: texture,
         emissive: data.emissive,
-        emissiveIntensity: 0.4,
-        metalness: 0.95,
-        roughness: 0.05,
+        emissiveIntensity: 0.3,
+        metalness: 0.9,
+        roughness: 0.1,
       });
       const body = new THREE.Mesh(bodyGeometry, bodyMaterial);
       coinGroup.add(body);
@@ -106,30 +170,6 @@ class IranCoin3D {
       const ridge = new THREE.Mesh(ridgeGeometry, ridgeMaterial);
       ridge.rotation.x = Math.PI / 2;
       coinGroup.add(ridge);
-
-      // Inner circle (face detail)
-      const innerGeometry = new THREE.CylinderGeometry(data.size * 0.7, data.size * 0.7, 0.22, 64);
-      const innerMaterial = new THREE.MeshStandardMaterial({
-        color: data.color,
-        emissive: data.emissive,
-        emissiveIntensity: 0.6,
-        metalness: 0.9,
-        roughness: 0.1,
-      });
-      const inner = new THREE.Mesh(innerGeometry, innerMaterial);
-      coinGroup.add(inner);
-
-      // Center symbol (text-like detail)
-      const centerGeometry = new THREE.CylinderGeometry(data.size * 0.35, data.size * 0.35, 0.24, 32);
-      const centerMaterial = new THREE.MeshStandardMaterial({
-        color: 0xffffff,
-        emissive: 0xffffff,
-        emissiveIntensity: 0.3,
-        metalness: 0.8,
-        roughness: 0.2,
-      });
-      const center = new THREE.Mesh(centerGeometry, centerMaterial);
-      coinGroup.add(center);
 
       coinGroup.position.set(...data.pos);
       coinGroup.rotation.x = Math.PI / 2;
