@@ -89,18 +89,34 @@ class IranCoin3D {
     // Crypto coins - using emissive materials for visibility
     const coins = [];
     const coinData = [
-      { color: 0xF7931A, emissive: 0xF7931A, size: 0.8, pos: [-3, 0.5, 0], symbol: 'BTC' },
-      { color: 0x26A17B, emissive: 0x26A17B, size: 0.6, pos: [-1.5, 0, 1], symbol: 'USDT' },
-      { color: 0x627EEA, emissive: 0x627EEA, size: 0.7, pos: [0, 1, -1], symbol: 'ETH' },
-      { color: 0xF0B90B, emissive: 0xF0B90B, size: 0.5, pos: [1.5, 0.3, 0.5], symbol: 'BNB' },
-      { color: 0x9945FF, emissive: 0x9945FF, size: 0.55, pos: [3, 0.7, -0.5], symbol: 'SOL' },
-      { color: 0x0033AD, emissive: 0x0033AD, size: 0.45, pos: [-2, -0.5, -1], symbol: 'ADA' },
-      { color: 0xC2A633, emissive: 0xC2A633, size: 0.5, pos: [2, -0.3, 1], symbol: 'DOGE' },
-      { color: 0x346AA9, emissive: 0x346AA9, size: 0.55, pos: [0, -0.5, 2], symbol: 'XRP' },
+      { color: 0xF7931A, emissive: 0xF7931A, size: 0.8, pos: [-3, 0.5, 0], symbol: 'BTC', svg: 'assets/brands/BTC.svg' },
+      { color: 0x26A17B, emissive: 0x26A17B, size: 0.6, pos: [-1.5, 0, 1], symbol: 'USDT', svg: 'assets/brands/USDT.svg' },
+      { color: 0x627EEA, emissive: 0x627EEA, size: 0.7, pos: [0, 1, -1], symbol: 'ETH', svg: 'assets/brands/ETH.svg' },
+      { color: 0xF0B90B, emissive: 0xF0B90B, size: 0.5, pos: [1.5, 0.3, 0.5], symbol: 'BNB', svg: 'assets/brands/BNB.svg' },
+      { color: 0x9945FF, emissive: 0x9945FF, size: 0.55, pos: [3, 0.7, -0.5], symbol: 'SOL', svg: 'assets/brands/SOL.svg' },
+      { color: 0x0033AD, emissive: 0x0033AD, size: 0.45, pos: [-2, -0.5, -1], symbol: 'ADA', svg: 'assets/brands/ADA.svg' },
+      { color: 0xC2A633, emissive: 0xC2A633, size: 0.5, pos: [2, -0.3, 1], symbol: 'DOGE', svg: 'assets/brands/DOGE.svg' },
+      { color: 0x346AA9, emissive: 0x346AA9, size: 0.55, pos: [0, -0.5, 2], symbol: 'XRP', svg: null },
     ];
 
-    coinData.forEach((data, i) => {
-      // Create coin texture with canvas
+    // Helper to load SVG as Image
+    const loadSVG = (url) => {
+      return new Promise((resolve) => {
+        const img = new Image();
+        img.onload = () => resolve(img);
+        img.onerror = () => resolve(null);
+        img.src = url;
+      });
+    };
+
+    // Preload all SVGs
+    const svgImages = {};
+    const svgPromises = coinData.filter(c => c.svg).map(async (data) => {
+      svgImages[data.symbol] = await loadSVG(data.svg);
+    });
+
+    // Draw coin texture with SVG or fallback text
+    const drawCoinTexture = (data) => {
       const canvas = document.createElement('canvas');
       canvas.width = 1024;
       canvas.height = 1024;
@@ -130,16 +146,24 @@ class IranCoin3D {
       ctx.lineWidth = 6;
       ctx.stroke();
       
-      // Symbol with shadow
-      ctx.shadowColor = 'rgba(0,0,0,0.5)';
-      ctx.shadowBlur = 20;
-      ctx.shadowOffsetX = 5;
-      ctx.shadowOffsetY = 5;
-      ctx.fillStyle = '#ffffff';
-      ctx.font = 'bold 400px Arial';
-      ctx.textAlign = 'center';
-      ctx.textBaseline = 'middle';
-      ctx.fillText(data.symbol, 512, 520);
+      // Draw SVG logo if available, otherwise text
+      const img = svgImages[data.symbol];
+      if (img) {
+        // Draw SVG logo centered and sized to fit
+        const logoSize = 500;
+        ctx.drawImage(img, 512 - logoSize/2, 512 - logoSize/2, logoSize, logoSize);
+      } else {
+        // Fallback: text symbol with shadow
+        ctx.shadowColor = 'rgba(0,0,0,0.5)';
+        ctx.shadowBlur = 20;
+        ctx.shadowOffsetX = 5;
+        ctx.shadowOffsetY = 5;
+        ctx.fillStyle = '#ffffff';
+        ctx.font = 'bold 400px Arial';
+        ctx.textAlign = 'center';
+        ctx.textBaseline = 'middle';
+        ctx.fillText(data.symbol, 512, 520);
+      }
       
       // Shine effect
       ctx.shadowColor = 'transparent';
@@ -153,7 +177,14 @@ class IranCoin3D {
       ctx.arc(512, 512, 490, 0, Math.PI * 2);
       ctx.fill();
       
-      const texture = new THREE.CanvasTexture(canvas);
+      return canvas;
+    };
+
+    // Wait for all SVGs to load, then create coins
+    Promise.all(svgPromises).then(() => {
+      coinData.forEach((data, i) => {
+        const canvas = drawCoinTexture.call(this, data);
+        const texture = new THREE.CanvasTexture(canvas);
       texture.needsUpdate = true;
 
       // Create coin with ridged edge
@@ -227,6 +258,7 @@ class IranCoin3D {
     camera.position.z = 7;
 
     this.scenes.hero = { scene, camera, renderer, coins };
+    }); // end Promise.all
   }
 
   // ============================================================
