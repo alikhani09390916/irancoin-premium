@@ -15,6 +15,61 @@ import { StdioServerTransport } from "@modelcontextprotocol/sdk/server/stdio.js"
 import { z } from "zod";
 
 // ============================================================
+// FONT AWESOME API TOKENS
+// ============================================================
+const FA_TOKENS = {
+  primary: "5AA38F74-A870-4ABC-895D-16005F22DB5A",
+  secondary: "FB1017FF-7090-416E-8F7D-12245076FF6C",
+};
+
+// Font Awesome GraphQL API
+const FA_API_URL = "https://api.fontawesome.com/graphql";
+
+// ============================================================
+// FETCH ICONS FROM FONT AWESOME API
+// ============================================================
+async function searchFAIcons(query, version = "5.15.4") {
+  const token = FA_TOKENS.primary;
+  const gql = `{ searchPaginated(query: "${query}", version: "${version}") { icons { id label } } }`;
+
+  try {
+    const response = await fetch(FA_API_URL, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "fa-kit-token": token,
+      },
+      body: JSON.stringify({ query: gql }),
+    });
+    const data = await response.json();
+    return data?.data?.searchPaginated?.icons || [];
+  } catch (e) {
+    console.error("FA API search error:", e.message);
+    return [];
+  }
+}
+
+async function getFARelease(version = "5.15.4") {
+  const token = FA_TOKENS.primary;
+  const gql = `{ release(version: "${version}") { version } }`;
+
+  try {
+    const response = await fetch(FA_API_URL, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "fa-kit-token": token,
+      },
+      body: JSON.stringify({ query: gql }),
+    });
+    const data = await response.json();
+    return data?.data?.release;
+  } catch (e) {
+    return null;
+  }
+}
+
+// ============================================================
 // FONT AWESOME FREE ICONS DATABASE
 // ============================================================
 const ICONS = {
@@ -501,31 +556,50 @@ const server = new McpServer({
 // ============================================================
 server.tool(
   "search_icons",
-  "Search Font Awesome icons by keyword",
+  "Search Font Awesome icons by keyword (API + local database)",
   {
     query: z.string().describe("Search keyword (e.g. 'chart', 'lock', 'money')"),
     limit: z.number().optional().describe("Max results (default 10)"),
+    useApi: z.boolean().optional().describe("Search via Font Awesome API (default: true)"),
   },
-  async ({ query, limit }) => {
+  async ({ query, limit, useApi }) => {
     const max = limit || 10;
     const q = query.toLowerCase();
-    const results = Object.entries(ICONS)
-      .filter(([name, icon]) =>
-        name.includes(q) ||
-        icon.keywords.some(k => k.includes(q))
-      )
-      .slice(0, max)
-      .map(([name, icon]) => ({
-        name,
-        type: icon.type,
-        unicode: `&#x${icon.unicode};`,
-        html: `<i class="fas fa-${name}"></i>`,
-        keywords: icon.keywords,
+
+    let results = [];
+
+    // Try API first
+    if (useApi !== false) {
+      const apiIcons = await searchFAIcons(query);
+      results = apiIcons.slice(0, max).map(icon => ({
+        name: icon.id.split(":").pop(),
+        label: icon.label,
+        html: `<i class="fas fa-${icon.id.split(":").pop()}"></i>`,
+        source: "api",
       }));
+    }
+
+    // Fallback to local database
+    if (results.length === 0) {
+      results = Object.entries(ICONS)
+        .filter(([name, icon]) =>
+          name.includes(q) || icon.keywords.some(k => k.includes(q))
+        )
+        .slice(0, max)
+        .map(([name, icon]) => ({
+          name,
+          type: icon.type,
+          unicode: `&#x${icon.unicode};`,
+          html: `<i class="fas fa-${name}"></i>`,
+          keywords: icon.keywords,
+          source: "local",
+        }));
+    }
+
     return {
       content: [{
         type: "text",
-        text: JSON.stringify(results, null, 2),
+        text: JSON.stringify({ query, count: results.length, results }, null, 2),
       }],
     };
   }
@@ -536,38 +610,59 @@ server.tool(
 // ============================================================
 server.tool(
   "get_icon_svg",
-  "Get SVG code for a Font Awesome icon with customization",
+  "Get SVG code for a Font Awesome icon with customization (fetches from Font Awesome API)",
   {
     icon: z.string().describe("Icon name (e.g. 'chart-line', 'lock')"),
+    style: z.string().optional().describe("Icon style: 'solid', 'regular', 'light', 'thin', 'duotone' (default: 'solid')"),
     size: z.number().optional().describe("Size in px (default 24)"),
     color: z.string().optional().describe("Color hex or CSS color (default: currentColor)"),
     animation: z.string().optional().describe("Animation preset name"),
   },
-  async ({ icon, size, color, animation }) => {
-    const iconData = ICONS[icon];
-    if (!iconData) {
-      return {
-        content: [{
-          type: "text",
-          text: `Icon "${icon}" not found. Use search_icons to find available icons.`,
-        }],
-      };
-    }
-
+  async ({ icon, style, size, color, animation }) => {
     const s = size || 24;
     const c = color || "currentColor";
+    const st = style || "solid";
     const anim = animation ? ANIMATIONS[animation] : null;
-    const animStyle = anim ? ` style="${anim.css} color: ${c};"` : ` style="color: ${c};"`;
 
-    const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="${s}" height="${s}" viewBox="0 0 448 512"${animStyle}>
-  <!-- Font Awesome Free 6.4.0 - fa-${icon} -->
+    // Try to fetch real SVG from Font Awesome API
+    const apiData = await fetchIconSVG(icon, st);
+    let svg;
+
+    if (apiData && apiData.svg) {
+      // Use real SVG data from API
+      const svgKey = Object.keys(apiData.svg)[0];
+      const pathData = apiData.svg[svgKey]?.path;
+      const viewBox = apiData.svg[svgKey]?.viewBox || "0 0 512 512";
+
+      if (pathData) {
+        const animStyle = anim ? ` style="${anim.css} color: ${c};"` : ` style="color: ${c};"`;
+        svg = `<svg xmlns="http://www.w3.org/2000/svg" width="${s}" height="${s}" viewBox="${viewBox}"${animStyle}>
+  <path fill="currentColor" d="${pathData}"/>
+</svg>`;
+      }
+    }
+
+    // Fallback to static database if API fails
+    if (!svg) {
+      const iconData = ICONS[icon];
+      if (!iconData) {
+        return {
+          content: [{
+            type: "text",
+            text: `Icon "${icon}" not found. Use search_icons to find available icons.\n\nAPI Token 1: ${FA_TOKENS.primary}\nAPI Token 2: ${FA_TOKENS.secondary}`,
+          }],
+        };
+      }
+      const animStyle = anim ? ` style="${anim.css} color: ${c};"` : ` style="color: ${c};"`;
+      svg = `<svg xmlns="http://www.w3.org/2000/svg" width="${s}" height="${s}" viewBox="0 0 448 512"${animStyle}>
   <path fill="currentColor" d="M224 0C100.3 0 0 100.3 0 224S100.3 448 224 448 448 347.7 448 224 347.7 0 224 0z"/>
 </svg>`;
+    }
 
     return {
       content: [{
         type: "text",
-        text: `Icon: fa-${icon} (${iconData.type})\n\nSVG:\n${svg}\n\n${anim ? `Animation: ${anim.name}\n${anim.keyframes}` : "No animation"}`,
+        text: `Icon: fa-${icon} (${st})\nSource: ${apiData ? "Font Awesome API" : "Static database"}\n\nSVG:\n${svg}\n\n${anim ? `Animation: ${anim.name}\n${anim.keyframes}` : "No animation"}`,
       }],
     };
   }
