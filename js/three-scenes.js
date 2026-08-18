@@ -102,42 +102,55 @@ class IranCoin3D {
     coinData.forEach((data, i) => {
       // Create coin texture with canvas
       const canvas = document.createElement('canvas');
-      canvas.width = 512;
-      canvas.height = 512;
+      canvas.width = 1024;
+      canvas.height = 1024;
       const ctx = canvas.getContext('2d');
       
       // Background gradient
-      const gradient = ctx.createRadialGradient(256, 256, 0, 256, 256, 256);
-      gradient.addColorStop(0, this.lightenColor(data.color, 30));
-      gradient.addColorStop(0.7, this.colorToHex(data.color));
-      gradient.addColorStop(1, this.darkenColor(data.color, 30));
+      const gradient = ctx.createRadialGradient(512, 512, 0, 512, 512, 512);
+      gradient.addColorStop(0, this.lightenColor(data.color, 40));
+      gradient.addColorStop(0.5, this.colorToHex(data.color));
+      gradient.addColorStop(1, this.darkenColor(data.color, 40));
       ctx.fillStyle = gradient;
       ctx.beginPath();
-      ctx.arc(256, 256, 256, 0, Math.PI * 2);
+      ctx.arc(512, 512, 512, 0, Math.PI * 2);
       ctx.fill();
       
-      // Inner circle
+      // Outer ring
       ctx.beginPath();
-      ctx.arc(256, 256, 180, 0, Math.PI * 2);
-      ctx.strokeStyle = this.lightenColor(data.color, 50);
-      ctx.lineWidth = 8;
+      ctx.arc(512, 512, 480, 0, Math.PI * 2);
+      ctx.strokeStyle = this.lightenColor(data.color, 60);
+      ctx.lineWidth = 12;
       ctx.stroke();
       
-      // Symbol
+      // Inner ring
+      ctx.beginPath();
+      ctx.arc(512, 512, 400, 0, Math.PI * 2);
+      ctx.strokeStyle = this.lightenColor(data.color, 40);
+      ctx.lineWidth = 6;
+      ctx.stroke();
+      
+      // Symbol with shadow
+      ctx.shadowColor = 'rgba(0,0,0,0.5)';
+      ctx.shadowBlur = 20;
+      ctx.shadowOffsetX = 5;
+      ctx.shadowOffsetY = 5;
       ctx.fillStyle = '#ffffff';
-      ctx.font = 'bold 200px Arial';
+      ctx.font = 'bold 400px Arial';
       ctx.textAlign = 'center';
       ctx.textBaseline = 'middle';
-      ctx.fillText(data.symbol, 256, 260);
+      ctx.fillText(data.symbol, 512, 520);
       
       // Shine effect
-      const shineGradient = ctx.createLinearGradient(100, 100, 400, 400);
-      shineGradient.addColorStop(0, 'rgba(255,255,255,0.4)');
-      shineGradient.addColorStop(0.5, 'rgba(255,255,255,0)');
-      shineGradient.addColorStop(1, 'rgba(255,255,255,0.1)');
+      ctx.shadowColor = 'transparent';
+      const shineGradient = ctx.createLinearGradient(200, 200, 800, 800);
+      shineGradient.addColorStop(0, 'rgba(255,255,255,0.5)');
+      shineGradient.addColorStop(0.3, 'rgba(255,255,255,0.1)');
+      shineGradient.addColorStop(0.7, 'rgba(255,255,255,0)');
+      shineGradient.addColorStop(1, 'rgba(255,255,255,0.2)');
       ctx.fillStyle = shineGradient;
       ctx.beginPath();
-      ctx.arc(256, 256, 250, 0, Math.PI * 2);
+      ctx.arc(512, 512, 490, 0, Math.PI * 2);
       ctx.fill();
       
       const texture = new THREE.CanvasTexture(canvas);
@@ -147,13 +160,13 @@ class IranCoin3D {
       const coinGroup = new THREE.Group();
       
       // Main coin body with texture
-      const bodyGeometry = new THREE.CylinderGeometry(data.size, data.size, 0.2, 64);
+      const bodyGeometry = new THREE.CylinderGeometry(data.size, data.size, 0.25, 64);
       const bodyMaterial = new THREE.MeshStandardMaterial({
         map: texture,
         emissive: data.emissive,
-        emissiveIntensity: 0.3,
-        metalness: 0.9,
-        roughness: 0.1,
+        emissiveIntensity: 0.4,
+        metalness: 0.85,
+        roughness: 0.15,
       });
       const body = new THREE.Mesh(bodyGeometry, bodyMaterial);
       coinGroup.add(body);
@@ -446,9 +459,10 @@ class IranCoin3D {
 
     // Hero coins animation
     if (this.scenes.hero) {
-      this.scenes.hero.coins.forEach((coin) => {
-        coin.position.y = coin.userData.originalY + Math.sin(time * coin.userData.speed + coin.userData.phase) * 0.3;
-        coin.rotation.z += 0.01;
+      this.scenes.hero.coins.forEach((coin, i) => {
+        coin.position.y = coin.userData.originalY + Math.sin(time * coin.userData.speed + coin.userData.phase) * 0.4;
+        coin.rotation.z = Math.sin(time * 0.5 + coin.userData.phase) * 0.2;
+        coin.rotation.y += 0.008;
       });
       this.scenes.hero.renderer.render(this.scenes.hero.scene, this.scenes.hero.camera);
     }
