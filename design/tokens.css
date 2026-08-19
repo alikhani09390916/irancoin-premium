@@ -72,6 +72,9 @@
   --c-rose-100: #FFE4E6;
   --c-amber-500: #F59E0B;
 
+  --err: #ef4444;
+  --err-bg: rgba(239,68,68,0.12);
+
   --c-white: #FFFFFF;
   --c-black: #0B0D1C;
 

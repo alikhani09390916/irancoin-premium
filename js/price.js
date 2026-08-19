@@ -164,7 +164,7 @@
 
     var cd = getCountdown(endDateStr);
     if (!cd || cd.total <= 0) {
-      container.innerHTML = '<div style="color:var(--err);font-size:.8125rem;font-weight:600">⏰ زمان به پایان رسید</div>';
+      container.innerHTML = '<div style="color:var(--err);font-size:.8125rem;font-weight:600"><i class="fa-solid fa-clock"></i> زمان به پایان رسید</div>';
       return;
     }
 
@@ -193,7 +193,7 @@
       '<div style="background:' + colors.bg + ';color:' + colors.text + ';width:3rem;height:3rem;border-radius:.5rem;display:grid;place-items:center;font-size:1.25rem;font-weight:800;font-variant-numeric:tabular-nums;box-shadow:0 4px 12px ' + colors.glow + ';' + blinkStyle + '">' +
         String(value).padStart(2, '0') +
       '</div>' +
-      '<div style="font-size:.625rem;color:var(--txt-dim);margin-top:.25rem;font-weight:600">' + label + '</div>' +
+      '<div style="font-size:.625rem;color:var(--text-tertiary);margin-top:.25rem;font-weight:600">' + label + '</div>' +
     '</div>';
   }
 
@@ -213,30 +213,30 @@
       html += '<div style="position:absolute;top:.75rem;left:.75rem;background:linear-gradient(135deg,#dc2626,#ea580c);color:white;padding:.25rem .625rem;border-radius:999px;font-size:.6875rem;font-weight:700;display:flex;align-items:center;gap:.25rem">';
       html += '<i class="fa-solid fa-clock"></i> ' + pricing.discount + '% تخفیف';
       html += '</div>';
-      html += '<div style="position:absolute;top:.75rem;right:.75rem;font-size:.75rem;color:var(--txt-dim)">⏰ مدت محدود</div>';
+      html += '<div style="position:absolute;top:.75rem;right:.75rem;font-size:.75rem;color:var(--text-tertiary)"><i class="fa-solid fa-clock"></i> مدت محدود</div>';
     }
 
     html += '<div style="margin-top:' + (hasDiscount ? '2.5rem' : '0') + '">';
-    html += '<div style="font-size:.8125rem;color:var(--txt-dim);margin-bottom:.25rem">' + plan.label + '</div>';
+    html += '<div style="font-size:.8125rem;color:var(--text-tertiary);margin-bottom:.25rem">' + plan.label + '</div>';
 
     if (hasDiscount) {
       html += '<div style="display:flex;align-items:baseline;gap:.5rem;flex-wrap:wrap">';
       html += '<span style="font-size:1.75rem;font-weight:800;background:var(--grad-brand);-webkit-background-clip:text;-webkit-text-fill-color:transparent">' + formatUSDT(pricing.usdt) + '</span>';
-      html += '<span style="font-size:.875rem;color:var(--txt-dim);text-decoration:line-through">' + formatUSDT(pricing.original.usdt) + '</span>';
+      html += '<span style="font-size:.875rem;color:var(--text-tertiary);text-decoration:line-through">' + formatUSDT(pricing.original.usdt) + '</span>';
       html += '</div>';
       html += '<div style="font-size:1rem;font-weight:700;color:var(--warn);margin-top:.25rem">' + formatToman(pricing.toman) + ' تومان</div>';
-      html += '<div style="font-size:.75rem;color:var(--txt-dim);text-decoration:line-through">' + formatToman(pricing.original.toman) + ' تومان</div>';
+      html += '<div style="font-size:.75rem;color:var(--text-tertiary);text-decoration:line-through">' + formatToman(pricing.original.toman) + ' تومان</div>';
     } else {
       html += '<div style="font-size:1.75rem;font-weight:800;background:var(--grad-brand);-webkit-background-clip:text;-webkit-text-fill-color:transparent">' + formatUSDT(pricing.usdt) + '</div>';
-      html += '<div style="font-size:1rem;font-weight:700;color:var(--txt);margin-top:.25rem">' + formatToman(pricing.toman) + ' تومان</div>';
+      html += '<div style="font-size:1rem;font-weight:700;color:var(--text-primary);margin-top:.25rem">' + formatToman(pricing.toman) + ' تومان</div>';
     }
 
-    html += '<div style="font-size:.75rem;color:var(--txt-dim);margin-top:.25rem">' + plan.days + ' روز اشتراک</div>';
+    html += '<div style="font-size:.75rem;color:var(--text-tertiary);margin-top:.25rem">' + plan.days + ' روز اشتراک</div>';
     html += '</div>';
 
     if (hasDiscount && pricing.endDate) {
       html += '<div style="margin-top:.75rem;padding-top:.75rem;border-top:1px solid var(--brd)">';
-      html += '<div style="font-size:.6875rem;color:var(--txt-dim);margin-bottom:.375rem;text-align:center"><i class="fa-solid fa-clock"></i> مدت محدود</div>';
+      html += '<div style="font-size:.6875rem;color:var(--text-tertiary);margin-bottom:.375rem;text-align:center"><i class="fa-solid fa-clock"></i> مدت محدود</div>';
       html += '<div id="cd-' + planId + '"></div>';
       html += '</div>';
     }
@@ -269,14 +269,14 @@
 
     var price = getCachedPrice();
     if (!price) {
-      container.innerHTML = '<span style="color:var(--txt-dim)">در حال دریافت قیمت...</span>';
+      container.innerHTML = '<span style="color:var(--text-tertiary)">در حال دریافت قیمت...</span>';
       return;
     }
 
     container.innerHTML =
       '<div style="display:flex;align-items:center;gap:1rem;flex-wrap:wrap">' +
         '<div style="display:flex;align-items:center;gap:.375rem">' +
-          '<span style="font-size:.75rem;color:var(--txt-dim)">قیمت لحظه‌ای USDT:</span>' +
+          '<span style="font-size:.75rem;color:var(--text-tertiary)">قیمت لحظه‌ای USDT:</span>' +
           '<span style="font-weight:800;background:var(--grad-brand);-webkit-background-clip:text;-webkit-text-fill-color:transparent;font-size:1rem">' + formatToman(price) + ' تومان</span>' +
         '</div>' +
         '<div style="font-size:.6875rem;color:var(--txt-muted)">هر ۶۰ ثانیه بروزرسانی</div>' +

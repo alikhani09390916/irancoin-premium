@@ -87,8 +87,15 @@
     if (!reduced) animate();
 
     // Recalculate on resize
+    var lastW = cRect ? cRect.width : 0;
     window.addEventListener("resize", function () {
       updateRect();
+      var wasHidden = lastW === 0 && cRect.width > 0;
+      lastW = cRect.width;
+      if (wasHidden) {
+        scatter();
+        measureAll();
+      }
       enforceBounds();
       resolveAll();
       labels.forEach(applyPos);
