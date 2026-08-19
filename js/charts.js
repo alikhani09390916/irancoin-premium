@@ -175,6 +175,7 @@
         style="transition: stroke-dasharray 1.4s cubic-bezier(0.22,1,0.36,1) 0.4s"/>
     </svg>`;
     const arc = el.querySelector("path:last-child");
+    if (!arc) return;
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
       arc.setAttribute("stroke-dasharray", finalDash);
       return;

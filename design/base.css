@@ -194,6 +194,7 @@ h1, h2, h3, h4, h5, h6 {
   padding: var(--sp-2) var(--sp-4);
   border-radius: var(--r-full);
   margin-bottom: var(--sp-5);
+  backdrop-filter: blur(var(--blur-sm));
   -webkit-backdrop-filter: blur(var(--blur-sm));
   letter-spacing: var(--font-letter-wide);
 }

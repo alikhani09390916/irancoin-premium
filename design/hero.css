@@ -168,7 +168,8 @@
   border-radius: var(--r-md);
   background: rgba(255,255,255,0.45);
   border: 1px solid rgba(124,58,237,0.08);
-  -webkit-backdrop-filter: blur(8px);
+  backdrop-filter: blur(var(--blur-sm));
+  -webkit-backdrop-filter: blur(var(--blur-sm));
   transition: transform var(--dur-fast) var(--ease-out),
               box-shadow var(--dur-fast) var(--ease-out);
 }
@@ -247,7 +248,8 @@
   border-radius: var(--r-full);
   background: var(--fl-bg, rgba(124,58,237,0.12));
   border: 1px solid var(--fl-border, rgba(124,58,237,0.3));
-  -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(var(--blur-md));
+  -webkit-backdrop-filter: blur(var(--blur-md));
   color: var(--fl-color, var(--c-violet-500));
   font-family: var(--font-fa);
   font-size: 0.65rem;
@@ -271,14 +273,9 @@
 }
 
 /* ---------- Bitcoin / Tether 3D coins ---------- */
+/* Hidden: replaced by realistic Three.js 3D coins */
 .coin {
-  position: absolute;
-  width: clamp(4.5rem, 7vw, 6.5rem);
-  aspect-ratio: 1;
-  border-radius: 50%;
-  z-index: 4;
-  transform-style: preserve-3d;
-  filter: drop-shadow(0 0 12px rgba(201, 109, 8, 0.2));
+  display: none !important;
 }
 
 .coin::before,
@@ -383,6 +380,7 @@
   z-index: 5;
   background: var(--bg-glass-strong);
   border: var(--bw-xs) solid var(--border-glass);
+  backdrop-filter: blur(var(--blur-md));
   -webkit-backdrop-filter: blur(var(--blur-md));
   border-radius: var(--r-md);
   box-shadow: var(--sh-md), var(--sh-inset-glass);
@@ -461,6 +459,7 @@
   z-index: 2;
   background: var(--bg-glass-strong);
   border: var(--bw-xs) solid var(--border-glass);
+  backdrop-filter: blur(var(--blur-md));
   -webkit-backdrop-filter: blur(var(--blur-md));
   border-radius: var(--r-md);
   box-shadow: var(--sh-md), var(--sh-inset-glass);

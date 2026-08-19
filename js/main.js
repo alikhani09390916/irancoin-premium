@@ -102,11 +102,12 @@
     link.addEventListener("click", (e) => {
       const href = link.getAttribute("href");
       if (!href || href.startsWith("#")) return;
-      const isSamePage = new URL(href, location.href).pathname === location.pathname;
+      let isSamePage;
+      try { isSamePage = new URL(href, location.href).pathname === location.pathname; } catch { return; }
       if (isSamePage) return;
       e.preventDefault();
       const veil = $("#page-veil");
-      veil.classList.add("is-active");
+      if (veil) veil.classList.add("is-active");
       document.body.style.overflow = "hidden";
       setTimeout(() => {
         window.location.href = href;
@@ -121,7 +122,8 @@
       const io = new IntersectionObserver(
         (entries) => {
           if (entries[0].isIntersecting) {
-            el.querySelector("span").style.width = `${target}%`;
+            const bar = el.querySelector("span");
+            if (bar) bar.style.width = `${target}%`;
             io.disconnect();
           }
         },
@@ -158,7 +160,7 @@
   window.IRANCOIN.pay = function (plan, period, price) {
     const p = plan ? `?plan=${encodeURIComponent(plan)}&period=${encodeURIComponent(period)}&price=${encodeURIComponent(price)}` : "";
     const veil = $("#page-veil");
-    veil.classList.add("is-active");
+    if (veil) veil.classList.add("is-active");
     document.body.style.overflow = "hidden";
     setTimeout(() => {
       window.location.href = `pricing.html${p}`;

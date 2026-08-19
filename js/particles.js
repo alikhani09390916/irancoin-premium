@@ -8,6 +8,7 @@
   const prefersReduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
   const ctx = canvas.getContext("2d");
+  if (!ctx) return;
   let W = 0, H = 0, dpr = 1;
   let particles = [];
   let rafId = null;

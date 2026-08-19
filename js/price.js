@@ -252,10 +252,11 @@
         // Auto-deactivate if expired
         var cd = getCountdown(pricing.endDate);
         if (cd && cd.total <= 0) {
+          clearInterval(countdownIntervals[planId]);
+          delete countdownIntervals[planId];
           var disc = getDiscount(planId);
           disc.active = false;
           setDiscount(planId, disc);
-          renderPriceCard(planId, containerId);
         }
       }, 1000);
     }

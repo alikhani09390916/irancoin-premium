@@ -115,7 +115,8 @@
 
     document.body.appendChild(overlay);
 
-    overlay.querySelector("#ic-modal-close").addEventListener("click", function() { overlay.remove(); });
+    var closeBtn1 = overlay.querySelector("#ic-modal-close");
+    if (closeBtn1) closeBtn1.addEventListener("click", function() { overlay.remove(); });
     overlay.addEventListener("click", function(e) { if (e.target === overlay) overlay.remove(); });
 
     overlay.querySelectorAll(".ic-crypto-btn").forEach(function(btn) {
@@ -199,12 +200,13 @@
 
     document.body.appendChild(overlay);
 
-    overlay.querySelector("#ic-modal-close").addEventListener("click", function() { overlay.remove(); });
+    var closeBtn2 = overlay.querySelector("#ic-modal-close");
+    if (closeBtn2) closeBtn2.addEventListener("click", function() { overlay.remove(); });
     overlay.addEventListener("click", function(e) { if (e.target === overlay) overlay.remove(); });
 
     overlay.querySelectorAll(".ic-copy-card").forEach(function(btn) {
       btn.addEventListener("click", function() {
-        navigator.clipboard.writeText(btn.dataset.num);
+        navigator.clipboard.writeText(btn.dataset.num).catch(function() {});
         btn.textContent = "کپی شد \u2713";
         setTimeout(function() { btn.textContent = "کپی"; }, 2000);
       });
@@ -232,23 +234,33 @@
       try {
         var reader = new FileReader();
         reader.onload = async function(e) {
-          var base64 = e.target.result.split(",")[1];
-          var res = await fetch(apiBase() + "/submit-card-payment", {
-            method: "POST",
-            headers: { "Content-Type": "application/json", "Authorization": "Bearer " + userToken(), "apikey": anonKey() },
-            body: JSON.stringify({
-              plan_id: planId,
-              tracking_code: trackingCode,
-              receipt_image: base64,
-              card_number: CARDS.map(function(c){return c.number}).join(" , "),
-            })
-          });
-          var data = await res.json();
-          if (data.success) {
-            overlay.remove();
-            showSuccess("فیش شما با موفقیت ارسال شد! پس از تأیید مدیر، اشتراک شما فعال می‌شود.");
-          } else {
-            throw new Error(data.error || "ارسال ناموفق");
+          try {
+            var base64 = e.target.result.split(",")[1];
+            var res = await fetch(apiBase() + "/submit-card-payment", {
+              method: "POST",
+              headers: { "Content-Type": "application/json", "Authorization": "Bearer " + userToken(), "apikey": anonKey() },
+              body: JSON.stringify({
+                plan_id: planId,
+                tracking_code: trackingCode,
+                receipt_image: base64,
+                card_number: CARDS.map(function(c){return c.number}).join(" , "),
+              })
+            });
+            if (!res.ok) {
+              var errData = await res.json().catch(function() { return {}; });
+              throw new Error(errData.error || "ارسال ناموفق");
+            }
+            var data = await res.json();
+            if (data.success) {
+              overlay.remove();
+              showSuccess("فیش شما با موفقیت ارسال شد! پس از تأیید مدیر، اشتراک شما فعال می‌شود.");
+            } else {
+              throw new Error(data.error || "ارسال ناموفق");
+            }
+          } catch(err) {
+            alert("خطا: " + err.message);
+            btn.disabled = false;
+            btn.textContent = "ارسال فیش و تأیید پرداخت";
           }
         };
         reader.readAsDataURL(receiptFile);
@@ -436,8 +448,7 @@
     if (cryptoBtn) {
       cryptoBtn.addEventListener("click", function() {
         var planId = cryptoBtn.dataset.cryptoPay;
-        var planMap = { monthly: "1m", quarterly: "3m", semiannual: "6m", annual: "1yr" };
-        showCryptoModal(planMap[planId] || planId);
+        showCryptoModal(planId);
       });
     }
 
@@ -446,8 +457,7 @@
     if (c2cBtn) {
       c2cBtn.addEventListener("click", function() {
         var planId = c2cBtn.dataset.card2cardPay;
-        var planMap = { monthly: "1m", quarterly: "3m", semiannual: "6m", annual: "1yr" };
-        showCard2CardModal(planMap[planId] || planId);
+        showCard2CardModal(planId);
       });
     }
 
@@ -471,6 +481,8 @@
             localStorage.setItem("sb-ibnpgzmbepieudwalwtv-auth-token", JSON.stringify(tokenData));
             window.history.replaceState({}, "", window.location.pathname);
             showSuccess("با موفقیت وارد شدید!");
+          }).catch(function() {
+            showSuccess("ورود انجام شد.");
           });
         }
       } catch (e) {}
