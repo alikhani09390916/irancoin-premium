@@ -15,6 +15,8 @@ class IranCoin3D {
     this.coins = [];
     this.vaporSystem = null;
     this.running = true;
+    this.reducedMotion = typeof window.matchMedia === 'function'
+      && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     this.init();
   }
 
@@ -788,6 +790,15 @@ class IranCoin3D {
   // ============================================================
   animate() {
     if (!this.running) return;
+
+    // Respect prefers-reduced-motion: render one static frame, no animation
+    if (this.reducedMotion) {
+      Object.values(this.scenes).forEach((s) => {
+        s.renderer.render(s.scene, s.camera);
+      });
+      return;
+    }
+
     requestAnimationFrame(() => this.animate());
 
     const time = Date.now() * 0.001;

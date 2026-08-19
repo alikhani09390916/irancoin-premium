@@ -59,6 +59,8 @@
   <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GT-TNCHQ3DV"
   height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   <!-- End Google Tag Manager (noscript) -->
+  <!-- No-JS fallback: keep reveal content visible without JS -->
+  <noscript><style>[data-reveal]{opacity:1 !important;transform:none !important}</style></noscript>
 
   <a class="skip-link" href="#main">پرش به محتوای اصلی</a>
 
@@ -234,7 +236,7 @@
               <div style="font-size:1rem;font-weight:700;color:var(--text-primary);margin-top:.25rem">در حال بارگذاری...</div>
               <div style="font-size:.75rem;color:var(--text-tertiary);margin-top:.25rem">۳۶۵ روز اشتراک</div>
             </div>
-            <div class="pricing-note">۲۵٪ تخفیف +یژه سالانه</div>
+            <div class="pricing-note">۲۵٪ تخفیف ویژه سالانه</div>
             <ul class="pricing-features">
               <li>ربات معامله‌گر <span class="b">نامحدود</span></li>
               <li>همه استراتژی‌ها + ساخت استراتژی شخصی</li>
@@ -446,8 +448,8 @@
 
         <div class="glass-card" data-reveal style="margin-bottom:var(--sp-6);text-align:center;padding:var(--sp-5)">
           <div style="color:var(--text-secondary);font-size:var(--fs-dlabel);margin-bottom:var(--sp-2)">پلن انتخابی</div>
-          <div style="font-size:var(--fs-heading-l);font-weight:800;color:var(--text-primary)" id="pp-plan-label">۶ ماهه</div>
-          <div style="font-size:var(--fs-heading-m);font-weight:700;background:var(--grad-brand);-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin-top:var(--sp-2)" id="pp-total">—</div>
+          <div style="font-size:var(--fs-heading-l);font-weight:800;color:var(--text-primary)" id="pp-plan-label">۱ ماهه</div>
+          <div style="font-size:var(--fs-heading-m);font-weight:700;background:var(--grad-brand);-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin-top:var(--sp-2)" id="pp-total">$29</div>
         </div>
 
         <div class="glass-card" data-reveal style="margin-bottom:var(--sp-4);transition:all .3s;border:2px solid transparent" id="pay-crypto-card">
@@ -582,32 +584,41 @@
     (function () {
       "use strict";
 
-      var PLAN_MAP = { monthly: "1m", quarterly: "3m", semiannual: "6m", annual: "1yr" };
-      var PLAN_LABELS = { "1m": "۱ ماهه", "3m": "۳ ماهه", "6m": "۶ ماهه", "1yr": "۱ ساله" };
-      var PLAN_PRICES = { "1m": 29, "3m": 79, "6m": 149, "1yr": 249 };
+      var PLAN_LABELS = { monthly: "۱ ماهه", quarterly: "۳ ماهه", semiannual: "۶ ماهه", annual: "۱ ساله" };
+      var PLAN_PRICES = { monthly: 29, quarterly: 79, semiannual: 149, annual: 249 };
+      var SHORT_TO_KEY = { "1m": "monthly", "3m": "quarterly", "6m": "semiannual", "1yr": "annual" };
 
       var params = new URLSearchParams(window.location.search);
       var planParam = params.get("plan");
 
+      function normalizePlan(p) { return SHORT_TO_KEY[p] || p; }
+
       function setPlanUI(planId) {
-        var mappedId = PLAN_MAP[planParam] || planId || "6m";
+        var id = normalizePlan(planId) || "monthly";
         var label = document.getElementById("pp-plan-label");
         var total = document.getElementById("pp-total");
-        if (label) label.textContent = PLAN_LABELS[mappedId] || mappedId;
-        if (total) total.textContent = "$" + (PLAN_PRICES[mappedId] || "—");
+        if (label) label.textContent = PLAN_LABELS[id] || id;
+        if (total) {
+          var price = PLAN_PRICES[id] || "—";
+          if (window.ICPrice && typeof window.ICPrice.calculateDiscountedPrice === "function") {
+            var pricing = window.ICPrice.calculateDiscountedPrice(id);
+            if (pricing.discount > 0) price = pricing.usdt;
+          }
+          total.textContent = "$" + price;
+        }
 
-        document.querySelectorAll("[data-crypto-pay]").forEach(function(b) { b.dataset.cryptoPay = mappedId; });
-        document.querySelectorAll("[data-card2card-pay]").forEach(function(b) { b.dataset.card2cardPay = mappedId; });
+        document.querySelectorAll("[data-crypto-pay]").forEach(function(b) { b.dataset.cryptoPay = id; });
+        document.querySelectorAll("[data-card2card-pay]").forEach(function(b) { b.dataset.card2cardPay = id; });
       }
 
-      if (planParam) setPlanUI(planParam);
+      // Keep panel + buttons in sync; default to monthly
+      setPlanUI(planParam || "monthly");
 
       document.querySelectorAll(".pricing-card .btn").forEach(function (btn) {
         btn.addEventListener("click", function () {
           var card = btn.closest(".pricing-card");
           var name = card.dataset.plan;
-          var mappedId = PLAN_MAP[name] || name;
-          setPlanUI(mappedId);
+          setPlanUI(name);
           var panel = document.getElementById("pay-panel");
           if (panel) panel.scrollIntoView({ behavior: "smooth", block: "start" });
         });

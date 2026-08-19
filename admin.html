@@ -28,7 +28,7 @@
       --brd-focus: rgba(124,58,237,0.5);
       --txt: #f1f5f9;
       --txt-dim: #64748b;
-      --txt-muted: #475569;
+      --txt-muted: #94A3B8;
       --ok: #10b981;
       --ok-bg: rgba(16,185,129,0.12);
       --warn: #f59e0b;
@@ -178,6 +178,7 @@
     /* ===== TOGGLE ===== */
     .toggle { position:relative; display:inline-block; width:2.75rem; height:1.5rem; cursor:pointer; }
     .toggle input { opacity:0; width:0; height:0; }
+    .toggle input:focus-visible + .slider { box-shadow:0 0 0 3px rgba(124,58,237,0.4); }
     .toggle .slider { position:absolute; inset:0; background:rgba(100,116,139,0.3); border-radius:999px; transition:var(--transition); }
     .toggle .slider::before { content:''; position:absolute; width:1.125rem; height:1.125rem; border-radius:50%; background:white; top:.1875rem; right:.1875rem; transition:var(--transition); }
     .toggle input:checked + .slider { background:var(--ok); }

@@ -54,9 +54,9 @@
     .badge-sample { background:var(--c-gold-100);color:var(--c-gold-600);font-size:.7rem;padding:2px 8px;border-radius:9999px;font-weight:600; }
     .badge-soon { background:rgba(124,58,237,.12);color:var(--c-violet-600);font-size:.65rem;padding:2px 8px;border-radius:9999px;font-weight:600;cursor:default; }
     .badge-disconnected { background:rgba(239,68,68,.1);color:#ef4444;font-size:.7rem;padding:2px 8px;border-radius:9999px;font-weight:600; }
-    .nav-disabled { opacity:.45;cursor:not-allowed;text-decoration:none;pointer-events:none; }
+    .nav-disabled { opacity:.45;cursor:not-allowed;text-decoration:none;pointer-events:auto; }
     .toast-wrap{position:fixed;bottom:1.5rem;left:50%;transform:translateX(-50%);z-index:9999;display:flex;flex-direction:column;align-items:center;gap:.5rem;pointer-events:none; }
-    .toast{background:var(--glass-bg,#1e1b4b);color:#fff;padding:.6rem 1.2rem;border-radius:12px;font-size:.82rem;font-weight:600;box-shadow:0 8px 32px rgba(0,0,0,.35);opacity:0;transform:translateY(12px);animation:toastIn .3s ease forwards;pointer-events:auto; }
+    .toast{position:static;background:var(--glass-bg,#1e1b4b);color:#fff;padding:.6rem 1.2rem;border-radius:12px;font-size:.82rem;font-weight:600;box-shadow:0 8px 32px rgba(0,0,0,.35);opacity:0;transform:translateY(12px);animation:toastIn .3s ease forwards;pointer-events:auto;max-width:min(90vw,28rem); }
     @keyframes toastIn{to{opacity:1;transform:translateY(0)}} @keyframes toastOut{to{opacity:0;transform:translateY(12px)}}
   </style>
 </head>
@@ -65,6 +65,8 @@
   <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GT-TNCHQ3DV"
   height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   <!-- End Google Tag Manager (noscript) -->
+  <!-- No-JS fallback: keep reveal content visible without JS -->
+  <noscript><style>[data-reveal]{opacity:1 !important;transform:none !important}</style></noscript>
 
   <a class="skip-link" href="#main">پرش به محتوای اصلی</a>
 
@@ -114,7 +116,7 @@
     </div>
   </div>
 
-  <div style="position:fixed;top:0;inset-inline:0;height:3px;z-index:150;background:transparent;">
+  <div style="position:fixed;top:0;inset-inline:0;height:3px;z-index:101;background:transparent;">
     <div data-scroll-progress style="height:100%;background:var(--grad-brand);width:0%;border-radius:0 0 4px 0;"></div>
   </div>
 
@@ -164,7 +166,20 @@
         <div style="display:flex;gap:var(--sp-3);flex-wrap:wrap;align-items:center">
           <div id="brain-3d-container" class="brain-scene" style="width:80px;height:80px;border-radius:50%;overflow:hidden" role="img" aria-label="مغز هوش مصنوعی"></div>
           <a class="btn btn-primary btn-sm" href="pricing.html" data-transition>ارتقای اشتراک</a>
-          <a class="btn btn-secondary btn-sm" href="index.html" data-transition>خروج</a>
+          <a class="btn btn-secondary btn-sm" href="index.html" data-transition onclick="localStorage.removeItem('sb-ibnpgzmbepieudwalwtv-auth-token')">خروج</a>
+        </div>
+      </div>
+
+      <!-- ============ SUBSCRIPTION STATUS ============ -->
+      <div class="glass-card" id="sub-status-card" data-reveal style="margin-bottom:var(--sp-5);padding:var(--sp-5);display:none">
+        <div style="display:flex;align-items:center;gap:var(--sp-4);flex-wrap:wrap">
+          <div style="width:2.75rem;height:2.75rem;border-radius:0.75rem;background:var(--grad-brand);display:grid;place-items:center;color:white;font-size:1.25rem;flex-shrink:0"><i class="fa-solid fa-gem"></i></div>
+          <div style="flex:1;min-width:12rem">
+            <div style="font-weight:700;font-size:1rem" id="sub-status-title">در حال بررسی اشتراک...</div>
+            <div style="color:var(--text-tertiary);font-size:0.8125rem;margin-top:0.25rem" id="sub-status-desc">در حال اتصال به سرور</div>
+          </div>
+          <div id="sub-countdown" style="display:none;direction:ltr;font-family:var(--font-num);font-weight:800;font-size:1.25rem;background:var(--grad-brand);-webkit-background-clip:text;-webkit-text-fill-color:transparent;white-space:nowrap"></div>
+          <a class="btn btn-primary btn-sm" href="pricing.html" data-transition>ارتقای اشتراک</a>
         </div>
       </div>
 
@@ -205,7 +220,7 @@
               ارزش پورتفولیو — ۹۰ روز اخیر
               <span class="badge-sample">داده نمونه</span>
             </div>
-            <div class="tabs" role="tablist" aria-label="بازه زمانی">
+            <div class="tabs tabs-static" role="tablist" aria-label="بازه زمانی">
               <button class="tab is-active" role="tab" aria-selected="true" onclick="window.__showToast('بازه زمانی به زودی فعال می‌شود')">روز</button>
               <button class="tab" role="tab" aria-selected="false" onclick="window.__showToast('بازه زمانی به زودی فعال می‌شود')">هفته</button>
               <button class="tab" role="tab" aria-selected="false" onclick="window.__showToast('بازه زمانی به زودی فعال می‌شود')">ماه</button>
@@ -454,7 +469,7 @@
 
       function fetchDashboardData() {
         try {
-          if (typeof window.__supabaseClient !== 'undefined' && window.__supabaseClient) {
+          if (window.IC && window.IC.supabase) {
             supabaseConnected = true;
             window.__showToast('اتصال به سرور برقرار شد');
           } else {
@@ -469,6 +484,54 @@
 
       // Wait for supabase.js to initialize, then check
       setTimeout(fetchDashboardData, 800);
+
+      // Subscription status + expiry countdown
+      (function renderSubStatus() {
+        var card = document.getElementById('sub-status-card');
+        if (!card) return;
+        card.style.display = 'block';
+        var title = document.getElementById('sub-status-title');
+        var desc = document.getElementById('sub-status-desc');
+        var cdEl = document.getElementById('sub-countdown');
+        var functionsUrl = 'https://ibnpgzmbepieudwalwtv.supabase.co/functions/v1';
+        var anon = window.IC?.supabase?.anonKey || '';
+        try {
+          var token = JSON.parse(localStorage.getItem('sb-ibnpgzmbepieudwalwtv-auth-token') || '{}').access_token || '';
+          if (!token) throw new Error('no token');
+          fetch(functionsUrl + '/check-subscription', {
+            headers: { 'Authorization': 'Bearer ' + token, 'apikey': anon }
+          }).then(function(r) { return r.json(); }).then(function(d) {
+            if (d && d.has_subscription && d.plan) {
+              title.textContent = 'اشتراک فعال — ' + (d.plan.label || d.plan.id);
+              desc.textContent = 'اشتراک شما فعال است';
+              var end = new Date(d.plan.expires_at).getTime();
+              function tick() {
+                var left = end - Date.now();
+                if (left <= 0) {
+                  cdEl.textContent = '';
+                  cdEl.style.display = 'none';
+                  desc.textContent = 'اشتراک شما منقضی شده است — برای تمدید، ارتقا دهید';
+                  return;
+                }
+                var days = Math.floor(left / 86400000);
+                var h = Math.floor((left % 86400000) / 3600000);
+                var m = Math.floor((left % 3600000) / 60000);
+                cdEl.textContent = days + 'd ' + String(h).padStart(2, '0') + ':' + String(m).padStart(2, '0');
+                cdEl.style.display = 'block';
+              }
+              tick();
+              setInterval(tick, 60000);
+            } else {
+              title.textContent = 'بدون اشتراک فعال';
+              desc.textContent = 'برای دسترسی به امکانات کامل، اشتراک تهیه کنید';
+            }
+          }).catch(function() {
+            desc.textContent = 'خطا در بررسی اشتراک — دوباره تلاش کنید';
+          });
+        } catch(e) {
+          desc.textContent = 'خطا در بررسی اشتراک — دوباره تلاش کنید';
+        }
+      })();
 
       // Charts
       var charts = window.IRANCOINCharts;

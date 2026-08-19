@@ -580,7 +580,7 @@
   bottom: 0;
   inset-inline-start: 2rem;
   width: 2px;
-  background: linear-gradient(180deg, var(--c-violet-200), var(--c-cyan-200));
+  background: linear-gradient(180deg, var(--c-violet-300), var(--c-cyan-300));
   opacity: 0.4;
 }
 

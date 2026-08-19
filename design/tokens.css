@@ -16,7 +16,7 @@
   --c-ink-700: #2A2F57;
   --c-ink-600: #3D4370;
   --c-ink-500: #565E8F;
-  --c-ink-400: #7A82B0;
+  --c-ink-400: #5A6099;
   --c-ink-300: #A2A9CC;
   --c-ink-200: #C9CEE4;
   --c-ink-100: #E4E7F3;
@@ -55,6 +55,7 @@
   --c-turquoise-100: #CCFBF1;
 
   --c-emerald-600: #059669;
+  --c-emerald-700: #047857;
   --c-emerald-500: #10B981;
   --c-emerald-400: #34D399;
   --c-emerald-300: #6EE7B7;
@@ -89,7 +90,7 @@
   --text-tertiary: var(--c-ink-400);
   --text-disabled: var(--c-ink-300);
   --text-on-accent: var(--c-white);
-  --text-up: var(--c-emerald-600);
+  --text-up: var(--c-emerald-700);
   --text-down: var(--c-rose-600);
   --text-brand: var(--c-violet-700);
   --border-default: rgba(28, 32, 64, 0.08);

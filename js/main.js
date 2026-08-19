@@ -144,6 +144,7 @@
 
   /* ---------- Tabs (active state switch) ---------- */
   $$(".tabs").forEach((group) => {
+    if (group.classList.contains("tabs-static")) return; // static demo tabs (dashboard)
     group.addEventListener("click", (e) => {
       const tab = e.target.closest(".tab");
       if (!tab) return;

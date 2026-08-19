@@ -224,7 +224,7 @@
       html += '<span style="font-size:1.75rem;font-weight:800;background:var(--grad-brand);-webkit-background-clip:text;-webkit-text-fill-color:transparent">' + formatUSDT(pricing.usdt) + '</span>';
       html += '<span style="font-size:.875rem;color:var(--text-tertiary);text-decoration:line-through">' + formatUSDT(pricing.original.usdt) + '</span>';
       html += '</div>';
-      html += '<div style="font-size:1rem;font-weight:700;color:var(--warn);margin-top:.25rem">' + formatToman(pricing.toman) + ' تومان</div>';
+      html += '<div style="font-size:1rem;font-weight:700;color:var(--c-amber-500);margin-top:.25rem">' + formatToman(pricing.toman) + ' تومان</div>';
       html += '<div style="font-size:.75rem;color:var(--text-tertiary);text-decoration:line-through">' + formatToman(pricing.original.toman) + ' تومان</div>';
     } else {
       html += '<div style="font-size:1.75rem;font-weight:800;background:var(--grad-brand);-webkit-background-clip:text;-webkit-text-fill-color:transparent">' + formatUSDT(pricing.usdt) + '</div>';
@@ -235,7 +235,7 @@
     html += '</div>';
 
     if (hasDiscount && pricing.endDate) {
-      html += '<div style="margin-top:.75rem;padding-top:.75rem;border-top:1px solid var(--brd)">';
+      html += '<div style="margin-top:.75rem;padding-top:.75rem;border-top:1px solid var(--border-default)">';
       html += '<div style="font-size:.6875rem;color:var(--text-tertiary);margin-bottom:.375rem;text-align:center"><i class="fa-solid fa-clock"></i> مدت محدود</div>';
       html += '<div id="cd-' + planId + '"></div>';
       html += '</div>';
@@ -257,6 +257,7 @@
           var disc = getDiscount(planId);
           disc.active = false;
           setDiscount(planId, disc);
+          renderPriceCard(planId, 'price-' + planId);
         }
       }, 1000);
     }
@@ -279,7 +280,7 @@
           '<span style="font-size:.75rem;color:var(--text-tertiary)">قیمت لحظه‌ای USDT:</span>' +
           '<span style="font-weight:800;background:var(--grad-brand);-webkit-background-clip:text;-webkit-text-fill-color:transparent;font-size:1rem">' + formatToman(price) + ' تومان</span>' +
         '</div>' +
-        '<div style="font-size:.6875rem;color:var(--txt-muted)">هر ۶۰ ثانیه بروزرسانی</div>' +
+        '<div style="font-size:.6875rem;color:var(--text-tertiary)">هر ۶۰ ثانیه بروزرسانی</div>' +
       '</div>';
   }
 
@@ -326,6 +327,13 @@
       var planId = el.dataset.usdtPrice;
       var pricing = calculateDiscountedPrice(planId);
       el.textContent = formatUSDT(pricing.usdt);
+    });
+
+    // Re-render banner + cards so the live price actually updates
+    renderPriceBanner('live-price-banner');
+    Object.keys(PLANS).forEach(function(planId) {
+      var container = document.getElementById('price-' + planId);
+      if (container) renderPriceCard(planId, 'price-' + planId);
     });
   }
 

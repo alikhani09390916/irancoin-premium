@@ -12,6 +12,7 @@
 
 html {
   scroll-behavior: smooth;
+  scroll-padding-top: 84px;
   -webkit-text-size-adjust: 100%;
   overflow-x: hidden;
 }
@@ -68,7 +69,6 @@ h1, h2, h3, h4, h5, h6 {
   line-height: var(--lh-heading);
   font-weight: var(--fw-extrabold);
   color: var(--text-primary);
-  letter-spacing: var(--ls-tight);
 }
 
 ::selection {
@@ -105,7 +105,6 @@ h1, h2, h3, h4, h5, h6 {
   font-size: var(--fs-display-xl);
   line-height: var(--lh-display);
   font-weight: var(--fw-extrabold);
-  letter-spacing: var(--ls-tight);
 }
 
 .t-display-l {
@@ -235,7 +234,7 @@ h1, h2, h3, h4, h5, h6 {
   .grid-3 { grid-template-columns: repeat(2, 1fr); }
 }
 
-@media (max-width: 639px) {
+@media (max-width: 640px) {
   .grid-4, .grid-3, .grid-2 { grid-template-columns: 1fr; }
 }
 

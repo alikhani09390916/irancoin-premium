@@ -9,6 +9,19 @@
     annual:     { amount: 249, label: "۱ ساله", days: 365 },
   };
 
+  // Apply active (non-expired) discount from localStorage ic-discounts
+  function discountedAmount(planId) {
+    var base = PLANS[planId] ? PLANS[planId].amount : 0;
+    try {
+      var discounts = JSON.parse(localStorage.getItem("ic-discounts") || "{}");
+      var d = discounts[planId];
+      if (d && d.active && d.percent > 0 && d.endDate && new Date(d.endDate).getTime() > Date.now()) {
+        return Math.round(base * (1 - d.percent / 100));
+      }
+    } catch (e) {}
+    return base;
+  }
+
   var CARDS = [
     { number: "xxxx-xxxx-xxxx-xxxx", name: "نام دارنده کارت", bank: "بانک" },
   ];
@@ -73,6 +86,7 @@
       pay_currency: payCurrency || "usdttrc20",
       user_email: userEmail(),
       user_name: userName(),
+      amount_usdt: discountedAmount(planId),
     };
 
     var headers = { "Content-Type": "application/json", "Authorization": "Bearer " + (userToken() || anonKey()), "apikey": anonKey() };
@@ -84,6 +98,8 @@
   function showCryptoModal(planId) {
     var plan = PLANS[planId];
     if (!plan) return;
+    var payAmount = discountedAmount(planId);
+    var hasDiscount = payAmount < plan.amount;
     var old = document.getElementById("ic-payment-modal"); if (old) old.remove();
 
     var overlay = document.createElement("div");
@@ -104,7 +120,7 @@
       '</div>' +
       '<div style="padding:0.75rem 1rem;border-radius:0.75rem;background:rgba(124,58,237,0.08);border:1px solid rgba(124,58,237,0.15);margin-bottom:1.25rem">' +
         '<div style="color:rgba(255,255,255,0.5);font-size:0.75rem;margin-bottom:0.25rem">پلن انتخابی</div>' +
-        '<div style="color:white;font-weight:700;font-size:1rem">' + plan.label + ' — <span style="background:linear-gradient(135deg,#7C3AED,#06B6D4);-webkit-background-clip:text;-webkit-text-fill-color:transparent">$' + plan.amount + '</span></div>' +
+        '<div style="color:white;font-weight:700;font-size:1rem">' + plan.label + ' — <span style="background:linear-gradient(135deg,#7C3AED,#06B6D4);-webkit-background-clip:text;-webkit-text-fill-color:transparent">$' + payAmount + '</span>' + (hasDiscount ? ' <span style="color:rgba(255,255,255,0.35);font-size:0.75rem;font-weight:400;text-decoration:line-through">$' + plan.amount + '</span>' : '') + '</div>' +
       '</div>' +
       '<div style="display:grid;gap:0.5rem">' + cryptoHtml + '</div>' +
       '<div style="display:flex;align-items:center;justify-content:center;gap:0.5rem;margin-top:1.25rem;padding-top:1rem;border-top:1px solid rgba(255,255,255,0.06)">' +
@@ -143,6 +159,8 @@
     var plan = PLANS[planId];
     if (!plan) return;
     if (!isLoggedIn()) { showAuthModal("login"); return; }
+    var payAmount = discountedAmount(planId);
+    var hasDiscount = payAmount < plan.amount;
 
     var old = document.getElementById("ic-payment-modal"); if (old) old.remove();
 
@@ -177,7 +195,7 @@
       '</div>' +
       '<div style="padding:0.75rem 1rem;border-radius:0.75rem;background:rgba(16,185,129,0.08);border:1px solid rgba(16,185,129,0.15);margin-bottom:1.25rem">' +
         '<div style="color:rgba(255,255,255,0.5);font-size:0.75rem;margin-bottom:0.25rem">مبلغ قابل پرداخت</div>' +
-        '<div style="color:white;font-weight:700;font-size:1.125rem">$' + plan.amount + ' <span style="color:rgba(255,255,255,0.4);font-size:0.8125rem;font-weight:400">— ' + plan.label + '</span></div>' +
+        '<div style="color:white;font-weight:700;font-size:1.125rem">$' + payAmount + (hasDiscount ? ' <span style="color:rgba(255,255,255,0.35);font-size:0.8125rem;font-weight:400;text-decoration:line-through">$' + plan.amount + '</span>' : '') + ' <span style="color:rgba(255,255,255,0.4);font-size:0.8125rem;font-weight:400">— ' + plan.label + '</span></div>' +
       '</div>' +
       '<div style="color:rgba(255,255,255,0.7);font-size:0.8125rem;margin-bottom:1rem;font-weight:600">شماره کارت‌های بانکی:</div>' +
       cardsHtml +
@@ -216,7 +234,11 @@
     var receiptName = overlay.querySelector("#ic-receipt-name");
     receiptInput.addEventListener("change", function() {
       if (receiptInput.files.length) {
-        receiptName.textContent = "<i class=\"fa-solid fa-check\"></i> " + receiptInput.files[0].name;
+        receiptName.textContent = "";
+        var icon = document.createElement("i");
+        icon.className = "fa-solid fa-check";
+        receiptName.appendChild(icon);
+        receiptName.appendChild(document.createTextNode(" " + receiptInput.files[0].name));
         receiptName.style.display = "block";
       }
     });
@@ -241,6 +263,7 @@
               headers: { "Content-Type": "application/json", "Authorization": "Bearer " + userToken(), "apikey": anonKey() },
               body: JSON.stringify({
                 plan_id: planId,
+                amount_usdt: payAmount,
                 tracking_code: trackingCode,
                 receipt_image: base64,
                 card_number: CARDS.map(function(c){return c.number}).join(" , "),

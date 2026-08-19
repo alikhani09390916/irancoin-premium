@@ -21,7 +21,7 @@ serve(async (req) => {
   }
 
   try {
-    const { plan_id, pay_currency, user_email, user_name } = await req.json();
+    const { plan_id, pay_currency, user_email, user_name, amount_usdt } = await req.json();
 
     if (!plan_id) {
       return new Response(
@@ -44,6 +44,19 @@ serve(async (req) => {
         JSON.stringify({ error: "Invalid plan" }),
         { status: 400, headers: { ...corsHeaders, "Content-Type": "application/json" } }
       );
+    }
+
+    // Apply client-provided discount amount (validated against plan price)
+    let invoiceAmount = plan.price_usdt;
+    if (amount_usdt !== undefined) {
+      const requested = Number(amount_usdt);
+      if (!Number.isFinite(requested) || requested <= 0 || requested > plan.price_usdt) {
+        return new Response(
+          JSON.stringify({ error: "Invalid amount" }),
+          { status: 400, headers: { ...corsHeaders, "Content-Type": "application/json" } }
+        );
+      }
+      invoiceAmount = requested;
     }
 
     // Get or create user
@@ -86,7 +99,7 @@ serve(async (req) => {
     const ipnCallbackUrl = `${SUPABASE_URL}/functions/v1/ipn-webhook`;
 
     const invoiceBody: any = {
-      price_amount: plan.price_usdt,
+      price_amount: invoiceAmount,
       price_currency: "usd",
       pay_currency: pay_currency || "usdttrc20",
       ipn_callback_url: ipnCallbackUrl,
@@ -116,7 +129,7 @@ serve(async (req) => {
     const paymentData: any = {
       subscription_id: subscription.id,
       plan_id,
-      amount_usdt: plan.price_usdt,
+      amount_usdt: invoiceAmount,
       invoice_id: nowData.id,
       payment_status: "waiting",
       pay_address: nowData.pay_address,
