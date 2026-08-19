@@ -2,12 +2,6 @@
    IRANCOiN — Section Styles (Landing · Pricing · Dashboard)
    ============================================================ */
 
-/* Prevent content overflow globally */
-.section {
-  position: relative;
-  overflow: hidden;
-}
-
 /* ---------- Shared section decoration ---------- */
 .section-glow {
   position: absolute;
@@ -1153,6 +1147,9 @@
 [data-reveal="left"] { transform: translateX(3rem); }
 [data-reveal="right"] { transform: translateX(-3rem); }
 [data-reveal="zoom"] { transform: scale(0.9); }
+
+[dir="rtl"] [data-reveal="left"] { transform: translateX(-3rem); }
+[dir="rtl"] [data-reveal="right"] { transform: translateX(3rem); }
 
 [data-reveal="left"].is-visible,
 [data-reveal="right"].is-visible,

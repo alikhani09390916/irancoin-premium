@@ -705,11 +705,6 @@
   100% { transform: translateX(100%); }
 }
 
-/* --- Section Entrance: Fade + Slide Up --- */
-.section {
-  position: relative;
-}
-
 /* --- Testimonial Cards: Hover Lift --- */
 .testimonial {
   transition: transform var(--dur-med) var(--ease-out),

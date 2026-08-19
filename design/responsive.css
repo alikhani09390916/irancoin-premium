@@ -261,7 +261,7 @@
   .hero-visual { height: 44rem; }
 }
 
-/* ---------- 240px — Massive displays ---------- */
+/* ---------- 2400px — Massive displays ---------- */
 @media (min-width: 2400px) {
   .hero { font-size: 1.05em; }
 }
