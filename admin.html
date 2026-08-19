@@ -661,7 +661,7 @@
 
     /* ===== CONTENT DATA ===== */
     var CONTENT_SECTIONS = {
-      hero: { title:'هدیرو صفحه اصلی', fields:{
+      hero: { title:'هیرو صفحه اصلی', fields:{
         headline:{label:'تیتر اصلی',type:'text',default:' هوش مصنوعی در خدمت معاملات شما'},
         subheadline:{label:'زیرتیتر',type:'textarea',default:'با موتور معاملاتی هوشمند IRANCOiN، سرعت، دقت و امنیت را در هر معامله تجربه کنید.'},
         cta:{label:'دکمه اصلی',type:'text',default:'شروع رایگان'},
@@ -715,6 +715,7 @@
     /* ===== AUTH ===== */
     // Password is hashed with SHA-256 for security (never store plaintext)
     async function hashPassword(pw) {
+      if(!(window.crypto && window.crypto.subtle)) throw new Error('crypto.subtle unavailable (needs HTTPS)');
       var enc = new TextEncoder().encode(pw);
       var buf = await crypto.subtle.digest('SHA-256', enc);
       return Array.from(new Uint8Array(buf)).map(b => b.toString(16).padStart(2,'0')).join('');
@@ -734,7 +735,7 @@
       if(inputHash === storedHash){
         KEY = input;
         var sessionExpiry = Date.now() + (30 * 60 * 1000); // 30 min session
-        localStorage.setItem('ic-admin-session', btoa(input + ':' + sessionExpiry));
+        localStorage.setItem('ic-admin-session', btoa(encodeURIComponent(input) + ':' + sessionExpiry));
         document.getElementById('login-view').style.display='none';
         document.getElementById('app-view').classList.add('on');
         loadSection('overview');
@@ -745,7 +746,7 @@
     };
     document.getElementById('admin-key').addEventListener('keydown',function(e){if(e.key==='Enter')doLogin()});
 
-    // Auto-login with session expiry check
+    // Auto-login with session expiry check + hash verification
     (function(){
       var session = localStorage.getItem('ic-admin-session');
       if(session){
@@ -753,11 +754,15 @@
           var decoded = atob(session);
           var parts = decoded.split(':');
           var sessionExpiry = parseInt(parts[1]) || 0;
-          if(Date.now() < sessionExpiry){
-            KEY = parts[0];
-            document.getElementById('login-view').style.display='none';
-            document.getElementById('app-view').classList.add('on');
-            loadSection('overview');
+          if(Date.now() < sessionExpiry && parts[0]){
+            hashPassword(decodeURIComponent(parts[0])).then(function(h){
+              if(h === localStorage.getItem('ic-admin-hash')){
+                KEY = decodeURIComponent(parts[0]);
+                document.getElementById('login-view').style.display='none';
+                document.getElementById('app-view').classList.add('on');
+                loadSection('overview');
+              }
+            }).catch(function(){});
           }
         }catch(e){}
       }
@@ -787,7 +792,7 @@
       document.getElementById('sidebar').classList.toggle('open');
     };
 
-    var TITLES = {overview:'داشبورد',content:'مدیریت محتوا',offers:'پیشنهادات',discounts:'تخفیف پلن‌ها',users:'کاربران',subscriptions:'اشتراک‌ها',payments:'پرداخت‌ها',emails:'ایمیل‌ها',preview:'پیش‌نمایش',versions:'نسخه‌ها',settings:'تنطیمات'};
+    var TITLES = {overview:'داشبورد',content:'مدیریت محتوا',offers:'پیشنهادات',discounts:'تخفیف پلن‌ها',users:'کاربران',subscriptions:'اشتراک‌ها',payments:'پرداخت‌ها',emails:'ایمیل‌ها',preview:'پیش‌نمایش',versions:'نسخه‌ها',settings:'تنظیمات'};
 
     function loadSection(s){
       currentSection = s;
@@ -810,12 +815,34 @@
 
     /* ===== API ===== */
     async function api(fn,body){
-      var res = await fetch(API+'/'+fn,{method:'POST',headers:{'Content-Type':'application/json','X-Admin-Key':KEY},body:JSON.stringify(body)});
-      return res.json();
+      var res;
+      try{
+        res = await fetch(API+'/'+fn,{method:'POST',headers:{'Content-Type':'application/json','X-Admin-Key':KEY},body:JSON.stringify(body)});
+      }catch(e){
+        return {success:false,error:'اتصال به سرور برقرار نشد'};
+      }
+      try{
+        var data = await res.json();
+        if(!res.ok && data && data.error) return {success:false,error:data.error};
+        return data;
+      }catch(e){
+        return {success:false,error:'پاسخ نامعتبر از سرور (HTTP '+res.status+')'};
+      }
     }
     async function apiGet(section){
-      var res = await fetch(API+'/admin-stats?section='+section,{headers:{'X-Admin-Key':KEY}});
-      return res.json();
+      var res;
+      try{
+        res = await fetch(API+'/admin-stats?section='+section,{headers:{'X-Admin-Key':KEY}});
+      }catch(e){
+        return {error:'اتصال به سرور برقرار نشد'};
+      }
+      try{
+        var data = await res.json();
+        if(!res.ok && data && data.error) return {error:data.error};
+        return data;
+      }catch(e){
+        return {error:'پاسخ نامعتبر از سرور (HTTP '+res.status+')'};
+      }
     }
 
     /* ===== OVERVIEW ===== */
@@ -1020,7 +1047,7 @@
         var expStr = o.expires ? new Date(o.expires).toLocaleDateString('fa-IR') : 'بدون محدودیت';
         return '<div class="offer-row">'+
           '<label class="toggle"><input type="checkbox" '+(o.active?'checked':'')+' onchange="toggleOffer('+i+')"><span class="slider"></span></label>'+
-          '<div class="offer-info"><div class="offer-title">'+o.title+'</div><div class="offer-desc">'+o.description+'</div>'+
+          '<div class="offer-info"><div class="offer-title">'+esc(o.title)+'</div><div class="offer-desc">'+esc(o.description)+'</div>'+
           '<div class="offer-meta">تخفیف: '+o.discount+'% | انقضا: '+expStr+'</div></div>'+
           '<div class="cell-actions">'+
             '<button class="btn btn-info" onclick="editOffer('+i+')"><i class="fa-solid fa-pen"></i></button>'+
@@ -1052,7 +1079,8 @@
       PLAN_IDS.forEach(function(pid){
         var disc = {};
         try{ disc = JSON.parse(localStorage.getItem('ic-discounts')||'{}')[pid] || {}; }catch(e){}
-        var isActive = disc.active && disc.percent > 0;
+        var expired = disc.endDate && new Date(disc.endDate).getTime() <= Date.now();
+        var isActive = !expired && disc.active && disc.percent > 0;
         var percent = disc.percent || 0;
         var endDate = disc.endDate || '';
         var usdt = PLAN_USDT[pid];
@@ -1076,6 +1104,9 @@
           html += '<div class="form-group"><label class="form-label">مدت (روز)</label>';
           html += '<input class="form-input" type="number" min="1" id="disc-'+pid+'-days" value="'+(disc.days||1)+'"></div>';
           html += '</div>';
+          if(disc.endDate){
+            html += '<div style="font-size:.6875rem;color:var(--txt-muted);margin-bottom:.5rem"><i class="fa-solid fa-hourglass-half"></i> انقضا: '+new Date(disc.endDate).toLocaleDateString('fa-IR')+'</div>';
+          }
 
           if(toman){
             html += '<div style="display:flex;align-items:baseline;gap:.75rem;margin-bottom:.75rem">';
@@ -1101,10 +1132,12 @@
       var disc = discounts[pid] || {active:false,percent:0,endDate:null};
       disc.active = !disc.active;
       if(disc.active && !disc.percent) disc.percent = 10;
-      if(disc.active && !disc.endDate){
+      if(disc.active){
         var days = parseInt(document.getElementById('disc-'+pid+'-days')?.value) || 7;
-        disc.endDate = new Date(Date.now() + days * 86400000).toISOString();
-        disc.days = days;
+        if(!disc.days || disc.days <= 0) disc.days = days;
+        if(!disc.endDate || new Date(disc.endDate).getTime() <= Date.now()){
+          disc.endDate = new Date(Date.now() + (disc.days) * 86400000).toISOString();
+        }
       }
       discounts[pid] = disc;
       localStorage.setItem('ic-discounts', JSON.stringify(discounts));
@@ -1152,7 +1185,7 @@
         '<div class="form-group"><label class="form-label">توضیحات</label><textarea class="form-textarea" id="of-desc">'+(offer?offer.description:'')+'</textarea></div>'+
         '<div class="field-row"><div class="form-group"><label class="form-label">درصد تخفیف</label><input class="form-input" id="of-discount" type="number" min="1" max="100" value="'+(offer?offer.discount:'10')+'"></div>'+
         '<div class="form-group"><label class="form-label">تاریخ انقضا</label><input class="form-input" id="of-expires" type="date" value="'+(offer?offer.expires:'')+'"></div></div>'+
-        '<div class="form-group"><label class="form-label"><input type="checkbox" id="of-active" '+(offer&&offer.active?'checked':'checked')+'> فعال باشد</label></div>';
+        '<div class="form-group"><label class="form-label"><input type="checkbox" id="of-active" '+(offer&&offer.active?'checked':'')+'> فعال باشد</label></div>';
       openModal(title, html, function(){
         var offers = getOffers();
         var newOffer = {
@@ -1196,7 +1229,7 @@
           return;
         }
         tb.innerHTML = cache.users.map(function(u){
-          return '<tr><td>'+dt(u.created_at)+'</td><td style="direction:ltr;text-align:left">'+u.email+'</td><td>'+(u.name||'-')+'</td><td>'+(u.last_sign_in?dt(u.last_sign_in):'هرگز')+'</td><td><button class="btn btn-info" onclick="detailUser(\''+u.id+'\')"><i class="fa-solid fa-clipboard-list"></i></button></td></tr>';
+          return '<tr><td>'+dt(u.created_at)+'</td><td style="direction:ltr;text-align:left">'+esc(u.email)+'</td><td>'+esc(u.name||'-')+'</td><td>'+(u.last_sign_in?dt(u.last_sign_in):'هرگز')+'</td><td><button class="btn btn-info" onclick="detailUser(\''+u.id+'\')"><i class="fa-solid fa-clipboard-list"></i></button></td></tr>';
         }).join('');
       }catch(e){
         showTableError('t-user', 5, '<i class="fa-solid fa-triangle-exclamation"></i>', 'خطا در بارگذاری کاربران. اتصال API را بررسی کنید.');
@@ -1266,7 +1299,7 @@
           return;
         }
         tb.innerHTML = cache.emails.map(function(e){
-          return '<tr><td>'+dt(e.created_at)+'</td><td style="direction:ltr;text-align:left">'+e.to_email+'</td><td>'+(TN[e.template]||e.template)+'</td><td>'+e.subject+'</td><td>'+ps(e.status)+'</td></tr>';
+          return '<tr><td>'+dt(e.created_at)+'</td><td style="direction:ltr;text-align:left">'+esc(e.to_email)+'</td><td>'+(TN[e.template]||esc(e.template))+'</td><td>'+esc(e.subject)+'</td><td>'+ps(e.status)+'</td></tr>';
         }).join('');
       }catch(e){
         showTableError('t-email', 5, '<i class="fa-solid fa-triangle-exclamation"></i>', 'خطا در بارگذاری ایمیل‌ها. اتصال API را بررسی کنید.');
@@ -1494,9 +1527,9 @@
       var p=r.payment;
       var html='<table style="width:100%;border-collapse:collapse;font-size:.875rem">'+
         row('شناسه',shortId(p.id))+row('تاریخ',dt(p.created_at))+row('کاربر',userName(p.user_id))+
-        row('پلن',p.subscriptions?.plans?.label||p.plan_id)+row('مبلغ','$'+p.amount_usdt)+
-        row('وضعیت',ps(p.payment_status))+row('آدرس پرداخت',p.pay_address||'-')+
-        row('مبلغ پرداختی',p.pay_amount||'-')+row('TX Hash',p.tx_hash||'-')+'</table>';
+        row('پلن',esc(p.subscriptions?.plans?.label||p.plan_id))+row('مبلغ','$'+p.amount_usdt)+
+        row('وضعیت',ps(p.payment_status))+row('آدرس پرداخت',esc(p.pay_address||'-'))+
+        row('مبلغ پرداختی',p.pay_amount||'-')+row('TX Hash',esc(p.tx_hash||'-'))+'</table>';
       openModal('جزئیات پرداخت',html);
     }
 
@@ -1505,12 +1538,12 @@
       if(r.error)return toast(r.error,'err');
       var u=r.user;
       var html='<table style="width:100%;border-collapse:collapse;font-size:.875rem">'+
-        row('ایمیل',u.email)+row('نام',u.name||'-')+
+        row('ایمیل',esc(u.email))+row('نام',esc(u.name||'-'))+
         row('تاریخ عضویت',dt(u.created_at))+row('آخرین ورود',u.last_sign_in?dt(u.last_sign_in):'هرگز')+'</table>';
       if(r.subscriptions&&r.subscriptions.length){
         html+='<h3 style="margin:1rem 0 .5rem;font-size:.875rem;color:var(--txt-dim)">اشتراک‌ها</h3>';
         html+='<table style="width:100%;border-collapse:collapse;font-size:.8125rem"><tr><th>پلن</th><th>وضعیت</th><th>انقضا</th></tr>';
-        r.subscriptions.forEach(function(s){html+='<tr><td>'+(s.plans?.label||s.plan_id)+'</td><td>'+ss(s.status)+'</td><td>'+dt(s.expires_at)+'</td></tr>'});
+        r.subscriptions.forEach(function(s){html+='<tr><td>'+esc(s.plans?.label||s.plan_id)+'</td><td>'+ss(s.status)+'</td><td>'+dt(s.expires_at)+'</td></tr>'});
         html+='</table>';
       }
       openModal('جزئیات کاربر',html);
@@ -1542,7 +1575,11 @@
       if(footerFn){
         document.getElementById('modal-ok').addEventListener('click',function(){
           var result = footerFn();
-          if(result !== false) closeModal();
+          if(result && typeof result.then === 'function'){
+            result.then(function(r){ if(r !== false) closeModal(); });
+          } else if(result !== false) {
+            closeModal();
+          }
         });
       }
     }
@@ -1592,9 +1629,14 @@
     function shortId(id){return id?id.slice(0,8)+'...':'-'}
     function userName(uid){
       var u=cache.users.find(function(x){return x.id===uid});
-      return u?(u.name||u.email):shortId(uid);
+      return esc(u?(u.name||u.email):shortId(uid));
     }
     function row(k,v){return '<tr><td style="padding:.375rem 0;color:var(--txt-dim);width:40%">'+k+'</td><td style="padding:.375rem 0;font-weight:500">'+v+'</td></tr>'}
+    function esc(s){
+      return String(s == null ? '' : s).replace(/[&<>"']/g, function(c){
+        return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c];
+      });
+    }
 
     function toast(msg,type){
       var t=document.createElement('div');
@@ -1603,6 +1645,16 @@
       document.body.appendChild(t);
       setTimeout(function(){t.remove()},3000);
     }
+
+    /* ===== EXPOSE FUNCTIONS FOR INLINE ONCLICK ===== */
+    window.confirmPayment = confirmPayment;
+    window.refundPayment = refundPayment;
+    window.activateSub = activateSub;
+    window.deactivateSub = deactivateSub;
+    window.extendSub = extendSub;
+    window.detailPayment = detailPayment;
+    window.detailUser = detailUser;
+    window.loadSection = loadSection;
 
   })();
   </script>

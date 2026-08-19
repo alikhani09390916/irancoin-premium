@@ -54,13 +54,19 @@ serve(async (req) => {
     const body = await req.text();
     const signature = req.headers.get("x-nowpayments-sig") || "";
 
-    // Verify signature
-    if (NOW_IPN_SECRET && signature) {
-      const valid = await verifySignature(body, signature);
-      if (!valid) {
-        console.error("Invalid IPN signature");
-        return new Response("Invalid signature", { status: 401 });
-      }
+    // Verify signature — mandatory. Fail closed if secret is not configured
+    if (!NOW_IPN_SECRET) {
+      console.error("NOWPAYMENTS_IPN_SECRET is not set; refusing IPN without verification");
+      return new Response("Server not configured", { status: 500 });
+    }
+    if (!signature) {
+      console.error("Missing IPN signature header");
+      return new Response("Missing signature", { status: 401 });
+    }
+    const valid = await verifySignature(body, signature);
+    if (!valid) {
+      console.error("Invalid IPN signature");
+      return new Response("Invalid signature", { status: 401 });
     }
 
     const data = JSON.parse(body);
@@ -83,7 +89,9 @@ serve(async (req) => {
     const statusMap: Record<string, string> = {
       "finished": "confirmed",
       "confirmed": "confirming",
+      "confirming": "confirming",
       "sending": "confirming",
+      "partially_paid": "waiting",
       "waiting": "waiting",
       "failed": "failed",
       "refunded": "refunded",
@@ -117,7 +125,8 @@ serve(async (req) => {
     let userEmail = "";
     let userName = "";
     if (currentPayment?.profiles) {
-      userEmail = currentPayment.profiles.full_name || "";
+      userEmail = currentPayment.profiles.email || "";
+      userName = currentPayment.profiles.full_name || "";
     }
     if (currentPayment?.user_id) {
       const { data: userData } = await supabase.auth.admin.getUserById(currentPayment.user_id);
@@ -137,7 +146,8 @@ serve(async (req) => {
 
       if (subscription && subscription.status !== "active") {
         const now = new Date();
-        const expiresAt = new Date(now.getTime() + subscription.plans.duration_days * 24 * 60 * 60 * 1000);
+        const durationDays = subscription.plans?.duration_days || 30;
+        const expiresAt = new Date(now.getTime() + durationDays * 24 * 60 * 60 * 1000);
 
         await supabase
           .from("subscriptions")
@@ -149,13 +159,13 @@ serve(async (req) => {
           })
           .eq("id", order_id);
 
-        console.log(`Subscription ${order_id} activated for ${subscription.plans.duration_days} days`);
+        console.log(`Subscription ${order_id} activated for ${durationDays} days`);
 
         // Send payment success email
         if (userEmail) {
           await sendEmailNotification(supabase, "payment_success", userEmail, {
             name: userName,
-            plan_label: subscription.plans.label,
+            plan_label: subscription.plans?.label || subscription.plan_id,
             amount_usdt: currentPayment?.amount_usdt,
             activated_at: now.toLocaleDateString("fa-IR"),
             expires_at: expiresAt.toLocaleDateString("fa-IR"),

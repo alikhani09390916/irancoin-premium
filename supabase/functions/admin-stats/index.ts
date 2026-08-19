@@ -12,12 +12,16 @@ const corsHeaders = {
   "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type",
 };
 
-// Simple admin auth — check against a hardcoded secret
+// Simple admin auth — check against ADMIN_KEY env var
 function isAdmin(req: Request): boolean {
   const auth = req.headers.get("Authorization") || "";
   const adminKey = req.headers.get("X-Admin-Key") || "";
-  // Allow service_role key or specific admin key
-  return adminKey === "irancoin-admin-2026" || auth.includes(SUPABASE_SERVICE_KEY);
+  const expected = Deno.env.get("ADMIN_KEY");
+  if (!expected) {
+    console.error("ADMIN_KEY env var is not set; denying all admin requests");
+    return false;
+  }
+  return adminKey === expected || auth.includes(SUPABASE_SERVICE_KEY);
 }
 
 serve(async (req) => {

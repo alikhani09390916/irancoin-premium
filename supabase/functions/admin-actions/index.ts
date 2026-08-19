@@ -13,7 +13,12 @@ const corsHeaders = {
 };
 
 function isAdmin(req: Request): boolean {
-  return req.headers.get("X-Admin-Key") === "irancoin-admin-2026";
+  const adminKey = Deno.env.get("ADMIN_KEY");
+  if (!adminKey) {
+    console.error("ADMIN_KEY env var is not set; denying all admin requests");
+    return false;
+  }
+  return req.headers.get("X-Admin-Key") === adminKey;
 }
 
 serve(async (req) => {

@@ -21,16 +21,31 @@ serve(async (req) => {
 
   try {
     const url = new URL(req.url);
-    const invoiceId = url.searchParams.get("invoice_id");
+    const invoiceIdRaw = url.searchParams.get("invoice_id");
 
-    if (!invoiceId) {
+    if (!invoiceIdRaw) {
       return new Response(
         JSON.stringify({ error: "invoice_id is required" }),
         { status: 400, headers: { ...corsHeaders, "Content-Type": "application/json" } }
       );
     }
+    const invoiceId = parseInt(invoiceIdRaw, 10);
+    if (!Number.isInteger(invoiceId) || invoiceId <= 0) {
+      return new Response(
+        JSON.stringify({ error: "invoice_id must be a positive integer" }),
+        { status: 400, headers: { ...corsHeaders, "Content-Type": "application/json" } }
+      );
+    }
 
     const supabase = createClient(SUPABASE_URL, SUPABASE_SERVICE_KEY);
+
+    // Resolve caller identity (optional — the post-redirect check may run without session)
+    let callerUserId: string | null = null;
+    const authHeader = req.headers.get("Authorization") || "";
+    if (authHeader.startsWith("Bearer ")) {
+      const { data: userData } = await supabase.auth.getUser(authHeader.slice(7));
+      callerUserId = userData?.user?.id || null;
+    }
 
     // Check NOWPayments status
     const nowRes = await fetch(`${NOWPAYMENTS_API}/invoice/${invoiceId}`, {
@@ -47,13 +62,22 @@ serve(async (req) => {
     const { data: payment } = await supabase
       .from("payments")
       .select("*, subscriptions(*, plans(*))")
-      .eq("invoice_id", parseInt(invoiceId))
+      .eq("invoice_id", invoiceId)
       .single();
 
     if (!payment) {
       return new Response(
         JSON.stringify({ status: "not_found", message: "پرداخت یافت نشد" }),
         { status: 200, headers: { ...corsHeaders, "Content-Type": "application/json" } }
+      );
+    }
+
+    // IDOR guard: if authenticated, require ownership for full details;
+    // unauthenticated callers get status only (needed for post-redirect check)
+    if (callerUserId && payment.user_id && callerUserId !== payment.user_id) {
+      return new Response(
+        JSON.stringify({ error: "Forbidden" }),
+        { status: 403, headers: { ...corsHeaders, "Content-Type": "application/json" } }
       );
     }
 
@@ -83,7 +107,8 @@ serve(async (req) => {
         const plan = sub.plans;
         if (plan && sub.status !== "active") {
           const now = new Date();
-          const expiresAt = new Date(now.getTime() + plan.duration_days * 24 * 60 * 60 * 1000);
+          const durationDays = plan.duration_days || 30;
+          const expiresAt = new Date(now.getTime() + durationDays * 24 * 60 * 60 * 1000);
           await supabase
             .from("subscriptions")
             .update({
@@ -95,6 +120,14 @@ serve(async (req) => {
             .eq("id", sub.id);
         }
       }
+    }
+
+    // Unauthenticated callers get minimal status only
+    if (!callerUserId) {
+      return new Response(
+        JSON.stringify({ status: mappedStatus, now_status: nowStatus }),
+        { status: 200, headers: { ...corsHeaders, "Content-Type": "application/json" } }
+      );
     }
 
     return new Response(

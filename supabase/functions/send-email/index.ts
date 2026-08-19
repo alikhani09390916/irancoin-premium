@@ -142,6 +142,19 @@ serve(async (req) => {
   }
 
   try {
+    // Restrict to admin key or internal service-role calls
+    const adminKey = req.headers.get("X-Admin-Key") || "";
+    const auth = req.headers.get("Authorization") || "";
+    const expectedAdmin = Deno.env.get("ADMIN_KEY");
+    const isInternal = auth.includes(SUPABASE_SERVICE_KEY);
+    const isAdminCall = !!expectedAdmin && adminKey === expectedAdmin;
+    if (!isInternal && !isAdminCall) {
+      return new Response(
+        JSON.stringify({ error: "Unauthorized" }),
+        { status: 401, headers: { ...corsHeaders, "Content-Type": "application/json" } }
+      );
+    }
+
     const { template, to, data } = await req.json();
 
     if (!template || !to) {
