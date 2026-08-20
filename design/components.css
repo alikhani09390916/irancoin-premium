@@ -44,11 +44,11 @@
 .btn-primary {
   background: var(--grad-brand);
   color: var(--text-on-accent);
-  box-shadow: var(--sh-brand);
+  box-shadow: var(--sh-brand), 0 0 0 1px rgba(255, 255, 255, 0.18) inset;
 }
 
 .btn-primary:hover {
-  box-shadow: var(--sh-brand-lg);
+  box-shadow: var(--sh-brand-lg), 0 0 0 1px rgba(255, 255, 255, 0.22) inset;
   transform: translateY(-2px);
 }
 
@@ -118,12 +118,12 @@
 /* ---------- Glass Card ---------- */
 .glass-card {
   position: relative;
-  background: var(--bg-glass);
-  border: var(--bw-xs) solid var(--border-glass);
-  border-radius: var(--r-lg);
-  backdrop-filter: blur(var(--blur-md));
-  -webkit-backdrop-filter: blur(var(--blur-md));
-  box-shadow: var(--sh-sm), var(--sh-inset-glass);
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.82), rgba(255, 255, 255, 0.62));
+  border: var(--bw-xs) solid rgba(255, 255, 255, 0.75);
+  border-radius: var(--r-xl);
+  backdrop-filter: blur(var(--blur-lg));
+  -webkit-backdrop-filter: blur(var(--blur-lg));
+  box-shadow: var(--sh-md), var(--sh-inset-glass);
   padding: var(--sp-6);
   transition: transform var(--dur-med) var(--ease-out),
               box-shadow var(--dur-med) var(--ease-out),
@@ -146,8 +146,8 @@
 .glass-card:hover {
   transform: translateY(-6px) scale(1.01);
   box-shadow: var(--sh-lg), var(--sh-inset-glass),
-              0 0 30px rgba(124, 58, 237, 0.08);
-  border-color: rgba(124, 58, 237, 0.28);
+              0 0 36px rgba(109, 91, 240, 0.14);
+  border-color: rgba(109, 91, 240, 0.34);
 }
 
 .glass-card:hover::before {
