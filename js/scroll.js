@@ -75,13 +75,21 @@
   /* ---------- Scroll progress bar ---------- */
   const progressBar = document.querySelector("[data-scroll-progress]");
   if (progressBar) {
-    const onScroll = () => {
+    let ticking = false;
+    const update = () => {
+      ticking = false;
       const h = document.documentElement;
       const max = h.scrollHeight - h.clientHeight;
       progressBar.style.width = `${max > 0 ? (h.scrollTop / max) * 100 : 0}%`;
     };
+    const onScroll = () => {
+      if (ticking) return;
+      ticking = true;
+      requestAnimationFrame(update);
+    };
     window.addEventListener("scroll", onScroll, { passive: true });
-    onScroll();
+    window.addEventListener("resize", onScroll, { passive: true });
+    update();
   }
 
   /* ---------- Active nav section highlighting ---------- */

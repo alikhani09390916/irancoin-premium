@@ -284,6 +284,7 @@
   overflow-y: hidden;
   scrollbar-width: none;
   -ms-overflow-style: none;
+  overscroll-behavior-x: contain;
   flex: 1 1 0;
   min-width: 0;
   padding: var(--sp-1) 0;
