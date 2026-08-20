@@ -253,6 +253,10 @@
   top: 0;
   z-index: var(--z-nav);
   padding: var(--sp-4) 0;
+  background: rgba(255, 255, 255, 0.55);
+  backdrop-filter: blur(var(--blur-md));
+  -webkit-backdrop-filter: blur(var(--blur-md));
+  border-bottom: var(--bw-xs) solid rgba(255, 255, 255, 0.6);
   transition: background var(--dur-med) var(--ease-out),
               box-shadow var(--dur-med) var(--ease-out),
               padding var(--dur-med) var(--ease-out);
@@ -394,12 +398,15 @@
 .footer::before {
   content: "";
   position: absolute;
-  top: 0;
+  top: -2px;
   left: 0;
   right: 0;
-  height: 1px;
-  background: var(--grad-brand);
-  opacity: 0.5;
+  height: 90px;
+  background:
+    radial-gradient(40rem 8rem at 50% 0%, rgba(109, 91, 240, 0.18), transparent 70%),
+    linear-gradient(90deg, transparent, rgba(109, 91, 240, 0.5), rgba(6, 182, 212, 0.5), transparent);
+  opacity: 0.7;
+  pointer-events: none;
 }
 
 .footer-grid {
@@ -531,17 +538,30 @@
 }
 
 .pricing-card.is-recommended {
-  background: linear-gradient(160deg, rgba(124, 58, 237, 0.12), rgba(37, 99, 235, 0.08)), var(--bg-glass-strong);
-  border: var(--bw-sm) solid rgba(124, 58, 237, 0.45);
+  background: linear-gradient(160deg, rgba(109, 91, 240, 0.12), rgba(79, 123, 247, 0.07)), var(--bg-glass-strong);
+  border: var(--bw-sm) solid transparent;
   box-shadow: var(--sh-brand), var(--sh-inset-glass);
   transform: translateY(-6px);
+}
+
+.pricing-card.is-recommended::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 2px;
+  background: conic-gradient(from var(--ring-angle, 0deg), #6D5BF0, #4F7BF7, #06B6D4, #6D5BF0);
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+          mask-composite: exclude;
+  animation: ring-spin 6s linear infinite;
+  pointer-events: none;
 }
 
 .pricing-card.is-recommended::after {
   height: 4px;
   transform: scaleX(1);
 }
-
 .pricing-card.is-recommended:hover {
   transform: translateY(-10px);
   box-shadow: var(--sh-brand-lg), var(--sh-inset-glass);

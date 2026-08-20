@@ -371,3 +371,35 @@ h1, h2, h3, h4, h5, h6 {
   border-radius: var(--r-full);
   border: 2px solid var(--c-bg-soft);
 }
+
+/* ---------- Animated gradient ring (recommended pricing) ---------- */
+@property --ring-angle {
+  syntax: "<angle>";
+  initial-value: 0deg;
+  inherits: false;
+}
+
+@keyframes ring-spin {
+  to { --ring-angle: 360deg; }
+}
+
+/* ---------- Gradient text shimmer (premium) ---------- */
+.t-gradient {
+  position: relative;
+  background: var(--grad-text);
+  background-size: 200% 200%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: grad-shimmer 8s ease-in-out infinite;
+}
+
+@keyframes grad-shimmer {
+  0%, 100% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .t-gradient { animation: none; }
+  .pricing-card.is-recommended::before { animation: none; }
+}
