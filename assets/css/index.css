@@ -20,7 +20,7 @@
 .hero .copy p { font-size: var(--text-sm); line-height: 1.9; color: var(--ink-soft); max-width: 46ch; margin: 0; }
 .cta-row { display: flex; gap: 10px; margin-top: 20px; flex-wrap: wrap; }
 .cta-row .btn-primary, .cta-row .btn-secondary { padding: 10px 20px; font-size: 14px; }
-.hero-visual-wrap { position: relative; min-height: 38vh; min-width: 0; }
+.hero-visual-wrap { position: relative; min-height: 38vh; min-width: 0; overflow: visible; }
 
 .stat-strip { display: flex; gap: 20px; margin-top: 28px; flex-wrap: wrap; }
 .stat-strip .num { font-size: var(--text-xl); font-weight: 800; direction: ltr; display: block; }

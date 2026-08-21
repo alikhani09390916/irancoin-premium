@@ -138,6 +138,7 @@
     <!-- Auth Modal -->
     <div id="auth-modal" class="auth-modal" role="dialog" aria-modal="true" aria-labelledby="auth-modal-title" hidden>
       <div class="auth-modal-content">
+        <div class="auth-modal-hero"><canvas aria-hidden="true" width="400" height="120"></canvas></div>
         <button type="button" class="close-modal" aria-label="بستن">&times;</button>
         <h2 id="auth-modal-title" class="auth-modal-header">ورود / ثبت نام</h2>
         <div class="auth-modal-body">
@@ -161,12 +162,12 @@
             </form>
           </div>
           <div id="google-tab" class="auth-tab">
-            <h3>Continue with Google</h3>
-            <button type="button" class="btn-google w-full" onclick="hideAuthModal()">Continue with Google</button>
+            <h3>ورود با Google</h3>
+            <button type="button" class="btn-google w-full" onclick="hideAuthModal()">ورود با Google</button>
           </div>
           <div id="github-tab" class="auth-tab">
-            <h3>Continue with GitHub</h3>
-            <button type="button" class="btn-github w-full" onclick="hideAuthModal()">Continue with GitHub</button>
+            <h3>ورود با GitHub</h3>
+            <button type="button" class="btn-github w-full" onclick="hideAuthModal()">ورود با GitHub</button>
           </div>
           <div id="phone-tab" class="auth-tab">
             <h3>شماره تلفن ایرانی</h3>
@@ -344,20 +345,20 @@
     },
 
     displayPrice(usdPrice, irrRate) {
-      // Update UI elements
-      const usdElements = document.querySelectorAll(".price .amount");
-      usdElements.forEach((el) => {
-        el.textContent = `$${usdPrice.toFixed(2)}`;
-      });
-
       // Calculate Toman (IRR without decimal)
       const tomanPrice = Math.round(irrRate / 10);
-      const tomanElements = document.querySelectorAll(".price-note");
-      // Add Toman display near the prices
+
+      // Update Toman equivalents next to each plan price (don't overwrite USD prices)
       const priceNotes = document.querySelectorAll(".plan-card .price-note");
+      const planMultipliers = [29, 79, 199]; // starter, professional, elite base USD prices
       priceNotes.forEach((note, idx) => {
-        const planNames = ["استارتر", "حرفه‌ای", "الیت"];
-        note.innerHTML += `<div class="toman-badge">≈ ${tomanPrice.toLocaleString()} تومان ${planNames[idx]}</div>`;
+        const existing = note.querySelector(".toman-badge");
+        if (existing) existing.remove();
+        const planToman = Math.round((planMultipliers[idx] || 29) * tomanPrice);
+        const badge = document.createElement("div");
+        badge.className = "toman-badge";
+        badge.textContent = "≈ " + planToman.toLocaleString(" fa-IR") + " تومان / ماه";
+        note.appendChild(badge);
       });
 
       // Show last updated time
@@ -365,26 +366,20 @@
       const timeString = now.toLocaleTimeString("fa-IR", { hour: "2-digit", minute: "2-digit" });
       const updateEl = document.getElementById("price-last-update");
       if (updateEl) {
-        updateEl.textContent = `آخرین به‌روزرسانی: ${timeString}`;
+        updateEl.textContent = "آخرین به‌روزرسانی: " + timeString;
       }
     },
 
     handleFetchError() {
-      // Use fallback price and show error state
-      const fallbackUsd = 1; // $1 as fallback base
-      const fallbackIrr = this.fallbackPrice;
-
-      const usdElements = document.querySelectorAll(".price .amount");
-      usdElements.forEach((el) => {
-        el.textContent = `$${fallbackUsd.toFixed(2)} (در حال بارگذاری)`;
-      });
-
-      // Show error state but don't display 0
+      // Show error state on toman badges
       const priceNotes = document.querySelectorAll(".plan-card .price-note");
       priceNotes.forEach((note) => {
         const existing = note.querySelector(".toman-badge");
         if (existing) existing.remove();
-        note.innerHTML += `<div class="toman-badge error">⚠ قیمت لحظه‌ای unavailable</div>`;
+        const badge = document.createElement("div");
+        badge.className = "toman-badge error";
+        badge.textContent = "⚠ قیمت لحظه‌ای در دسترس نیست";
+        note.appendChild(badge);
       });
 
       const updateEl = document.getElementById("price-last-update");
@@ -433,64 +428,6 @@
     // Initialize pricing calculator
     pricingCalc.init();
   });
-
-  // ---- Authentication form handling ----
-  const authForms = {
-    email: document.getElementById("auth-email-form"),
-    google: document.getElementById("auth-google-form"),
-    github: document.getElementById("auth-github-form"),
-    phone: document.getElementById("auth-phone-form"),
-  };
-
-  // Email sign-in/sign-up form
-  if (authForms.email) {
-    authForms.email.addEventListener("submit", (e) => {
-      e.preventDefault();
-      const email = authForms.email.querySelector('input[type="email"]').value;
-      const password = authForms.email.querySelector('input[type="password"]').value;
-      // TODO: Implement actual auth
-      console.log("Email submitted:", email, password);
-      // After successful auth, restore selected plan and continue
-      localStorage.setItem("irancoin_last_plan", localStorage.getItem("irancoin_selected_plan") || "starter");
-      window.location.href = "./dashboard.html";
-    });
-  }
-
-  // Google sign-in
-  if (authForms.google) {
-    authForms.google.addEventListener("click", (e) => {
-      e.preventDefault();
-      // TODO: Implement Google OAuth
-      console.log("Google sign-in requested");
-      localStorage.setItem("irancoin_last_plan", localStorage.getItem("irancoin_selected_plan") || "starter");
-      window.location.href = "./dashboard.html";
-    });
-  }
-
-  // GitHub sign-in
-  if (authForms.github) {
-    authForms.github.addEventListener("click", (e) => {
-      e.preventDefault();
-      // TODO: Implement GitHub OAuth
-      console.log("GitHub sign-in requested");
-      localStorage.setItem("irancoin_last_plan", localStorage.getItem("irancoin_selected_plan") || "starter");
-      window.location.href = "./dashboard.html";
-    });
-  }
-
-  // Iranian phone sign-in
-  if (authForms.phone) {
-    authForms.phone.addEventListener("submit", (e) => {
-      e.preventDefault();
-      const phone = authForms.phone.querySelector('input[type="tel"]').value;
-      // Normalize Iranian phone number
-      const normalized = phone.replace(/^0/, "+98");
-      console.log("Iranian phone submitted:", phone, "->", normalized);
-      // TODO: Implement SMS/OTP verification
-      localStorage.setItem("irancoin_last_plan", localStorage.getItem("irancoin_selected_plan") || "starter");
-      window.location.href = "./dashboard.html";
-    });
-  }
 </script>
 </body>
 </html>

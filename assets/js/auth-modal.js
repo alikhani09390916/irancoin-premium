@@ -70,6 +70,12 @@
     var m = getModal();
     if (!m) return;
 
+    // Animated hero candle canvas
+    var heroCanvas = m.querySelector(".auth-modal-hero canvas");
+    if (heroCanvas && typeof LiveCandles !== "undefined") {
+      new LiveCandles(heroCanvas, { candleWidth: 4, gap: 4 });
+    }
+
     // Close button
     var closeBtn = m.querySelector(".close-modal");
     if (closeBtn) {

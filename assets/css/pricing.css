@@ -58,7 +58,7 @@
 }
 .plan-card .plan-agent { display: flex; align-items: center; gap: 8px; font-size: 13px; font-weight: 700; color: var(--ink-faint); margin-bottom: 14px; }
 .plan-card .plan-agent .dot { width: 8px; height: 8px; border-radius: 50%; }
-.plan-card h3 { font-size: 18px; margin: 0 0 6px; }
+.plan-card h2 { font-size: 20px; margin: 0 0 6px; font-weight: 800; }
 .plan-card .plan-desc { font-size: 13px; color: var(--ink-soft); margin: 0 0 18px; line-height: 1.8; min-height: 36px; }
 .plan-card .price { display: flex; align-items: baseline; gap: 6px; direction: ltr; justify-content: flex-end; margin-bottom: 4px; }
 .plan-card .price .amount { font-size: 32px; font-weight: 800; }

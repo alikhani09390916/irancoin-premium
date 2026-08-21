@@ -16,7 +16,7 @@
   height: 100%;
   min-height: 460px;
   isolation: isolate;
-  overflow: hidden;
+  overflow: visible;
 }
 
 /* ---- layer 0: live, ever-forming candlestick field ---- */

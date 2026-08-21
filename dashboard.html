@@ -61,34 +61,56 @@
 </nav>
 
 <main id="main">
-  <div class="container">
-    <header class="dash-head">
-      <div>
-        <h1>نمای کلی پورتفولیو</h1>
-        <p>خلاصه‌ی عملکرد حساب شما — به‌روزرسانی لحظه‌ای توسط هسته‌ی هوش مصنوعی IranCoin</p>
+  <header class="page-header dash-hero">
+    <div class="candle-bg">
+      <canvas id="dash-candles" aria-hidden="true" style="width:100%;height:100%;opacity:0.3;" width="800" height="200"></canvas>
+    </div>
+    <div class="container content">
+      <span class="eyebrow" data-motion="fade-in">داشبورد معاملاتی</span>
+      <h1 data-text-reveal>نمای کلی پورتفولیو</h1>
+      <p data-motion="slide-up" data-motion-delay="100">خلاصه‌ی عملکرد حساب شما — به‌روزرسانی لحظه‌ای توسط هسته‌ی هوش مصنوعی IranCoin</p>
+      <div class="dash-hero-stats" data-stagger>
+        <div data-motion="slide-up">
+          <span class="hero-stat-num" lang="en">$24,860</span>
+          <span class="hero-stat-label">ارزش پورتفولیو</span>
+          <span class="chip up" style="margin-top:6px;">▲ ۱.۴٪ امروز</span>
+        </div>
+        <div data-motion="slide-up">
+          <span class="hero-stat-num" lang="en">+$3,420</span>
+          <span class="hero-stat-label">سود محقق‌شده</span>
+          <span class="chip up" style="margin-top:6px;">▲ ۱۲.۴٪ این ماه</span>
+        </div>
+        <div data-motion="slide-up">
+          <span class="hero-stat-num" lang="en">۶</span>
+          <span class="hero-stat-label">پوزیشن‌های باز</span>
+          <span class="chip neutral" style="margin-top:6px;">۲ پوزیشن در سود</span>
+        </div>
       </div>
-    </header>
+    </div>
+  </header>
+
+  <div class="container">
 
     <div class="kpi-grid" data-stagger>
-      <div class="kpi-card glass reveal" data-motion="slide-up">
-        <div class="label">ارزش پورتفولیو</div>
-        <div class="value">$24,860</div>
-        <div class="chip up delta">▲ ۱.۴٪ امروز</div>
-      </div>
-      <div class="kpi-card glass reveal" data-motion="slide-up">
-        <div class="label">سود محقق‌شده</div>
-        <div class="value">+$3,420</div>
-        <div class="chip up delta">▲ ۱۲.۴٪ این ماه</div>
-      </div>
-      <div class="kpi-card glass reveal" data-motion="slide-up">
-        <div class="label">پوزیشن‌های باز</div>
-        <div class="value">۶</div>
-        <div class="chip neutral delta">۲ پوزیشن در سود</div>
-      </div>
       <div class="kpi-card glass reveal" data-motion="slide-up">
         <div class="label">نسبت برد به باخت</div>
         <div class="value">۶۸٪</div>
         <div class="chip up delta">▲ ۳٪ نسبت به ماه قبل</div>
+      </div>
+      <div class="kpi-card glass reveal" data-motion="slide-up">
+        <div class="label">میانگین سود هر معامله</div>
+        <div class="value" lang="en">+2.4%</div>
+        <div class="chip up delta">بالای صنعت</div>
+      </div>
+      <div class="kpi-card glass reveal" data-motion="slide-up">
+        <div class="label">حداکثر افت</div>
+        <div class="value" lang="en">-1.2%</div>
+        <div class="chip up delta">▼ کمتر از حد مجاز</div>
+      </div>
+      <div class="kpi-card glass reveal" data-motion="slide-up">
+        <div class="label">معاملات امروز</div>
+        <div class="value" lang="en">۱۲</div>
+        <div class="chip neutral delta">۸ سود / ۴ زیان</div>
       </div>
     </div>
 
@@ -168,6 +190,7 @@
 <!-- Auth Modal -->
 <div id="auth-modal" class="auth-modal" role="dialog" aria-modal="true" aria-labelledby="auth-modal-title" hidden>
   <div class="auth-modal-content">
+    <div class="auth-modal-hero"><canvas aria-hidden="true" width="400" height="120"></canvas></div>
     <button type="button" class="close-modal" aria-label="بستن">&times;</button>
     <h2 id="auth-modal-title" class="auth-modal-header">ورود / ثبت نام</h2>
     <div class="auth-modal-body">
@@ -191,12 +214,12 @@
         </form>
       </div>
       <div id="google-tab" class="auth-tab">
-        <h3>Continue with Google</h3>
-        <button type="button" class="btn-google w-full" onclick="hideAuthModal()">Continue with Google</button>
+        <h3>ورود با Google</h3>
+        <button type="button" class="btn-google w-full" onclick="hideAuthModal()">ورود با Google</button>
       </div>
       <div id="github-tab" class="auth-tab">
-        <h3>Continue with GitHub</h3>
-        <button type="button" class="btn-github w-full" onclick="hideAuthModal()">Continue with GitHub</button>
+        <h3>ورود با GitHub</h3>
+        <button type="button" class="btn-github w-full" onclick="hideAuthModal()">ورود با GitHub</button>
       </div>
       <div id="phone-tab" class="auth-tab">
         <h3>شماره تلفن ایرانی</h3>
@@ -220,12 +243,15 @@
 <!-- Footer injected by footer.js -->
 
 <script src="./assets/js/ai-core.js"></script>
+<script src="./assets/js/live-candles.js"></script>
 <script src="./assets/js/ui.js"></script>
 <script src="./assets/js/motion.js"></script>
 <script src="./assets/js/auth-modal.js"></script>
 <script src="./assets/js/footer.js"></script>
 <script>
-  new AICore(document.getElementById("risk-ring-canvas"), { pointCount: 90, sphereRadiusFrac: 0.3, showOrbits: false, color: [244, 63, 94], color2: [124, 58, 237] });
+  // Dashboard candle hero
+  new LiveCandles(document.getElementById("dash-candles"), { candleWidth: 5, gap: 5 });
+  new AICore(document.getElementById("risk-ring-canvas"), { pointCount: 90, sphereRadiusFrac: 0.3, showOrbits: false, color: [31, 191, 159], color2: [46, 196, 255] });
 
   // ---- portfolio growth chart: small dependency-free canvas line chart ----
   (function () {

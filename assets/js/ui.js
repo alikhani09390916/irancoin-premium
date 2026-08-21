@@ -15,52 +15,9 @@
   const driftTimers = [];
   window.addEventListener("beforeunload", () => driftTimers.forEach(clearInterval));
 
-  // ---- animated counters: <span data-count-to="12840" data-count-suffix="+"> ----
-  function animateCounter(el) {
-    const to = parseFloat(el.getAttribute("data-count-to"));
-    if (!Number.isFinite(to)) return;
-    const suffix = el.getAttribute("data-count-suffix") || "";
-    const rawDecimals = el.getAttribute("data-count-decimals");
-    const decimals = rawDecimals ? (parseInt(rawDecimals, 10) || 0) : 0;
-    const duration = reduced ? 0 : 1400;
-    const start = performance.now();
-    const from = 0;
+  // ---- animated counters: handled by motion.js (no duplicate) ----
 
-    function frame(now) {
-      const p = duration ? Math.min(1, (now - start) / duration) : 1;
-      const eased = 1 - Math.pow(1 - p, 3);
-      const val = from + (to - from) * eased;
-      el.textContent = val.toLocaleString("en-US", {
-        minimumFractionDigits: decimals,
-        maximumFractionDigits: decimals,
-      }) + suffix;
-      if (p < 1) requestAnimationFrame(frame);
-    }
-    requestAnimationFrame(frame);
-  }
-
-  function initCounters() {
-    const els = document.querySelectorAll("[data-count-to]");
-    if (!els.length) return;
-    if (typeof IntersectionObserver === "undefined") {
-      els.forEach(animateCounter);
-      return;
-    }
-    const io = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            animateCounter(entry.target);
-            io.unobserve(entry.target);
-          }
-        });
-      },
-      { threshold: 0.1, rootMargin: "0px 0px -10% 0px" }
-    );
-    els.forEach((el) => io.observe(el));
-  }
-
-  // ---- slow "live" ticking for a counter that keeps drifting upward
+  // ---- slow "live" drifting counter
   function initLiveDrift() {
     document.querySelectorAll("[data-live-drift]").forEach((el) => {
       if (reduced) return;
@@ -237,7 +194,6 @@
   }
 
   document.addEventListener("DOMContentLoaded", () => {
-    initCounters();
     initLiveDrift();
     initNavToggle();
     initFaq();
