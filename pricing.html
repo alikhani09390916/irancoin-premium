@@ -32,6 +32,7 @@
 <link rel="stylesheet" href="./assets/css/ai-core.css" />
 <link rel="stylesheet" href="./assets/css/pricing.css" />
 <link rel="stylesheet" href="./assets/css/motion.css" />
+<link rel="stylesheet" href="./assets/css/auth-modal.css" />
 
 </head>
 <body>
@@ -135,16 +136,20 @@
 
     </div>
     <!-- Auth Modal -->
-    <div id="auth-modal" class="auth-modal" role="dialog" aria-modal="true" aria-labelledby="modal-title" hidden>
+    <div id="auth-modal" class="auth-modal" role="dialog" aria-modal="true" aria-labelledby="auth-modal-title" hidden>
       <div class="auth-modal-content">
-        <button type="button" class="close-modal" aria-label="بستن" onclick="hideAuthModal()">&times;</button>
-        <h2 id="modal-title" class="auth-modal-header">ورود به حساب</h2>
+        <button type="button" class="close-modal" aria-label="بستن">&times;</button>
+        <h2 id="auth-modal-title" class="auth-modal-header">ورود / ثبت نام</h2>
         <div class="auth-modal-body">
           <input type="hidden" id="modal-selected-plan" />
-          <!-- Email tab -->
+          <div class="auth-tab-switcher">
+            <button type="button" class="is-active" data-auth-tab="email">ایمیل</button>
+            <button type="button" data-auth-tab="google">Google</button>
+            <button type="button" data-auth-tab="github">GitHub</button>
+            <button type="button" data-auth-tab="phone">تلفن</button>
+          </div>
           <div id="email-tab" class="auth-tab is-active">
-            <h3>ایمیل ورود</h3>
-            <form id="auth-email-form">
+            <form onsubmit="event.preventDefault(); hideAuthModal();">
               <div class="input-group">
                 <input type="email" placeholder="example@irancoin.ir" required />
               </div>
@@ -152,34 +157,31 @@
                 <input type="password" placeholder="رمز عبور" required />
               </div>
               <button type="submit" class="btn-primary w-full">ورود</button>
-              <button type="button" class="btn-link w-full">رمز عبور فراموشی دادم؟</button>
+              <button type="button" class="btn-link w-full">رمز عبور را فراموش کرده‌اید؟</button>
             </form>
           </div>
-          <!-- Google tab -->
           <div id="google-tab" class="auth-tab">
             <h3>Continue with Google</h3>
-            <button type="button" class="btn-google w-full">Continue with Google</button>
+            <button type="button" class="btn-google w-full" onclick="hideAuthModal()">Continue with Google</button>
           </div>
-          <!-- GitHub tab -->
           <div id="github-tab" class="auth-tab">
             <h3>Continue with GitHub</h3>
-            <button type="button" class="btn-github w-full">Continue with GitHub</button>
+            <button type="button" class="btn-github w-full" onclick="hideAuthModal()">Continue with GitHub</button>
           </div>
-          <!-- Phone tab -->
           <div id="phone-tab" class="auth-tab">
             <h3>شماره تلفن ایرانی</h3>
-            <form id="auth-phone-form">
+            <form onsubmit="event.preventDefault(); hideAuthModal();">
               <div class="input-group">
                 <input type="tel" placeholder="09123456789" required />
-                <small>+98 added automatically</small>
+                <small>+98 خودکار اضافه می‌شود</small>
               </div>
-              <button type="submit" class="btn-primary w-full">Verify with OTP</button>
+              <button type="submit" class="btn-primary w-full">ارسال کد تأیید</button>
             </form>
           </div>
         </div>
         <div class="auth-modal-footer">
-          <span>still don't have an account?</span>
-          <a href="#" onclick="switchAuthTab('email')">Create Account</a>
+          <span>حساب کاربری ندارید؟</span>
+          <a href="#" onclick="switchAuthTab('email'); return false;">ثبت نام</a>
         </div>
       </div>
     </div>
@@ -241,17 +243,16 @@
 <script src="./assets/js/live-candles.js"></script>
 <script src="./assets/js/ui.js"></script>
 <script src="./assets/js/motion.js"></script>
+<script src="./assets/js/auth-modal.js"></script>
 <script src="./assets/js/footer.js"></script>
 <script>
   new AICore(document.getElementById("mini-core-canvas"), { pointCount: 120, sphereRadiusFrac: 0.34, showOrbits: false });
   new LiveCandles(document.getElementById("pricing-candles"), { candleWidth: 5, gap: 5 });
 
-  // billing toggle: independent of the generic ui.js tab helper, since
-  // it needs to control price panels living outside the toggle itself
+  // billing toggle
   (function() {
     const btns = document.querySelectorAll("#billing-toggle .tab");
     const panels = document.querySelectorAll("[data-tab-panel]");
-    // ARIA setup
     const toggleEl = document.getElementById("billing-toggle");
     if (toggleEl) toggleEl.setAttribute("role", "tablist");
     panels.forEach((p, i) => {
@@ -259,7 +260,7 @@
       p.id = id;
       p.setAttribute("role", "tabpanel");
     });
-    btns.forEach((btn, i) => {
+    btns.forEach((btn) => {
       btn.setAttribute("role", "tab");
       btn.setAttribute("aria-selected", btn.classList.contains("is-active") ? "true" : "false");
       const target = btn.getAttribute("data-billing");
@@ -282,93 +283,13 @@
     });
   })();
 
-  // ---- Plan selection storage ----
+  // Plan selection -> open auth modal
   function selectPlan(plan) {
-    // Store selected plan in localStorage
     localStorage.setItem("irancoin_selected_plan", plan);
-    // Store billing preference too
     const billing = document.querySelector("#billing-toggle .is-active")?.getAttribute("data-billing") || "monthly";
     localStorage.setItem("irancoin_billing_preference", billing);
-    // Show auth modal
     showAuthModal(plan);
   }
-
-  // ---- Authentication Modal ----
-  const authModal = document.getElementById("auth-modal");
-  const openAuthBtn = document.getElementById("open-auth-modal");
-  const closeAuthBtn = authModal?.querySelector(".close-modal");
-
-  function showAuthModal(selectedPlan) {
-    // Preserve selected plan in modal
-    const modalPlanDisplay = document.getElementById("modal-selected-plan");
-    if (modalPlanDisplay) {
-      const planNames = { starter: "استارتر", professional: "حرفه‌ای", elite: "الیت" };
-      modalPlanDisplay.textContent = planNames[selectedPlan] || selectedPlan;
-    }
-
-    if (authModal) {
-      authModal.classList.add("is-active");
-      authModal.setAttribute("aria-modal", "true");
-      // Focus first focusable element inside modal
-      requestAnimationFrame(() => {
-        const firstInput = authModal.querySelector('input:not([disabled]), button:not([disabled])');
-        if (firstInput) firstInput.focus();
-      });
-    }
-  }
-
-  function hideAuthModal() {
-    if (authModal) {
-      authModal.classList.remove("is-active");
-      authModal.removeAttribute("aria-modal");
-    }
-  }
-
-  // Open auth modal when clicking plan buttons
-  document.querySelectorAll(".plan-card .btn-block").forEach((btn) => {
-    btn.addEventListener("click", (e) => {
-      e.stopPropagation();
-      const plan = btn.getAttribute("onclick").match(/'([^']+)'/)[1];
-      selectPlan(plan);
-    });
-  });
-
-  // Close modal on close button
-  if (closeAuthBtn) {
-    closeAuthBtn.addEventListener("click", hideAuthModal);
-  }
-
-  // Close modal on overlay click
-  if (authModal) {
-    authModal.addEventListener("click", (e) => {
-      if (e.target === authModal) {
-        hideAuthModal();
-      }
-    });
-  }
-
-  // Handle Escape to close + focus trap
-  document.addEventListener("keydown", (e) => {
-    if (!authModal || !authModal.classList.contains("is-active")) return;
-    if (e.key === "Escape") {
-      hideAuthModal();
-      return;
-    }
-    // Focus trap: keep Tab inside modal
-    if (e.key === "Tab") {
-      const focusable = authModal.querySelectorAll(
-        'button:not([disabled]), input:not([disabled]), a[href], [tabindex]:not([tabindex="-1"])'
-      );
-      if (!focusable.length) return;
-      const first = focusable[0];
-      const last = focusable[focusable.length - 1];
-      if (e.shiftKey) {
-        if (document.activeElement === first) { e.preventDefault(); last.focus(); }
-      } else {
-        if (document.activeElement === last) { e.preventDefault(); first.focus(); }
-      }
-    }
-  });
 
   // ---- Live USDT → IRR/Toman Pricing Calculator ----
   // Fetches real-time USDT price from CoinGecko and displays IRR/Toman equivalents

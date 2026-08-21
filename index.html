@@ -32,6 +32,7 @@
 <link rel="stylesheet" href="./assets/css/ai-core.css" />
 <link rel="stylesheet" href="./assets/css/index.css" />
 <link rel="stylesheet" href="./assets/css/motion.css" />
+<link rel="stylesheet" href="./assets/css/auth-modal.css" />
 
 </head>
 <body>
@@ -52,6 +53,7 @@
       <li><a href="#agents">هسته هوش مصنوعی</a></li>
     </ul>
     <div class="nav-cta">
+      <button type="button" class="btn-ghost" onclick="showAuthModal()">ورود</button>
       <a href="./pricing.html" class="btn-primary">خرید اشتراک</a>
       <button type="button" class="nav-toggle" aria-label="باز کردن منو" aria-expanded="false" aria-controls="nav-links">☰</button>
     </div>
@@ -68,7 +70,7 @@
         پیوسته دور همین هسته در جریان‌اند تا هر تصمیم معاملاتی از داده بگذرد، نه از احساس.
       </p>
       <div class="cta-row" data-motion="slide-up" data-motion-delay="400">
-        <button type="button" class="btn-primary" data-magnetic="0.3">شروع رایگان</button>
+        <button type="button" class="btn-primary" data-magnetic="0.3" onclick="showAuthModal()">شروع رایگان</button>
         <button type="button" class="btn-secondary">مشاهده ویدیو</button>
       </div>
 
@@ -185,6 +187,58 @@
   </section>
 </main>
 
+<!-- Auth Modal -->
+<div id="auth-modal" class="auth-modal" role="dialog" aria-modal="true" aria-labelledby="auth-modal-title" hidden>
+  <div class="auth-modal-content">
+    <button type="button" class="close-modal" aria-label="بستن">&times;</button>
+    <h2 id="auth-modal-title" class="auth-modal-header">ورود / ثبت نام</h2>
+    <div class="auth-modal-body">
+      <input type="hidden" id="modal-selected-plan" />
+      <div class="auth-tab-switcher">
+        <button type="button" class="is-active" data-auth-tab="email">ایمیل</button>
+        <button type="button" data-auth-tab="google">Google</button>
+        <button type="button" data-auth-tab="github">GitHub</button>
+        <button type="button" data-auth-tab="phone">تلفن</button>
+      </div>
+      <div id="email-tab" class="auth-tab is-active">
+        <form onsubmit="event.preventDefault(); hideAuthModal();">
+          <div class="input-group">
+            <input type="email" placeholder="example@irancoin.ir" required />
+          </div>
+          <div class="input-group">
+            <input type="password" placeholder="رمز عبور" required />
+          </div>
+          <button type="submit" class="btn-primary w-full">ورود</button>
+          <button type="button" class="btn-link w-full">رمز عبور را فراموش کرده‌اید؟</button>
+        </form>
+      </div>
+      <div id="google-tab" class="auth-tab">
+        <h3>Continue with Google</h3>
+        <button type="button" class="btn-google w-full" onclick="hideAuthModal()">Continue with Google</button>
+      </div>
+      <div id="github-tab" class="auth-tab">
+        <h3>Continue with GitHub</h3>
+        <button type="button" class="btn-github w-full" onclick="hideAuthModal()">Continue with GitHub</button>
+      </div>
+      <div id="phone-tab" class="auth-tab">
+        <h3>شماره تلفن ایرانی</h3>
+        <form onsubmit="event.preventDefault(); hideAuthModal();">
+          <div class="input-group">
+            <input type="tel" placeholder="09123456689" required />
+            <small>+98 خودکار اضافه می‌شود</small>
+          </div>
+          <button type="submit" class="btn-primary w-full">ارسال کد تأیید</button>
+        </form>
+      </div>
+    </div>
+    <div class="auth-modal-footer">
+      <span>حساب کاربری ندارید؟</span>
+      <a href="#" onclick="switchAuthTab('email'); return false;">ثبت نام</a>
+    </div>
+  </div>
+</div>
+<!-- /Auth Modal -->
+
 <!-- Footer injected by footer.js -->
 
 <script src="./assets/js/ai-core.js"></script>
@@ -192,6 +246,7 @@
 <script src="./assets/js/cables.js"></script>
 <script src="./assets/js/ui.js"></script>
 <script src="./assets/js/motion.js"></script>
+<script src="./assets/js/auth-modal.js"></script>
 <script src="./assets/js/footer.js"></script>
 <script>
   new AICore(document.getElementById("ai-core-canvas"));
