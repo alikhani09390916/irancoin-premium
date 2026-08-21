@@ -1,0 +1,314 @@
+<!doctype html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>داشبورد | IranCoin</title>
+<meta name="description" content="داشبورد IranCoin — ارزش پورتفولیو، پوزیشن‌های باز، سیگنال‌های هوش مصنوعی و پنل ریسک، در یک نمای واحد." />
+<meta name="theme-color" content="#7C3AED" />
+<link rel="stylesheet" href="./assets/css/theme.css" />
+<link rel="stylesheet" href="./assets/css/ai-core.css" />
+<style>
+  .dash-head { padding: 40px 0 8px; display: flex; align-items: flex-end; justify-content: space-between; flex-wrap: wrap; gap: 18px; }
+  .dash-head h1 { font-size: 26px; margin: 0 0 6px; }
+  .dash-head p { margin: 0; color: var(--ink-soft); font-size: 14.5px; }
+  .live-pill { display: inline-flex; align-items: center; gap: 7px; font-size: 12.5px; font-weight: 700; color: var(--teal); }
+  .live-pill .blip { width: 7px; height: 7px; border-radius: 50%; background: var(--teal); animation: blip 1.6s ease-in-out infinite; }
+  @keyframes blip { 0%,100% { opacity: 1; } 50% { opacity: 0.25; } }
+
+  .kpi-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 18px; margin: 28px 0; }
+  .kpi-card { padding: 20px 22px; border-radius: var(--radius-md); }
+  .kpi-card .label { font-size: 12.5px; color: var(--ink-faint); font-weight: 700; margin-bottom: 8px; }
+  .kpi-card .value { font-size: 25px; font-weight: 800; direction: ltr; }
+  .kpi-card .delta { margin-top: 6px; }
+
+  .dash-grid { display: grid; grid-template-columns: 2fr 1fr; gap: 20px; align-items: start; margin-bottom: 20px; }
+  .dash-grid > div { min-width: 0; }
+
+  .panel { padding: 24px; border-radius: var(--radius-lg); }
+  .panel-head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 18px; flex-wrap: wrap; gap: 12px; }
+  .panel-head h3 { font-size: 16px; margin: 0; }
+
+  .range-tabs { display: inline-flex; gap: 4px; background: rgba(28,24,48,0.05); padding: 4px; border-radius: 12px; }
+  .range-tab { border: none; background: transparent; font-family: inherit; font-size: 12.5px; font-weight: 700; color: var(--ink-soft); padding: 7px 14px; border-radius: 9px; cursor: pointer; }
+  .range-tab.is-active { background: #fff; color: var(--violet); box-shadow: 0 4px 12px rgba(30,20,60,0.1); }
+
+  .chart-wrap { position: relative; height: 220px; }
+  .chart-wrap canvas { width: 100%; height: 100%; display: block; }
+  .chart-legend { display: flex; gap: 22px; margin-top: 14px; font-size: 13px; color: var(--ink-soft); }
+  .chart-legend b { color: var(--ink); direction: ltr; display: inline-block; }
+
+  table.positions { width: 100%; border-collapse: collapse; font-size: 13.5px; margin-top: 6px; }
+  table.positions th { text-align: start; font-size: 12px; color: var(--ink-faint); font-weight: 700; padding: 8px 10px; border-bottom: 1px solid var(--line); }
+  table.positions td { padding: 12px 10px; border-bottom: 1px solid var(--line); }
+  table.positions td.num { direction: ltr; text-align: end; }
+  table.positions tr:last-child td { border-bottom: none; }
+
+  .risk-ring-mini { width: 96px; height: 96px; margin: 0 auto 16px; }
+  .risk-meter { height: 10px; border-radius: 999px; background: rgba(28,24,48,0.08); overflow: hidden; margin-top: 8px; }
+  .risk-meter > span { display: block; height: 100%; border-radius: 999px; background: linear-gradient(90deg, var(--teal), var(--rose)); }
+  .risk-rows { display: grid; gap: 12px; margin-top: 18px; font-size: 13.5px; }
+  .risk-rows .row { display: flex; justify-content: space-between; color: var(--ink-soft); }
+  .risk-rows .row b { color: var(--ink); font-weight: 700; direction: ltr; }
+
+  .journal-item { display: flex; justify-content: space-between; align-items: flex-start; padding: 12px 0; border-bottom: 1px solid var(--line); font-size: 13.5px; }
+  .journal-item:last-child { border-bottom: none; }
+  .journal-item .meta { color: var(--ink-faint); font-size: 12px; margin-top: 3px; }
+  .journal-item .pnl { font-weight: 800; direction: ltr; }
+
+  @media (max-width: 1000px) {
+    .kpi-grid { grid-template-columns: 1fr 1fr; }
+    .dash-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<nav class="site-nav">
+  <div class="container row">
+    <a href="./index.html" class="logo-mark"><span class="lg-iran">Iran</span><span class="lg-coin">Coin</span></a>
+    <ul class="nav-links">
+      <li><a href="./index.html">صفحه اصلی</a></li>
+      <li><a href="./pricing.html">تعرفه‌ها</a></li>
+      <li><a href="./dashboard.html" class="active">داشبورد</a></li>
+    </ul>
+    <div class="nav-cta">
+      <span class="live-pill"><span class="blip"></span>بازار زنده</span>
+      <button class="nav-toggle" aria-label="باز کردن منو" aria-expanded="false">☰</button>
+    </div>
+  </div>
+</nav>
+
+<main id="main">
+  <div class="container">
+    <div class="dash-head">
+      <div>
+        <h1>نمای کلی پورتفولیو</h1>
+        <p>خلاصه‌ی عملکرد حساب شما — به‌روزرسانی لحظه‌ای توسط هسته‌ی هوش مصنوعی IranCoin</p>
+      </div>
+    </div>
+
+    <div class="kpi-grid">
+      <div class="kpi-card glass reveal">
+        <div class="label">ارزش پورتفولیو</div>
+        <div class="value">$24,860</div>
+        <div class="chip up delta">▲ ۱.۴٪ امروز</div>
+      </div>
+      <div class="kpi-card glass reveal">
+        <div class="label">سود محقق‌شده</div>
+        <div class="value">+$3,420</div>
+        <div class="chip up delta">▲ ۱۲.۴٪ این ماه</div>
+      </div>
+      <div class="kpi-card glass reveal">
+        <div class="label">پوزیشن‌های باز</div>
+        <div class="value">۶</div>
+        <div class="chip neutral delta">۲ پوزیشن در سود</div>
+      </div>
+      <div class="kpi-card glass reveal">
+        <div class="label">نسبت برد به باخت</div>
+        <div class="value">۶۸٪</div>
+        <div class="chip up delta">▲ ۳٪ نسبت به ماه قبل</div>
+      </div>
+    </div>
+
+    <div class="dash-grid">
+      <div>
+        <div class="panel glass reveal">
+          <div class="panel-head">
+            <h3>رشد پورتفولیو</h3>
+            <div class="range-tabs" id="range-tabs">
+              <button class="range-tab" data-range="day">روز</button>
+              <button class="range-tab" data-range="week">هفته</button>
+              <button class="range-tab is-active" data-range="month">ماه</button>
+              <button class="range-tab" data-range="year">سال</button>
+            </div>
+          </div>
+          <div class="chart-wrap">
+            <canvas id="growth-chart" aria-label="نمودار رشد پورتفولیو"></canvas>
+          </div>
+          <div class="chart-legend">
+            <span>ارزش فعلی: <b id="chart-current">$24,860</b></span>
+            <span>بازده بازه: <b id="chart-change" style="color:var(--teal)">+۱۲.۴٪</b></span>
+          </div>
+        </div>
+
+        <div class="panel glass reveal" style="margin-top:20px;">
+          <div class="panel-head"><h3>پوزیشن‌های باز</h3><span class="chip neutral">۶ فعال</span></div>
+          <table class="positions">
+            <thead><tr><th>جفت‌ارز</th><th>استراتژی</th><th>ورود</th><th>سود/زیان</th></tr></thead>
+            <tbody>
+              <tr><td>BTC/USDT</td><td>روندی</td><td class="num">$66,120</td><td class="num" style="color:var(--teal)">+۴.۲٪</td></tr>
+              <tr><td>ETH/USDT</td><td>مومنتوم</td><td class="num">$3,860</td><td class="num" style="color:var(--teal)">+۲.۱٪</td></tr>
+              <tr><td>SOL/USDT</td><td>رنج</td><td class="num">$142.30</td><td class="num" style="color:var(--rose)">-۰.۸٪</td></tr>
+              <tr><td>XRP/USDT</td><td>روندی</td><td class="num">$0.612</td><td class="num" style="color:var(--teal)">+۶.۷٪</td></tr>
+              <tr><td>BNB/USDT</td><td>مومنتوم</td><td class="num">$598.10</td><td class="num" style="color:var(--rose)">-۱.۲٪</td></tr>
+              <tr><td>ADA/USDT</td><td>رنج</td><td class="num">$0.451</td><td class="num" style="color:var(--teal)">+۱.۹٪</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div>
+        <div class="panel glass reveal">
+          <div class="panel-head"><h3>پنل ایجنت ریسک</h3><span class="chip down">سطح: کم</span></div>
+          <div class="risk-ring-mini"><canvas id="risk-ring-canvas" aria-hidden="true"></canvas></div>
+          <div style="text-align:center; font-size:13px; color:var(--ink-faint);">سطح ریسک پورتفولیو</div>
+          <div class="risk-meter"><span style="width:28%"></span></div>
+          <div style="text-align:center; font-weight:800; margin-top:6px;">۲۸٪</div>
+
+          <div class="risk-rows">
+            <div class="row"><span>حداکثر ریسک هر معامله</span><b>۱٪ سرمایه</b></div>
+            <div class="row"><span>نسبت سود به ضرر هدف</span><b>۱ : ۲.۵</b></div>
+            <div class="row"><span>سقف افت سرمایه روزانه</span><b>۳٪</b></div>
+          </div>
+        </div>
+
+        <div class="panel glass reveal" style="margin-top:20px;">
+          <div class="panel-head"><h3>آخرین ژورنال معاملات</h3></div>
+          <div class="journal-item">
+            <div><div>BTC/USDT — خرید</div><div class="meta">استراتژی: روندی · ریسک ۱٪</div></div>
+            <div class="pnl" style="color:var(--teal)">+$184</div>
+          </div>
+          <div class="journal-item">
+            <div><div>ETH/USDT — فروش</div><div class="meta">استراتژی: رنج · خروج زودهنگام</div></div>
+            <div class="pnl" style="color:var(--rose)">-$42</div>
+          </div>
+          <div class="journal-item">
+            <div><div>SOL/USDT — خرید</div><div class="meta">استراتژی: مومنتوم · حد ضرر ۲٪</div></div>
+            <div class="pnl" style="color:var(--teal)">+$96</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+
+<footer class="site-footer">
+  <div class="container">
+    <div class="grid">
+      <div>
+        <a href="./index.html" class="logo-mark" style="font-size:19px;"><span class="lg-iran">Iran</span><span class="lg-coin">Coin</span></a>
+        <p class="about" style="margin-top:14px;">پلتفرم پیشرفته معاملات ارز دیجیتال با هوش مصنوعی. هوش، دقت، سرعت و امنیت در خدمت تصمیم‌های مالی شما.</p>
+      </div>
+      <div>
+        <h4>محصول</h4>
+        <ul><li><a href="./index.html#agents">هسته هوش مصنوعی</a></li><li><a href="./dashboard.html">داشبورد</a></li><li><a href="./pricing.html">تعرفه‌ها</a></li></ul>
+      </div>
+      <div>
+        <h4>دسترسی سریع</h4>
+        <ul><li><a href="./pricing.html#faq">سوالات متداول</a></li><li><a href="./index.html">صفحه اصلی</a></li></ul>
+      </div>
+      <div>
+        <h4>ارتباط با ما</h4>
+        <ul><li><a href="mailto:support@irancoin.ir">پشتیبانی</a></li><li><a href="https://t.me/irancoin">تلگرام</a></li></ul>
+      </div>
+    </div>
+    <div class="bottom">
+      <span>© ۱۴۰۵ IranCoin. تمامی حقوق محفوظ است.</span>
+      <span>داده‌های این صفحه نمایشی هستند</span>
+    </div>
+  </div>
+</footer>
+
+<script src="./assets/js/ai-core.js"></script>
+<script src="./assets/js/ui.js"></script>
+<script>
+  new AICore(document.getElementById("risk-ring-canvas"), { pointCount: 90, sphereRadiusFrac: 0.3, showOrbits: false, color: [244, 63, 94], color2: [124, 58, 237] });
+
+  // ---- portfolio growth chart: small dependency-free canvas line chart ----
+  (function () {
+    const canvas = document.getElementById("growth-chart");
+    const ctx = canvas.getContext("2d");
+    const dpr = Math.min(window.devicePixelRatio || 1, 2);
+
+    const DATASETS = {
+      day:   { points: [24510,24580,24490,24610,24700,24655,24780,24860], change: "+1.4%", changeUp: true, current: "$24,860" },
+      week:  { points: [23980,24120,24050,24390,24510,24700,24610,24860], change: "+3.7%", changeUp: true, current: "$24,860" },
+      month: { points: [22120,22540,21980,22960,23410,23180,24020,24860], change: "+12.4%", changeUp: true, current: "$24,860" },
+      year:  { points: [14200,15800,15100,17600,19800,18700,21500,24860], change: "+75.1%", changeUp: true, current: "$24,860" },
+    };
+
+    function resize() {
+      const rect = canvas.parentElement.getBoundingClientRect();
+      canvas.width = Math.round(rect.width * dpr);
+      canvas.height = Math.round(rect.height * dpr);
+      canvas.style.width = rect.width + "px";
+      canvas.style.height = rect.height + "px";
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    }
+
+    function draw(range) {
+      const data = DATASETS[range];
+      const w = canvas.clientWidth;
+      const h = canvas.clientHeight;
+      const pad = 10;
+      ctx.clearRect(0, 0, w, h);
+
+      const min = Math.min(...data.points);
+      const max = Math.max(...data.points);
+      const spanY = (max - min) || 1;
+      const stepX = (w - pad * 2) / (data.points.length - 1);
+      const toXY = (i, v) => [
+        pad + i * stepX,
+        h - pad - ((v - min) / spanY) * (h - pad * 2),
+      ];
+
+      // filled area
+      const grad = ctx.createLinearGradient(0, 0, 0, h);
+      grad.addColorStop(0, "rgba(124,58,237,0.22)");
+      grad.addColorStop(1, "rgba(124,58,237,0.0)");
+      ctx.beginPath();
+      data.points.forEach((v, i) => {
+        const [x, y] = toXY(i, v);
+        if (i === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y);
+      });
+      ctx.lineTo(w - pad, h - pad);
+      ctx.lineTo(pad, h - pad);
+      ctx.closePath();
+      ctx.fillStyle = grad;
+      ctx.fill();
+
+      // line
+      ctx.beginPath();
+      data.points.forEach((v, i) => {
+        const [x, y] = toXY(i, v);
+        if (i === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y);
+      });
+      ctx.strokeStyle = "#7c3aed";
+      ctx.lineWidth = 2.4;
+      ctx.lineJoin = "round";
+      ctx.stroke();
+
+      // last point marker
+      const [lx, ly] = toXY(data.points.length - 1, data.points[data.points.length - 1]);
+      ctx.beginPath();
+      ctx.arc(lx, ly, 4.5, 0, Math.PI * 2);
+      ctx.fillStyle = "#2ec4ff";
+      ctx.shadowColor = "rgba(46,196,255,0.8)";
+      ctx.shadowBlur = 10;
+      ctx.fill();
+      ctx.shadowBlur = 0;
+
+      document.getElementById("chart-current").textContent = data.current;
+      const changeEl = document.getElementById("chart-change");
+      changeEl.textContent = (data.changeUp ? "+" : "") + data.change.replace("+", "") ;
+      changeEl.style.color = data.changeUp ? "#1fbf9f" : "#f43f5e";
+    }
+
+    resize();
+    draw("month");
+    window.addEventListener("resize", () => { resize(); draw(currentRange); });
+
+    let currentRange = "month";
+    document.querySelectorAll("#range-tabs .range-tab").forEach((btn) => {
+      btn.addEventListener("click", () => {
+        document.querySelectorAll("#range-tabs .range-tab").forEach((b) => b.classList.remove("is-active"));
+        btn.classList.add("is-active");
+        currentRange = btn.getAttribute("data-range");
+        draw(currentRange);
+      });
+    });
+  })();
+</script>
+</body>
+</html>

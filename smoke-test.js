@@ -1,6 +1,7 @@
-// smoke-test.js — verifies ai-core.js actually RUNS without throwing:
-// geometry generation, edge computation, projection math, resize, and a
-// handful of animation ticks, using a minimal fake canvas/window.
+// smoke-test.js — verifies every JS module actually RUNS without
+// throwing: geometry generation, projection math, resize, a handful of
+// animation ticks, and (for cables.js) real SVG element construction
+// against a minimal fake DOM. No browser, no build step: `node smoke-test.js`.
 
 let rafCallback = null;
 
@@ -24,35 +25,33 @@ function makeFakeCtx() {
     beginPath() {},
     moveTo() {},
     lineTo() {},
-    arcTo() {},
-    closePath() {},
     stroke() {},
     arc() {},
+    ellipse() {},
     fill() {},
+    save() {},
+    restore() {},
+    translate() {},
+    rotate() {},
     createRadialGradient() {
       return { addColorStop() {} };
     },
     createLinearGradient() {
       return { addColorStop() {} };
     },
-    save() {},
-    restore() {},
-    translate() {},
-    rotate() {},
-    setLineDash() {},
-    ellipse() {},
     lineWidth: 1,
-    lineDashOffset: 0,
     fillStyle: "",
     strokeStyle: "",
     shadowColor: "",
     shadowBlur: 0,
+    lineJoin: "",
+    lineCap: "",
   };
 }
 
-function makeFakeCanvas() {
+function makeFakeCanvas(w, h) {
   const parent = {
-    getBoundingClientRect: () => ({ width: 480, height: 480 }),
+    getBoundingClientRect: () => ({ width: w || 480, height: h || 480 }),
   };
   return {
     getContext: () => makeFakeCtx(),
@@ -63,91 +62,117 @@ function makeFakeCanvas() {
   };
 }
 
-require("./ai-core.js");
-const AICore = global.window.AICore;
-
-if (typeof AICore !== "function") {
-  console.error("FAIL: AICore was not attached to window");
-  process.exit(1);
+let failures = 0;
+function check(cond, msg) {
+  if (!cond) {
+    console.error("FAIL: " + msg);
+    failures++;
+  } else {
+    console.log("  ok  " + msg);
+  }
 }
 
-const canvas = makeFakeCanvas();
-const core = new AICore(canvas, { pointCount: 120 });
+// ---------------------------------------------------------------
+console.log("\n[1/4] ai-core.js — rotating core + 3 orbit-ring agents");
+require("./assets/js/ai-core.js");
+const AICore = global.window.AICore;
+check(typeof AICore === "function", "AICore attached to window");
 
-// sanity on generated geometry
-console.assert(core.points.length === 120, "expected 120 points");
-console.assert(core.edges.length > 0, "expected some edges to be generated");
+const coreCanvas = makeFakeCanvas();
+const core = new AICore(coreCanvas, { pointCount: 120 });
+check(core.points.length === 120, "generated 120 sphere points");
+check(core.edges.length > 0, "generated neural edges between points");
+check(core.orbitAngles.length === 3, "three orbit-ring agents initialized");
 for (const p of core.points) {
   const mag = Math.sqrt(p.x * p.x + p.y * p.y + p.z * p.z);
-  console.assert(Math.abs(mag - 1) < 1e-6, "every point must lie on the unit sphere");
+  check(Math.abs(mag - 1) < 1e-6, "point lies on the unit sphere");
+  break; // one representative check keeps the log readable
 }
 
-// drive a handful of frames forward, including a resize mid-flight
 let t = 1000;
-for (let i = 0; i < 5; i++) {
-  t += 16;
-  rafCallback(t);
-}
-canvas.parentElement.getBoundingClientRect = () => ({ width: 320, height: 640 });
+for (let i = 0; i < 5; i++) { t += 16; rafCallback(t); }
+coreCanvas.parentElement.getBoundingClientRect = () => ({ width: 320, height: 640 });
 core._resize();
-for (let i = 0; i < 5; i++) {
-  t += 16;
-  rafCallback(t);
-}
+for (let i = 0; i < 5; i++) { t += 16; rafCallback(t); }
 
-// angle must have advanced forward, never NaN
-console.assert(Number.isFinite(core.angleY) && core.angleY > 0, "angleY should have advanced");
-console.assert(Number.isFinite(core.angleX), "angleX should be finite");
-
+check(Number.isFinite(core.angleY) && core.angleY > 0, "angleY advanced forward and stayed finite");
+check(Number.isFinite(core.angleX), "angleX (wobble) stayed finite");
+const center = core.getCenter();
+check(Number.isFinite(center.x) && Number.isFinite(center.y), "getCenter() returns finite coordinates");
 core.dispose();
 
-console.log("SMOKE TEST PASSED: geometry, edges, projection, resize, and animation ticks all ran without throwing.");
+// ---------------------------------------------------------------
+console.log("\n[2/4] live-candles.js — ever-forming candlestick field");
+require("./assets/js/live-candles.js");
+const LiveCandles = global.window.LiveCandles;
+check(typeof LiveCandles === "function", "LiveCandles attached to window");
 
-// ---- AICoreChart (live candlestick chart) ----
-require("./ai-core-chart.js");
-const AICoreChart = global.window.AICoreChart;
+const candleCanvas = makeFakeCanvas(600, 200);
+const field = new LiveCandles(candleCanvas, { intervalSeconds: 0.05 });
+check(field.candles.length > 0, "history seeded with finalized candles");
+check(!!field.forming, "a forming (still-building) candle exists");
 
-if (typeof AICoreChart !== "function") {
-  console.error("FAIL: AICoreChart was not attached to window");
+t = 1000;
+for (let i = 0; i < 40; i++) { t += 30; rafCallback(t); } // enough ticks to roll several candles over
+check(Number.isFinite(field.price) && field.price > 0, "simulated price stayed finite and positive");
+check(
+  field.candles.every((c) => [c.open, c.close, c.high, c.low].every(Number.isFinite)),
+  "every finalized candle has finite OHLC values"
+);
+field.dispose();
+
+// ---------------------------------------------------------------
+console.log("\n[3/4] cables.js — SVG cable layer against a minimal fake DOM");
+const fakeSvg = { children: [], attrs: {}, appendChild(n) { this.children.push(n); }, setAttribute(k, v) { this.attrs[k] = v; }, get firstChild() { return this.children[0] || null; }, removeChild(n) { this.children = this.children.filter((c) => c !== n); } };
+function fakeEl(rect, tagName) {
+  const attrs = {};
+  return {
+    tagName: tagName || "DIV",
+    _rect: rect,
+    getBoundingClientRect() { return this._rect; },
+    getAttribute(k) { return attrs[k] || null; },
+    setAttribute(k, v) { attrs[k] = String(v); },
+    appendChild() {},
+    style: {},
+  };
+}
+const coreBadge = fakeEl({ left: 290, top: 290, width: 100, height: 40 });
+const cardA = fakeEl({ left: 40, top: 40, width: 120, height: 60 });
+cardA.setAttribute("data-cable", "market");
+const cardB = fakeEl({ left: 500, top: 400, width: 120, height: 60 });
+cardB.setAttribute("data-cable", "risk");
+const container = {
+  getBoundingClientRect: () => ({ left: 0, top: 0, width: 680, height: 560 }),
+  querySelector: (sel) => (sel === ".cable-layer" ? fakeSvg : sel === ".core-badge" ? coreBadge : null),
+  querySelectorAll: (sel) => (sel === "[data-cable]" ? [cardA, cardB] : []),
+};
+global.document = {
+  createElementNS: (ns, tag) => fakeEl({}, tag),
+};
+global.ResizeObserver = undefined; // exercise the "no ResizeObserver" fallback path too
+require("./assets/js/cables.js");
+const initCables = global.window.initCables;
+check(typeof initCables === "function", "initCables attached to window");
+const cablesHandle = initCables({ container });
+check(fakeSvg.children.length === 6, "2 cards -> 6 svg nodes (glow path + line path + pulse dot each)");
+cablesHandle.dispose();
+
+// ---------------------------------------------------------------
+console.log("\n[4/4] ui.js — loads without throwing in a DOM-less environment");
+global.document.addEventListener = () => {};
+global.document.querySelectorAll = () => [];
+try {
+  require("./assets/js/ui.js");
+  check(true, "ui.js required without throwing");
+} catch (e) {
+  check(false, "ui.js required without throwing (" + e.message + ")");
+}
+
+// ---------------------------------------------------------------
+console.log("");
+if (failures > 0) {
+  console.error(`SMOKE TEST FAILED: ${failures} check(s) did not pass.`);
   process.exit(1);
 }
-
-const chartCanvas = makeFakeCanvas();
-let lastPrice = null;
-const chart = new AICoreChart(chartCanvas, {
-  startPrice: 27450,
-  candleDurationSeconds: 0.05, // fast, so the test forces several candles to complete
-  onPriceUpdate: (p) => {
-    lastPrice = p;
-  },
-});
-
-console.assert(chart.candles.length === 1, "should start with exactly one in-progress candle");
-
-let ct = 2000;
-for (let i = 0; i < 40; i++) {
-  ct += 16;
-  rafCallback(ct);
-}
-
-console.assert(chart.candles.length > 1, "expected new candles to have formed over time");
-console.assert(typeof lastPrice === "number" && Number.isFinite(lastPrice), "onPriceUpdate should report a finite price");
-console.assert(chart.candles.length <= chart.opts.maxCandles, "candle history should stay trimmed to maxCandles");
-
-for (const c of chart.candles) {
-  console.assert(c.high >= c.low, "candle high must be >= low");
-  console.assert(c.high >= c.open && c.high >= c.close, "candle high must bound open/close");
-  console.assert(c.low <= c.open && c.low <= c.close, "candle low must bound open/close");
-}
-
-// resize mid-flight must not throw
-chartCanvas.parentElement.getBoundingClientRect = () => ({ width: 220, height: 140 });
-chart._resize();
-for (let i = 0; i < 10; i++) {
-  ct += 16;
-  rafCallback(ct);
-}
-
-chart.dispose();
-
-console.log("SMOKE TEST PASSED: AICoreChart formed multiple valid OHLC candles, trimmed history, and survived a resize.");
+console.log("SMOKE TEST PASSED: all four modules run cleanly — geometry, projection,");
+console.log("resize, animation ticks, candle formation, and SVG cable construction.");

@@ -1,0 +1,271 @@
+/**
+ * ai-core.css — v2
+ * The "AI trading core" hero visual: rotating neural sphere + three
+ * orbit rings (each ring = one specialized AI agent), a live-forming
+ * candlestick field behind everything, animated data-cables running
+ * from the core out to floating stat cards, and the IranCoin wordmark
+ * fused into the core itself (brand mark == product mark).
+ *
+ * All floating-element motion is pure CSS (@keyframes), independent
+ * of the canvas rotation and of each other, so nothing can desync.
+ */
+
+.hero-visual {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  min-height: 460px;
+  isolation: isolate;
+}
+
+/* ---- layer 0: live, ever-forming candlestick field ---- */
+.live-candles-canvas {
+  position: absolute;
+  inset: -6%;
+  width: 112%;
+  height: 112%;
+  z-index: 0;
+  opacity: 0.55;
+  filter: blur(0.4px);
+  pointer-events: none;
+  -webkit-mask-image: radial-gradient(ellipse at 50% 48%, #000 55%, transparent 88%);
+  mask-image: radial-gradient(ellipse at 50% 48%, #000 55%, transparent 88%);
+}
+
+/* ---- layer 1: animated cables connecting the core to each card ---- */
+.cable-layer {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 2;
+  overflow: visible;
+  pointer-events: none;
+}
+.cable-layer path.cable {
+  fill: none;
+  stroke-linecap: round;
+}
+.cable-layer path.cable-glow { stroke-width: 9px; }
+.cable-layer path.cable-line { stroke-width: 2px; }
+.cable-layer .cable-pulse {
+  filter: drop-shadow(0 0 4px currentColor);
+}
+
+/* ---- layer 3: the rotating core stage ---- */
+.ai-core-stage {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  min-height: 420px;
+  z-index: 3;
+}
+.ai-core-stage canvas#ai-core-canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+/* ---- the fused brand/product wordmark at the exact center of the core ---- */
+.core-badge {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 5px;
+  padding: 16px 22px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.86);
+  border: 1px solid rgba(124, 58, 237, 0.22);
+  box-shadow: 0 8px 30px rgba(124, 58, 237, 0.22), 0 0 0 1px rgba(255,255,255,0.6) inset;
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  z-index: 4;
+  pointer-events: none;
+  animation: coreBadgePulse 2.6s ease-in-out infinite;
+}
+.core-badge .logo-mark { font-size: 19px; letter-spacing: 0.005em; }
+.core-badge .core-badge-sub {
+  font-size: 10.5px;
+  font-weight: 700;
+  color: var(--ink-faint);
+  letter-spacing: 0.03em;
+}
+@keyframes coreBadgePulse {
+  0%, 100% { box-shadow: 0 8px 30px rgba(124, 58, 237, 0.22), 0 0 0 1px rgba(255,255,255,0.6) inset; }
+  50%      { box-shadow: 0 10px 40px rgba(124, 58, 237, 0.36), 0 0 0 1px rgba(255,255,255,0.6) inset; }
+}
+
+/* ring legend: the three specialized AI agents orbiting the core */
+.core-legend {
+  position: absolute;
+  bottom: 2%;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 8px;
+  z-index: 4;
+  pointer-events: none;
+}
+.core-legend .chip { background: rgba(255,255,255,0.88); border: 1px solid rgba(28,24,48,0.08); box-shadow: 0 4px 14px rgba(30,20,60,0.1); }
+.core-legend .dot { width: 7px; height: 7px; border-radius: 50%; display: inline-block; }
+.core-legend .dot.market { background: var(--violet); }
+.core-legend .dot.risk   { background: var(--rose); }
+.core-legend .dot.capital{ background: var(--teal); }
+
+/* ---- floating glass stat cards ---- */
+.ai-core-card {
+  position: absolute;
+  min-width: 148px;
+  padding: 13px 17px;
+  border-radius: 18px;
+  background: rgba(255, 255, 255, 0.92);
+  box-shadow: 0 12px 32px rgba(30, 20, 60, 0.16);
+  border: 1px solid rgba(124, 58, 237, 0.14);
+  text-align: center;
+  font-family: inherit;
+  animation: aiCoreFloat 6s ease-in-out infinite;
+  z-index: 5;
+}
+.ai-core-card .label {
+  font-size: 12.5px;
+  font-weight: 700;
+  color: rgba(40, 30, 70, 0.55);
+  margin-bottom: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+}
+.ai-core-card .label .dot { width: 6px; height: 6px; border-radius: 50%; }
+.ai-core-card .value {
+  font-size: 23px;
+  font-weight: 800;
+  color: #1c1830;
+  line-height: 1.15;
+  direction: ltr;
+}
+.ai-core-card .subtitle {
+  font-size: 12.5px;
+  font-weight: 600;
+  margin-top: 4px;
+  color: #22c55e;
+}
+.ai-core-card.negative .subtitle,
+.ai-core-card .subtitle.is-risk { color: var(--rose); }
+.ai-core-card .subtitle.is-neutral { color: var(--violet); }
+
+/* tiny CSS-only sparkline used on a couple of cards */
+.mini-spark {
+  display: flex;
+  align-items: flex-end;
+  gap: 2.5px;
+  height: 20px;
+  margin-top: 6px;
+  justify-content: center;
+}
+.mini-spark span {
+  width: 4px;
+  border-radius: 2px 2px 0 0;
+  background: linear-gradient(180deg, var(--cyan), var(--violet));
+  opacity: 0.85;
+}
+
+/* six-point hex layout around the sphere */
+.ai-core-card.pos-tr { top: 3%;  inset-inline-end: 1%;  animation-duration: 6.5s; animation-delay: -1.2s; }
+.ai-core-card.pos-r  { top: 37%; inset-inline-end: -5%; animation-duration: 5.5s; animation-delay: -3.4s; }
+.ai-core-card.pos-br { top: 72%; inset-inline-end: 4%;  animation-duration: 6.8s; animation-delay: -4.6s; }
+.ai-core-card.pos-tl { top: 7%;  inset-inline-start: -1%; animation-duration: 7s;   animation-delay: -2.1s; }
+.ai-core-card.pos-l  { top: 41%; inset-inline-start: -7%; animation-duration: 6.2s; animation-delay: -0.5s; }
+.ai-core-card.pos-bl { top: 76%; inset-inline-start: 2%;  animation-duration: 6.1s; animation-delay: -5.2s; }
+
+@keyframes aiCoreFloat {
+  0%, 100% { transform: translateY(0); }
+  50%      { transform: translateY(-10px); }
+}
+
+/* ---- coin badges (CSS-only "3D" bevel via layered gradients) ---- */
+.ai-core-coin {
+  position: absolute;
+  width: 78px;
+  height: 78px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 800;
+  font-size: 28px;
+  color: #ffffff;
+  box-shadow:
+    0 10px 26px rgba(0, 0, 0, 0.28),
+    inset 0 3px 6px rgba(255, 255, 255, 0.55),
+    inset 0 -6px 10px rgba(0, 0, 0, 0.25);
+  animation: aiCoreFloat 6s ease-in-out infinite;
+  z-index: 3;
+}
+.ai-core-coin.btc {
+  background: radial-gradient(circle at 35% 30%, #ffd27a, #f2a71b 60%, #b97a0c 100%);
+  bottom: 2%;
+  inset-inline-start: 6%;
+  animation-duration: 5.8s;
+  animation-delay: -1.6s;
+}
+.ai-core-coin.usdt {
+  width: 66px;
+  height: 66px;
+  font-size: 24px;
+  background: radial-gradient(circle at 35% 30%, #6be3c8, #1fbf9f 60%, #0f8a71 100%);
+  bottom: 6%;
+  inset-inline-end: 10%;
+  animation-duration: 6.4s;
+  animation-delay: -3s;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ai-core-card, .ai-core-coin, .core-badge { animation-duration: 40s; }
+}
+
+@media (max-width: 900px) {
+  .core-legend { display: none; }
+}
+
+@media (max-width: 767px) {
+  .ai-core-card { min-width: 108px; padding: 9px 11px; border-radius: 14px; }
+  .ai-core-card .value { font-size: 17px; }
+  .ai-core-card .label { font-size: 10.5px; }
+  .ai-core-card .subtitle { font-size: 10.5px; }
+  .ai-core-coin { width: 54px; height: 54px; font-size: 20px; }
+  .ai-core-coin.usdt { width: 46px; height: 46px; font-size: 16px; }
+  .core-badge { padding: 10px 15px; }
+  .core-badge .logo-mark { font-size: 14px; }
+  .core-badge .core-badge-sub { font-size: 9px; }
+
+  .ai-core-card.pos-tr { top: 0%;  inset-inline-end: -2%; }
+  .ai-core-card.pos-r  { top: 34%; inset-inline-end: -8%; }
+  .ai-core-card.pos-br { top: 74%; inset-inline-end: -2%; }
+  .ai-core-card.pos-tl { top: 4%;  inset-inline-start: -4%; }
+  .ai-core-card.pos-l  { top: 38%; inset-inline-start: -9%; }
+  .ai-core-card.pos-bl { top: 78%; inset-inline-start: -3%; }
+}
+
+/* ---- background candlesticks used on pages other than the hero
+   (pricing/dashboard headers) — lighter-weight decorative variant ---- */
+.ai-core-candles {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+.ai-core-candle {
+  position: absolute;
+  width: 8px;
+  border-radius: 3px;
+  opacity: 0.3;
+  animation: aiCoreFloat 7s ease-in-out infinite;
+}
+.ai-core-candle.up { background: #1fbf9f; }
+.ai-core-candle.down { background: #f472b6; }

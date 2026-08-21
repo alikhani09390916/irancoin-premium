@@ -1,27 +1,32 @@
 /**
- * ai-core.js
+ * ai-core.js — v2
  * ------------------------------------------------------------------
- * A self-contained, zero-dependency "AI Core" hero visual: a glowing
- * particle/neural sphere that rotates continuously around its own
- * vertical axis, with a pulsing energy core and connecting lines
- * between nearby particles (the "luxury AI product" look — the same
- * family of visual used by many 2025/2026 AI/fintech hero sections).
+ * Zero-dependency "AI Core" hero visual:
  *
- * Deliberately NOT an anatomical 3D brain: pixel-accurate anatomical
- * detail requires a real sculpted 3D asset (see README.md for where
- * to source one). This is a fully procedural, always-correct
- * alternative that needs no external model, no WebGL, and no CDN —
- * just this one <canvas> and this one script.
+ *   1. A glowing particle/neural sphere that rotates continuously
+ *      around its own vertical axis — the trading brain itself.
+ *   2. Three tilted orbit rings around that sphere, each carrying one
+ *      traveling satellite node. Each ring is a *separate* specialized
+ *      AI agent working around the core brain:
+ *        - "market"  (violet) — market / signal analysis AI
+ *        - "risk"    (rose)   — risk-management AI
+ *        - "capital" (teal)   — capital / position-sizing AI
+ *      This gives the rotating sphere literal meaning instead of being
+ *      a decorative ball: the brain analyzes, and three independent
+ *      agents orbiting it handle strategy, risk and capital.
+ *
+ * No CDN, no WebGL, no three.js — one <canvas>, one script.
  *
  * USAGE
  * -----
  *   <div class="ai-core-stage" id="ai-core-stage">
  *     <canvas id="ai-core-canvas"></canvas>
  *   </div>
- *
- *   <script src="./ai-core.js"></script>
+ *   <script src="./assets/js/ai-core.js"></script>
  *   <script>
  *     const core = new AICore(document.getElementById('ai-core-canvas'));
+ *     core.getCenter(); // -> {x, y} in the canvas's own CSS pixel space,
+ *                        // used by cables.js to anchor the data cables.
  *     // core.dispose() if the section is ever removed from the DOM
  *   </script>
  * ------------------------------------------------------------------
@@ -42,6 +47,13 @@
     );
   }
 
+  const ORBIT_RINGS = [
+    // name        color(rgb)          radiusMul  tiltDeg  speed(rad/s, signed)  agent size
+    { key: "market",  color: [124, 58, 237], radiusMul: 1.22, tiltDeg: 8,   speed: 0.42, size: 4.4 },
+    { key: "risk",    color: [244, 63, 94],  radiusMul: 1.42, tiltDeg: -14, speed: -0.30, size: 3.8 },
+    { key: "capital", color: [31, 191, 159], radiusMul: 1.62, tiltDeg: 22,  speed: 0.23, size: 4.0 },
+  ];
+
   class AICore {
     constructor(canvas, userOptions) {
       this.canvas = canvas;
@@ -49,7 +61,7 @@
 
       this.opts = Object.assign(
         {
-          pointCount: 300,
+          pointCount: 260,
           color: [124, 58, 237], // primary accent (violet, #7C3AED)
           color2: [46, 196, 255], // secondary accent (cyan) — every 5th point
           rotationPeriodSeconds: 26, // one full 360° turn every N seconds
@@ -58,6 +70,8 @@
           wobblePeriodSeconds: 10,
           neighborCount: 3,
           maxLineDist: 0.42, // in unit-sphere distance units
+          sphereRadiusFrac: 0.27, // fraction of min(w,h) — leaves room for orbit rings
+          showOrbits: true,
           respectReducedMotion: true,
         },
         userOptions || {}
@@ -74,9 +88,8 @@
 
       this.angleY = 0;
       this.angleX = 0;
-      this.ringAngle1 = 0;
-      this.ringAngle2 = 0;
       this.time = 0;
+      this.orbitAngles = ORBIT_RINGS.map(() => Math.random() * Math.PI * 2);
       this._lastT = null;
       this._rafId = null;
       this._disposed = false;
@@ -150,9 +163,16 @@
 
       this.ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
 
-      this.radiusPx = Math.min(this.cssW, this.cssH) * 0.34;
+      this.radiusPx = Math.min(this.cssW, this.cssH) * this.opts.sphereRadiusFrac;
       this.cx = this.cssW / 2;
       this.cy = this.cssH / 2;
+    }
+
+    /** Center point of the core, in the canvas's own CSS-pixel space.
+     *  cables.js uses this (translated into page coordinates by the
+     *  caller) to anchor the data cables at the exact core center. */
+    getCenter() {
+      return { x: this.cx, y: this.cy, radiusPx: this.radiusPx };
     }
 
     // -- per-frame math --
@@ -187,25 +207,59 @@
       this._lastT = now;
       this.time += dt;
 
-      const rotationSpeed = this.reduced
-        ? (2 * Math.PI) / (this.opts.rotationPeriodSeconds * 6)
-        : (2 * Math.PI) / this.opts.rotationPeriodSeconds;
+      const slow = this.reduced ? 6 : 1;
+
+      const rotationSpeed = (2 * Math.PI) / (this.opts.rotationPeriodSeconds * slow);
       this.angleY += rotationSpeed * dt;
 
-      const wobbleAmp =
-        (Math.PI / 180) * this.opts.wobbleDeg * (this.reduced ? 0.3 : 1);
+      const wobbleAmp = (Math.PI / 180) * this.opts.wobbleDeg * (this.reduced ? 0.3 : 1);
       this.angleX =
-        Math.sin((this.time * 2 * Math.PI) / this.opts.wobblePeriodSeconds) *
-        wobbleAmp;
+        Math.sin((this.time * 2 * Math.PI) / this.opts.wobblePeriodSeconds) * wobbleAmp;
 
-      // independent slow orbital rings — reinforce the "AI reactor core"
-      // feel; deliberately not tied to the main sphere's rotation speed
-      const ringSpeed = this.reduced ? 0.15 : 1;
-      this.ringAngle1 += ((2 * Math.PI) / 42) * dt * ringSpeed;
-      this.ringAngle2 -= ((2 * Math.PI) / 58) * dt * ringSpeed;
+      for (let i = 0; i < ORBIT_RINGS.length; i++) {
+        this.orbitAngles[i] += (ORBIT_RINGS[i].speed / slow) * dt;
+      }
 
       this._draw();
       this._rafId = requestAnimationFrame(this._tick);
+    }
+
+    _drawOrbitRings(pulse) {
+      if (!this.opts.showOrbits) return;
+      const ctx = this.ctx;
+      for (let i = 0; i < ORBIT_RINGS.length; i++) {
+        const ring = ORBIT_RINGS[i];
+        const [r, g, b] = ring.color;
+        const rx = this.radiusPx * ring.radiusMul;
+        const ry = rx * Math.cos((ring.tiltDeg * Math.PI) / 180) * 0.42;
+        const rot = (ring.tiltDeg * Math.PI) / 180 * 0.6;
+
+        ctx.save();
+        ctx.translate(this.cx, this.cy);
+        ctx.rotate(rot);
+        ctx.beginPath();
+        ctx.ellipse(0, 0, rx, Math.max(6, Math.abs(ry)), 0, 0, Math.PI * 2);
+        ctx.strokeStyle = `rgba(${r},${g},${b},${0.16 + pulse * 0.08})`;
+        ctx.lineWidth = 1;
+        ctx.stroke();
+
+        // traveling satellite node for this AI agent
+        const a = this.orbitAngles[i];
+        const sx = Math.cos(a) * rx;
+        const sy = Math.sin(a) * Math.max(6, Math.abs(ry));
+        const depth = (Math.sin(a) + 1) / 2; // 0..1, used for a subtle front/back fade
+        const alpha = 0.55 + depth * 0.45;
+        const size = ring.size * (0.75 + depth * 0.5);
+
+        ctx.beginPath();
+        ctx.fillStyle = `rgba(${r},${g},${b},${alpha})`;
+        ctx.shadowColor = `rgba(${r},${g},${b},0.9)`;
+        ctx.shadowBlur = 8;
+        ctx.arc(sx, sy, size, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.shadowBlur = 0;
+        ctx.restore();
+      }
     }
 
     _draw() {
@@ -216,35 +270,19 @@
       const pulse =
         0.5 + 0.5 * Math.sin((this.time * 2 * Math.PI) / this.opts.pulsePeriodSeconds);
 
-      // central energy-core glow (soft ambient halo)
+      // central energy-core glow (the "brain")
       const [r1, g1, b1] = this.opts.color;
       const coreGrad = ctx.createRadialGradient(
-        this.cx,
-        this.cy,
-        0,
-        this.cx,
-        this.cy,
-        this.radiusPx * 0.95
+        this.cx, this.cy, 0,
+        this.cx, this.cy, this.radiusPx * 0.95
       );
       coreGrad.addColorStop(0, `rgba(${r1},${g1},${b1},${0.26 + pulse * 0.16})`);
       coreGrad.addColorStop(1, `rgba(${r1},${g1},${b1},0)`);
       ctx.fillStyle = coreGrad;
       ctx.fillRect(0, 0, this.cssW, this.cssH);
 
-      // dashed orbital rings — reads as "reactor core" / trading-engine HUD
-      this._drawRings(pulse);
-
-      // small bright core ball at dead-center — the "AI core" itself
-      // (the HTML brand wordmark sits visually on top of this, in CSS)
-      const ballR = this.radiusPx * (0.15 + pulse * 0.025);
-      const ballGrad = ctx.createRadialGradient(this.cx, this.cy, 0, this.cx, this.cy, ballR);
-      ballGrad.addColorStop(0, `rgba(255,255,255,0.95)`);
-      ballGrad.addColorStop(0.4, `rgba(${r1},${g1},${b1},0.9)`);
-      ballGrad.addColorStop(1, `rgba(${r1},${g1},${b1},0)`);
-      ctx.fillStyle = ballGrad;
-      ctx.beginPath();
-      ctx.arc(this.cx, this.cy, ballR, 0, Math.PI * 2);
-      ctx.fill();
+      // orbit rings (the three specialized AI agents) — behind the sphere
+      this._drawOrbitRings(pulse);
 
       // connecting lines (neural network look), faded by depth
       ctx.lineWidth = 1;
@@ -281,30 +319,6 @@
         ctx.fill();
       }
       ctx.shadowBlur = 0;
-    }
-
-    _drawRings(pulse) {
-      const ctx = this.ctx;
-      const [r1, g1, b1] = this.opts.color;
-      const [r2, g2, b2] = this.opts.color2;
-      const rings = [
-        { rx: 1.32, ry: 0.3, angle: this.ringAngle1, color: [r1, g1, b1], dash: [10, 8], width: 1.4, alpha: 0.45 },
-        { rx: 1.55, ry: 0.2, angle: this.ringAngle2, color: [r2, g2, b2], dash: [3, 9], width: 1.1, alpha: 0.35 },
-      ];
-      for (const cfg of rings) {
-        ctx.save();
-        ctx.translate(this.cx, this.cy);
-        ctx.rotate(cfg.angle);
-        ctx.setLineDash(cfg.dash);
-        ctx.lineDashOffset = -this.time * 40;
-        ctx.strokeStyle = `rgba(${cfg.color[0]},${cfg.color[1]},${cfg.color[2]},${cfg.alpha * (0.6 + pulse * 0.4)})`;
-        ctx.lineWidth = cfg.width;
-        ctx.beginPath();
-        ctx.ellipse(0, 0, this.radiusPx * cfg.rx, this.radiusPx * cfg.ry, 0, 0, Math.PI * 2);
-        ctx.stroke();
-        ctx.restore();
-      }
-      ctx.setLineDash([]);
     }
 
     dispose() {

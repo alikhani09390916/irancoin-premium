@@ -1,0 +1,277 @@
+<!doctype html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>خرید اشتراک | IranCoin</title>
+<meta name="description" content="تعرفه‌های IranCoin — دسترسی به هسته‌ی هوش مصنوعی، سه ایجنت تحلیل بازار، مدیریت ریسک و مدیریت سرمایه، متناسب با نیاز شما." />
+<meta name="theme-color" content="#7C3AED" />
+<link rel="stylesheet" href="./assets/css/theme.css" />
+<link rel="stylesheet" href="./assets/css/ai-core.css" />
+<style>
+  .page-header {
+    position: relative;
+    padding: 64px 0 40px;
+    text-align: center;
+    overflow: hidden;
+  }
+  .page-header .candle-bg { position: absolute; inset: 0; z-index: 0; }
+  .page-header .content { position: relative; z-index: 1; }
+  .page-header .mini-core {
+    width: 88px; height: 88px; margin: 0 auto 22px; position: relative;
+  }
+  .page-header .mini-core canvas { width: 100%; height: 100%; display: block; }
+  .page-header h1 { font-size: 32px; margin: 0 0 12px; }
+  .page-header p { color: var(--ink-soft); max-width: 52ch; margin: 0 auto; line-height: 1.9; }
+
+  .billing-toggle {
+    display: inline-flex; align-items: center; gap: 12px;
+    margin: 28px auto 0; padding: 6px; border-radius: 999px;
+    background: rgba(124,58,237,0.08);
+  }
+  .billing-toggle button {
+    border: none; background: transparent; font-family: inherit;
+    font-weight: 700; font-size: 13.5px; padding: 9px 20px; border-radius: 999px;
+    color: var(--ink-soft); cursor: pointer;
+  }
+  .billing-toggle button.is-active { background: #fff; color: var(--violet); box-shadow: 0 6px 16px rgba(30,20,60,0.12); }
+  .billing-toggle .save-chip { font-size: 11px; background: var(--teal); color: #fff; padding: 2px 7px; border-radius: 6px; margin-inline-start: 4px; }
+
+  .plans-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 22px;
+    align-items: stretch;
+  }
+  .plans-grid > * { min-width: 0; }
+  .plan-card {
+    padding: 32px 26px;
+    border-radius: var(--radius-lg);
+    display: flex;
+    flex-direction: column;
+    position: relative;
+  }
+  .plan-card.featured {
+    border: 1.5px solid var(--violet);
+    box-shadow: 0 20px 50px rgba(124,58,237,0.22);
+    transform: translateY(-8px);
+  }
+  .plan-card .featured-badge {
+    position: absolute; top: -13px; left: 50%; transform: translateX(-50%);
+    background: linear-gradient(90deg, var(--violet), var(--cyan));
+    color: #fff; font-size: 12px; font-weight: 800; padding: 6px 16px;
+    border-radius: 999px; white-space: nowrap;
+  }
+  .plan-card .plan-agent { display: flex; align-items: center; gap: 8px; font-size: 13px; font-weight: 700; color: var(--ink-faint); margin-bottom: 16px; }
+  .plan-card .plan-agent .dot { width: 8px; height: 8px; border-radius: 50%; }
+  .plan-card h3 { font-size: 20px; margin: 0 0 6px; }
+  .plan-card .plan-desc { font-size: 13.5px; color: var(--ink-soft); margin: 0 0 20px; line-height: 1.8; min-height: 40px; }
+  .plan-card .price { display: flex; align-items: baseline; gap: 6px; direction: ltr; justify-content: flex-end; margin-bottom: 4px; }
+  .plan-card .price .amount { font-size: 38px; font-weight: 800; }
+  .plan-card .price .period { font-size: 13px; color: var(--ink-faint); }
+  .plan-card .price-note { font-size: 12px; color: var(--ink-faint); margin-bottom: 24px; }
+  .plan-card ul.features { list-style: none; margin: 0 0 26px; padding: 0; display: grid; gap: 12px; font-size: 14px; color: var(--ink-soft); flex-grow: 1; }
+  .plan-card ul.features li { display: flex; align-items: flex-start; gap: 9px; }
+  .plan-card ul.features li::before { content: "✓"; color: var(--teal); font-weight: 800; flex-shrink: 0; }
+  .plan-card ul.features li.muted { color: var(--ink-faint); }
+  .plan-card ul.features li.muted::before { content: "–"; color: var(--ink-faint); }
+
+  .agents-included { display: flex; gap: 10px; margin-top: 30px; flex-wrap: wrap; justify-content: center; }
+
+  .faq-wrap { max-width: 760px; margin: 0 auto; }
+
+  .trust-strip { display: flex; justify-content: center; gap: 48px; flex-wrap: wrap; text-align: center; }
+  .trust-strip .num { font-size: 24px; font-weight: 800; display: block; direction: ltr; }
+  .trust-strip .cap { font-size: 12.5px; color: var(--ink-faint); margin-top: 2px; }
+
+  @media (max-width: 900px) {
+    .plans-grid { grid-template-columns: 1fr; }
+    .plan-card.featured { transform: none; }
+  }
+</style>
+</head>
+<body>
+
+<nav class="site-nav">
+  <div class="container row">
+    <a href="./index.html" class="logo-mark"><span class="lg-iran">Iran</span><span class="lg-coin">Coin</span></a>
+    <ul class="nav-links">
+      <li><a href="./index.html">صفحه اصلی</a></li>
+      <li><a href="./pricing.html" class="active">تعرفه‌ها</a></li>
+      <li><a href="./dashboard.html">داشبورد</a></li>
+    </ul>
+    <div class="nav-cta">
+      <a href="./dashboard.html" class="btn-primary">ورود به داشبورد</a>
+      <button class="nav-toggle" aria-label="باز کردن منو" aria-expanded="false">☰</button>
+    </div>
+  </div>
+</nav>
+
+<main id="main">
+  <header class="page-header">
+    <div class="candle-bg">
+      <canvas id="pricing-candles" style="width:100%;height:100%;opacity:0.35;"></canvas>
+    </div>
+    <div class="container content">
+      <div class="mini-core"><canvas id="mini-core-canvas" aria-hidden="true"></canvas></div>
+      <span class="eyebrow">خرید اشتراک</span>
+      <h1>پلنی که مناسب سبک معاملاتی شماست</h1>
+      <p>در همه‌ی پلن‌ها، ایجنت تحلیل بازار فعال است؛ هرچه پلن بالاتر می‌رود، دسترسی به ایجنت‌های مدیریت ریسک و مدیریت سرمایه عمیق‌تر و شخصی‌سازی‌شده‌تر می‌شود.</p>
+
+      <div class="billing-toggle">
+        <div class="tabs" id="billing-toggle">
+          <button class="tab is-active" data-billing="monthly">ماهانه</button>
+          <button class="tab" data-billing="yearly">سالانه <span class="save-chip">۲۰٪-</span></button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <section class="container section-tight">
+    <div class="plans-grid">
+
+      <div class="plan-card glass reveal">
+        <div class="plan-agent"><span class="dot" style="background:var(--violet)"></span>ایجنت تحلیل بازار</div>
+        <h3>استارتر</h3>
+        <p class="plan-desc">شروع معاملات هوشمند با سیگنال‌های پایه و پایش زنده بازار.</p>
+        <div data-tab-panel="monthly" class="price"><span class="amount">$29</span><span class="period">/ ماه</span></div>
+        <div data-tab-panel="yearly" class="price" hidden><span class="amount">$23</span><span class="period">/ ماه</span></div>
+        <div class="price-note">بدون تعهد بلندمدت · لغو در هر زمان</div>
+        <ul class="features">
+          <li>اتصال به ۲ صرافی هم‌زمان</li>
+          <li>سیگنال‌های تحلیل بازار (روزانه)</li>
+          <li>حد ضرر و حد سود دستی</li>
+          <li class="muted">ایجنت مدیریت ریسک اختصاصی</li>
+          <li class="muted">تخصیص خودکار سرمایه</li>
+        </ul>
+        <button class="btn-secondary btn-block">شروع با استارتر</button>
+      </div>
+
+      <div class="plan-card glass featured reveal">
+        <span class="featured-badge">محبوب‌ترین</span>
+        <div class="plan-agent"><span class="dot" style="background:var(--rose)"></span>+ ایجنت مدیریت ریسک</div>
+        <h3>حرفه‌ای</h3>
+        <p class="plan-desc">ربات معامله‌گر تمام‌وقت با مدیریت ریسک خودکار و ژورنال هوشمند.</p>
+        <div data-tab-panel="monthly" class="price"><span class="amount">$79</span><span class="period">/ ماه</span></div>
+        <div data-tab-panel="yearly" class="price" hidden><span class="amount">$63</span><span class="period">/ ماه</span></div>
+        <div class="price-note">۷ روز بازگشت وجه · لغو در هر زمان</div>
+        <ul class="features">
+          <li>اتصال به ۶ صرافی هم‌زمان</li>
+          <li>ربات معامله‌گر خودکار ۲۴/۷</li>
+          <li>ایجنت مدیریت ریسک اختصاصی</li>
+          <li>ژورنال معاملات و تحلیل رفتاری</li>
+          <li class="muted">تخصیص خودکار سرمایه چند‌استراتژی</li>
+        </ul>
+        <button class="btn-primary btn-block">شروع با حرفه‌ای</button>
+      </div>
+
+      <div class="plan-card glass reveal">
+        <div class="plan-agent"><span class="dot" style="background:var(--teal)"></span>+ ایجنت مدیریت سرمایه</div>
+        <h3>الیت</h3>
+        <p class="plan-desc">هر سه ایجنت هسته‌ی هوش مصنوعی، کاملاً شخصی‌سازی‌شده برای پورتفولیوی شما.</p>
+        <div data-tab-panel="monthly" class="price"><span class="amount">$199</span><span class="period">/ ماه</span></div>
+        <div data-tab-panel="yearly" class="price" hidden><span class="amount">$159</span><span class="period">/ ماه</span></div>
+        <div class="price-note">پشتیبانی اختصاصی · لغو در هر زمان</div>
+        <ul class="features">
+          <li>اتصال نامحدود صرافی</li>
+          <li>هر سه ایجنت هسته فعال و شخصی‌سازی‌شده</li>
+          <li>تخصیص خودکار سرمایه بین استراتژی‌ها</li>
+          <li>مدیر حساب اختصاصی</li>
+          <li>اولویت در قابلیت‌های جدید</li>
+        </ul>
+        <button class="btn-secondary btn-block">شروع با الیت</button>
+      </div>
+
+    </div>
+
+    <div class="agents-included reveal">
+      <span class="chip"><span class="dot market"></span>تحلیل بازار — در همه‌ی پلن‌ها</span>
+      <span class="chip"><span class="dot risk"></span>مدیریت ریسک — حرفه‌ای و الیت</span>
+      <span class="chip"><span class="dot capital"></span>مدیریت سرمایه — فقط الیت</span>
+    </div>
+  </section>
+
+  <section class="container section-tight">
+    <div class="trust-strip reveal">
+      <div><span class="num" data-count-to="98.7" data-count-decimals="1" data-count-suffix="%">0%</span><span class="cap">نرخ موفقیت سیگنال</span></div>
+      <div><span class="num" data-count-to="12840" data-count-suffix="+">0+</span><span class="cap">کاربر فعال</span></div>
+      <div><span class="num" data-count-to="4" data-count-suffix="ms">0ms</span><span class="cap">میانگین تأخیر اجرا</span></div>
+      <div><span class="num" data-count-to="99.99" data-count-decimals="2" data-count-suffix="%">0%</span><span class="cap">در دسترس بودن سرویس</span></div>
+    </div>
+  </section>
+
+  <section class="container section" id="faq">
+    <div style="text-align:center; margin-bottom: 34px;">
+      <span class="eyebrow">سوالات متداول</span>
+      <h2 style="margin:0 auto;">قبل از شروع، این‌ها را بخوانید</h2>
+    </div>
+    <div class="faq-wrap">
+      <div class="faq-item is-open">
+        <button class="faq-q" aria-expanded="true">آیا می‌توانم بین پلن‌ها جابه‌جا شوم؟</button>
+        <div class="faq-a"><p>بله. ارتقا یا کاهش پلن در هر زمان از داشبورد حساب شما ممکن است و تفاوت مبلغ به‌صورت نسبی محاسبه می‌شود.</p></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" aria-expanded="false">ایجنت مدیریت ریسک دقیقاً چه کاری انجام می‌دهد؟</button>
+        <div class="faq-a"><p>پیش از هر معامله، حجم پوزیشن، حد ضرر و حداکثر افت مجاز روزانه را بر اساس تنظیمات ریسک شما تعیین می‌کند و پورتفولیو را به‌صورت لحظه‌ای پایش می‌کند.</p></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" aria-expanded="false">آیا کلید API من دسترسی برداشت وجه دارد؟</button>
+        <div class="faq-a"><p>خیر. کلیدهای API فقط برای معامله صادر می‌شوند و هیچ‌گاه اجازه‌ی برداشت وجه از صرافی را ندارند.</p></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" aria-expanded="false">آیا امکان لغو اشتراک وجود دارد؟</button>
+        <div class="faq-a"><p>بله، در هر زمان و بدون هیچ تعهد بلندمدتی می‌توانید اشتراک خود را از داشبورد لغو کنید.</p></div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="site-footer">
+  <div class="container">
+    <div class="grid">
+      <div>
+        <a href="./index.html" class="logo-mark" style="font-size:19px;"><span class="lg-iran">Iran</span><span class="lg-coin">Coin</span></a>
+        <p class="about" style="margin-top:14px;">پلتفرم پیشرفته معاملات ارز دیجیتال با هوش مصنوعی. هوش، دقت، سرعت و امنیت در خدمت تصمیم‌های مالی شما.</p>
+      </div>
+      <div>
+        <h4>محصول</h4>
+        <ul><li><a href="./index.html#agents">هسته هوش مصنوعی</a></li><li><a href="./dashboard.html">داشبورد</a></li><li><a href="./pricing.html">تعرفه‌ها</a></li></ul>
+      </div>
+      <div>
+        <h4>دسترسی سریع</h4>
+        <ul><li><a href="#faq">سوالات متداول</a></li><li><a href="./index.html">صفحه اصلی</a></li></ul>
+      </div>
+      <div>
+        <h4>ارتباط با ما</h4>
+        <ul><li><a href="mailto:support@irancoin.ir">پشتیبانی</a></li><li><a href="https://t.me/irancoin">تلگرام</a></li></ul>
+      </div>
+    </div>
+    <div class="bottom">
+      <span>© ۱۴۰۵ IranCoin. تمامی حقوق محفوظ است.</span>
+      <span>ساخته‌شده با هسته‌ی هوش مصنوعی IranCoin</span>
+    </div>
+  </div>
+</footer>
+
+<script src="./assets/js/ai-core.js"></script>
+<script src="./assets/js/live-candles.js"></script>
+<script src="./assets/js/ui.js"></script>
+<script>
+  new AICore(document.getElementById("mini-core-canvas"), { pointCount: 120, sphereRadiusFrac: 0.34, showOrbits: false });
+  new LiveCandles(document.getElementById("pricing-candles"), { candleWidth: 5, gap: 5 });
+
+  // billing toggle: independent of the generic ui.js tab helper, since
+  // it needs to control price panels living outside the toggle itself
+  document.querySelectorAll("#billing-toggle .tab").forEach((btn) => {
+    btn.addEventListener("click", () => {
+      document.querySelectorAll("#billing-toggle .tab").forEach((b) => b.classList.remove("is-active"));
+      btn.classList.add("is-active");
+      const billing = btn.getAttribute("data-billing");
+      document.querySelectorAll("[data-tab-panel]").forEach((panel) => {
+        panel.hidden = panel.getAttribute("data-tab-panel") !== billing;
+      });
+    });
+  });
+</script>
+</body>
+</html>
