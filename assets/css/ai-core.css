@@ -16,6 +16,7 @@
   height: 100%;
   min-height: 460px;
   isolation: isolate;
+  overflow: hidden;
 }
 
 /* ---- layer 0: live, ever-forming candlestick field ---- */
@@ -225,7 +226,7 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .ai-core-card, .ai-core-coin, .core-badge { animation-duration: 40s; }
+  .ai-core-card, .ai-core-coin, .core-badge { animation: none; }
 }
 
 @media (max-width: 900px) {
@@ -250,6 +251,14 @@
   .ai-core-card.pos-l  { top: 38%; inset-inline-start: -9%; }
   .ai-core-card.pos-bl { top: 78%; inset-inline-start: -3%; }
 }
+
+/* ---- table overflow on small screens ---- */
+@media (max-width: 600px) {
+  table.positions { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; }
+}
+
+/* ---- will-change for heavy animations ---- */
+.ai-core-card, .ai-core-coin { will-change: transform; }
 
 /* ---- background candlesticks used on pages other than the hero
    (pricing/dashboard headers) — lighter-weight decorative variant ---- */

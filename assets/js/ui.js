@@ -82,36 +82,122 @@
     });
   }
 
-  // ---- FAQ accordion: <div class="faq-item"><button class="faq-q">..</button><div class="faq-a">..</div></div> ----
+  // ---- FAQ accordion with ARIA + arrow-key navigation ----
   function initFaq() {
-    document.querySelectorAll(".faq-item").forEach((item) => {
+    const items = document.querySelectorAll(".faq-item");
+    if (!items.length) return;
+
+    items.forEach((item, idx) => {
       const btn = item.querySelector(".faq-q");
-      if (!btn) return;
+      const panel = item.querySelector(".faq-a");
+      if (!btn || !panel) return;
+
+      // ARIA setup
+      const btnId = "faq-q-" + idx;
+      const panelId = "faq-a-" + idx;
+      btn.id = btnId;
+      btn.setAttribute("aria-controls", panelId);
+      btn.setAttribute("aria-expanded", item.classList.contains("is-open") ? "true" : "false");
+      panel.id = panelId;
+      panel.setAttribute("role", "region");
+      panel.setAttribute("aria-labelledby", btnId);
+
       btn.addEventListener("click", () => {
         const isOpen = item.classList.contains("is-open");
-        item.parentElement
-          .querySelectorAll(".faq-item.is-open")
-          .forEach((el) => { if (el !== item) el.classList.remove("is-open"); });
+        // close others
+        items.forEach((other) => {
+          if (other !== item) {
+            other.classList.remove("is-open");
+            const otherBtn = other.querySelector(".faq-q");
+            if (otherBtn) otherBtn.setAttribute("aria-expanded", "false");
+          }
+        });
         item.classList.toggle("is-open", !isOpen);
         btn.setAttribute("aria-expanded", !isOpen ? "true" : "false");
+      });
+
+      // arrow-key navigation within accordion
+      btn.addEventListener("keydown", (e) => {
+        const btns = Array.from(items).map((it) => it.querySelector(".faq-q")).filter(Boolean);
+        const i = btns.indexOf(btn);
+        if (e.key === "ArrowDown" || e.key === "Down") {
+          e.preventDefault();
+          const next = btns[(i + 1) % btns.length];
+          if (next) next.focus();
+        } else if (e.key === "ArrowUp" || e.key === "Up") {
+          e.preventDefault();
+          const prev = btns[(i - 1 + btns.length) % btns.length];
+          if (prev) prev.focus();
+        } else if (e.key === "Home") {
+          e.preventDefault();
+          if (btns[0]) btns[0].focus();
+        } else if (e.key === "End") {
+          e.preventDefault();
+          if (btns[btns.length - 1]) btns[btns.length - 1].focus();
+        }
       });
     });
   }
 
-  // ---- generic tab switcher: <div class="tabs"><button class="tab" data-tab="week">..</button></div> + [data-tab-panel="week"] ----
+  // ---- generic tab switcher with ARIA + arrow-key navigation ----
   function initTabs() {
     document.querySelectorAll(".tabs").forEach((group) => {
-      const buttons = group.querySelectorAll(".tab");
-      buttons.forEach((btn) => {
-        btn.addEventListener("click", () => {
-          buttons.forEach((b) => b.classList.remove("is-active"));
-          btn.classList.add("is-active");
-          const target = btn.getAttribute("data-tab");
-          const scope = group.closest("[data-tab-scope]") || document;
-          scope.querySelectorAll("[data-tab-panel]").forEach((panel) => {
-            panel.hidden = panel.getAttribute("data-tab-panel") !== target;
-          });
+      const buttons = Array.from(group.querySelectorAll(".tab"));
+      if (!buttons.length) return;
+
+      // ARIA setup
+      group.setAttribute("role", "tablist");
+      buttons.forEach((btn, i) => {
+        btn.setAttribute("role", "tab");
+        btn.setAttribute("aria-selected", btn.classList.contains("is-active") ? "true" : "false");
+        if (!btn.id) btn.id = "tab-" + Math.random().toString(36).slice(2, 8) + "-" + i;
+      });
+
+      function activateTab(btn) {
+        buttons.forEach((b) => {
+          b.classList.remove("is-active");
+          b.setAttribute("aria-selected", "false");
+          b.setAttribute("tabindex", "-1");
         });
+        btn.classList.add("is-active");
+        btn.setAttribute("aria-selected", "true");
+        btn.setAttribute("tabindex", "0");
+        btn.focus();
+        const target = btn.getAttribute("data-tab");
+        const scope = group.closest("[data-tab-scope]") || document;
+        scope.querySelectorAll("[data-tab-panel]").forEach((panel) => {
+          const isTarget = panel.getAttribute("data-tab-panel") === target;
+          panel.hidden = !isTarget;
+          if (panel.hasAttribute("id")) {
+            btn.setAttribute("aria-controls", panel.id);
+            panel.setAttribute("role", "tabpanel");
+            panel.setAttribute("aria-labelledby", btn.id);
+          }
+        });
+      }
+
+      buttons.forEach((btn) => {
+        btn.addEventListener("click", () => activateTab(btn));
+        btn.addEventListener("keydown", (e) => {
+          const i = buttons.indexOf(btn);
+          if (e.key === "ArrowRight" || e.key === "ArrowLeft") {
+            e.preventDefault();
+            const dir = e.key === "ArrowRight" ? 1 : -1;
+            const next = buttons[(i + dir + buttons.length) % buttons.length];
+            if (next) activateTab(next);
+          } else if (e.key === "Home") {
+            e.preventDefault();
+            activateTab(buttons[0]);
+          } else if (e.key === "End") {
+            e.preventDefault();
+            activateTab(buttons[buttons.length - 1]);
+          }
+        });
+      });
+
+      // set initial tabindex
+      buttons.forEach((btn) => {
+        btn.setAttribute("tabindex", btn.classList.contains("is-active") ? "0" : "-1");
       });
     });
   }

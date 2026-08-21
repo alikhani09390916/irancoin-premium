@@ -36,8 +36,10 @@
 
   class LiveCandles {
     constructor(canvas, userOptions) {
+      if (!canvas) return;
       this.canvas = canvas;
       this.ctx = canvas.getContext("2d");
+      if (!this.ctx) return;
 
       this.opts = Object.assign(
         {

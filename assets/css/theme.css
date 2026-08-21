@@ -44,6 +44,21 @@ canvas { display: block; max-width: 100%; }
 
 a { color: inherit; text-decoration: none; }
 
+/* ---- screen-reader only ---- */
+.sr-only {
+  position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
+  overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0;
+}
+
+/* ---- focus-visible: keyboard accessibility ---- */
+:focus-visible {
+  outline: 2px solid var(--violet);
+  outline-offset: 2px;
+}
+:focus:not(:focus-visible) {
+  outline: none;
+}
+
 .container {
   max-width: 1280px;
   margin: 0 auto;
@@ -108,7 +123,7 @@ a { color: inherit; text-decoration: none; }
   .nav-links { display: none; }
   .nav-toggle {
     display: inline-flex;
-    width: 40px; height: 40px;
+    width: 44px; height: 44px;
     border-radius: 10px;
     border: 1px solid var(--line);
     background: #fff;
@@ -311,12 +326,12 @@ a { color: inherit; text-decoration: none; }
 .faq-a {
   max-height: 0;
   overflow: hidden;
-  transition: max-height 0.25s ease;
+  transition: max-height 0.35s ease;
   font-size: 14.5px;
   line-height: 1.9;
   color: var(--ink-soft);
 }
-.faq-item.is-open .faq-a { max-height: 240px; }
+.faq-item.is-open .faq-a { max-height: 400px; }
 .faq-a p { margin: 0 0 20px; padding-inline-end: 30px; }
 
 /* ---- tabs (dashboard range switcher, etc.) ---- */
@@ -328,13 +343,25 @@ a { color: inherit; text-decoration: none; }
   font-size: 13px;
   font-weight: 700;
   color: var(--ink-soft);
-  padding: 8px 16px;
+  padding: 14px 16px;
   border-radius: 9px;
   cursor: pointer;
+  min-height: 44px;
 }
 .tab.is-active { background: #fff; color: var(--violet); box-shadow: 0 4px 12px rgba(30,20,60,0.1); }
 
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
   .reveal { transition: none; opacity: 1; transform: none; }
+  .live-pill .blip { animation: none; }
+}
+
+/* ---- print styles ---- */
+@media print {
+  .site-nav, .cable-layer, .live-candles-canvas, .core-legend,
+  .ai-core-card, .ai-core-coin, .core-badge, .hero-visual,
+  .cta-band, .site-footer, .skip-link { display: none !important; }
+  .reveal { opacity: 1 !important; transform: none !important; }
+  body { background: #fff !important; color: #000 !important; }
+  .glass { background: #fff !important; box-shadow: none !important; border: 1px solid #ccc !important; }
 }
