@@ -159,11 +159,15 @@
       const ctx = this.ctx;
       ctx.clearRect(0, 0, this.cssW, this.cssH);
 
-      const all = this.candles.concat([this.forming]);
+      // compute bounds from all candles + forming (no concat alloc)
       let lo = Infinity, hi = -Infinity;
-      for (const c of all) {
+      for (const c of this.candles) {
         lo = Math.min(lo, c.low);
         hi = Math.max(hi, c.high);
+      }
+      if (this.forming) {
+        lo = Math.min(lo, this.forming.low);
+        hi = Math.max(hi, this.forming.high);
       }
       const pad = (hi - lo) * 0.18 || 1;
       lo -= pad;
@@ -172,19 +176,19 @@
 
       const toY = (price) => this.cssH - ((price - lo) / range) * this.cssH;
 
-      const n = all.length;
+      const n = this.candles.length + (this.forming ? 1 : 0);
       const startX = this.cssW - n * this.slot + this.opts.gap;
 
-      for (let i = 0; i < n; i++) {
-        const c = all[i];
-        const isForming = i === n - 1;
+      // draw finalized candles
+      for (let i = 0; i < this.candles.length; i++) {
+        const c = this.candles[i];
         const x = startX + i * this.slot;
         if (x < -this.slot || x > this.cssW + this.slot) continue;
 
         const up = c.close >= c.open;
         const color = up ? this.opts.upColor : this.opts.downColor;
-        const ageFade = 0.35 + 0.65 * (i / n); // older = fainter (depth)
-        const bodyA = this.opts.bodyAlpha * ageFade * (isForming ? 1 : 0.85);
+        const ageFade = 0.35 + 0.65 * (i / n);
+        const bodyA = this.opts.bodyAlpha * ageFade * 0.85;
         const wickA = this.opts.wickAlpha * ageFade;
 
         ctx.strokeStyle = `rgba(${color},${wickA})`;
@@ -200,10 +204,35 @@
         const h = Math.max(1.5, Math.abs(yClose - yOpen));
 
         ctx.fillStyle = `rgba(${color},${bodyA})`;
-        if (isForming) {
-          ctx.shadowColor = `rgba(${color},0.9)`;
-          ctx.shadowBlur = 10;
-        }
+        ctx.fillRect(x, top, this.opts.candleWidth, h);
+      }
+
+      // draw forming candle (rightmost, glowing)
+      if (this.forming) {
+        const c = this.forming;
+        const i = this.candles.length;
+        const x = startX + i * this.slot;
+        const up = c.close >= c.open;
+        const color = up ? this.opts.upColor : this.opts.downColor;
+        const ageFade = 0.35 + 0.65 * (i / n);
+        const bodyA = this.opts.bodyAlpha * ageFade;
+        const wickA = this.opts.wickAlpha * ageFade;
+
+        ctx.strokeStyle = `rgba(${color},${wickA})`;
+        ctx.lineWidth = 1;
+        ctx.beginPath();
+        ctx.moveTo(x + this.opts.candleWidth / 2, toY(c.high));
+        ctx.lineTo(x + this.opts.candleWidth / 2, toY(c.low));
+        ctx.stroke();
+
+        const yOpen = toY(c.open);
+        const yClose = toY(c.close);
+        const top = Math.min(yOpen, yClose);
+        const h = Math.max(1.5, Math.abs(yClose - yOpen));
+
+        ctx.fillStyle = `rgba(${color},${bodyA})`;
+        ctx.shadowColor = `rgba(${color},0.9)`;
+        ctx.shadowBlur = 10;
         ctx.fillRect(x, top, this.opts.candleWidth, h);
         ctx.shadowBlur = 0;
       }

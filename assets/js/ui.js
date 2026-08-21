@@ -14,9 +14,8 @@
     const to = parseFloat(el.getAttribute("data-count-to"));
     if (!Number.isFinite(to)) return;
     const suffix = el.getAttribute("data-count-suffix") || "";
-    const decimals = el.getAttribute("data-count-decimals")
-      ? parseInt(el.getAttribute("data-count-decimals"), 10)
-      : 0;
+    const rawDecimals = el.getAttribute("data-count-decimals");
+    const decimals = rawDecimals ? (parseInt(rawDecimals, 10) || 0) : 0;
     const duration = reduced ? 0 : 1400;
     const start = performance.now();
     const from = 0;
@@ -63,7 +62,7 @@
       const stepMin = parseInt(el.getAttribute("data-drift-min") || "1", 10);
       const stepMax = parseInt(el.getAttribute("data-drift-max") || "3", 10);
       const intervalMs = parseInt(el.getAttribute("data-drift-interval") || "3200", 10);
-      setInterval(() => {
+      el._driftTimer = setInterval(() => {
         const current = parseInt(el.textContent.replace(/[^\d]/g, ""), 10) || 0;
         const next = current + stepMin + Math.floor(Math.random() * (stepMax - stepMin + 1));
         const suffix = el.getAttribute("data-count-suffix") || "";

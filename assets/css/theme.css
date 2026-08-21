@@ -243,6 +243,23 @@ a { color: inherit; text-decoration: none; }
 .chip.down { background: rgba(244,63,94,0.12); color: var(--rose); }
 .chip.neutral { background: var(--violet-soft); color: var(--violet); }
 
+/* ---- skip-to-content link (accessibility) ---- */
+.skip-link {
+  position: absolute;
+  top: -100%;
+  left: 0;
+  z-index: 100;
+  padding: 12px 24px;
+  background: var(--violet);
+  color: #fff;
+  font-weight: 700;
+  font-size: 14px;
+  border-radius: 0 0 12px 0;
+}
+.skip-link:focus {
+  top: 0;
+}
+
 /* ---- mobile nav open state ---- */
 @media (max-width: 900px) {
   .nav-links.is-open {

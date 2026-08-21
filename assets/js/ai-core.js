@@ -94,6 +94,11 @@
       this._rafId = null;
       this._disposed = false;
 
+      // pre-allocated per-frame buffers (avoid GC pressure)
+      this._projected = this.points.map(() => ({ sx: 0, sy: 0, scale: 0, z: 0 }));
+      this._sortIdx = new Array(this.opts.pointCount);
+      for (let i = 0; i < this.opts.pointCount; i++) this._sortIdx[i] = i;
+
       this._onResize = this._resize.bind(this);
       window.addEventListener("resize", this._onResize);
       this._resize();
@@ -177,7 +182,7 @@
 
     // -- per-frame math --
 
-    _project(p) {
+    _project(p, out) {
       const cosY = Math.cos(this.angleY);
       const sinY = Math.sin(this.angleY);
       const x1 = p.x * cosY + p.z * sinY;
@@ -192,12 +197,10 @@
       const focal = 2.6;
       const scale = focal / (focal + z2);
 
-      return {
-        sx: this.cx + x1 * this.radiusPx * scale,
-        sy: this.cy + y2 * this.radiusPx * scale,
-        scale,
-        z: z2,
-      };
+      out.sx = this.cx + x1 * this.radiusPx * scale;
+      out.sy = this.cy + y2 * this.radiusPx * scale;
+      out.scale = scale;
+      out.z = z2;
     }
 
     _tick(now) {
@@ -266,7 +269,8 @@
       const ctx = this.ctx;
       ctx.clearRect(0, 0, this.cssW, this.cssH);
 
-      const projected = this.points.map((p) => this._project(p));
+      for (let i = 0; i < this.points.length; i++) this._project(this.points[i], this._projected[i]);
+      const projected = this._projected;
       const pulse =
         0.5 + 0.5 * Math.sin((this.time * 2 * Math.PI) / this.opts.pulsePeriodSeconds);
 
@@ -300,9 +304,13 @@
       }
 
       // particles, back-to-front (painter's algorithm)
-      const order = projected.map((_, i) => i).sort((a, b) => projected[a].z - projected[b].z);
+      const sortIdx = this._sortIdx;
+      sortIdx.length = projected.length;
+      for (let i = 0; i < sortIdx.length; i++) sortIdx[i] = i;
+      sortIdx.sort((a, b) => projected[a].z - projected[b].z);
       const [r2, g2, b2] = this.opts.color2;
-      for (const idx of order) {
+      for (let k = 0; k < sortIdx.length; k++) {
+        const idx = sortIdx[k];
         const p = projected[idx];
         const size = Math.max(0.6, 2.6 * p.scale);
         const alpha = clamp((p.scale - 0.7) / 0.8, 0.14, 1);
@@ -313,12 +321,9 @@
 
         ctx.beginPath();
         ctx.fillStyle = `rgba(${rc},${gc},${bc},${alpha})`;
-        ctx.shadowColor = `rgba(${rc},${gc},${bc},0.85)`;
-        ctx.shadowBlur = 6 * p.scale;
         ctx.arc(p.sx, p.sy, size, 0, Math.PI * 2);
         ctx.fill();
       }
-      ctx.shadowBlur = 0;
     }
 
     dispose() {
