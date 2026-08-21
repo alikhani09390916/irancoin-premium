@@ -257,8 +257,8 @@
   table.positions { display: block; overflow-x: auto; -webkit-overflow-scrolling: touch; }
 }
 
-/* ---- will-change for heavy animations ---- */
-.ai-core-card, .ai-core-coin { will-change: transform; }
+/* ---- will-change for heavy animations (only during animation) ---- */
+.ai-core-card.is-visible, .ai-core-coin { will-change: transform; }
 
 /* ---- background candlesticks used on pages other than the hero
    (pricing/dashboard headers) — lighter-weight decorative variant ---- */

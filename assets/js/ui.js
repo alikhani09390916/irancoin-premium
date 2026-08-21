@@ -6,8 +6,14 @@
 (function () {
   "use strict";
 
-  const reduced =
-    window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const mql = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)");
+  let reduced = mql ? mql.matches : false;
+  if (mql && mql.addEventListener) {
+    mql.addEventListener("change", (e) => { reduced = e.matches; });
+  }
+
+  const driftTimers = [];
+  window.addEventListener("beforeunload", () => driftTimers.forEach(clearInterval));
 
   // ---- animated counters: <span data-count-to="12840" data-count-suffix="+"> ----
   function animateCounter(el) {
@@ -49,29 +55,29 @@
           }
         });
       },
-      { threshold: 0.4 }
+      { threshold: 0.1, rootMargin: "0px 0px -10% 0px" }
     );
     els.forEach((el) => io.observe(el));
   }
 
   // ---- slow "live" ticking for a counter that keeps drifting upward
-  // e.g. active-user count on the hero card ----
   function initLiveDrift() {
     document.querySelectorAll("[data-live-drift]").forEach((el) => {
       if (reduced) return;
       const stepMin = parseInt(el.getAttribute("data-drift-min") || "1", 10);
       const stepMax = parseInt(el.getAttribute("data-drift-max") || "3", 10);
       const intervalMs = parseInt(el.getAttribute("data-drift-interval") || "3200", 10);
-      el._driftTimer = setInterval(() => {
+      const id = setInterval(() => {
         const current = parseInt(el.textContent.replace(/[^\d]/g, ""), 10) || 0;
         const next = current + stepMin + Math.floor(Math.random() * (stepMax - stepMin + 1));
         const suffix = el.getAttribute("data-count-suffix") || "";
         el.textContent = next.toLocaleString("en-US") + suffix;
       }, intervalMs);
+      driftTimers.push(id);
     });
   }
 
-  // ---- mobile nav toggle ----
+  // ---- mobile nav toggle with Escape key + focus management ----
   function initNavToggle() {
     const btn = document.querySelector(".nav-toggle");
     const links = document.querySelector(".nav-links");
@@ -79,6 +85,17 @@
     btn.addEventListener("click", () => {
       const open = links.classList.toggle("is-open");
       btn.setAttribute("aria-expanded", open ? "true" : "false");
+      if (open) {
+        const firstLink = links.querySelector("a");
+        if (firstLink) firstLink.focus();
+      }
+    });
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "Escape" && links.classList.contains("is-open")) {
+        links.classList.remove("is-open");
+        btn.setAttribute("aria-expanded", "false");
+        btn.focus();
+      }
     });
   }
 
@@ -92,7 +109,6 @@
       const panel = item.querySelector(".faq-a");
       if (!btn || !panel) return;
 
-      // ARIA setup
       const btnId = "faq-q-" + idx;
       const panelId = "faq-a-" + idx;
       btn.id = btnId;
@@ -104,7 +120,6 @@
 
       btn.addEventListener("click", () => {
         const isOpen = item.classList.contains("is-open");
-        // close others
         items.forEach((other) => {
           if (other !== item) {
             other.classList.remove("is-open");
@@ -116,7 +131,6 @@
         btn.setAttribute("aria-expanded", !isOpen ? "true" : "false");
       });
 
-      // arrow-key navigation within accordion
       btn.addEventListener("keydown", (e) => {
         const btns = Array.from(items).map((it) => it.querySelector(".faq-q")).filter(Boolean);
         const i = btns.indexOf(btn);
@@ -145,7 +159,6 @@
       const buttons = Array.from(group.querySelectorAll(".tab"));
       if (!buttons.length) return;
 
-      // ARIA setup
       group.setAttribute("role", "tablist");
       buttons.forEach((btn, i) => {
         btn.setAttribute("role", "tab");
@@ -195,14 +208,13 @@
         });
       });
 
-      // set initial tabindex
       buttons.forEach((btn) => {
         btn.setAttribute("tabindex", btn.classList.contains("is-active") ? "0" : "-1");
       });
     });
   }
 
-  // ---- scroll reveal: <* class="reveal"> fades/slides up once in view ----
+  // ---- scroll reveal ----
   function initReveal() {
     const els = document.querySelectorAll(".reveal");
     if (!els.length) return;

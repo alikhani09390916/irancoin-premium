@@ -11,6 +11,11 @@ global.window = {
   devicePixelRatio: 1,
   matchMedia: () => ({ matches: false }),
 };
+global.document = {
+  addEventListener: () => {},
+  removeEventListener: () => {},
+  hidden: false,
+};
 global.requestAnimationFrame = (cb) => {
   rafCallback = cb;
   return 1;

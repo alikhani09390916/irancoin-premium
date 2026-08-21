@@ -36,10 +36,10 @@
 
   class LiveCandles {
     constructor(canvas, userOptions) {
-      if (!canvas) return;
+      if (!canvas || !canvas.getContext) throw new Error("LiveCandles requires a valid canvas element");
       this.canvas = canvas;
       this.ctx = canvas.getContext("2d");
-      if (!this.ctx) return;
+      if (!this.ctx) throw new Error("LiveCandles: canvas.getContext('2d') failed");
 
       this.opts = Object.assign(
         {
@@ -58,6 +58,9 @@
       );
 
       this.reduced = this.opts.respectReducedMotion && prefersReducedMotion();
+      this._mql = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)");
+      this._onMqlChange = (e) => { this.reduced = this.opts.respectReducedMotion && e.matches; };
+      if (this._mql && this._mql.addEventListener) this._mql.addEventListener("change", this._onMqlChange);
 
       this.price = 100;
       this.candles = []; // finalized candles, oldest first
@@ -72,6 +75,17 @@
       window.addEventListener("resize", this._onResize);
       this._resize();
       this._seed();
+
+      this._onVisibility = () => {
+        if (document.hidden) {
+          if (this._rafId) cancelAnimationFrame(this._rafId);
+          this._rafId = null;
+        } else {
+          this._lastT = null;
+          this._rafId = requestAnimationFrame(this._tick);
+        }
+      };
+      document.addEventListener("visibilitychange", this._onVisibility);
 
       this._tick = this._tick.bind(this);
       this._rafId = requestAnimationFrame(this._tick);
@@ -171,6 +185,11 @@
         lo = Math.min(lo, this.forming.low);
         hi = Math.max(hi, this.forming.high);
       }
+      if (!isFinite(lo) || !isFinite(hi)) { lo = 0; hi = 1; }
+      if (this.forming) {
+        lo = Math.min(lo, this.forming.low);
+        hi = Math.max(hi, this.forming.high);
+      }
       const pad = (hi - lo) * 0.18 || 1;
       lo -= pad;
       hi += pad;
@@ -237,6 +256,7 @@
         ctx.shadowBlur = 10;
         ctx.fillRect(x, top, this.opts.candleWidth, h);
         ctx.shadowBlur = 0;
+        ctx.shadowColor = "transparent";
       }
     }
 
@@ -244,6 +264,8 @@
       this._disposed = true;
       if (this._rafId) cancelAnimationFrame(this._rafId);
       window.removeEventListener("resize", this._onResize);
+      document.removeEventListener("visibilitychange", this._onVisibility);
+      if (this._mql && this._mql.removeEventListener) this._mql.removeEventListener("change", this._onMqlChange);
     }
   }
 

@@ -155,7 +155,12 @@
       ro = new ResizeObserver(() => recompute());
       ro.observe(container);
     }
-    window.addEventListener("resize", recompute);
+    let resizeRaf = 0;
+    const debouncedRecompute = () => {
+      cancelAnimationFrame(resizeRaf);
+      resizeRaf = requestAnimationFrame(recompute);
+    };
+    window.addEventListener("resize", debouncedRecompute);
     // layout can still be settling (fonts, card content) right after load
     const settleTimer = setTimeout(recompute, 250);
     recompute();
@@ -164,7 +169,8 @@
       recompute,
       dispose() {
         clearTimeout(settleTimer);
-        window.removeEventListener("resize", recompute);
+        cancelAnimationFrame(resizeRaf);
+        window.removeEventListener("resize", debouncedRecompute);
         if (ro) ro.disconnect();
       },
     };

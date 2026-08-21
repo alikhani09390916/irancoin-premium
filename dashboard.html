@@ -10,8 +10,20 @@
 <meta property="og:title" content="داشبورد | IranCoin" />
 <meta property="og:description" content="داشبورد IranCoin — ارزش پورتفولیو، پوزیشن‌های باز، سیگنال‌های هوش مصنوعی و پنل ریسک." />
 <meta property="og:type" content="website" />
-<meta property="og:image" content="https://alikhani09390916.github.io/irancoin-premium/assets/og-image.png" />
+<meta property="og:url" content="https://alikhani09390916.github.io/irancoin-premium/dashboard.html" />
+<meta property="og:image" content="https://alikhani09390916.github.io/irancoin-premium/assets/og-image.svg" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="داشبورد | IranCoin" />
+<meta name="twitter:description" content="داشبورد IranCoin — ارزش پورتفولیو، پوزیشن‌های باز، سیگنال‌های هوش مصنوعی." />
+<meta name="twitter:image" content="https://alikhani09390916.github.io/irancoin-premium/assets/og-image.svg" />
+<meta name="robots" content="index, follow" />
+<meta name="author" content="IranCoin" />
 <link rel="canonical" href="https://alikhani09390916.github.io/irancoin-premium/dashboard.html" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"WebApplication","name":"IranCoin Dashboard","url":"https://alikhani09390916.github.io/irancoin-premium/dashboard.html","applicationCategory":"FinanceApplication","operatingSystem":"Web","description":"داشبورد IranCoin — ارزش پورتفولیو، پوزیشن‌های باز، سیگنال‌های هوش مصنوعی و پنل ریسک."}
+</script>
+<link rel="preload" href="./assets/css/theme.css" as="style" />
+<link rel="preload" href="./assets/css/ai-core.css" as="style" />
 <link rel="stylesheet" href="./assets/css/theme.css" />
 <link rel="stylesheet" href="./assets/css/ai-core.css" />
 <style>
@@ -33,7 +45,7 @@
 
   .panel { padding: 24px; border-radius: var(--radius-lg); }
   .panel-head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 18px; flex-wrap: wrap; gap: 12px; }
-  .panel-head h3 { font-size: 16px; margin: 0; }
+  .panel-head h2 { font-size: 16px; margin: 0; }
 
   .range-tabs { display: inline-flex; gap: 4px; background: rgba(28,24,48,0.05); padding: 4px; border-radius: 12px; }
   .range-tab { border: none; background: transparent; font-family: inherit; font-size: 12.5px; font-weight: 700; color: var(--ink-soft); padding: 7px 14px; border-radius: 9px; cursor: pointer; }
@@ -77,26 +89,27 @@
 <nav class="site-nav">
   <div class="container row">
     <a href="./index.html" class="logo-mark"><span class="lg-iran">Iran</span><span class="lg-coin">Coin</span></a>
-    <ul class="nav-links">
+    <ul class="nav-links" id="nav-links">
       <li><a href="./index.html">صفحه اصلی</a></li>
+      <li><a href="./index.html#agents">هسته هوش مصنوعی</a></li>
       <li><a href="./pricing.html">تعرفه‌ها</a></li>
-      <li><a href="./dashboard.html" class="active">داشبورد</a></li>
+      <li><a href="./dashboard.html" class="active" aria-current="page">داشبورد</a></li>
     </ul>
     <div class="nav-cta">
       <span class="live-pill"><span class="blip"></span>بازار زنده</span>
-      <button class="nav-toggle" aria-label="باز کردن منو" aria-expanded="false">☰</button>
+      <button type="button" class="nav-toggle" aria-label="باز کردن منو" aria-expanded="false" aria-controls="nav-links">☰</button>
     </div>
   </div>
 </nav>
 
 <main id="main">
   <div class="container">
-    <div class="dash-head">
+    <header class="dash-head">
       <div>
         <h1>نمای کلی پورتفولیو</h1>
         <p>خلاصه‌ی عملکرد حساب شما — به‌روزرسانی لحظه‌ای توسط هسته‌ی هوش مصنوعی IranCoin</p>
       </div>
-    </div>
+    </header>
 
     <div class="kpi-grid">
       <div class="kpi-card glass reveal">
@@ -127,10 +140,10 @@
           <div class="panel-head">
             <h2>رشد پورتفولیو</h2>
             <div class="range-tabs" id="range-tabs">
-              <button class="range-tab" data-range="day">روز</button>
-              <button class="range-tab" data-range="week">هفته</button>
-              <button class="range-tab is-active" data-range="month">ماه</button>
-              <button class="range-tab" data-range="year">سال</button>
+              <button type="button" class="range-tab" data-range="day">روز</button>
+              <button type="button" class="range-tab" data-range="week">هفته</button>
+              <button type="button" class="range-tab is-active" data-range="month">ماه</button>
+              <button type="button" class="range-tab" data-range="year">سال</button>
             </div>
           </div>
           <div class="chart-wrap">
@@ -207,7 +220,7 @@
       </div>
       <div>
         <h3>دسترسی سریع</h3>
-        <ul><li><a href="./pricing.html#faq">سوالات متداول</a></li><li><a href="./index.html">صفحه اصلی</a></li></ul>
+        <ul><li><a href="./pricing.html">خرید اشتراک</a></li><li><a href="./pricing.html#faq">سوالات متداول</a></li><li><a href="./index.html">صفحه اصلی</a></li></ul>
       </div>
       <div>
         <h3>ارتباط با ما</h3>
@@ -229,7 +242,9 @@
   // ---- portfolio growth chart: small dependency-free canvas line chart ----
   (function () {
     const canvas = document.getElementById("growth-chart");
+    if (!canvas) return;
     const ctx = canvas.getContext("2d");
+    if (!ctx) return;
     const dpr = Math.min(window.devicePixelRatio || 1, 2);
 
     const DATASETS = {
@@ -299,6 +314,7 @@
       ctx.shadowBlur = 10;
       ctx.fill();
       ctx.shadowBlur = 0;
+      ctx.shadowColor = "transparent";
 
       document.getElementById("chart-current").textContent = data.current;
       const changeEl = document.getElementById("chart-change");
@@ -308,9 +324,13 @@
 
     resize();
     draw("month");
-    window.addEventListener("resize", () => { resize(); draw(currentRange); });
 
     let currentRange = "month";
+    let dashResizeRaf = 0;
+    window.addEventListener("resize", () => {
+      cancelAnimationFrame(dashResizeRaf);
+      dashResizeRaf = requestAnimationFrame(() => { resize(); draw(currentRange); });
+    });
     document.querySelectorAll("#range-tabs .range-tab").forEach((btn) => {
       btn.addEventListener("click", () => {
         document.querySelectorAll("#range-tabs .range-tab").forEach((b) => b.classList.remove("is-active"));

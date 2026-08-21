@@ -11,21 +11,32 @@
 <meta property="og:description" content="پلتفرم پیشرفته معاملات ارز دیجیتال با هوش مصنوعی. سه ایجنت تخصصی، مدیریت ریسک و سرمایه خودکار." />
 <meta property="og:type" content="website" />
 <meta property="og:url" content="https://alikhani09390916.github.io/irancoin-premium/" />
-<meta property="og:image" content="https://alikhani09390916.github.io/irancoin-premium/assets/og-image.png" />
+<meta property="og:image" content="https://alikhani09390916.github.io/irancoin-premium/assets/og-image.svg" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="IranCoin — معاملات هوشمند با هسته هوش مصنوعی" />
+<meta name="twitter:description" content="پلتفرم پیشرفته معاملات ارز دیجیتال با هوش مصنوعی." />
+<meta name="twitter:image" content="https://alikhani09390916.github.io/irancoin-premium/assets/og-image.svg" />
+<meta name="robots" content="index, follow" />
+<meta name="author" content="IranCoin" />
 <link rel="canonical" href="https://alikhani09390916.github.io/irancoin-premium/" />
 <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"WebSite","name":"IranCoin","url":"https://alikhani09390916.github.io/irancoin-premium/","description":"پلتفرم معاملات ارز دیجیتال با هسته‌ی هوش مصنوعی","inLanguage":"fa"}
+{"@context":"https://schema.org","@type":"WebSite","name":"IranCoin","url":"https://alikhani09390916.github.io/irancoin-premium/","description":"پلتفرم معاملات ارز دیجیتال با هسته‌ی هوش مصنوعی","inLanguage":"fa","sameAs":["https://t.me/irancoin","https://instagram.com/irancoin"]}
 </script>
+<link rel="preload" href="./assets/css/theme.css" as="style" />
+<link rel="preload" href="./assets/css/ai-core.css" as="style" />
 <link rel="stylesheet" href="./assets/css/theme.css" />
 <link rel="stylesheet" href="./assets/css/ai-core.css" />
 <style>
   .hero {
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 1fr;
     gap: 32px;
     align-items: center;
     min-height: 88vh;
     padding-block: 40px 24px;
+  }
+  @media (min-width: 768px) {
+    .hero { grid-template-columns: 1fr 1fr; }
   }
   .hero .copy { min-width: 0; }
   .hero .copy h1 { font-size: 42px; line-height: 1.35; margin: 0 0 18px; }
@@ -35,7 +46,7 @@
   }
   .hero .copy p { font-size: 17px; line-height: 1.9; color: var(--ink-soft); max-width: 46ch; margin: 0; }
   .cta-row { display: flex; gap: 14px; margin-top: 26px; flex-wrap: wrap; }
-  .hero-visual-wrap { position: relative; height: 560px; min-width: 0; }
+  .hero-visual-wrap { position: relative; min-height: 50vh; min-width: 0; }
 
   .stat-strip { display: flex; gap: 40px; margin-top: 40px; flex-wrap: wrap; }
   .stat-strip .num { font-size: 26px; font-weight: 800; direction: ltr; display: block; }
@@ -96,15 +107,15 @@
 <nav class="site-nav">
   <div class="container row">
     <a href="./index.html" class="logo-mark"><span class="lg-iran">Iran</span><span class="lg-coin">Coin</span></a>
-    <ul class="nav-links">
-      <li><a href="./index.html" class="active">صفحه اصلی</a></li>
+    <ul class="nav-links" id="nav-links">
+      <li><a href="./index.html" class="active" aria-current="page">صفحه اصلی</a></li>
       <li><a href="./pricing.html">تعرفه‌ها</a></li>
       <li><a href="./dashboard.html">داشبورد</a></li>
       <li><a href="#agents">هسته هوش مصنوعی</a></li>
     </ul>
     <div class="nav-cta">
       <a href="./pricing.html" class="btn-primary">خرید اشتراک</a>
-      <button class="nav-toggle" aria-label="باز کردن منو" aria-expanded="false">☰</button>
+      <button type="button" class="nav-toggle" aria-label="باز کردن منو" aria-expanded="false" aria-controls="nav-links">☰</button>
     </div>
   </div>
 </nav>
@@ -119,8 +130,8 @@
         پیوسته دور همین هسته در جریان‌اند تا هر تصمیم معاملاتی از داده بگذرد، نه از احساس.
       </p>
       <div class="cta-row">
-        <button class="btn-primary">شروع رایگان</button>
-        <button class="btn-secondary">مشاهده ویدیو</button>
+        <button type="button" class="btn-primary">شروع رایگان</button>
+        <button type="button" class="btn-secondary">مشاهده ویدیو</button>
       </div>
 
       <div class="stat-strip">

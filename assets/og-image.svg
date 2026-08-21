@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#1c1830"/>
+      <stop offset="100%" stop-color="#0f0a1e"/>
+    </linearGradient>
+    <linearGradient id="accent" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#7c3aed"/>
+      <stop offset="100%" stop-color="#2ec4ff"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="630" fill="url(#bg)"/>
+  <circle cx="600" cy="315" r="140" fill="none" stroke="url(#accent)" stroke-width="2" opacity="0.6"/>
+  <circle cx="600" cy="315" r="90" fill="none" stroke="#7c3aed" stroke-width="1.5" opacity="0.4"/>
+  <circle cx="600" cy="315" r="50" fill="none" stroke="#2ec4ff" stroke-width="1" opacity="0.3"/>
+  <text x="600" y="305" text-anchor="middle" font-family="system-ui,sans-serif" font-size="48" font-weight="800" fill="white">Iran<tspan fill="#7c3aed">Coin</tspan></text>
+  <text x="600" y="350" text-anchor="middle" font-family="system-ui,sans-serif" font-size="18" fill="#a0a0b0">AI-Powered Crypto Trading Platform</text>
+  <text x="600" y="580" text-anchor="middle" font-family="system-ui,sans-serif" font-size="14" fill="#555">alikhani09390916.github.io/irancoin-premium</text>
+</svg>

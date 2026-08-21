@@ -50,16 +50,16 @@
   const ORBIT_RINGS = [
     // name        color(rgb)          radiusMul  tiltDeg  speed(rad/s, signed)  agent size
     { key: "market",  color: [124, 58, 237], radiusMul: 1.22, tiltDeg: 8,   speed: 0.42, size: 4.4 },
-    { key: "risk",    color: [244, 63, 94],  radiusMul: 1.42, tiltDeg: -14, speed: -0.30, size: 3.8 },
-    { key: "capital", color: [31, 191, 159], radiusMul: 1.62, tiltDeg: 22,  speed: 0.23, size: 4.0 },
+    { key: "risk",    color: [31, 191, 159],  radiusMul: 1.42 * 1.5, tiltDeg: -14, speed: -0.30, size: 3.8 * 1.5 },  // enhanced green for low-risk
+    { key: "capital", color: [31, 191, 159], radiusMul: 1.62, tiltDeg: 22,  speed: 0.23, size: 4.0 }, // teal - preserved
   ];
 
   class AICore {
     constructor(canvas, userOptions) {
-      if (!canvas) return;
+      if (!canvas || !canvas.getContext) throw new Error("AICore requires a valid canvas element");
       this.canvas = canvas;
       this.ctx = canvas.getContext("2d");
-      if (!this.ctx) return;
+      if (!this.ctx) throw new Error("AICore: canvas.getContext('2d') failed");
 
       this.opts = Object.assign(
         {
@@ -75,11 +75,16 @@
           sphereRadiusFrac: 0.27, // fraction of min(w,h) — leaves room for orbit rings
           showOrbits: true,
           respectReducedMotion: true,
+          riskColor: [31, 191, 159], // green for low-risk state (teal accent)
+          riskEmphasis: 1.5, // make risk agent more prominent
         },
         userOptions || {}
       );
 
       this.reduced = this.opts.respectReducedMotion && prefersReducedMotion();
+      this._mql = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)");
+      this._onMqlChange = (e) => { this.reduced = this.opts.respectReducedMotion && e.matches; };
+      if (this._mql && this._mql.addEventListener) this._mql.addEventListener("change", this._onMqlChange);
 
       this.points = this._makeFibonacciSphere(this.opts.pointCount);
       this.edges = this._computeEdges(
@@ -100,6 +105,18 @@
       this._projected = this.points.map(() => ({ sx: 0, sy: 0, scale: 0, z: 0 }));
       this._sortIdx = new Array(this.opts.pointCount);
       for (let i = 0; i < this.opts.pointCount; i++) this._sortIdx[i] = i;
+      this._sortComparator = (a, b) => this._projected[a].z - this._projected[b].z;
+
+      this._onVisibility = () => {
+        if (document && document.hidden) {
+          if (this._rafId) cancelAnimationFrame(this._rafId);
+          this._rafId = null;
+        } else {
+          this._lastT = null;
+          this._rafId = requestAnimationFrame(this._tick);
+        }
+      };
+      if (document) { document.addEventListener("visibilitychange", this._onVisibility); }
 
       this._onResize = this._resize.bind(this);
       window.addEventListener("resize", this._onResize);
@@ -309,7 +326,7 @@
       const sortIdx = this._sortIdx;
       sortIdx.length = projected.length;
       for (let i = 0; i < sortIdx.length; i++) sortIdx[i] = i;
-      sortIdx.sort((a, b) => projected[a].z - projected[b].z);
+      sortIdx.sort(this._sortComparator);
       const [r2, g2, b2] = this.opts.color2;
       for (let k = 0; k < sortIdx.length; k++) {
         const idx = sortIdx[k];
@@ -332,6 +349,8 @@
       this._disposed = true;
       if (this._rafId) cancelAnimationFrame(this._rafId);
       window.removeEventListener("resize", this._onResize);
+      if (document) { document.removeEventListener("visibilitychange", this._onVisibility); }
+      if (this._mql && this._mql.removeEventListener) this._mql.removeEventListener("change", this._onMqlChange);
     }
   }
 
