@@ -1,0 +1,84 @@
+/**
+ * index.css — Landing page specific styles (mobile-first)
+ */
+
+/* Hero: single column by default */
+.hero {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 24px;
+  align-items: center;
+  min-height: auto;
+  padding-block: 24px 24px;
+}
+.hero .copy { min-width: 0; }
+.hero .copy h1 { font-size: var(--text-3xl); line-height: 1.35; margin: 0 0 14px; }
+.hero .copy h1 .accent {
+  background: linear-gradient(90deg, var(--violet), var(--cyan));
+  -webkit-background-clip: text; background-clip: text; color: transparent;
+}
+.hero .copy p { font-size: var(--text-sm); line-height: 1.9; color: var(--ink-soft); max-width: 46ch; margin: 0; }
+.cta-row { display: flex; gap: 10px; margin-top: 20px; flex-wrap: wrap; }
+.cta-row .btn-primary, .cta-row .btn-secondary { padding: 10px 20px; font-size: 14px; }
+.hero-visual-wrap { position: relative; min-height: 38vh; min-width: 0; }
+
+.stat-strip { display: flex; gap: 20px; margin-top: 28px; flex-wrap: wrap; }
+.stat-strip .num { font-size: var(--text-xl); font-weight: 800; direction: ltr; display: block; }
+.stat-strip .cap { font-size: 12px; color: var(--ink-faint); margin-top: 2px; }
+
+/* agents section */
+.agents-grid { display: grid; grid-template-columns: 1fr; gap: 16px; }
+.agent-card {
+  padding: 20px 18px;
+  border-radius: var(--radius-lg);
+  position: relative;
+  overflow: hidden;
+}
+.agent-card .ring-dot {
+  width: 40px; height: 40px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 17px; margin-bottom: 14px;
+  box-shadow: inset 0 0 0 1px rgba(255,255,255,0.5);
+}
+.agent-card.market .ring-dot { background: radial-gradient(circle at 35% 30%, #a78bfa, var(--violet) 70%); }
+.agent-card.risk .ring-dot   { background: radial-gradient(circle at 35% 30%, #fb7185, var(--rose) 70%); }
+.agent-card.capital .ring-dot{ background: radial-gradient(circle at 35% 30%, #5eead4, var(--teal) 70%); }
+.agent-card h3 { font-size: 16px; margin: 0 0 6px; }
+.agent-card p { font-size: 13px; line-height: 1.85; color: var(--ink-soft); margin: 0; }
+.agent-card .ring-badge {
+  position: absolute; top: 14px; inset-inline-end: 16px;
+  font-size: 11px; font-weight: 800; letter-spacing: 0.04em;
+  color: var(--ink-faint); direction: ltr;
+}
+
+/* CTA band */
+.cta-band {
+  border-radius: 20px;
+  background: linear-gradient(120deg, #1c1830, #3b2467 55%, #1c1830);
+  color: #fff;
+  padding: clamp(28px, 6vw, 56px) clamp(16px, 4vw, 40px);
+  text-align: center;
+}
+.cta-band h2 { color: #fff; margin: 0 auto 10px; max-width: 30ch; font-size: var(--text-2xl); }
+.cta-band p { color: rgba(255,255,255,0.68); max-width: 50ch; margin: 0 auto 20px; font-size: var(--text-sm); }
+.cta-band .cta-row { justify-content: center; }
+.cta-band .btn-secondary { background: rgba(255,255,255,0.08); color: #fff; border-color: rgba(255,255,255,0.18); }
+.cta-band .fine { margin-top: 14px; font-size: 12px; color: rgba(255,255,255,0.45); }
+
+/* ---- Responsive: Tablet ---- */
+@media (min-width: 480px) {
+  .agents-grid { grid-template-columns: repeat(2, 1fr); }
+}
+
+/* ---- Responsive: Desktop ---- */
+@media (min-width: 768px) {
+  .hero { grid-template-columns: 1fr 1fr; min-height: 88vh; padding-block: 40px 24px; gap: 32px; }
+  .hero-visual-wrap { min-height: 50vh; }
+  .hero .copy h1 { font-size: clamp(28px, 4vw, 42px); }
+  .hero .copy p { font-size: var(--text-base); }
+  .stat-strip { gap: 40px; margin-top: 40px; }
+  .stat-strip .num { font-size: 26px; }
+  .agents-grid { grid-template-columns: repeat(3, 1fr); gap: 22px; }
+  .agent-card { padding: 28px 24px; }
+  .cta-band { border-radius: 28px; }
+}

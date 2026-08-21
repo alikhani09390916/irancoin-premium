@@ -1,0 +1,89 @@
+/**
+ * dashboard.css — Dashboard page specific styles (mobile-first)
+ */
+
+.dash-head { padding: clamp(20px, 4vw, 40px) 0 8px; display: flex; align-items: flex-end; justify-content: space-between; flex-wrap: wrap; gap: 12px; }
+.dash-head h1 { font-size: var(--text-xl); margin: 0 0 6px; }
+.dash-head p { margin: 0; color: var(--ink-soft); font-size: 13px; }
+.live-pill { display: inline-flex; align-items: center; gap: 7px; font-size: 12px; font-weight: 700; color: var(--teal); }
+.live-pill .blip { width: 7px; height: 7px; border-radius: 50%; background: var(--teal); animation: blip 1.6s ease-in-out infinite; }
+@keyframes blip { 0%,100% { opacity: 1; } 50% { opacity: 0.25; } }
+
+/* KPI: 2 columns by default */
+.kpi-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 20px 0; }
+.kpi-card { padding: 16px 18px; border-radius: var(--radius-md); }
+.kpi-card .label { font-size: 12px; color: var(--ink-faint); font-weight: 700; margin-bottom: 6px; }
+.kpi-card .value { font-size: 20px; font-weight: 800; direction: ltr; }
+.kpi-card .delta { margin-top: 4px; }
+
+/* Dashboard grid: single column by default */
+.dash-grid { display: grid; grid-template-columns: 1fr; gap: 16px; align-items: start; margin-bottom: 16px; }
+.dash-grid > div { min-width: 0; }
+
+.panel { padding: clamp(16px, 3vw, 24px); border-radius: var(--radius-lg); }
+.panel-head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 14px; flex-wrap: wrap; gap: 10px; }
+.panel-head h2 { font-size: 15px; margin: 0; }
+
+.range-tabs { display: inline-flex; gap: 3px; background: rgba(28,24,48,0.05); padding: 3px; border-radius: 10px; }
+.range-tab { border: none; background: transparent; font-family: inherit; font-size: 12px; font-weight: 700; color: var(--ink-soft); padding: 6px 12px; border-radius: 8px; cursor: pointer; }
+.range-tab.is-active { background: #fff; color: var(--violet); box-shadow: 0 4px 12px rgba(30,20,60,0.1); }
+
+.chart-wrap { position: relative; height: 180px; }
+.chart-wrap canvas { width: 100%; height: 100%; display: block; }
+.chart-legend { display: flex; gap: 14px; margin-top: 10px; font-size: 12px; color: var(--ink-soft); }
+.chart-legend b { color: var(--ink); direction: ltr; display: inline-block; }
+
+table.positions { width: 100%; border-collapse: collapse; font-size: 12px; margin-top: 6px; }
+table.positions th { text-align: start; font-size: 11px; color: var(--ink-faint); font-weight: 700; padding: 6px 8px; border-bottom: 1px solid var(--line); }
+table.positions td { padding: 10px 8px; border-bottom: 1px solid var(--line); }
+table.positions td.num { direction: ltr; text-align: end; }
+table.positions tr:last-child td { border-bottom: none; }
+
+.risk-ring-mini { width: 80px; height: 80px; margin: 0 auto 12px; }
+.risk-meter { height: 8px; border-radius: 999px; background: rgba(28,24,48,0.08); overflow: hidden; margin-top: 6px; }
+.risk-meter > span { display: block; height: 100%; border-radius: 999px; background: linear-gradient(90deg, var(--teal), var(--rose)); }
+.risk-rows { display: grid; gap: 10px; margin-top: 14px; font-size: 12px; }
+.risk-rows .row { display: flex; justify-content: space-between; color: var(--ink-soft); }
+.risk-rows .row b { color: var(--ink); font-weight: 700; direction: ltr; }
+
+.journal-item { display: flex; justify-content: space-between; align-items: flex-start; padding: 10px 0; border-bottom: 1px solid var(--line); font-size: 12px; }
+.journal-item:last-child { border-bottom: none; }
+.journal-item .meta { color: var(--ink-faint); font-size: 11px; margin-top: 3px; }
+.journal-item .pnl { font-weight: 800; direction: ltr; }
+
+/* ---- Responsive: Tablet ---- */
+@media (min-width: 480px) {
+  .kpi-grid { gap: 14px; }
+  .kpi-card { padding: 18px 20px; }
+  .kpi-card .value { font-size: 22px; }
+  .dash-grid { gap: 18px; margin-bottom: 18px; }
+  .panel { padding: 20px; }
+  .panel-head h2 { font-size: 16px; }
+  .chart-wrap { height: 200px; }
+  table.positions { font-size: 13px; }
+  table.positions th { font-size: 12px; padding: 8px 10px; }
+  table.positions td { padding: 12px 10px; }
+  .risk-ring-mini { width: 88px; height: 88px; }
+  .risk-rows { font-size: 13px; }
+  .journal-item { font-size: 13px; padding: 12px 0; }
+}
+
+/* ---- Responsive: Desktop ---- */
+@media (min-width: 768px) {
+  .dash-head h1 { font-size: var(--text-2xl); }
+  .dash-head p { font-size: 14.5px; }
+  .live-pill { font-size: 12.5px; }
+  .kpi-grid { grid-template-columns: repeat(4, 1fr); gap: 18px; margin: 28px 0; }
+  .kpi-card { padding: 20px 22px; }
+  .kpi-card .value { font-size: 25px; }
+  .kpi-card .delta { margin-top: 6px; }
+  .dash-grid { grid-template-columns: 2fr 1fr; gap: 20px; margin-bottom: 20px; }
+  .panel { padding: 24px; }
+  .panel-head h2 { font-size: 16px; }
+  .range-tab { font-size: 12.5px; padding: 7px 14px; }
+  .chart-wrap { height: 220px; }
+  .chart-legend { gap: 22px; margin-top: 14px; font-size: 13px; }
+  .risk-ring-mini { width: 96px; height: 96px; margin-bottom: 16px; }
+  .risk-meter { height: 10px; margin-top: 8px; }
+  .risk-rows { gap: 12px; margin-top: 18px; font-size: 13.5px; }
+}

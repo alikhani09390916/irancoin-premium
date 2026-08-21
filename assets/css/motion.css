@@ -1,0 +1,134 @@
+/**
+ * motion.css — Motion system CSS classes and keyframes
+ */
+
+/* ---- Scroll-triggered motion classes ---- */
+[data-motion] {
+  opacity: 0;
+  transition: opacity var(--dur-reveal) var(--ease-out),
+              transform var(--dur-reveal) var(--ease-out);
+}
+
+/* Fade in */
+[data-motion="fade-in"].is-visible {
+  opacity: 1;
+}
+
+/* Slide up */
+[data-motion="slide-up"] {
+  transform: translateY(24px);
+}
+[data-motion="slide-up"].is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Slide down */
+[data-motion="slide-down"] {
+  transform: translateY(-24px);
+}
+[data-motion="slide-down"].is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Slide right (RTL-aware: slides from start) */
+[data-motion="slide-right"] {
+  transform: translateX(30px);
+}
+[data-motion="slide-right"].is-visible {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+/* Slide left (RTL-aware: slides from end) */
+[data-motion="slide-left"] {
+  transform: translateX(-30px);
+}
+[data-motion="slide-left"].is-visible {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+/* Scale in */
+[data-motion="scale-in"] {
+  transform: scale(0.92);
+}
+[data-motion="scale-in"].is-visible {
+  opacity: 1;
+  transform: scale(1);
+}
+
+/* Blur in */
+[data-motion="blur-in"] {
+  filter: blur(8px);
+}
+[data-motion="blur-in"].is-visible {
+  opacity: 1;
+  filter: blur(0);
+}
+
+/* ---- Section divider ---- */
+.section-divider {
+  width: 60px;
+  height: 3px;
+  border-radius: 2px;
+  background: linear-gradient(90deg, var(--violet), var(--cyan));
+  margin: var(--sp-10) auto;
+  transform-origin: center;
+}
+
+/* ---- Scroll progress bar ---- */
+[data-scroll-progress] {
+  position: fixed;
+  top: 0;
+  inset-inline-start: 0;
+  width: 100%;
+  height: 3px;
+  background: linear-gradient(90deg, var(--violet), var(--cyan));
+  transform-origin: left;
+  transform: scaleX(0);
+  z-index: calc(var(--z-sticky) + 1);
+  pointer-events: none;
+}
+
+/* ---- Text reveal container ---- */
+[data-text-reveal] {
+  overflow: hidden;
+}
+
+/* ---- Magnetic button base ---- */
+[data-magnetic] {
+  transition: transform var(--dur-normal) var(--ease-out);
+  will-change: transform;
+}
+
+/* ---- Hover lift base ---- */
+[data-hover-lift] {
+  transition: transform var(--dur-normal) var(--ease-out),
+              box-shadow var(--dur-normal) var(--ease-out);
+  will-change: transform;
+}
+
+/* ---- Parallax layer ---- */
+[data-parallax] {
+  will-change: transform;
+}
+
+/* ---- Reduced motion: disable all motion ---- */
+@media (prefers-reduced-motion: reduce) {
+  [data-motion],
+  [data-motion].is-visible {
+    transition: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+    filter: none !important;
+  }
+  [data-text-reveal] span {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+  }
+  [data-scroll-progress] { display: none; }
+  .section-divider { transform: scaleX(1); }
+}
