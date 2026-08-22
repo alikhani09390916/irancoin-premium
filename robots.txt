@@ -1,0 +1,7 @@
+User-agent: *
+Allow: /
+Disallow: /supabase/
+Disallow: /mcp/
+Disallow: /docs/
+
+Sitemap: https://alikhani09390916.github.io/irancoin-premium/sitemap.xml
