@@ -2,16 +2,16 @@
 id = "ibnpgzmbepieudwalwtv"
 
 [functions.create-invoice]
-verify_jwt = false
+verify_jwt = true
 
 [functions.check-payment]
-verify_jwt = false
+verify_jwt = true
 
 [functions.check-subscription]
-verify_jwt = false
+verify_jwt = true
 
 [functions.ipn-webhook]
-verify_jwt = false
+verify_jwt = true
 
 [functions.admin-stats]
 verify_jwt = true
@@ -20,7 +20,7 @@ verify_jwt = true
 verify_jwt = true
 
 [functions.send-email]
-verify_jwt = false
+verify_jwt = true
 
 [functions.submit-card-payment]
-verify_jwt = false
+verify_jwt = true
