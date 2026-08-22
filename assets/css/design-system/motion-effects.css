@@ -1,0 +1,1058 @@
+/* ============================================================
+   IRANCOiN — Professional 3D Motion Effects & Animations
+   Premium cinematic motion system · Performance-first
+   ============================================================
+
+   DESIGN PHILOSOPHY:
+   - Every animation uses ONLY transform/opacity/filter (no layout thrashing)
+   - Motion intensity: professional, controlled, never flashy
+   - All animations respect prefers-reduced-motion
+   - Mobile: reduced motion by default
+   - Staggered delays for cinematic entrance sequencing
+
+   ============================================================ */
+
+/* ==========================================================
+   1. LOGO 3D EFFECT — Floating, Shine, Depth, Gradient
+   ========================================================== */
+
+/* --- Brand Mark: Floating Animation --- */
+.brand-mark {
+  animation: logo-float 6s var(--ease-in-out) infinite alternate;
+  transform-origin: center center;
+  will-change: transform;
+  filter: drop-shadow(0 2px 8px rgba(124, 58, 237, 0.35))
+          drop-shadow(0 8px 24px rgba(124, 58, 237, 0.15));
+  transition: filter var(--dur-fast) var(--ease-out);
+}
+
+@keyframes logo-float {
+  0%   { transform: translateY(0) scale(1); }
+  100% { transform: translateY(-3px) scale(1.015); }
+}
+
+/* --- Brand Mark: 3D Depth Shadow Layer --- */
+.brand::before {
+  content: "";
+  position: absolute;
+  bottom: -6px;
+  inset-inline-start: 50%;
+  transform: translateX(50%);
+  width: 60%;
+  height: 6px;
+  background: radial-gradient(ellipse, rgba(124, 58, 237, 0.2), transparent 70%);
+  filter: blur(4px);
+  border-radius: var(--r-full);
+  animation: logo-shadow 6s var(--ease-in-out) infinite alternate;
+  pointer-events: none;
+  z-index: -1;
+}
+
+@keyframes logo-shadow {
+  0%   { opacity: 0.7; transform: translateX(50%) scaleX(1); }
+  100% { opacity: 0.4; transform: translateX(50%) scaleX(0.85); }
+}
+
+/* --- Brand Mark: Light Reflection / Shine Sweep --- */
+.brand::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: linear-gradient(
+    105deg,
+    transparent 35%,
+    rgba(255, 255, 255, 0.35) 45%,
+    rgba(255, 255, 255, 0.08) 55%,
+    transparent 65%
+  );
+  opacity: 0;
+  transform: translateX(-150%);
+  transition: opacity 0.3s, transform 0.6s var(--ease-out);
+  pointer-events: none;
+}
+
+.brand:hover::after {
+  opacity: 1;
+  transform: translateX(150%);
+}
+
+/* --- Brand Name: Gradient Animation on Hover --- */
+.brand-name {
+  background-size: 200% 100%;
+  transition: background-position var(--dur-med) var(--ease-out),
+              filter var(--dur-fast) var(--ease-out);
+}
+
+.brand:hover .brand-name {
+  animation: brand-gradient-shift 2s var(--ease-in-out) infinite alternate;
+}
+
+@keyframes brand-gradient-shift {
+  0%   { background-position: 0% 50%; }
+  100% { background-position: 100% 50%; }
+}
+
+/* --- Brand Mark: Hover Glow Pulse --- */
+.brand:hover .brand-mark {
+  filter: drop-shadow(0 2px 8px rgba(124, 58, 237, 0.45))
+          drop-shadow(0 12px 32px rgba(124, 58, 237, 0.25));
+}
+
+
+/* ==========================================================
+   2. NAVBAR BORDER ANIMATION — Gradient Pulse + Active Underline
+   ========================================================== */
+
+/* --- Navbar: Animated Gradient Border (bottom) --- */
+.nav.is-scrolled::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  inset-inline: 0;
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    var(--c-violet-400) 20%,
+    var(--c-cyan-400) 50%,
+    var(--c-violet-400) 80%,
+    transparent 100%
+  );
+  background-size: 200% 100%;
+  animation: nav-border-pulse 4s linear infinite;
+  opacity: 0.5;
+}
+
+@keyframes nav-border-pulse {
+  0%   { background-position: -100% 0; }
+  100% { background-position: 200% 0; }
+}
+
+/* --- Nav Link: Active Underline Animation --- */
+.nav-link {
+  position: relative;
+  overflow: hidden;
+}
+
+.nav-link::after {
+  content: "";
+  position: absolute;
+  bottom: 4px;
+  inset-inline: 50%;
+  width: 0;
+  height: 2px;
+  background: var(--grad-brand);
+  border-radius: var(--r-full);
+  transform: translateX(50%);
+  transition: width var(--dur-fast) var(--ease-out);
+}
+
+.nav-link:hover::after {
+  width: 60%;
+}
+
+.nav-link[aria-current="page"]::after {
+  width: 80%;
+  animation: nav-active-pulse 3s var(--ease-in-out) infinite alternate;
+}
+
+@keyframes nav-active-pulse {
+  0%   { opacity: 0.7; width: 70%; }
+  100% { opacity: 1; width: 85%; }
+}
+
+
+/* ==========================================================
+   3. BUTTON ANIMATIONS — Hover Scale, Glow, Press, Gradient
+   ========================================================== */
+
+/* --- All Buttons: Enhanced Hover Glow --- */
+.btn {
+  position: relative;
+  overflow: hidden;
+}
+
+/* Primary Button: Gradient Shift on Hover */
+.btn-primary {
+  background-size: 100% 100%;
+  background-position: 0% 0%;
+  transition: transform var(--dur-fast) var(--ease-spring),
+              box-shadow var(--dur-fast) var(--ease-out),
+              background-position var(--dur-med) var(--ease-out);
+}
+
+.btn-primary:hover {
+  transform: translateY(-2px) scale(1.02);
+  box-shadow: var(--sh-brand-lg),
+              0 0 40px rgba(124, 58, 237, 0.2);
+}
+
+.btn-primary:active {
+  transform: translateY(0) scale(0.97);
+  box-shadow: var(--sh-brand);
+  transition-duration: 80ms;
+}
+
+/* Primary Button: Gradient Animation */
+.btn-primary:hover {
+  animation: btn-gradient-flow 3s linear infinite;
+  background-size: 200% 200%;
+}
+
+@keyframes btn-gradient-flow {
+  0%   { background-position: 0% 50%; }
+  50%  { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* Secondary Button: Enhanced Hover */
+.btn-secondary:hover {
+  transform: translateY(-2px) scale(1.015);
+  box-shadow: var(--sh-md), 0 0 24px rgba(124, 58, 237, 0.1);
+}
+
+.btn-secondary:active {
+  transform: translateY(0) scale(0.98);
+  transition-duration: 80ms;
+}
+
+/* Gold Button: Enhanced Glow */
+.btn-gold {
+  transition: transform var(--dur-fast) var(--ease-spring),
+              box-shadow var(--dur-fast) var(--ease-out);
+}
+
+.btn-gold:hover {
+  transform: translateY(-3px) scale(1.02);
+  box-shadow: 0 16px 40px rgba(217, 119, 6, 0.4),
+              0 0 60px rgba(245, 158, 11, 0.15);
+}
+
+.btn-gold:active {
+  transform: translateY(0) scale(0.97);
+  transition-duration: 80ms;
+}
+
+/* Ghost Button: Subtle Rise */
+.btn-ghost:hover {
+  transform: translateY(-1px);
+}
+
+.btn-ghost:active {
+  transform: translateY(0) scale(0.98);
+}
+
+/* All Buttons: Focus Ring Glow */
+.btn:focus-visible {
+  box-shadow: var(--sh-brand),
+              0 0 0 3px rgba(124, 58, 237, 0.25),
+              0 0 20px rgba(124, 58, 237, 0.15);
+}
+
+
+/* ==========================================================
+   4. LOGIN / AUTH MODAL — Floating Assets & Particles
+   ========================================================== */
+
+/* --- Auth Modal: Entrance Animation --- */
+.auth-modal-overlay {
+  opacity: 0;
+  transition: opacity var(--dur-med) var(--ease-out);
+}
+
+.auth-modal-overlay.is-open {
+  opacity: 1;
+}
+
+.auth-modal-overlay .auth-modal {
+  transform: translateY(24px) scale(0.96);
+  opacity: 0;
+  transition: transform var(--dur-slow) var(--ease-spring),
+              opacity var(--dur-slow) var(--ease-out);
+}
+
+.auth-modal-overlay.is-open .auth-modal {
+  transform: translateY(0) scale(1);
+  opacity: 1;
+}
+
+/* --- Auth Modal: Floating Background Elements --- */
+.auth-modal::before {
+  content: "";
+  position: absolute;
+  top: -60px;
+  inset-inline-end: -60px;
+  width: 180px;
+  height: 180px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(124, 58, 237, 0.08), transparent 65%);
+  animation: auth-float-1 8s var(--ease-in-out) infinite alternate;
+  pointer-events: none;
+}
+
+.auth-modal::after {
+  content: "";
+  position: absolute;
+  bottom: -40px;
+  inset-inline-start: -40px;
+  width: 140px;
+  height: 140px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(34, 211, 238, 0.06), transparent 65%);
+  animation: auth-float-2 10s var(--ease-in-out) infinite alternate;
+  pointer-events: none;
+}
+
+@keyframes auth-float-1 {
+  0%   { transform: translate(0, 0) scale(1); opacity: 0.6; }
+  100% { transform: translate(12px, -8px) scale(1.1); opacity: 1; }
+}
+
+@keyframes auth-float-2 {
+  0%   { transform: translate(0, 0) scale(1); opacity: 0.5; }
+  100% { transform: translate(-10px, 6px) scale(1.08); opacity: 0.9; }
+}
+
+/* --- Auth Form Fields: Staggered Entrance --- */
+.auth-modal.is-open .auth-field {
+  animation: auth-field-enter 0.5s var(--ease-out) both;
+}
+
+.auth-modal.is-open .auth-field:nth-child(1) { animation-delay: 0.15s; }
+.auth-modal.is-open .auth-field:nth-child(2) { animation-delay: 0.25s; }
+.auth-modal.is-open .auth-field:nth-child(3) { animation-delay: 0.35s; }
+
+@keyframes auth-field-enter {
+  from { opacity: 0; transform: translateY(12px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* --- Auth Logo: Pulse Glow --- */
+.auth-modal .brand-mark,
+.auth-modal svg {
+  animation: auth-logo-glow 4s var(--ease-in-out) infinite alternate;
+}
+
+@keyframes auth-logo-glow {
+  0%   { filter: drop-shadow(0 0 8px rgba(124, 58, 237, 0.2)); }
+  100% { filter: drop-shadow(0 0 16px rgba(124, 58, 237, 0.4)); }
+}
+
+
+/* ==========================================================
+   5. AI CORE / BRAIN ASSET — Pulsing Glow, Rings, Neural Links
+   ========================================================== */
+
+/* --- Brain Core: Enhanced Pulsing Glow --- */
+.brain-glow {
+  animation: brain-glow-enhanced 6s var(--ease-in-out) infinite alternate;
+}
+
+@keyframes brain-glow-enhanced {
+  0%   { opacity: 0.5; transform: scale(0.94); filter: blur(16px); }
+  50%  { opacity: 0.85; transform: scale(1.02); filter: blur(20px); }
+  100% { opacity: 0.6; transform: scale(1.06); filter: blur(18px); }
+}
+
+/* --- Brain Ring: Rotating Gradient Effect --- */
+.brain-ring {
+  border-image: linear-gradient(
+    var(--brain-ring-angle, 0deg),
+    rgba(196, 181, 253, 0.6),
+    rgba(165, 243, 252, 0.4),
+    rgba(196, 181, 253, 0.6)
+  ) 1;
+}
+
+.brain-ring-r1 { --brain-ring-angle: 0deg; }
+.brain-ring-r2 { --brain-ring-angle: 90deg; }
+.brain-ring-r3 { --brain-ring-angle: 180deg; }
+.brain-ring-r4 { --brain-ring-angle: 270deg; }
+
+/* --- Neural Network Links: Pulsing Flow --- */
+.nn-link {
+  animation: nn-flow-enhanced 3.5s linear infinite;
+  animation-delay: var(--d, 0s);
+  filter: drop-shadow(0 0 4px rgba(165, 243, 252, 0.5));
+}
+
+@keyframes nn-flow-enhanced {
+  0%   { stroke-dashoffset: 0; opacity: 0.6; }
+  50%  { opacity: 1; }
+  100% { stroke-dashoffset: -42; opacity: 0.6; }
+}
+
+/* --- Neural Nodes: Enhanced Pulse --- */
+.nn-dot {
+  animation: nn-dot-pulse 3s var(--ease-in-out) infinite;
+  animation-delay: var(--d, 0s);
+}
+
+@keyframes nn-dot-pulse {
+  0%, 100% { opacity: 0.35; transform: scale(0.7); filter: drop-shadow(0 0 0 transparent); }
+  50%      { opacity: 1; transform: scale(1.35); filter: drop-shadow(0 0 6px rgba(165, 243, 252, 0.7)); }
+}
+
+/* --- Brain Scanline: Smoother Drift --- */
+.brain-scanline {
+  animation: scanline-drift-enhanced 8s var(--ease-in-out) infinite;
+}
+
+@keyframes scanline-drift-enhanced {
+  0%   { transform: translateY(-5%); opacity: 0.08; stroke-width: 1; }
+  25%  { opacity: 0.5; stroke-width: 1.5; }
+  50%  { opacity: 0.7; stroke-width: 2; }
+  75%  { opacity: 0.5; stroke-width: 1.5; }
+  100% { transform: translateY(5%); opacity: 0.08; stroke-width: 1; }
+}
+
+/* --- Brain Core: Rotating Gradient Background --- */
+.brain-core {
+  background:
+    conic-gradient(
+      from 0deg,
+      rgba(124, 58, 237, 0.25),
+      rgba(59, 130, 246, 0.15),
+      rgba(165, 243, 252, 0.1),
+      rgba(124, 58, 237, 0.25)
+    ),
+    radial-gradient(circle at 50% 45%, rgba(124, 58, 237, 0.32), rgba(67, 56, 202, 0.12) 55%, transparent 72%);
+  animation: brain-core-rotate 30s linear infinite, brain-breathe 6s var(--ease-in-out) infinite alternate;
+}
+
+@keyframes brain-core-rotate {
+  from { background-position: 0% 0%, center; }
+  to   { background-position: 100% 100%, center; }
+}
+
+/* --- Intel Visual: Enhanced Ring Nodes --- */
+.intel-node {
+  animation: intel-node-pulse 3.5s var(--ease-in-out) infinite alternate;
+}
+
+@keyframes intel-node-pulse {
+  0%   { transform: scale(0.85); opacity: 0.7; box-shadow: 0 0 8px currentColor; }
+  100% { transform: scale(1.15); opacity: 1; box-shadow: 0 0 20px currentColor; }
+}
+
+.intel-node:nth-child(2) { animation-delay: 0.4s; }
+.intel-node:nth-child(3) { animation-delay: 0.8s; }
+.intel-node:nth-child(4) { animation-delay: 1.2s; }
+.intel-node:nth-child(5) { animation-delay: 1.6s; }
+
+
+/* ==========================================================
+   6. FLOATING CARDS — Pricing, Features, Stats
+   ========================================================== */
+
+/* --- Pricing Cards: Subtle Float --- */
+.pricing-card {
+  animation: pricing-float 7s var(--ease-in-out) infinite alternate;
+  will-change: transform;
+}
+
+.pricing-card:nth-child(1) { animation-delay: 0s; }
+.pricing-card:nth-child(2) { animation-delay: 0.5s; }
+.pricing-card:nth-child(3) { animation-delay: 1s; }
+.pricing-card:nth-child(4) { animation-delay: 1.5s; }
+
+@keyframes pricing-float {
+  0%   { transform: translateY(0); }
+  100% { transform: translateY(-4px); }
+}
+
+.pricing-card:hover {
+  animation: none;
+}
+
+.pricing-card.is-recommended {
+  animation: pricing-recommended-float 5s var(--ease-in-out) infinite alternate;
+}
+
+@keyframes pricing-recommended-float {
+  0%   { transform: translateY(-6px); }
+  100% { transform: translateY(-10px); }
+}
+
+/* --- Pricing Flag: Enhanced Bounce --- */
+.pricing-flag {
+  animation: flag-bounce-enhanced 2.5s var(--ease-in-out) infinite;
+}
+
+@keyframes flag-bounce-enhanced {
+  0%, 100% { transform: translateX(50%) translateY(0) scale(1); }
+  50%      { transform: translateX(50%) translateY(-4px) scale(1.03); }
+}
+
+/* --- Glass Cards: Scroll Reveal Stagger --- */
+.glass-card[data-reveal] {
+  transition-delay: var(--reveal-delay, 0ms);
+}
+
+/* --- Stats / Proof Cards: Counter Shine --- */
+.proof-stat {
+  position: relative;
+  overflow: hidden;
+}
+
+.proof-stat::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    135deg,
+    transparent 40%,
+    rgba(124, 58, 237, 0.04) 50%,
+    transparent 60%
+  );
+  opacity: 0;
+  transition: opacity var(--dur-med) var(--ease-out);
+}
+
+.proof-stat:hover::before {
+  opacity: 1;
+  animation: stat-shine 1.5s var(--ease-out);
+}
+
+@keyframes stat-shine {
+  from { transform: translateX(-100%) translateY(-100%); }
+  to   { transform: translateX(100%) translateY(100%); }
+}
+
+/* --- Dash Cards: Enhanced Hover --- */
+.dash-card {
+  position: relative;
+  overflow: hidden;
+}
+
+.dash-card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  inset-inline: 0;
+  height: 2px;
+  background: var(--grad-brand);
+  transform: scaleX(0);
+  transform-origin: inset-inline-start;
+  transition: transform var(--dur-med) var(--ease-out);
+}
+
+.dash-card:hover::before {
+  transform: scaleX(1);
+}
+
+/* --- Engine Steps: Enhanced Hover --- */
+.engine-step {
+  position: relative;
+  overflow: hidden;
+}
+
+.engine-step::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  inset-inline: 0;
+  height: 3px;
+  background: var(--grad-brand);
+  transform: scaleX(0);
+  transition: transform var(--dur-med) var(--ease-out);
+}
+
+.engine-step:hover::after {
+  transform: scaleX(1);
+}
+
+
+/* ==========================================================
+   7. TIMELINE / PIPELINE BAR — Animated Progress
+   ========================================================== */
+
+/* --- Pipeline Row: Sequential Entrance --- */
+.pipe-row {
+  position: relative;
+}
+
+.pipe-row::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  inset-inline-start: 2rem;
+  width: 2px;
+  background: linear-gradient(180deg, var(--c-violet-300), var(--c-cyan-300));
+  opacity: 0.4;
+}
+
+.pipe-row:last-child::before {
+  display: none;
+}
+
+/* --- Pipeline Row: Progress Glow on Hover --- */
+.pipe-row::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  inset-inline-start: 2rem;
+  width: 2px;
+  height: 0;
+  background: var(--grad-brand);
+  transition: height 0.6s var(--ease-out);
+}
+
+.pipe-row:hover::after {
+  height: 100%;
+}
+
+/* --- Pipeline Number: Animated Ring --- */
+.pipe-num {
+  position: relative;
+  z-index: 1;
+}
+
+.pipe-num::after {
+  content: "";
+  position: absolute;
+  inset: -4px;
+  border-radius: var(--r-full);
+  border: 1.5px solid var(--c-violet-300);
+  opacity: 0;
+  transform: scale(0.8);
+  transition: opacity var(--dur-fast) var(--ease-out),
+              transform var(--dur-fast) var(--ease-out);
+}
+
+.pipe-row:hover .pipe-num::after {
+  opacity: 0.6;
+  transform: scale(1);
+}
+
+/* --- Progress Bars: Enhanced Fill Animation --- */
+.progress > span {
+  position: relative;
+  animation: progress-fill 1.2s var(--ease-out) both;
+  animation-delay: var(--reveal-delay, 0.3s);
+}
+
+@keyframes progress-fill {
+  from { width: 0; }
+}
+
+.progress > span::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(255, 255, 255, 0.3) 50%,
+    transparent 100%
+  );
+  animation: progress-shimmer-enhanced 2.5s ease-in-out infinite;
+}
+
+@keyframes progress-shimmer-enhanced {
+  0%   { transform: translateX(-100%); }
+  100% { transform: translateX(200%); }
+}
+
+
+/* ==========================================================
+   8. GENERAL MOTION — Scroll Reveal, Loading, Transitions
+   ========================================================== */
+
+/* --- Scroll Reveal: Enhanced with Stagger Support --- */
+[data-reveal] {
+  transition: opacity var(--dur-slow) var(--ease-out),
+              transform var(--dur-slow) var(--ease-out),
+              filter var(--dur-slow) var(--ease-out);
+  transition-delay: var(--reveal-delay, 0ms);
+}
+
+/* Stagger children inside grids */
+.grid > [data-reveal]:nth-child(1) { --reveal-delay: 0ms; }
+.grid > [data-reveal]:nth-child(2) { --reveal-delay: 80ms; }
+.grid > [data-reveal]:nth-child(3) { --reveal-delay: 160ms; }
+.grid > [data-reveal]:nth-child(4) { --reveal-delay: 240ms; }
+.grid > [data-reveal]:nth-child(5) { --reveal-delay: 320ms; }
+.grid > [data-reveal]:nth-child(6) { --reveal-delay: 400ms; }
+
+/* --- Loading Skeleton Shimmer --- */
+.skeleton,
+[data-loading] {
+  position: relative;
+  overflow: hidden;
+  background: var(--c-ink-100);
+  border-radius: var(--r-md);
+}
+
+.skeleton::after,
+[data-loading]::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(255, 255, 255, 0.6) 50%,
+    transparent 100%
+  );
+  animation: skeleton-shimmer 1.8s ease-in-out infinite;
+}
+
+@keyframes skeleton-shimmer {
+  0%   { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
+}
+
+/* --- Testimonial Cards: Hover Lift --- */
+.testimonial {
+  transition: transform var(--dur-med) var(--ease-out),
+              box-shadow var(--dur-med) var(--ease-out);
+}
+
+.testimonial:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--sh-lg);
+}
+
+/* --- Benefit Items: Staggered Hover --- */
+.benefit-item {
+  position: relative;
+  overflow: hidden;
+}
+
+.benefit-item::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(124, 58, 237, 0.03), transparent);
+  opacity: 0;
+  transition: opacity var(--dur-fast) var(--ease-out);
+}
+
+.benefit-item:hover::before {
+  opacity: 1;
+}
+
+/* --- FAQ Items: Smooth Open/Close Enhancement --- */
+.faq-q {
+  position: relative;
+}
+
+.faq-q::before {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  inset-inline: var(--sp-6);
+  height: 1px;
+  background: var(--grad-brand);
+  transform: scaleX(0);
+  transition: transform var(--dur-fast) var(--ease-out);
+  opacity: 0.3;
+}
+
+.faq-item.is-open .faq-q::before {
+  transform: scaleX(1);
+}
+
+/* --- Signal Items: Hover Enhancement --- */
+.signal-item {
+  transition: transform var(--dur-fast) var(--ease-out),
+              box-shadow var(--dur-fast) var(--ease-out),
+              border-color var(--dur-fast) var(--ease-out);
+}
+
+.signal-item:hover {
+  transform: translateX(-4px);
+  box-shadow: var(--sh-sm);
+  border-color: rgba(124, 58, 237, 0.2);
+}
+
+/* --- Journal Entries: Hover Slide --- */
+.journal-entry {
+  transition: transform var(--dur-fast) var(--ease-out),
+              box-shadow var(--dur-fast) var(--ease-out);
+}
+
+.journal-entry:hover {
+  transform: translateX(-4px);
+  box-shadow: var(--sh-sm);
+}
+
+/* --- Exchange Items: Enhanced Hover --- */
+.ex-item {
+  transition: all var(--dur-fast) var(--ease-out);
+}
+
+.ex-item:hover {
+  transform: translateY(-3px) scale(1.02);
+  box-shadow: var(--sh-md), 0 0 20px rgba(124, 58, 237, 0.12);
+}
+
+/* --- Tab: Focus Glow --- */
+.tab {
+  position: relative;
+}
+
+.tab.is-active {
+  animation: tab-active-glow 3s var(--ease-in-out) infinite alternate;
+}
+
+@keyframes tab-active-glow {
+  0%   { box-shadow: var(--sh-brand); }
+  100% { box-shadow: var(--sh-brand), 0 0 20px rgba(124, 58, 237, 0.2); }
+}
+
+/* --- Footer Social Icons: Hover Rise --- */
+.footer-social a {
+  position: relative;
+  overflow: hidden;
+}
+
+.footer-social a::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at center, rgba(255, 255, 255, 0.2), transparent);
+  opacity: 0;
+  transition: opacity var(--dur-fast);
+}
+
+.footer-social a:hover::after {
+  opacity: 1;
+}
+
+/* --- Section Kicker: Enhanced Pulse --- */
+.section-kicker::before {
+  animation: kicker-pulse-enhanced 2.5s var(--ease-in-out) infinite;
+}
+
+@keyframes kicker-pulse-enhanced {
+  0%, 100% { opacity: 1; transform: scale(1); box-shadow: 0 0 8px rgba(124, 58, 237, 0.5); }
+  50%      { opacity: 0.6; transform: scale(0.85); box-shadow: 0 0 16px rgba(124, 58, 237, 0.7); }
+}
+
+/* --- Status Dot: Enhanced Pulse --- */
+.status-dot::after {
+  animation: pulse-ring-enhanced 2.5s var(--ease-out) infinite;
+}
+
+@keyframes pulse-ring-enhanced {
+  0%   { transform: scale(0.6); opacity: 0.5; }
+  70%  { transform: scale(1.8); opacity: 0; }
+  100% { transform: scale(1.8); opacity: 0; }
+}
+
+/* --- Toast: Enhanced Slide-in --- */
+.toast {
+  transition: transform var(--dur-med) var(--ease-spring),
+              opacity var(--dur-med) var(--ease-out);
+}
+
+.toast.is-visible {
+  transform: translateX(50%) translateY(0);
+  opacity: 1;
+}
+
+/* --- CTA Final: Subtle Background Animation --- */
+.cta-final {
+  overflow: hidden;
+}
+
+.cta-final::before {
+  animation: cta-bg-drift 12s ease-in-out infinite alternate;
+}
+
+@keyframes cta-bg-drift {
+  0%   { transform: scale(1) translate(0, 0); }
+  100% { transform: scale(1.05) translate(-2%, -1%); }
+}
+
+/* --- Pay Methods: Enhanced Selection --- */
+.pay-method.is-selected {
+  animation: pay-selected-pulse 2s var(--ease-in-out) infinite alternate;
+}
+
+@keyframes pay-selected-pulse {
+  0%   { box-shadow: 0 0 0 4px rgba(124, 58, 237, 0.12); }
+  100% { box-shadow: 0 0 0 6px rgba(124, 58, 237, 0.18), 0 0 20px rgba(124, 58, 237, 0.1); }
+}
+
+/* --- Scroll Progress Bar: Smooth --- */
+[data-scroll-progress] {
+  transition: width 0.1s linear;
+  will-change: width;
+}
+
+/* --- Chart Window: Enhanced Entrance --- */
+.chart-window {
+  position: relative;
+}
+
+.chart-window::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  inset-inline: 0;
+  height: 2px;
+  background: var(--grad-brand);
+  opacity: 0.3;
+}
+
+/* --- Keyboard Focus: Enhanced Glow for All Interactive --- */
+a:focus-visible,
+button:focus-visible,
+[role="tab"]:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(124, 58, 237, 0.3),
+              0 0 16px rgba(124, 58, 237, 0.15);
+}
+
+
+/* ==========================================================
+   9. MOBILE OPTIMIZATION — Reduced Motion on Small Screens
+   ========================================================== */
+
+@media (max-width: 767px) {
+  /* Disable floating animations on mobile for performance */
+  .brand-mark {
+    animation: none;
+  }
+
+  .pricing-card {
+    animation: none;
+  }
+
+  .pricing-card.is-recommended {
+    animation: none;
+  }
+
+  /* Reduce hover effects on touch devices */
+  .glass-card:hover,
+  .engine-step:hover,
+  .benefit-item:hover,
+  .dash-card:hover {
+    transform: none;
+  }
+
+  /* Simpler button hover on mobile */
+  .btn-primary:hover,
+  .btn-secondary:hover,
+  .btn-gold:hover {
+    transform: none;
+  }
+
+  .btn-primary:active,
+  .btn-secondary:active,
+  .btn-gold:active {
+    transform: scale(0.97);
+  }
+
+  /* Disable stagger delays on mobile */
+  .grid > [data-reveal]:nth-child(n) {
+    --reveal-delay: 0ms;
+  }
+
+  /* Simpler nav border on mobile */
+  .nav.is-scrolled::after {
+    animation: none;
+    opacity: 0.3;
+  }
+
+  /* Disable brain core rotation on mobile */
+  .brain-core {
+    animation: brain-breathe 6s var(--ease-in-out) infinite alternate;
+  }
+
+  /* Disable CTA background drift on mobile */
+  .cta-final::before {
+    animation: none;
+  }
+}
+
+
+/* ==========================================================
+   10. PREFERS-REDUCED-MOTION — Complete Override
+   ========================================================== */
+
+@media (prefers-reduced-motion: reduce) {
+  /* Kill ALL animations */
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  /* Explicitly disable specific animations */
+  .brand-mark,
+  .brand::before,
+  .brand::after,
+  .nav.is-scrolled::after,
+  .nav-link::after,
+  .pricing-card,
+  .pricing-card.is-recommended,
+  .pricing-flag,
+  .brain-glow,
+  .brain-core,
+  .brain-ring,
+  .brain-scanline,
+  .nn-dot,
+  .nn-link,
+  .intel-node,
+  .intel-ring,
+  .hero-orb,
+  .hero-bg::before,
+  .hero-bg::after,
+  .page-veil,
+  .status-dot::after,
+  .progress::after,
+  .progress > span,
+  .progress > span::before,
+  .section-kicker::before,
+  .pipe-row::after,
+  .pipe-row::before,
+  .cta-final::before,
+  .auth-modal::before,
+  .auth-modal::after,
+  .skeleton::after,
+  [data-loading]::after,
+  .tab.is-active,
+  .pay-method.is-selected,
+  .proof-stat::before,
+  .footer-social a::after,
+  .benefit-item::before,
+  .faq-q::before,
+  .dash-card::before,
+  .engine-step::after,
+  [data-scroll-progress] {
+    animation: none !important;
+    transition: none !important;
+  }
+
+  /* Reset all transforms */
+  .brand-mark,
+  .glass-card,
+  .pricing-card,
+  .engine-step,
+  .benefit-item,
+  .dash-card,
+  .testimonial,
+  .btn,
+  .ex-item,
+  .signal-item,
+  .journal-entry,
+  .pipe-row {
+    transform: none !important;
+  }
+
+  /* Ensure visibility */
+  [data-reveal] {
+    opacity: 1 !important;
+    transform: none !important;
+    filter: none !important;
+  }
+}

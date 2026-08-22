@@ -1,0 +1,267 @@
+/* ============================================================
+   IRANCOiN — Responsive System
+   Mobile · Small Phone · Tablet · Laptop · Desktop · Ultra
+   Breakpoints: 360 / 480 / 640 / 768 / 1024 / 1600 / 2400
+   ============================================================ */
+
+/* ---------- Hamburger menu (mobile) ---------- */
+.nav-hamburger {
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  gap: 5px;
+  width: 2.25rem;
+  height: 2.25rem;
+  padding: 0.4rem;
+  cursor: pointer;
+  background: none;
+  border: none;
+  border-radius: var(--r-sm);
+  z-index: calc(var(--z-nav) + 10);
+  transition: background var(--dur-fast) var(--ease-out);
+}
+
+.nav-hamburger:hover { background: rgba(124, 58, 237, 0.08); }
+.nav-hamburger:focus-visible { outline: 2px solid var(--c-violet-500); outline-offset: 2px; }
+
+.nav-hamburger span {
+  display: block;
+  width: 100%;
+  height: 2px;
+  background: var(--c-ink-700);
+  border-radius: 2px;
+  transition: transform var(--dur-fast) var(--ease-out),
+              opacity var(--dur-fast) var(--ease-out);
+}
+
+.nav-hamburger.is-open span:nth-child(1) {
+  transform: translateY(7px) rotate(45deg);
+}
+.nav-hamburger.is-open span:nth-child(2) {
+  opacity: 0;
+}
+.nav-hamburger.is-open span:nth-child(3) {
+  transform: translateY(-7px) rotate(-45deg);
+}
+
+@media (max-width: 1023px) {
+  .nav-hamburger {
+    display: flex;
+  }
+}
+
+/* Mobile nav open state */
+@media (max-width: 1023px) {
+  .nav-links.is-open {
+    display: flex !important;
+    flex-wrap: wrap;
+    position: absolute;
+    top: 100%;
+    inset-inline: 0;
+    z-index: calc(var(--z-nav) + 5);
+    background: rgba(255, 255, 255, 0.96);
+    backdrop-filter: blur(var(--blur-lg));
+    -webkit-backdrop-filter: blur(var(--blur-lg));
+    border-bottom: var(--bw-xs) solid var(--border-default);
+    box-shadow: var(--sh-md);
+    padding: var(--sp-4);
+    gap: var(--sp-2);
+  }
+
+  .nav-links.is-open .nav-link {
+    width: 100%;
+    text-align: center;
+    padding: var(--sp-3) var(--sp-4);
+  }
+
+  .nav-links.is-open .nav-login-btn {
+    width: 100%;
+  }
+}
+
+/* ---------- 360px — Small phones ---------- */
+/* ---------- 480px — Mobile ---------- */
+@media (max-width: 480px) {
+  :root {
+    --fs-display-xl: 2.5rem;
+  }
+
+  .hero-stats { gap: var(--sp-5); }
+  .hero-stat { padding: var(--sp-3) var(--sp-4); }
+  .hero-visual { height: 27rem; }
+  .ai-card { min-width: 8.5rem; padding: var(--sp-3); }
+  .ai-card .ac-value { font-size: 0.9375rem; }
+  .mc-1 { width: 8rem; }
+  .mc-2 { width: 9rem; }
+  .coin { width: 3.4rem; }
+  .btn-lg { padding: 0.9375rem 1.75rem; }
+  .ac-2, .ac-4, .mc-2 { display: none; }
+  .pricing-card { padding: var(--sp-6); }
+  .faq-item { margin-bottom: var(--sp-2); }
+
+  /* Auth modal mobile */
+  .auth-modal-overlay .auth-modal {
+    max-width: 100%;
+    margin: var(--sp-3);
+    max-height: 95vh;
+  }
+
+  /* Dashboard cards */
+  .dash-cards {
+    grid-template-columns: 1fr !important;
+  }
+
+  .dash-grid-2,
+  .dash-grid-3 {
+    grid-template-columns: 1fr !important;
+  }
+
+  .dash-grid-3 > .glass-card[style*="grid-column"] {
+    grid-column: span 1 !important;
+  }
+
+  .dash-topbar {
+    flex-direction: column;
+    gap: var(--sp-3);
+    align-items: stretch;
+  }
+
+  .dash-topbar .btn {
+    width: 100%;
+    text-align: center;
+  }
+}
+
+@media (max-width: 360px) {
+  :root {
+    --fs-display-xl: 2rem;
+    --fs-display-l: 1.75rem;
+    --fs-heading-xl: 1.5rem;
+    --fs-heading-l: 1.25rem;
+    --fs-heading-m: 1.125rem;
+    --gutter: 1rem;
+  }
+
+  .hero-stats { gap: var(--sp-3); flex-direction: column; }
+  .hero-stat { padding: var(--sp-2) var(--sp-3); }
+  .hero-visual { height: 22rem; }
+  .ai-card { min-width: 7rem; padding: var(--sp-2); font-size: 0.8125rem; }
+  .ai-card .ac-value { font-size: 0.8125rem; }
+  .mc-1, .mc-2 { width: 7rem; }
+  .coin { width: 2.8rem; }
+  .btn-lg { padding: 0.8125rem 1.5rem; font-size: 0.875rem; }
+  .ac-2, .ac-3, .ac-4, .mc-2 { display: none; }
+  .pricing-card { padding: var(--sp-4); }
+  .pricing-price { font-size: 2rem; }
+  .faq-item { margin-bottom: var(--sp-2); }
+  .cta-final { padding: var(--sp-6) var(--sp-4); }
+  .cta-final h2 { font-size: 1.25rem; }
+
+  /* Dashboard */
+  .dash-sidebar { width: 100%; height: auto; position: relative; }
+  .dash-main { margin: 0; }
+}
+
+
+
+/* ---------- 640px — Large phones / small tablets ---------- */
+@media (max-width: 767px) {
+  .hero-ctas { flex-direction: column; align-items: stretch; }
+  .hero-ctas .btn { width: 100%; }
+  .scroll-hint { display: none; }
+  .pay-panel { padding: var(--sp-6); }
+  .hero-visual { height: 32rem; }
+  .section-head { margin-bottom: var(--sp-10); }
+  .cta-final { padding: var(--sp-8) var(--sp-5); }
+  .cmp-table { font-size: 0.8125rem; }
+  .cmp-table th, .cmp-table td { padding: var(--sp-3) var(--sp-4); }
+
+  /* Auth modal */
+  .auth-modal-overlay .auth-modal {
+    margin: var(--sp-3);
+    max-height: 90vh;
+  }
+  /* Pricing grid */
+  .pricing-grid-4 {
+    grid-template-columns: 1fr;
+    max-width: 24rem;
+    margin-inline: auto;
+  }
+
+  /* Dashboard */
+  .dash-topbar {
+    padding: var(--sp-3);
+  }
+
+  .dash-table {
+    font-size: 0.8125rem;
+  }
+
+  .dash-table th,
+  .dash-table td {
+    padding: var(--sp-2) var(--sp-3);
+  }
+
+  .chart-window .cw-tags {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .chart-window .tabs {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+}
+@media (min-width: 768px) and (max-width: 1023px) {
+  .hero-visual { height: 34rem; }
+}
+
+/* ---------- 1024px — Laptop (tablet sidebar) ---------- */
+@media (max-width: 1023px) {
+  .nav-links {
+    display: none;
+  }
+
+  .nav-link { padding: var(--sp-2) var(--sp-3); font-size: 0.875rem; }
+  .nav-actions { flex: 0 1 auto; }
+  .nav-actions .btn { padding: 0.625rem 1rem; font-size: 0.8125rem; }
+}
+
+/* ---------- 1600px — Ultra-wide ---------- */
+@media (min-width: 1600px) {
+  .hero-inner { width: min(100% - (var(--gutter) * 2), 96rem); }
+  .hero-visual { height: 44rem; }
+}
+
+/* ---------- 2400px — Massive displays ---------- */
+@media (min-width: 2400px) {
+  .hero { font-size: 1.05em; }
+}
+
+/* ---------- Print ---------- */
+@media print {
+  .nav, .nav-hamburger, .scroll-hint, .hero-visual, .page-veil,
+  .exchange-carousel-wrap, #particles-canvas, #particles-canvas-cta, #hero-3d, #particles-3d,
+  .dash-sidebar, .dash-topbar .btn {
+    display: none !important;
+  }
+  body { background: #fff; color: #111; }
+  .section { padding-block: 1rem; }
+  .glass-card, .pricing-card, .dash-card {
+    background: #fff;
+    border: 1px solid #ddd;
+    box-shadow: none;
+    backdrop-filter: none;
+  }
+  .dash-shell .dash-main { margin: 0; }
+}
+
+/* ---------- Floating labels responsive ---------- */
+@media (max-width: 767px) {
+  .floating-label {
+    font-size: 0.55rem;
+    padding: 0.3rem 0.6rem;
+    gap: 0.3rem;
+  }
+  .fl-icon { font-size: 0.6rem; }
+}

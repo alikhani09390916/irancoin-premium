@@ -1,0 +1,1663 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>پنل مدیریت | IRANCOiN</title>
+  <meta name="description" content="پنل مدیریت IRANCOiN — مدیریت کاربران، اشتراک‌ها، پرداخت‌ها و تنظیمات.">
+  <meta name="theme-color" content="#7C3AED">
+  <meta name="robots" content="noindex, nofollow">
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%237C3AED'/%3E%3Cstop offset='1' stop-color='%2306B6D4'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='64' height='64' rx='16' fill='url(%23g)'/%3E%3Ctext x='32' y='42' font-size='28' font-weight='800' text-anchor='middle' fill='white' font-family='Arial'%3EIC%3C/text%3E%3C/svg%3E">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  
+  <!-- Font Awesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  
+  <style>
+    :root {
+      --grad-brand: linear-gradient(135deg, #7C3AED 0%, #06B6D4 100%);
+      --grad-brand-r: linear-gradient(135deg, #06B6D4 0%, #7C3AED 100%);
+      --bg-body: #060a14;
+      --bg-sidebar: #0a0f1e;
+      --bg-card: rgba(255,255,255,0.03);
+      --bg-card-hover: rgba(255,255,255,0.06);
+      --bg-input: rgba(255,255,255,0.05);
+      --brd: rgba(255,255,255,0.06);
+      --brd-focus: rgba(124,58,237,0.5);
+      --txt: #f1f5f9;
+      --txt-dim: #64748b;
+      --txt-muted: #94A3B8;
+      --ok: #10b981;
+      --ok-bg: rgba(16,185,129,0.12);
+      --warn: #f59e0b;
+      --warn-bg: rgba(245,158,11,0.12);
+      --err: #ef4444;
+      --err-bg: rgba(239,68,68,0.12);
+      --info: #3b82f6;
+      --info-bg: rgba(59,130,246,0.12);
+      --purple: #a78bfa;
+      --purple-bg: rgba(167,139,250,0.12);
+      --radius: 0.75rem;
+      --radius-lg: 1rem;
+      --shadow: 0 4px 24px rgba(0,0,0,0.3);
+      --transition: all 0.2s ease;
+      --sidebar-w: 260px;
+      --header-h: 64px;
+    }
+    * { margin:0; padding:0; box-sizing:border-box; }
+    html { scroll-behavior: smooth; }
+    body { font-family:'Vazirmatn',system-ui,sans-serif; background:var(--bg-body); color:var(--txt); min-height:100vh; direction:rtl; overflow-x:hidden; }
+    ::-webkit-scrollbar { width:6px; height:6px; }
+    ::-webkit-scrollbar-track { background:transparent; }
+    ::-webkit-scrollbar-thumb { background:rgba(124,58,237,0.3); border-radius:3px; }
+    ::-webkit-scrollbar-thumb:hover { background:rgba(124,58,237,0.5); }
+
+    /* ===== LOGIN ===== */
+    .login-wrap { display:flex; align-items:center; justify-content:center; min-height:100vh; padding:2rem; background:radial-gradient(ellipse at 50% 30%, rgba(124,58,237,0.08) 0%, transparent 70%); }
+    .login-card { background:linear-gradient(160deg, rgba(26,16,64,0.9), rgba(15,23,42,0.95)); border:1px solid rgba(124,58,237,0.25); border-radius:1.5rem; padding:3rem 2.5rem; max-width:26rem; width:100%; box-shadow:0 25px 80px rgba(0,0,0,0.6), 0 0 60px rgba(124,58,237,0.05); text-align:center; backdrop-filter:blur(20px); }
+    .login-logo { width:4rem; height:4rem; border-radius:1rem; background:var(--grad-brand); display:grid; place-items:center; margin:0 auto 1.5rem; font-size:1.75rem; font-weight:900; color:white; box-shadow:0 8px 32px rgba(124,58,237,0.3); }
+    .login-card h1 { font-size:1.375rem; font-weight:800; margin-bottom:.375rem; background:var(--grad-brand); -webkit-background-clip:text; -webkit-text-fill-color:transparent; }
+    .login-card .sub { color:var(--txt-dim); font-size:.8125rem; margin-bottom:2rem; }
+    .login-field { position:relative; margin-bottom:1rem; }
+    .login-field input { width:100%; padding:.875rem 1.125rem .875rem 3rem; border-radius:var(--radius); border:1px solid var(--brd); background:var(--bg-input); color:var(--txt); font-size:.9375rem; font-family:inherit; outline:none; transition:var(--transition); direction:ltr; text-align:left; }
+    .login-field input:focus { border-color:var(--brd-focus); box-shadow:0 0 0 3px rgba(124,58,237,0.1); }
+    .login-field .icon { position:absolute; inset-inline-start:1rem; top:50%; transform:translateY(-50%); color:var(--txt-dim); font-size:1.125rem; }
+    .login-btn { width:100%; padding:.875rem; border-radius:var(--radius); background:var(--grad-brand); border:none; color:white; font-weight:700; font-size:1rem; cursor:pointer; font-family:inherit; transition:var(--transition); box-shadow:0 4px 20px rgba(124,58,237,0.3); }
+    .login-btn:hover { transform:translateY(-1px); box-shadow:0 6px 28px rgba(124,58,237,0.4); }
+    .login-btn:active { transform:translateY(0); }
+    .login-err { color:var(--err); font-size:.8125rem; margin-top:.75rem; display:none; }
+    .login-footer { margin-top:1.5rem; padding-top:1.25rem; border-top:1px solid var(--brd); }
+    .login-footer p { color:var(--txt-muted); font-size:.75rem; }
+
+    /* ===== LAYOUT ===== */
+    .app { display:none; }
+    .app.on { display:flex; min-height:100vh; }
+
+    /* ===== SIDEBAR ===== */
+    .sidebar { position:fixed; top:0; right:0; width:var(--sidebar-w); height:100vh; background:var(--bg-sidebar); border-left:1px solid var(--brd); z-index:200; display:flex; flex-direction:column; transition:transform 0.3s ease; }
+    .sidebar-header { padding:1.25rem 1.5rem; border-bottom:1px solid var(--brd); display:flex; align-items:center; gap:.75rem; }
+    .sidebar-logo { width:2.5rem; height:2.5rem; border-radius:.625rem; background:var(--grad-brand); display:grid; place-items:center; font-size:.875rem; font-weight:900; color:white; flex-shrink:0; }
+    .sidebar-brand { font-size:.9375rem; font-weight:700; }
+    .sidebar-brand span { background:var(--grad-brand); -webkit-background-clip:text; -webkit-text-fill-color:transparent; }
+    .sidebar-nav { flex:1; overflow-y:auto; padding:.75rem; }
+    .nav-group { margin-bottom:.5rem; }
+    .nav-group-label { padding:.5rem .75rem; font-size:.6875rem; font-weight:600; color:var(--txt-muted); text-transform:uppercase; letter-spacing:.05em; }
+    .nav-item { display:flex; align-items:center; gap:.75rem; padding:.625rem .75rem; border-radius:.5rem; color:var(--txt-dim); cursor:pointer; transition:var(--transition); font-size:.8125rem; font-weight:500; border:1px solid transparent; }
+    .nav-item:hover { background:var(--bg-card-hover); color:var(--txt); }
+    .nav-item.active { background:rgba(124,58,237,0.12); color:var(--purple); border-color:rgba(124,58,237,0.2); font-weight:600; }
+    .nav-item .icon { width:1.25rem; text-align:center; font-size:1rem; }
+    .nav-item .badge { margin-right:auto; background:var(--err); color:white; font-size:.625rem; padding:.125rem .375rem; border-radius:999px; font-weight:700; }
+    .sidebar-footer { padding:1rem 1.5rem; border-top:1px solid var(--brd); }
+    .sidebar-footer .user-info { display:flex; align-items:center; gap:.75rem; }
+    .sidebar-footer .avatar { width:2rem; height:2rem; border-radius:50%; background:var(--grad-brand); display:grid; place-items:center; font-size:.75rem; font-weight:700; color:white; }
+    .sidebar-footer .user-name { font-size:.8125rem; font-weight:600; }
+    .sidebar-footer .user-role { font-size:.6875rem; color:var(--txt-dim); }
+
+    /* ===== MAIN ===== */
+    .main { flex:1; margin-right:var(--sidebar-w); min-height:100vh; display:flex; flex-direction:column; }
+
+    /* ===== HEADER ===== */
+    .header { height:var(--header-h); padding:0 2rem; border-bottom:1px solid var(--brd); background:rgba(6,10,20,0.8); backdrop-filter:blur(12px); display:flex; align-items:center; justify-content:space-between; position:sticky; top:0; z-index:100; }
+    .header-right { display:flex; align-items:center; gap:1rem; }
+    .header-title { font-size:1.125rem; font-weight:700; }
+    .header-actions { display:flex; align-items:center; gap:.5rem; }
+    .hbtn { padding:.5rem 1rem; border-radius:.5rem; border:1px solid var(--brd); background:transparent; color:var(--txt-dim); cursor:pointer; font-family:inherit; font-size:.8125rem; font-weight:500; transition:var(--transition); display:flex; align-items:center; gap:.375rem; }
+    .hbtn:hover { background:var(--bg-card-hover); color:var(--txt); border-color:rgba(255,255,255,0.1); }
+    .hbtn-danger { border-color:rgba(239,68,68,0.3); color:var(--err); }
+    .hbtn-danger:hover { background:var(--err-bg); }
+    .hbtn-primary { background:var(--grad-brand); border:none; color:white; font-weight:600; }
+    .hbtn-primary:hover { opacity:.9; }
+    .mobile-toggle { display:none; background:none; border:none; color:var(--txt); font-size:1.5rem; cursor:pointer; padding:.25rem; }
+
+    /* ===== CONTENT ===== */
+    .content { flex:1; padding:1.5rem 2rem 3rem; max-width:90rem; margin:0 auto; width:100%; }
+
+    /* ===== SECTIONS ===== */
+    .section { display:none; animation:fadeIn .3s ease; }
+    .section.active { display:block; }
+    @keyframes fadeIn { from{opacity:0;transform:translateY(8px)} to{opacity:1;transform:translateY(0)} }
+
+    /* ===== STAT CARDS ===== */
+    .stats-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(14rem,1fr)); gap:1rem; margin-bottom:2rem; }
+    .stat-card { background:var(--bg-card); border:1px solid var(--brd); border-radius:var(--radius-lg); padding:1.25rem; transition:var(--transition); position:relative; overflow:hidden; }
+    .stat-card:hover { border-color:rgba(124,58,237,0.3); transform:translateY(-2px); box-shadow:var(--shadow); }
+    .stat-card .stat-icon { width:2.5rem; height:2.5rem; border-radius:.625rem; display:grid; place-items:center; font-size:1.125rem; margin-bottom:.75rem; }
+    .stat-card .stat-label { color:var(--txt-dim); font-size:.75rem; font-weight:500; margin-bottom:.25rem; }
+    .stat-card .stat-value { font-size:1.75rem; font-weight:800; background:var(--grad-brand); -webkit-background-clip:text; -webkit-text-fill-color:transparent; line-height:1.2; }
+    .stat-card .stat-sub { color:var(--txt-dim); font-size:.6875rem; margin-top:.25rem; }
+    .stat-card::after { content:''; position:absolute; top:0; left:0; right:0; height:2px; background:var(--grad-brand); opacity:0; transition:var(--transition); }
+    .stat-card:hover::after { opacity:1; }
+
+    /* ===== CARDS ===== */
+    .card { background:var(--bg-card); border:1px solid var(--brd); border-radius:var(--radius-lg); overflow:hidden; margin-bottom:1.5rem; }
+    .card-header { display:flex; align-items:center; justify-content:space-between; padding:1rem 1.5rem; border-bottom:1px solid var(--brd); }
+    .card-header h2 { font-size:.9375rem; font-weight:700; display:flex; align-items:center; gap:.5rem; }
+    .card-header .actions { display:flex; gap:.375rem; }
+    .card-body { padding:1.25rem 1.5rem; }
+    .card-body.no-pad { padding:0; }
+
+    /* ===== TABLES ===== */
+    .table-wrap { overflow-x:auto; }
+    table { width:100%; border-collapse:collapse; }
+    th { padding:.75rem 1rem; text-align:right; font-size:.75rem; font-weight:600; color:var(--txt-dim); background:rgba(255,255,255,0.02); border-bottom:1px solid var(--brd); white-space:nowrap; }
+    td { padding:.75rem 1rem; font-size:.8125rem; border-bottom:1px solid var(--brd); vertical-align:middle; }
+    tr:hover td { background:rgba(255,255,255,0.015); }
+    tr:last-child td { border-bottom:none; }
+
+    /* ===== BADGES ===== */
+    .badge { display:inline-flex; align-items:center; gap:.25rem; padding:.2rem .625rem; border-radius:999px; font-size:.6875rem; font-weight:600; white-space:nowrap; }
+    .badge-ok { background:var(--ok-bg); color:var(--ok); }
+    .badge-warn { background:var(--warn-bg); color:var(--warn); }
+    .badge-err { background:var(--err-bg); color:var(--err); }
+    .badge-info { background:var(--info-bg); color:var(--info); }
+    .badge-purple { background:var(--purple-bg); color:var(--purple); }
+    .badge-neutral { background:rgba(100,116,139,0.12); color:var(--txt-dim); }
+
+    /* ===== BUTTONS ===== */
+    .btn { display:inline-flex; align-items:center; gap:.375rem; padding:.375rem .75rem; border-radius:.375rem; border:none; cursor:pointer; font-family:inherit; font-size:.75rem; font-weight:600; transition:var(--transition); white-space:nowrap; }
+    .btn:hover { transform:scale(1.02); }
+    .btn-ok { background:var(--ok-bg); color:var(--ok); border:1px solid rgba(16,185,129,0.2); }
+    .btn-err { background:var(--err-bg); color:var(--err); border:1px solid rgba(239,68,68,0.2); }
+    .btn-warn { background:var(--warn-bg); color:var(--warn); border:1px solid rgba(245,158,11,0.2); }
+    .btn-info { background:var(--info-bg); color:var(--info); border:1px solid rgba(59,130,246,0.2); }
+    .btn-purple { background:var(--purple-bg); color:var(--purple); border:1px solid rgba(167,139,250,0.2); }
+    .btn-neutral { background:rgba(100,116,139,0.12); color:var(--txt-dim); border:1px solid rgba(100,116,139,0.2); }
+    .cell-actions { display:flex; gap:.25rem; flex-wrap:wrap; }
+
+    /* ===== FORMS ===== */
+    .form-group { margin-bottom:1rem; }
+    .form-label { display:block; color:var(--txt-dim); font-size:.8125rem; font-weight:500; margin-bottom:.375rem; }
+    .form-input, .form-select, .form-textarea { width:100%; padding:.625rem .875rem; border-radius:.5rem; border:1px solid var(--brd); background:var(--bg-input); color:var(--txt); font-size:.875rem; font-family:inherit; outline:none; transition:var(--transition); }
+    .form-input:focus, .form-select:focus, .form-textarea:focus { border-color:var(--brd-focus); box-shadow:0 0 0 3px rgba(124,58,237,0.08); }
+    .form-textarea { min-height:5rem; resize:vertical; }
+    .form-select { cursor:pointer; }
+    .form-select option { background:#1a1040; color:white; }
+
+    /* ===== TOGGLE ===== */
+    .toggle { position:relative; display:inline-block; width:2.75rem; height:1.5rem; cursor:pointer; }
+    .toggle input { opacity:0; width:0; height:0; }
+    .toggle input:focus-visible + .slider { box-shadow:0 0 0 3px rgba(124,58,237,0.4); }
+    .toggle .slider { position:absolute; inset:0; background:rgba(100,116,139,0.3); border-radius:999px; transition:var(--transition); }
+    .toggle .slider::before { content:''; position:absolute; width:1.125rem; height:1.125rem; border-radius:50%; background:white; top:.1875rem; right:.1875rem; transition:var(--transition); }
+    .toggle input:checked + .slider { background:var(--ok); }
+    .toggle input:checked + .slider::before { transform:translateX(1.25rem); }
+
+    /* ===== MODAL ===== */
+    .modal-overlay { display:none; position:fixed; inset:0; z-index:999; background:rgba(0,0,0,0.65); backdrop-filter:blur(8px); align-items:center; justify-content:center; padding:1rem; }
+    .modal-overlay.on { display:flex; }
+    .modal { background:linear-gradient(160deg, #1a1040, #0f172a); border:1px solid rgba(124,58,237,0.25); border-radius:1.25rem; padding:0; max-width:36rem; width:100%; max-height:85vh; overflow:hidden; box-shadow:0 25px 80px rgba(0,0,0,0.6); animation:modalIn .25s ease; }
+    @keyframes modalIn { from{opacity:0;transform:scale(.95)} to{opacity:1;transform:scale(1)} }
+    .modal-header { display:flex; align-items:center; justify-content:space-between; padding:1.25rem 1.5rem; border-bottom:1px solid var(--brd); }
+    .modal-header h2 { font-size:1rem; font-weight:700; background:var(--grad-brand); -webkit-background-clip:text; -webkit-text-fill-color:transparent; }
+    .modal-close { background:none; border:none; color:var(--txt-dim); font-size:1.5rem; cursor:pointer; padding:.25rem; line-height:1; transition:var(--transition); }
+    .modal-close:hover { color:var(--err); }
+    .modal-body { padding:1.5rem; overflow-y:auto; max-height:calc(85vh - 8rem); }
+    .modal-footer { padding:1rem 1.5rem; border-top:1px solid var(--brd); display:flex; gap:.5rem; justify-content:flex-start; }
+    .modal-footer .btn { padding:.5rem 1.25rem; font-size:.8125rem; }
+    .btn-primary { background:var(--grad-brand); color:white; border:none; }
+    .btn-cancel { background:rgba(100,116,139,0.12); color:var(--txt-dim); border:1px solid var(--brd); }
+
+    /* ===== TOGGLE SWITCH (for offers) ===== */
+    .offer-row { display:flex; align-items:center; gap:1rem; padding:1rem; border:1px solid var(--brd); border-radius:var(--radius); margin-bottom:.75rem; transition:var(--transition); }
+    .offer-row:hover { border-color:rgba(124,58,237,0.3); background:var(--bg-card-hover); }
+    .offer-info { flex:1; }
+    .offer-title { font-size:.875rem; font-weight:600; margin-bottom:.125rem; }
+    .offer-desc { font-size:.75rem; color:var(--txt-dim); }
+    .offer-meta { font-size:.6875rem; color:var(--txt-muted); margin-top:.25rem; }
+
+    /* ===== SECTION EDITOR ===== */
+    .section-editor { border:1px solid var(--brd); border-radius:var(--radius); margin-bottom:1rem; overflow:hidden; }
+    .section-editor-header { display:flex; align-items:center; justify-content:space-between; padding:.875rem 1.25rem; background:rgba(255,255,255,0.02); border-bottom:1px solid var(--brd); cursor:pointer; transition:var(--transition); }
+    .section-editor-header:hover { background:rgba(255,255,255,0.04); }
+    .section-editor-header h3 { font-size:.875rem; font-weight:600; display:flex; align-items:center; gap:.5rem; }
+    .section-editor-body { padding:1.25rem; display:none; }
+    .section-editor-body.open { display:block; }
+    .field-row { display:grid; grid-template-columns:1fr 1fr; gap:1rem; margin-bottom:1rem; }
+    .field-full { grid-column:1/-1; }
+
+    /* ===== PREVIEW ===== */
+    .preview-frame { width:100%; height:70vh; border:1px solid var(--brd); border-radius:var(--radius); background:white; }
+
+    /* ===== VERSION ===== */
+    .version-item { display:flex; align-items:center; gap:1rem; padding:1rem; border:1px solid var(--brd); border-radius:var(--radius); margin-bottom:.75rem; transition:var(--transition); }
+    .version-item:hover { border-color:rgba(124,58,237,0.3); }
+    .version-dot { width:.5rem; height:.5rem; border-radius:50%; background:var(--ok); flex-shrink:0; }
+    .version-dot.old { background:var(--txt-dim); }
+    .version-info { flex:1; }
+    .version-tag { font-size:.875rem; font-weight:600; }
+    .version-date { font-size:.75rem; color:var(--txt-dim); }
+    .version-msg { font-size:.75rem; color:var(--txt-muted); margin-top:.125rem; }
+
+    /* ===== TOAST ===== */
+    .toast { position:fixed; bottom:1.5rem; left:50%; transform:translateX(-50%); padding:.75rem 1.5rem; border-radius:.75rem; font-size:.875rem; font-weight:600; z-index:9999; animation:toastIn .3s ease; display:flex; align-items:center; gap:.5rem; box-shadow:0 8px 32px rgba(0,0,0,0.3); }
+    .toast-ok { background:rgba(16,185,129,0.95); color:white; }
+    .toast-err { background:rgba(239,68,68,0.95); color:white; }
+    .toast-info { background:rgba(59,130,246,0.95); color:white; }
+    @keyframes toastIn { from{opacity:0;transform:translateX(-50%) translateY(1rem)} to{opacity:1;transform:translateX(-50%) translateY(0)} }
+
+    /* ===== CONFIRM DIALOG ===== */
+    .confirm-overlay { display:none; position:fixed; inset:0; z-index:1000; background:rgba(0,0,0,0.7); backdrop-filter:blur(8px); align-items:center; justify-content:center; padding:1rem; }
+    .confirm-overlay.on { display:flex; }
+    .confirm-box { background:linear-gradient(160deg, #1a1040, #0f172a); border:1px solid rgba(124,58,237,0.25); border-radius:1.25rem; padding:2rem; max-width:24rem; width:100%; text-align:center; box-shadow:0 25px 80px rgba(0,0,0,0.6); animation:modalIn .25s ease; }
+    .confirm-icon { font-size:3rem; margin-bottom:1rem; }
+    .confirm-msg { font-size:1rem; font-weight:600; line-height:1.6; margin-bottom:1.5rem; }
+    .confirm-btns { display:flex; gap:.75rem; justify-content:center; }
+    .confirm-btns button { padding:.625rem 2rem; border-radius:.5rem; font-weight:700; font-size:.9375rem; cursor:pointer; font-family:inherit; border:none; transition:var(--transition); }
+    .confirm-btns .btn-yes { background:var(--grad-brand); color:white; }
+    .confirm-btns .btn-no { background:rgba(100,116,139,0.2); color:var(--txt-dim); border:1px solid var(--brd); }
+    .confirm-btns button:hover { transform:scale(1.03); }
+
+    /* ===== LOADING SKELETON ===== */
+    .skeleton { background:linear-gradient(90deg, rgba(255,255,255,0.03) 25%, rgba(255,255,255,0.06) 50%, rgba(255,255,255,0.03) 75%); background-size:200% 100%; animation:shimmer 1.5s infinite; border-radius:var(--radius); }
+    .skeleton-text { height:1rem; margin-bottom:.5rem; }
+    .skeleton-value { height:2rem; width:60%; margin-bottom:.375rem; }
+    .skeleton-sub { height:.75rem; width:40%; }
+    @keyframes shimmer { 0%{background-position:200% 0} 100%{background-position:-200% 0} }
+
+    /* ===== NOTICE BANNER ===== */
+    .notice-banner { background:rgba(245,158,11,0.08); border:1px solid rgba(245,158,11,0.25); border-radius:var(--radius); padding:.75rem 1.25rem; margin-bottom:1.5rem; display:flex; align-items:center; gap:.75rem; font-size:.8125rem; color:var(--warn); }
+    .notice-banner .icon { font-size:1.125rem; flex-shrink:0; }
+
+    /* ===== TABLE EMPTY STATE ===== */
+    .table-empty { text-align:center; padding:2.5rem 1rem; color:var(--txt-dim); }
+    .table-empty .icon { font-size:2rem; margin-bottom:.5rem; opacity:.5; }
+    .table-empty .msg { font-size:.875rem; }
+    .table-loading { text-align:center; padding:2rem 1rem; color:var(--txt-dim); }
+
+    /* ===== BANK CARD MANAGEMENT ===== */
+    .bank-card-item { display:flex; align-items:center; gap:1rem; padding:1rem; border:1px solid var(--brd); border-radius:var(--radius); margin-bottom:.75rem; transition:var(--transition); }
+    .bank-card-item:hover { border-color:rgba(124,58,237,0.3); background:var(--bg-card-hover); }
+    .bank-card-icon { width:2.5rem; height:2.5rem; border-radius:.5rem; background:var(--grad-brand); display:grid; place-items:center; font-size:1rem; flex-shrink:0; }
+    .bank-card-info { flex:1; }
+    .bank-card-number { font-size:.9375rem; font-weight:700; direction:ltr; text-align:left; letter-spacing:.05em; }
+    .bank-card-name { font-size:.75rem; color:var(--txt-dim); margin-top:.125rem; }
+    .bank-card-bank { font-size:.6875rem; color:var(--txt-muted); }
+
+    /* ===== RESPONSIVE ===== */
+    @media(max-width:1024px) {
+      .sidebar { transform:translateX(100%); }
+      .sidebar.open { transform:translateX(0); }
+      .main { margin-right:0; }
+      .mobile-toggle { display:block; }
+      .stats-grid { grid-template-columns:repeat(2,1fr); }
+      .field-row { grid-template-columns:1fr; }
+    }
+    @media(max-width:768px) {
+      .content { padding:1.25rem; }
+      .stats-grid { grid-template-columns:repeat(2,1fr); }
+      .header { padding:0 1.25rem; }
+      .modal { margin:.75rem; max-height:90vh; }
+      .modal-body { max-height:calc(90vh - 8rem); }
+      .card-body { padding:1rem; }
+      .card-header { padding:.75rem 1rem; }
+      .sidebar { width:280px; }
+    }
+    @media(max-width:640px) {
+      .content { padding:1rem; }
+      .stats-grid { grid-template-columns:1fr; }
+      .header { padding:0 1rem; }
+      th, td { padding:.5rem .625rem; font-size:.75rem; }
+      .modal { margin:.5rem; max-height:95vh; }
+      .modal-body { max-height:calc(95vh - 8rem); }
+      .sidebar { width:100%; }
+      .card-header { flex-direction:column; gap:.5rem; align-items:flex-start; }
+      .card-header .actions { width:100%; }
+      .header-actions { gap:.25rem; }
+      .hbtn { padding:.375rem .625rem; font-size:.75rem; }
+    }
+    @media(max-width:360px) {
+      .stats-grid { gap:.5rem; }
+      .stat-card { padding:1rem; }
+      .stat-card .stat-value { font-size:1.375rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ============ PYRAMID BRAND SYMBOL ============ -->
+  <svg xmlns="http://www.w3.org/2000/svg" width="0" height="0" style="position:absolute" aria-hidden="true">
+    <symbol id="ic-brand" viewBox="0 0 200 165">
+      <defs>
+        <linearGradient id="pyr-btc" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#F7931A"/><stop offset="100%" stop-color="#E07B00"/></linearGradient>
+        <linearGradient id="pyr-usdt" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#26A17B"/><stop offset="100%" stop-color="#1C7C5E"/></linearGradient>
+        <linearGradient id="pyr-eth" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#627EEA"/><stop offset="100%" stop-color="#4357C9"/></linearGradient>
+        <linearGradient id="pyr-usdc" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#2775CA"/><stop offset="100%" stop-color="#1A5AA0"/></linearGradient>
+        <linearGradient id="pyr-ltc" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#BFBBBB"/><stop offset="100%" stop-color="#8E8E8E"/></linearGradient>
+        <linearGradient id="pyr-doge" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#C2A633"/><stop offset="100%" stop-color="#BA9F33"/></linearGradient>
+        <linearGradient id="pyr-bnb" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#F0B90B"/><stop offset="100%" stop-color="#D4A50A"/></linearGradient>
+        <linearGradient id="pyr-sol" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#9945FF"/><stop offset="50%" stop-color="#14F195"/><stop offset="100%" stop-color="#9945FF"/></linearGradient>
+        <linearGradient id="pyr-ada" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#0033AD"/><stop offset="100%" stop-color="#0052FF"/></linearGradient>
+        <linearGradient id="pyr-xrp" x1="0" y1="0" x2="1" y2="1"><stop offset="0%" stop-color="#346AA9"/><stop offset="100%" stop-color="#23292F"/></linearGradient>
+        <filter id="pyr-glow"><feGaussianBlur stdDeviation="2" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+      </defs>
+      <circle cx="34" cy="24" r="19" fill="url(#pyr-btc)" filter="url(#pyr-glow)"/>
+      <text x="34" y="31" text-anchor="middle" fill="white" font-size="18" font-weight="800" font-family="Arial,Helvetica,sans-serif">&#x20BF;</text>
+      <circle cx="78" cy="24" r="15" fill="url(#pyr-usdt)"/>
+      <text x="78" y="30" text-anchor="middle" fill="white" font-size="14" font-weight="800" font-family="Arial,Helvetica,sans-serif">&#x20AE;</text>
+      <circle cx="122" cy="24" r="15" fill="url(#pyr-eth)"/>
+      <text x="122" y="30" text-anchor="middle" fill="white" font-size="14" font-weight="800" font-family="Arial,Helvetica,sans-serif">&#x039E;</text>
+      <circle cx="166" cy="24" r="15" fill="url(#pyr-usdc)"/>
+      <text x="166" y="30" text-anchor="middle" fill="white" font-size="13" font-weight="800" font-family="Arial,Helvetica,sans-serif">$</text>
+      <circle cx="56" cy="62" r="15" fill="url(#pyr-ltc)"/>
+      <text x="56" y="68" text-anchor="middle" fill="white" font-size="14" font-weight="800" font-family="Arial,Helvetica,sans-serif">&#x141;</text>
+      <circle cx="100" cy="62" r="15" fill="url(#pyr-doge)"/>
+      <text x="100" y="68" text-anchor="middle" fill="white" font-size="14" font-weight="800" font-family="Arial,Helvetica,sans-serif">&#x0D0;</text>
+      <circle cx="144" cy="62" r="15" fill="url(#pyr-bnb)"/>
+      <text x="144" y="68" text-anchor="middle" fill="#1a1040" font-size="12" font-weight="800" font-family="Arial,Helvetica,sans-serif">BNB</text>
+      <circle cx="74" cy="100" r="15" fill="url(#pyr-sol)"/>
+      <text x="74" y="106" text-anchor="middle" fill="white" font-size="13" font-weight="800" font-family="Arial,Helvetica,sans-serif">SOL</text>
+      <circle cx="126" cy="100" r="15" fill="url(#pyr-ada)"/>
+      <text x="126" y="106" text-anchor="middle" fill="white" font-size="13" font-weight="800" font-family="Arial,Helvetica,sans-serif">ADA</text>
+      <circle cx="100" cy="138" r="18" fill="url(#pyr-xrp)" filter="url(#pyr-glow)"/>
+      <text x="100" y="144" text-anchor="middle" fill="white" font-size="14" font-weight="800" font-family="Arial,Helvetica,sans-serif">XRP</text>
+    </symbol>
+  </svg>
+
+  <!-- ===== LOGIN ===== -->
+  <div class="login-wrap" id="login-view">
+    <div class="login-card">
+      <div class="login-logo">
+        <svg viewBox="0 0 200 165" width="3rem" height="2.4rem" aria-hidden="true"><use href="#ic-brand"/></svg>
+      </div>
+      <h1>پنل مدیریت IRANCOiN</h1>
+      <p class="sub">برای دسترسی به پنل مدیریت، رمز عبور را وارد کنید</p>
+      <div class="login-field">
+        <span class="icon"><i class="fa-solid fa-key"></i></span>
+        <input type="password" id="admin-key" placeholder="رمز عبور" autofocus>
+      </div>
+      <button class="login-btn" onclick="doLogin()">ورود به پنل</button>
+      <p class="login-err" id="login-err">رمز عبور اشتباه است</p>
+      <div class="login-footer">
+        <p>تمامی تغییرات ذخیره و نسخه‌بندی می‌شوند</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== APP ===== -->
+  <div class="app" id="app-view">
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar" id="sidebar">
+      <div class="sidebar-header">
+        <div class="sidebar-logo"><svg viewBox="0 0 200 165" width="2.5rem" height="2rem" aria-hidden="true"><use href="#ic-brand"/></svg></div>
+        <div class="sidebar-brand"><span>IRANCOiN</span> Admin</div>
+      </div>
+      <nav class="sidebar-nav">
+        <div class="nav-group">
+          <div class="nav-group-label">اصلی</div>
+          <div class="nav-item active" data-s="overview"><span class="icon"><i class="fa-solid fa-chart-pie"></i></span> داشبورد</div>
+          <div class="nav-item" data-s="content"><span class="icon"><i class="fa-solid fa-file-lines"></i></span> مدیریت محتوا</div>
+          <div class="nav-item" data-s="offers"><span class="icon"><i class="fa-solid fa-gift"></i></span> پیشنهادات</div>
+          <div class="nav-item" data-s="discounts"><span class="icon"><i class="fa-solid fa-coins"></i></span> تخفیف پلن‌ها</div>
+        </div>
+        <div class="nav-group">
+          <div class="nav-group-label">کاربران و مالی</div>
+          <div class="nav-item" data-s="users"><span class="icon"><i class="fa-solid fa-users"></i></span> کاربران</div>
+          <div class="nav-item" data-s="subscriptions"><span class="icon"><i class="fa-solid fa-clipboard-list"></i></span> اشتراک‌ها</div>
+          <div class="nav-item" data-s="payments"><span class="icon"><i class="fa-solid fa-credit-card"></i></span> پرداخت‌ها</div>
+        </div>
+        <div class="nav-group">
+          <div class="nav-group-label">ابزارها</div>
+          <div class="nav-item" data-s="emails"><span class="icon"><i class="fa-solid fa-envelope"></i></span> ایمیل‌ها</div>
+          <div class="nav-item" data-s="preview"><span class="icon"><i class="fa-solid fa-eye"></i></span> پیش‌نمایش</div>
+          <div class="nav-item" data-s="versions"><span class="icon"><i class="fa-solid fa-box-archive"></i></span> نسخه‌ها</div>
+          <div class="nav-item" data-s="settings"><span class="icon"><i class="fa-solid fa-gear"></i></span> تنظیمات</div>
+        </div>
+      </nav>
+      <div class="sidebar-footer">
+        <div class="user-info">
+          <div class="avatar">A</div>
+          <div>
+            <div class="user-name">Admin</div>
+            <div class="user-role">مدیر اصلی</div>
+          </div>
+        </div>
+      </div>
+    </aside>
+
+    <!-- MAIN -->
+    <div class="main">
+      <header class="header">
+        <div class="header-right">
+          <button class="mobile-toggle" onclick="toggleSidebar()"><i class="fa-solid fa-bars"></i></button>
+          <div class="header-title" id="page-title">داشبورد</div>
+        </div>
+        <div class="header-actions">
+          <button class="hbtn" onclick="loadSection(currentSection)"><i class="fa-solid fa-rotate"></i> بروزرسانی</button>
+          <button class="hbtn hbtn-primary" onclick="saveAll()"><i class="fa-solid fa-floppy-disk"></i> ذخیره همه</button>
+          <button class="hbtn hbtn-danger" onclick="doLogout()"><i class="fa-solid fa-right-from-bracket"></i> خروج</button>
+        </div>
+      </header>
+
+      <div class="content">
+
+        <!-- ===== LOCAL STORAGE NOTICE ===== -->
+        <div class="notice-banner" id="localStorageNotice">
+          <span class="icon"><i class="fa-solid fa-triangle-exclamation"></i></span>
+          <span>تغییرات در مرورگر ذخیره می‌شوند. برای اعمال روی سایت، فایل‌ها را مجدداً deploy کنید.</span>
+        </div>
+
+        <!-- ===== OVERVIEW ===== -->
+        <div class="section active" id="s-overview">
+          <div class="stats-grid" id="stats-grid"></div>
+          <div class="card">
+            <div class="card-header"><h2><i class="fa-solid fa-chart-line"></i> نمودار درآمد (۷ روز اخیر)</h2></div>
+            <div class="card-body"><canvas id="revenue-chart" height="200"></canvas></div>
+          </div>
+        </div>
+
+        <!-- ===== CONTENT MANAGEMENT ===== -->
+        <div class="section" id="s-content">
+          <div id="content-editors"></div>
+          <div style="margin-top:1rem">
+            <button class="btn btn-purple" onclick="saveContent()" style="padding:.625rem 1.5rem;font-size:.875rem"><i class="fa-solid fa-floppy-disk"></i> ذخیره تغییرات محتوا</button>
+          </div>
+        </div>
+
+        <!-- ===== OFFERS ===== -->
+        <div class="section" id="s-offers">
+          <div class="card">
+            <div class="card-header">
+              <h2><i class="fa-solid fa-gift"></i> مدیریت پیشنهادات</h2>
+              <div class="actions">
+                <button class="btn btn-purple" onclick="openOfferModal()">+ پیشنهاد جدید</button>
+              </div>
+            </div>
+            <div class="card-body" id="offers-list"></div>
+          </div>
+        </div>
+
+        <!-- ===== DISCOUNTS ===== -->
+        <div class="section" id="s-discounts">
+          <div class="card">
+            <div class="card-header">
+              <h2><i class="fa-solid fa-coins"></i> مدیریت تخفیف پلن‌ها</h2>
+            </div>
+            <div class="card-body">
+              <div id="live-price-banner-admin" style="text-align:center;padding:1rem;background:var(--bg-card);border:1px solid var(--brd);border-radius:var(--radius);margin-bottom:1.5rem"></div>
+              <div id="discount-managers"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ===== USERS ===== -->
+        <div class="section" id="s-users">
+          <div class="card">
+            <div class="card-header">
+              <h2><i class="fa-solid fa-users"></i> لیست کاربران</h2>
+              <div class="actions"><button class="btn btn-neutral" onclick="exportCSV('users')"><i class="fa-solid fa-download"></i> خروجی CSV</button></div>
+            </div>
+            <div class="card-body no-pad">
+              <div class="table-wrap"><table id="t-user"><thead><tr><th>تاریخ</th><th>ایمیل</th><th>نام</th><th>آخرین ورود</th><th>عملیات</th></tr></thead><tbody></tbody></table></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ===== SUBSCRIPTIONS ===== -->
+        <div class="section" id="s-subscriptions">
+          <div class="card">
+            <div class="card-header">
+              <h2><i class="fa-solid fa-clipboard-list"></i> لیست اشتراک‌ها</h2>
+              <div class="actions"><button class="btn btn-neutral" onclick="exportCSV('subscriptions')"><i class="fa-solid fa-download"></i> خروجی CSV</button></div>
+            </div>
+            <div class="card-body no-pad">
+              <div class="table-wrap"><table id="t-sub"><thead><tr><th>تاریخ</th><th>کاربر</th><th>پلن</th><th>وضعیت</th><th>انقضا</th><th>عملیات</th></tr></thead><tbody></tbody></table></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ===== PAYMENTS ===== -->
+        <div class="section" id="s-payments">
+          <div class="card">
+            <div class="card-header">
+              <h2><i class="fa-solid fa-credit-card"></i> لیست پرداخت‌ها</h2>
+              <div class="actions"><button class="btn btn-neutral" onclick="exportCSV('payments')"><i class="fa-solid fa-download"></i> خروجی CSV</button></div>
+            </div>
+            <div class="card-body no-pad">
+              <div class="table-wrap"><table id="t-pay"><thead><tr><th>تاریخ</th><th>کاربر</th><th>پلن</th><th>مبلغ</th><th>وضعیت</th><th>عملیات</th></tr></thead><tbody></tbody></table></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ===== EMAILS ===== -->
+        <div class="section" id="s-emails">
+          <div class="card">
+            <div class="card-header">
+              <h2><i class="fa-solid fa-envelope"></i> لاگ ایمیل‌ها</h2>
+              <div class="actions"><button class="btn btn-purple" onclick="openEmailModal()"><i class="fa-solid fa-envelope"></i> ارسال ایمیل</button></div>
+            </div>
+            <div class="card-body no-pad">
+              <div class="table-wrap"><table id="t-email"><thead><tr><th>تاریخ</th><th>گیرنده</th><th>قالب</th><th>موضوع</th><th>وضعیت</th></tr></thead><tbody></tbody></table></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ===== PREVIEW ===== -->
+        <div class="section" id="s-preview">
+          <div class="card">
+            <div class="card-header">
+              <h2><i class="fa-solid fa-eye"></i> پیش‌نمایش زنده سایت</h2>
+              <div class="actions">
+                <label class="toggle" title="حالت آزمایشی">
+                  <input type="checkbox" id="trial-toggle" onchange="toggleTrial()">
+                  <span class="slider"></span>
+                </label>
+                <span style="font-size:.75rem;color:var(--txt-dim)">حالت آزمایشی</span>
+              </div>
+            </div>
+            <div class="card-body">
+              <iframe id="preview-frame" class="preview-frame" src="index.html" loading="lazy"></iframe>
+            </div>
+          </div>
+        </div>
+
+        <!-- ===== VERSIONS ===== -->
+        <div class="section" id="s-versions">
+          <div class="card">
+            <div class="card-header">
+              <h2><i class="fa-solid fa-box-archive"></i> تاریخچه نسخه‌ها</h2>
+              <div class="actions">
+                <button class="btn btn-purple" onclick="createVersion()">+ ذخیره نسخه جدید</button>
+              </div>
+            </div>
+            <div class="card-body">
+              <p style="font-size:.75rem;color:var(--txt-dim);margin-bottom:1rem"><i class="fa-solid fa-triangle-exclamation"></i> تاریخچه نسخه‌ها فقط در مرورگر ذخیره می‌شوند و با پاک کردن کش حذف خواهند شد.</p>
+              <div id="versions-list"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ===== SETTINGS ===== -->
+        <div class="section" id="s-settings">
+          <div class="card">
+            <div class="card-header"><h2><i class="fa-solid fa-gear"></i> تنظیمات عمومی</h2></div>
+            <div class="card-body">
+              <div class="field-row">
+                <div class="form-group">
+                  <label class="form-label">نام سایت</label>
+                  <input class="form-input" id="set-site-name" value="IRANCOiN">
+                </div>
+                <div class="form-group">
+                  <label class="form-label">توضیحات سایت</label>
+                  <input class="form-input" id="set-site-desc" value="پلتفرم پیشرفته معاملات ارز دیجیتال با هوش مصنوعی">
+                </div>
+              </div>
+              <div class="field-row">
+                <div class="form-group">
+                  <label class="form-label">ایمیل پشتیبانی</label>
+                  <input class="form-input" id="set-support-email" value="support@irancoin.ir" style="direction:ltr;text-align:left">
+                </div>
+                <div class="form-group">
+                  <label class="form-label">کلید API NOWPayments</label>
+                  <input class="form-input" id="set-now-key" type="password" value="" placeholder="از Supabase Secrets">
+                </div>
+              </div>
+              <div class="field-row">
+                <div class="form-group">
+                  <label class="form-label">کلید رمز ادمین</label>
+                  <input class="form-input" id="set-admin-key" type="password" placeholder="رمز جدید">
+                </div>
+                <div class="form-group">
+                  <label class="form-label">Site URL</label>
+                  <input class="form-input" id="set-site-url" value="https://alikhani09390916.github.io/irancoin-premium/" style="direction:ltr;text-align:left">
+                </div>
+              </div>
+              <button class="btn btn-purple" onclick="saveSettings()" style="padding:.625rem 1.5rem;font-size:.875rem;margin-top:.5rem"><i class="fa-solid fa-floppy-disk"></i> ذخیره تنظیمات</button>
+            </div>
+          </div>
+
+          <!-- ===== BANK CARDS MANAGEMENT ===== -->
+          <div class="card">
+            <div class="card-header">
+              <h2><i class="fa-solid fa-credit-card"></i> مدیریت کارت‌های بانکی</h2>
+              <div class="actions">
+                <button class="btn btn-purple" onclick="openBankCardModal()">+ کارت جدید</button>
+              </div>
+            </div>
+            <div class="card-body" id="bank-cards-list"></div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== MODAL ===== -->
+  <div class="modal-overlay" id="modal-overlay">
+    <div class="modal">
+      <div class="modal-header">
+        <h2 id="modal-title"></h2>
+        <button class="modal-close" onclick="closeModal()">&times;</button>
+      </div>
+      <div class="modal-body" id="modal-body"></div>
+      <div class="modal-footer" id="modal-footer"></div>
+    </div>
+  </div>
+
+  <!-- ===== CONFIRM ===== -->
+  <div class="confirm-overlay" id="confirm-overlay">
+    <div class="confirm-box">
+      <div class="confirm-icon"><i class="fa-solid fa-triangle-exclamation"></i></div>
+      <div class="confirm-msg" id="confirm-msg"></div>
+      <div class="confirm-btns">
+        <button class="btn-yes" id="confirm-yes">بله</button>
+        <button class="btn-no" onclick="closeConfirm()">خیر</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+  (function(){
+    "use strict";
+
+    /* ===== CONFIG ===== */
+    var ADMIN_HASH = 'irancoin-admin-2026';
+    var API = 'https://ibnpgzmbepieudwalwtv.supabase.co/functions/v1';
+    var ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImlibnBnem1iZXBpZXVkd2Fsd3R2Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODY4NDE5MzcsImV4cCI6MjEwMjQxNzkzN30.Ayeyo4ifmUr9kV6sCI_2-JtT81QxLL45znknrddoB5E';
+    var currentSection = 'overview';
+    var KEY = '';
+    var cache = { payments:[], subscriptions:[], users:[], emails:[] };
+
+    /* ===== CONTENT DATA ===== */
+    var CONTENT_SECTIONS = {
+      hero: { title:'هیرو صفحه اصلی', fields:{
+        headline:{label:'تیتر اصلی',type:'text',default:' هوش مصنوعی در خدمت معاملات شما'},
+        subheadline:{label:'زیرتیتر',type:'textarea',default:'با موتور معاملاتی هوشمند IRANCOiN، سرعت، دقت و امنیت را در هر معامله تجربه کنید.'},
+        cta:{label:'دکمه اصلی',type:'text',default:'شروع رایگان'},
+        cta2:{label:'دکمه دوم',type:'text',default:'مشاهده دمو'}
+      }},
+      features:{title:'ویژگی‌ها',fields:{
+        title:{label:'تیتر بخش',type:'text',default:'چرا IRANCOiN؟'},
+        desc:{label:'توضیحات',type:'textarea',default:'ترکیبی از هوش مصنوعی پیشرفته و تحلیل تکنیکال حرفه‌ای'}
+      }},
+      engine:{title:'موتور معاملاتی',fields:{
+        title:{label:'تیتر',type:'text',default:'موتور معاملاتی هوشمند'},
+        desc:{label:'توضیحات',type:'textarea',default:'الگوریتم‌های یادگیری عمیق که الگوهای بازار را تحلیل می‌کنند'}
+      }},
+      pricing:{title:'قیمت‌گذاری',fields:{
+        title:{label:'تیتر',type:'text',default:' plan های اشتراک'},
+        desc:{label:'توضیحات',type:'textarea',default:'plan مناسب خود را انتخاب کنید'}
+      }},
+      security:{title:'امنیت',fields:{
+        title:{label:'تیتر',type:'text',default:'امنیت بی‌نظیر'},
+        desc:{label:'توضیحات',type:'textarea',default:'رمزنگاری AES-256 و احراز هویت دو مرحله‌ای'}
+      }},
+      footer:{title:'فوتر',fields:{
+        copyright:{label:'متن کپی‌رایت',type:'text',default:'© ۱۴۰۵ IRANCOiN. تمامی حقوق محفوظ است.'},
+        support:{label:'ایمیل پشتیبانی',type:'text',default:'support@irancoin.ir'}
+      }}
+    };
+
+    var contentData = {};
+    Object.keys(CONTENT_SECTIONS).forEach(function(k){
+      contentData[k] = {};
+      Object.keys(CONTENT_SECTIONS[k].fields).forEach(function(f){
+        contentData[k][f] = localStorage.getItem('ic-content-'+k+'-'+f) || CONTENT_SECTIONS[k].fields[f].default;
+      });
+    });
+
+    /* ===== OFFERS DATA ===== */
+    function getOffers(){ try{return JSON.parse(localStorage.getItem('ic-offers')||'[]')}catch(e){return[]} }
+    function saveOffers(o){ localStorage.setItem('ic-offers',JSON.stringify(o)) }
+
+    /* ===== VERSIONS DATA ===== */
+    function getVersions(){ try{return JSON.parse(localStorage.getItem('ic-versions')||'[]')}catch(e){return[]} }
+    function saveVersions(v){ localStorage.setItem('ic-versions',JSON.stringify(v)) }
+
+    /* ===== SETTINGS ===== */
+    function getSettings(){
+      var def = {siteName:'IRANCOiN',siteDesc:'پلتفرم پیشرفته معاملات ارز دیجیتال با هوش مصنوعی',supportEmail:'support@irancoin.ir',siteUrl:'https://alikhani09390916.github.io/irancoin-premium/'};
+      try{ var s = JSON.parse(localStorage.getItem('ic-settings')||'{}'); return Object.assign(def,s); }catch(e){return def}
+    }
+    function saveSettingsData(s){ localStorage.setItem('ic-settings',JSON.stringify(s)) }
+
+    /* ===== AUTH ===== */
+    // Password is hashed with SHA-256 for security (never store plaintext)
+    async function hashPassword(pw) {
+      if(!(window.crypto && window.crypto.subtle)) throw new Error('crypto.subtle unavailable (needs HTTPS)');
+      var enc = new TextEncoder().encode(pw);
+      var buf = await crypto.subtle.digest('SHA-256', enc);
+      return Array.from(new Uint8Array(buf)).map(b => b.toString(16).padStart(2,'0')).join('');
+    }
+
+    window.doLogin = async function(){
+      var input = document.getElementById('admin-key').value.trim();
+      if(!input) return;
+      var inputHash = await hashPassword(input);
+      var storedHash = localStorage.getItem('ic-admin-hash');
+      // First login: hash the default password
+      if(!storedHash) {
+        var defaultHash = await hashPassword(ADMIN_HASH);
+        localStorage.setItem('ic-admin-hash', defaultHash);
+        storedHash = defaultHash;
+      }
+      if(inputHash === storedHash){
+        KEY = input;
+        var sessionExpiry = Date.now() + (30 * 60 * 1000); // 30 min session
+        localStorage.setItem('ic-admin-session', btoa(encodeURIComponent(input) + ':' + sessionExpiry));
+        document.getElementById('login-view').style.display='none';
+        document.getElementById('app-view').classList.add('on');
+        loadSection('overview');
+      } else {
+        document.getElementById('login-err').style.display='block';
+        setTimeout(function(){document.getElementById('login-err').style.display='none'},3000);
+      }
+    };
+    document.getElementById('admin-key').addEventListener('keydown',function(e){if(e.key==='Enter')doLogin()});
+
+    // Auto-login with session expiry check + hash verification
+    (function(){
+      var session = localStorage.getItem('ic-admin-session');
+      if(session){
+        try{
+          var decoded = atob(session);
+          var parts = decoded.split(':');
+          var sessionExpiry = parseInt(parts[1]) || 0;
+          if(Date.now() < sessionExpiry && parts[0]){
+            hashPassword(decodeURIComponent(parts[0])).then(function(h){
+              if(h === localStorage.getItem('ic-admin-hash')){
+                KEY = decodeURIComponent(parts[0]);
+                document.getElementById('login-view').style.display='none';
+                document.getElementById('app-view').classList.add('on');
+                loadSection('overview');
+              }
+            }).catch(function(){});
+          }
+        }catch(e){}
+      }
+    })();
+
+    window.doLogout = function(){
+      KEY='';
+      localStorage.removeItem('ic-admin-session');
+      document.getElementById('app-view').classList.remove('on');
+      document.getElementById('login-view').style.display='';
+      document.getElementById('admin-key').value='';
+    };
+
+    /* ===== SIDEBAR ===== */
+    document.querySelectorAll('.nav-item').forEach(function(item){
+      item.addEventListener('click',function(){
+        document.querySelectorAll('.nav-item').forEach(function(x){x.classList.remove('active')});
+        item.classList.add('active');
+        var s = item.dataset.s;
+        loadSection(s);
+        // Close mobile sidebar
+        document.getElementById('sidebar').classList.remove('open');
+      });
+    });
+
+    window.toggleSidebar = function(){
+      document.getElementById('sidebar').classList.toggle('open');
+    };
+
+    var TITLES = {overview:'داشبورد',content:'مدیریت محتوا',offers:'پیشنهادات',discounts:'تخفیف پلن‌ها',users:'کاربران',subscriptions:'اشتراک‌ها',payments:'پرداخت‌ها',emails:'ایمیل‌ها',preview:'پیش‌نمایش',versions:'نسخه‌ها',settings:'تنظیمات'};
+
+    function loadSection(s){
+      currentSection = s;
+      document.querySelectorAll('.section').forEach(function(x){x.classList.remove('active')});
+      var el = document.getElementById('s-'+s);
+      if(el) el.classList.add('active');
+      document.getElementById('page-title').textContent = TITLES[s] || s;
+
+      if(s==='overview') loadOverview();
+      else if(s==='content') renderContentEditors();
+      else if(s==='offers') renderOffers();
+      else if(s==='discounts') renderDiscounts();
+      else if(s==='users') loadUsers();
+      else if(s==='subscriptions') loadSubs();
+      else if(s==='payments') loadPayments();
+      else if(s==='emails') loadEmails();
+      else if(s==='versions') renderVersions();
+      else if(s==='settings') loadSettings();
+    }
+
+    /* ===== API ===== */
+    async function api(fn,body){
+      var res;
+      try{
+        res = await fetch(API+'/'+fn,{method:'POST',headers:{'Content-Type':'application/json','X-Admin-Key':KEY},body:JSON.stringify(body)});
+      }catch(e){
+        return {success:false,error:'اتصال به سرور برقرار نشد'};
+      }
+      try{
+        var data = await res.json();
+        if(!res.ok && data && data.error) return {success:false,error:data.error};
+        return data;
+      }catch(e){
+        return {success:false,error:'پاسخ نامعتبر از سرور (HTTP '+res.status+')'};
+      }
+    }
+    async function apiGet(section){
+      var res;
+      try{
+        res = await fetch(API+'/admin-stats?section='+section,{headers:{'X-Admin-Key':KEY}});
+      }catch(e){
+        return {error:'اتصال به سرور برقرار نشد'};
+      }
+      try{
+        var data = await res.json();
+        if(!res.ok && data && data.error) return {error:data.error};
+        return data;
+      }catch(e){
+        return {error:'پاسخ نامعتبر از سرور (HTTP '+res.status+')'};
+      }
+    }
+
+    /* ===== OVERVIEW ===== */
+    function renderStatsSkeletons(){
+      var grid = document.getElementById('stats-grid');
+      var html = '';
+      for(var i=0;i<6;i++){
+        html += '<div class="stat-card"><div class="skeleton" style="width:2.5rem;height:2.5rem;border-radius:.625rem;margin-bottom:.75rem"></div><div class="skeleton skeleton-text" style="width:50%"></div><div class="skeleton skeleton-value"></div><div class="skeleton skeleton-sub"></div></div>';
+      }
+      grid.innerHTML = html;
+    }
+
+    async function loadOverview(){
+      renderStatsSkeletons();
+      try{
+        var d = await apiGet('overview');
+        var stats = [
+          {icon:'<i class="fa-solid fa-users"></i>',label:'کل کاربران',value:d.total_users||0,sub:'عضو ثبت‌نام‌شده',color:'var(--info-bg)'},
+          {icon:'<i class="fa-solid fa-clipboard-list"></i>',label:'اشتراک فعال',value:d.active_subscriptions||0,sub:'در حال حاضر فعال',color:'var(--ok-bg)'},
+          {icon:'<i class="fa-solid fa-check-circle"></i>',label:'پرداخت تایید شده',value:d.confirmed_payments||0,sub:'تراکنش موفق',color:'var(--purple-bg)'},
+          {icon:'<i class="fa-solid fa-coins"></i>',label:'درآمد کل',value:'$'+(d.total_revenue_usdt||0).toLocaleString(),sub:'USDT',color:'var(--warn-bg)'},
+          {icon:'<i class="fa-solid fa-clock"></i>',label:'پرداخت در انتظار',value:d.pending_subscriptions||0,sub:'منتظر تایید',color:'var(--warn-bg)'},
+          {icon:'<i class="fa-solid fa-envelope"></i>',label:'ایمیل ارسال شده',value:d.emails_sent||0,sub:'مجموع',color:'var(--info-bg)'}
+        ];
+        document.getElementById('stats-grid').innerHTML = stats.map(function(s){
+          return '<div class="stat-card"><div class="stat-icon" style="background:'+s.color+'">'+s.icon+'</div><div class="stat-label">'+s.label+'</div><div class="stat-value">'+s.value+'</div><div class="stat-sub">'+s.sub+'</div></div>';
+        }).join('');
+      }catch(e){
+        document.getElementById('stats-grid').innerHTML = '<div style="color:var(--txt-dim);text-align:center;padding:2rem">خطا در بارگذاری آمار</div>';
+      }
+      renderRevenueChart();
+    }
+
+    /* ===== REVENUE CHART ===== */
+    function renderRevenueChart(){
+      var canvas = document.getElementById('revenue-chart');
+      if(!canvas) return;
+      var ctx = canvas.getContext('2d');
+      var dpr = window.devicePixelRatio || 1;
+      var rect = canvas.parentElement.getBoundingClientRect();
+      canvas.width = rect.width * dpr;
+      canvas.height = 200 * dpr;
+      canvas.style.width = rect.width + 'px';
+      canvas.style.height = '200px';
+      ctx.scale(dpr, dpr);
+      var W = rect.width, H = 200;
+
+      // Try to get revenue data from localStorage, otherwise use placeholder
+      var months = ['فروردین','اردیبهشت','خرداد','تیر','مرداد','شهریور','مهر'];
+      var revenue = [];
+      try {
+        revenue = JSON.parse(localStorage.getItem('ic-revenue-chart') || '[]');
+      } catch(e) {}
+      if(!revenue.length || revenue.length !== 7){
+        // Placeholder data
+        revenue = [0, 0, 0, 0, 0, 0, 0];
+      }
+
+      var maxVal = Math.max.apply(null, revenue) || 1;
+      var padL = 50, padR = 20, padT = 20, padB = 40;
+      var chartW = W - padL - padR;
+      var chartH = H - padT - padB;
+
+      // Background
+      ctx.fillStyle = 'transparent';
+      ctx.fillRect(0, 0, W, H);
+
+      // Grid lines
+      ctx.strokeStyle = 'rgba(255,255,255,0.04)';
+      ctx.lineWidth = 1;
+      for(var i = 0; i <= 4; i++){
+        var y = padT + (chartH / 4) * i;
+        ctx.beginPath();
+        ctx.moveTo(padL, y);
+        ctx.lineTo(W - padR, y);
+        ctx.stroke();
+        // Y-axis labels
+        ctx.fillStyle = 'rgba(255,255,255,0.3)';
+        ctx.font = '11px Vazirmatn, system-ui';
+        ctx.textAlign = 'right';
+        var label = Math.round(maxVal - (maxVal / 4) * i);
+        ctx.fillText('$' + label, padL - 8, y + 4);
+      }
+
+      // Calculate points
+      var points = [];
+      for(var i = 0; i < revenue.length; i++){
+        var x = padL + (chartW / (revenue.length - 1)) * i;
+        var y = padT + chartH - (revenue[i] / maxVal) * chartH;
+        points.push({x: x, y: y});
+      }
+
+      // Gradient fill under the line
+      if(points.length > 1){
+        var grad = ctx.createLinearGradient(0, padT, 0, H - padB);
+        grad.addColorStop(0, 'rgba(124,58,237,0.25)');
+        grad.addColorStop(1, 'rgba(124,58,237,0.01)');
+        ctx.beginPath();
+        ctx.moveTo(points[0].x, H - padB);
+        for(var i = 0; i < points.length; i++){
+          ctx.lineTo(points[i].x, points[i].y);
+        }
+        ctx.lineTo(points[points.length-1].x, H - padB);
+        ctx.closePath();
+        ctx.fillStyle = grad;
+        ctx.fill();
+
+        // Line
+        var lineGrad = ctx.createLinearGradient(padL, 0, W - padR, 0);
+        lineGrad.addColorStop(0, '#7C3AED');
+        lineGrad.addColorStop(1, '#06B6D4');
+        ctx.beginPath();
+        ctx.moveTo(points[0].x, points[0].y);
+        for(var i = 1; i < points.length; i++){
+          ctx.lineTo(points[i].x, points[i].y);
+        }
+        ctx.strokeStyle = lineGrad;
+        ctx.lineWidth = 2.5;
+        ctx.lineJoin = 'round';
+        ctx.stroke();
+
+        // Dots
+        for(var i = 0; i < points.length; i++){
+          ctx.beginPath();
+          ctx.arc(points[i].x, points[i].y, 4, 0, Math.PI * 2);
+          ctx.fillStyle = '#7C3AED';
+          ctx.fill();
+          ctx.beginPath();
+          ctx.arc(points[i].x, points[i].y, 2, 0, Math.PI * 2);
+          ctx.fillStyle = '#fff';
+          ctx.fill();
+        }
+      }
+
+      // X-axis labels
+      ctx.fillStyle = 'rgba(255,255,255,0.35)';
+      ctx.font = '11px Vazirmatn, system-ui';
+      ctx.textAlign = 'center';
+      for(var i = 0; i < months.length; i++){
+        var x = padL + (chartW / (months.length - 1)) * i;
+        ctx.fillText(months[i], x, H - 10);
+      }
+
+      // "No data" message if all zeros
+      var hasData = revenue.some(function(v){ return v > 0; });
+      if(!hasData){
+        ctx.fillStyle = 'rgba(255,255,255,0.2)';
+        ctx.font = '14px Vazirmatn, system-ui';
+        ctx.textAlign = 'center';
+        ctx.fillText('هنوز داده‌ای ثبت نشده', W/2, H/2);
+      }
+    }
+
+    window.addEventListener('resize', function(){
+      if(currentSection === 'overview') renderRevenueChart();
+    });
+
+    /* ===== CONTENT MANAGEMENT ===== */
+    function renderContentEditors(){
+      var html = '';
+      Object.keys(CONTENT_SECTIONS).forEach(function(key){
+        var sec = CONTENT_SECTIONS[key];
+        html += '<div class="section-editor"><div class="section-editor-header" onclick="this.nextElementSibling.classList.toggle(\'open\')"><h3><span><i class="fa-solid fa-file-lines"></i></span> '+sec.title+'</h3><span style="color:var(--txt-dim);font-size:.75rem">▼</span></div><div class="section-editor-body">';
+        Object.keys(sec.fields).forEach(function(f){
+          var field = sec.fields[f];
+          var val = contentData[key][f] || field.default;
+          if(field.type === 'textarea'){
+            html += '<div class="form-group field-full"><label class="form-label">'+field.label+'</label><textarea class="form-textarea" data-section="'+key+'" data-field="'+f+'" onchange="updateContent(this)">'+val+'</textarea></div>';
+          } else {
+            html += '<div class="form-group"><label class="form-label">'+field.label+'</label><input class="form-input" data-section="'+key+'" data-field="'+f+'" value="'+val.replace(/"/g,'&quot;')+'" onchange="updateContent(this)"></div>';
+          }
+        });
+        html += '</div></div>';
+      });
+      document.getElementById('content-editors').innerHTML = html;
+    }
+
+    window.updateContent = function(el){
+      var sec = el.dataset.section;
+      var field = el.dataset.field;
+      contentData[sec][field] = el.value;
+    };
+
+    window.saveContent = function(){
+      Object.keys(contentData).forEach(function(k){
+        Object.keys(contentData[k]).forEach(function(f){
+          localStorage.setItem('ic-content-'+k+'-'+f, contentData[k][f]);
+        });
+      });
+      toast('محتوا ذخیره شد','ok');
+      autoVersion('بروزرسانی محتوا');
+    };
+
+    /* ===== OFFERS ===== */
+    function renderOffers(){
+      var offers = getOffers();
+      if(!offers.length){
+        document.getElementById('offers-list').innerHTML = '<div style="text-align:center;padding:2rem;color:var(--txt-dim)">هنوز پیشنهادی تعریف نشده</div>';
+        return;
+      }
+      document.getElementById('offers-list').innerHTML = offers.map(function(o,i){
+        var expStr = o.expires ? new Date(o.expires).toLocaleDateString('fa-IR') : 'بدون محدودیت';
+        return '<div class="offer-row">'+
+          '<label class="toggle"><input type="checkbox" '+(o.active?'checked':'')+' onchange="toggleOffer('+i+')"><span class="slider"></span></label>'+
+          '<div class="offer-info"><div class="offer-title">'+esc(o.title)+'</div><div class="offer-desc">'+esc(o.description)+'</div>'+
+          '<div class="offer-meta">تخفیف: '+o.discount+'% | انقضا: '+expStr+'</div></div>'+
+          '<div class="cell-actions">'+
+            '<button class="btn btn-info" onclick="editOffer('+i+')"><i class="fa-solid fa-pen"></i></button>'+
+            '<button class="btn btn-err" onclick="deleteOffer('+i+')"><i class="fa-solid fa-trash"></i></button>'+
+          '</div></div>';
+      }).join('');
+    }
+
+    /* ===== DISCOUNTS ===== */
+    var PLAN_IDS = ['monthly','quarterly','semiannual','annual'];
+    var PLAN_LABELS = {monthly:'۱ ماهه',quarterly:'۳ ماهه',semiannual:'۶ ماهه',annual:'۱ ساله'};
+    var PLAN_USDT = {monthly:29,quarterly:79,semiannual:149,annual:249};
+
+    function renderDiscounts(){
+      // Show live price
+      var banner = document.getElementById('live-price-banner-admin');
+      if(banner){
+        var price = 0;
+        try{ price = parseInt(localStorage.getItem('ic-usdt-toman')) || 0; }catch(e){}
+        if(price){
+          banner.innerHTML = '<div style="font-size:.875rem;color:var(--txt-dim)">قیمت لحظه‌ای USDT: <span style="font-weight:800;background:var(--grad-brand);-webkit-background-clip:text;-webkit-text-fill-color:transparent">'+price.toLocaleString('fa-IR')+' تومان</span></div>';
+        } else {
+          banner.innerHTML = '<div style="font-size:.875rem;color:var(--txt-dim)">برای دریافت قیمت لحظه‌ای، صفحه قیمت‌ها را باز کنید</div>';
+        }
+      }
+
+      // Render discount managers
+      var html = '';
+      PLAN_IDS.forEach(function(pid){
+        var disc = {};
+        try{ disc = JSON.parse(localStorage.getItem('ic-discounts')||'{}')[pid] || {}; }catch(e){}
+        var expired = disc.endDate && new Date(disc.endDate).getTime() <= Date.now();
+        var isActive = !expired && disc.active && disc.percent > 0;
+        var percent = disc.percent || 0;
+        var endDate = disc.endDate || '';
+        var usdt = PLAN_USDT[pid];
+        var discountedUsdt = isActive ? Math.round(usdt * (1 - percent/100)) : usdt;
+        var price = 0;
+        try{ price = parseInt(localStorage.getItem('ic-usdt-toman')) || 0; }catch(e){}
+        var toman = price ? Math.round(discountedUsdt * price) : 0;
+        var originalToman = price ? Math.round(usdt * price) : 0;
+
+        html += '<div style="border:1px solid var(--brd);border-radius:var(--radius);padding:1.25rem;margin-bottom:1rem">';
+        html += '<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:1rem">';
+        html += '<div><div style="font-weight:700;font-size:.9375rem">'+PLAN_LABELS[pid]+'</div>';
+        html += '<div style="font-size:.75rem;color:var(--txt-dim)">'+usdt+' USDT</div></div>';
+        html += '<label class="toggle"><input type="checkbox" '+(isActive?'checked':'')+' onchange="toggleDiscount(\''+pid+'\')"><span class="slider"></span></label>';
+        html += '</div>';
+
+        if(isActive){
+          html += '<div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:1rem">';
+          html += '<div class="form-group"><label class="form-label">درصد تخفیف</label>';
+          html += '<input class="form-input" type="number" min="1" max="90" id="disc-'+pid+'-percent" value="'+percent+'"></div>';
+          html += '<div class="form-group"><label class="form-label">مدت (روز)</label>';
+          html += '<input class="form-input" type="number" min="1" id="disc-'+pid+'-days" value="'+(disc.days||1)+'"></div>';
+          html += '</div>';
+          if(disc.endDate){
+            html += '<div style="font-size:.6875rem;color:var(--txt-muted);margin-bottom:.5rem"><i class="fa-solid fa-hourglass-half"></i> انقضا: '+new Date(disc.endDate).toLocaleDateString('fa-IR')+'</div>';
+          }
+
+          if(toman){
+            html += '<div style="display:flex;align-items:baseline;gap:.75rem;margin-bottom:.75rem">';
+            html += '<span style="font-size:1.25rem;font-weight:800;color:var(--ok)">'+toman.toLocaleString('fa-IR')+' تومان</span>';
+            html += '<span style="font-size:.875rem;color:var(--txt-dim);text-decoration:line-through">'+originalToman.toLocaleString('fa-IR')+' تومان</span>';
+            html += '<span style="font-size:.75rem;color:var(--warn);font-weight:600">-'+percent+'%</span>';
+            html += '</div>';
+          }
+
+          html += '<button class="btn btn-purple" onclick="saveDiscount(\''+pid+'\')"><i class="fa-solid fa-floppy-disk"></i> ذخیره تخفیف</button>';
+        } else {
+          html += '<div style="color:var(--txt-dim);font-size:.8125rem">تخفیف غیرفعال است</div>';
+        }
+        html += '</div>';
+      });
+
+      document.getElementById('discount-managers').innerHTML = html;
+    }
+
+    window.toggleDiscount = function(pid){
+      var discounts = {};
+      try{ discounts = JSON.parse(localStorage.getItem('ic-discounts')||'{}'); }catch(e){}
+      var disc = discounts[pid] || {active:false,percent:0,endDate:null};
+      disc.active = !disc.active;
+      if(disc.active && !disc.percent) disc.percent = 10;
+      if(disc.active){
+        var days = parseInt(document.getElementById('disc-'+pid+'-days')?.value) || 7;
+        if(!disc.days || disc.days <= 0) disc.days = days;
+        if(!disc.endDate || new Date(disc.endDate).getTime() <= Date.now()){
+          disc.endDate = new Date(Date.now() + (disc.days) * 86400000).toISOString();
+        }
+      }
+      discounts[pid] = disc;
+      localStorage.setItem('ic-discounts', JSON.stringify(discounts));
+      renderDiscounts();
+    };
+
+    window.saveDiscount = function(pid){
+      var percent = parseInt(document.getElementById('disc-'+pid+'-percent')?.value) || 0;
+      var days = parseInt(document.getElementById('disc-'+pid+'-days')?.value) || 7;
+      if(percent <= 0 || percent > 90){ toast('درصد تخفیف باید بین ۱ تا ۹۰ باشد','err'); return; }
+
+      var discounts = {};
+      try{ discounts = JSON.parse(localStorage.getItem('ic-discounts')||'{}'); }catch(e){}
+      discounts[pid] = {
+        active: true,
+        percent: percent,
+        days: days,
+        endDate: new Date(Date.now() + days * 86400000).toISOString(),
+        created: new Date().toISOString()
+      };
+      localStorage.setItem('ic-discounts', JSON.stringify(discounts));
+      toast('تخفیف '+PLAN_LABELS[pid]+' ذخیره شد','ok');
+      renderDiscounts();
+    };
+
+    window.toggleOffer = function(i){
+      var offers = getOffers();
+      if(offers[i]){ offers[i].active = !offers[i].active; saveOffers(offers); renderOffers(); }
+    };
+
+    window.deleteOffer = function(i){
+      showConfirm('آیا از حذف این پیشنهاد مطمئنید؟',function(){
+        var offers = getOffers();
+        offers.splice(i,1);
+        saveOffers(offers);
+        renderOffers();
+        toast('پیشنهاد حذف شد','ok');
+      });
+    };
+
+    window.openOfferModal = function(editIndex){
+      var offer = editIndex !== undefined ? getOffers()[editIndex] : null;
+      var title = offer ? 'ویرایش پیشنهاد' : 'پیشنهاد جدید';
+      var html = '<div class="form-group"><label class="form-label">عنوان</label><input class="form-input" id="of-title" value="'+(offer?offer.title:'')+'"></div>'+
+        '<div class="form-group"><label class="form-label">توضیحات</label><textarea class="form-textarea" id="of-desc">'+(offer?offer.description:'')+'</textarea></div>'+
+        '<div class="field-row"><div class="form-group"><label class="form-label">درصد تخفیف</label><input class="form-input" id="of-discount" type="number" min="1" max="100" value="'+(offer?offer.discount:'10')+'"></div>'+
+        '<div class="form-group"><label class="form-label">تاریخ انقضا</label><input class="form-input" id="of-expires" type="date" value="'+(offer?offer.expires:'')+'"></div></div>'+
+        '<div class="form-group"><label class="form-label"><input type="checkbox" id="of-active" '+(offer&&offer.active?'checked':'')+'> فعال باشد</label></div>';
+      openModal(title, html, function(){
+        var offers = getOffers();
+        var newOffer = {
+          title: document.getElementById('of-title').value.trim(),
+          description: document.getElementById('of-desc').value.trim(),
+          discount: parseInt(document.getElementById('of-discount').value)||10,
+          expires: document.getElementById('of-expires').value,
+          active: document.getElementById('of-active').checked,
+          created: new Date().toISOString()
+        };
+        if(!newOffer.title){ toast('عنوان را وارد کنید','err'); return false; }
+        if(editIndex !== undefined){ offers[editIndex] = newOffer; }
+        else { offers.push(newOffer); }
+        saveOffers(offers);
+        renderOffers();
+        toast('پیشنهاد ذخیره شد','ok');
+        return true;
+      });
+    };
+
+    window.editOffer = function(i){ openOfferModal(i); };
+
+    /* ===== USERS ===== */
+    function showTableLoading(tableId, colSpan){
+      var tb = document.querySelector('#'+tableId+' tbody');
+      tb.innerHTML = '<tr><td colspan="'+colSpan+'" class="table-loading"><div class="skeleton skeleton-text" style="width:30%;margin:0 auto .5rem"></div><div class="skeleton skeleton-text" style="width:20%;margin:0 auto"></div></td></tr>';
+    }
+    function showTableError(tableId, colSpan, icon, msg){
+      var tb = document.querySelector('#'+tableId+' tbody');
+      tb.innerHTML = '<tr><td colspan="'+colSpan+'" class="table-empty"><div class="icon">'+icon+'</div><div class="msg">'+msg+'</div></td></tr>';
+    }
+
+    async function loadUsers(){
+      showTableLoading('t-user', 5);
+      try{
+        var d = await apiGet('users');
+        cache.users = d.users||[];
+        var tb = document.querySelector('#t-user tbody');
+        if(!cache.users.length){
+          showTableError('t-user', 5, '<i class="fa-solid fa-users"></i>', 'هنوز کاربری ثبت‌نام نکرده');
+          return;
+        }
+        tb.innerHTML = cache.users.map(function(u){
+          return '<tr><td>'+dt(u.created_at)+'</td><td style="direction:ltr;text-align:left">'+esc(u.email)+'</td><td>'+esc(u.name||'-')+'</td><td>'+(u.last_sign_in?dt(u.last_sign_in):'هرگز')+'</td><td><button class="btn btn-info" onclick="detailUser(\''+u.id+'\')"><i class="fa-solid fa-clipboard-list"></i></button></td></tr>';
+        }).join('');
+      }catch(e){
+        showTableError('t-user', 5, '<i class="fa-solid fa-triangle-exclamation"></i>', 'خطا در بارگذاری کاربران. اتصال API را بررسی کنید.');
+      }
+    }
+
+    /* ===== SUBSCRIPTIONS ===== */
+    async function loadSubs(){
+      showTableLoading('t-sub', 6);
+      try{
+        var d = await apiGet('subscriptions');
+        cache.subscriptions = d.subscriptions||[];
+        var tb = document.querySelector('#t-sub tbody');
+        if(!cache.subscriptions.length){
+          showTableError('t-sub', 6, '<i class="fa-solid fa-clipboard-list"></i>', 'هنوز اشتراکی ثبت نشده');
+          return;
+        }
+        tb.innerHTML = cache.subscriptions.map(function(s){
+          var acts = '';
+          if(s.status==='pending') acts += '<button class="btn btn-ok" onclick="activateSub(\''+s.id+'\')"><i class="fa-solid fa-check-circle"></i></button>';
+          if(s.status==='active'){
+            acts += '<button class="btn btn-warn" onclick="extendSub(\''+s.id+'\')"><i class="fa-solid fa-clock"></i></button>';
+            acts += '<button class="btn btn-err" onclick="deactivateSub(\''+s.id+'\')"><i class="fa-solid fa-times-circle"></i></button>';
+          }
+          return '<tr><td>'+dt(s.created_at)+'</td><td>'+userName(s.user_id)+'</td><td>'+(s.plans?.label||s.plan_id)+'</td><td>'+ss(s.status)+'</td><td>'+dt(s.expires_at)+'</td><td><div class="cell-actions">'+acts+'</div></td></tr>';
+        }).join('');
+      }catch(e){
+        showTableError('t-sub', 6, '<i class="fa-solid fa-triangle-exclamation"></i>', 'خطا در بارگذاری اشتراک‌ها. اتصال API را بررسی کنید.');
+      }
+    }
+
+    /* ===== PAYMENTS ===== */
+    async function loadPayments(){
+      showTableLoading('t-pay', 6);
+      try{
+        var d = await apiGet('payments');
+        cache.payments = d.payments||[];
+        var tb = document.querySelector('#t-pay tbody');
+        if(!cache.payments.length){
+          showTableError('t-pay', 6, '<i class="fa-solid fa-credit-card"></i>', 'هنوز پرداختی ثبت نشده');
+          return;
+        }
+        tb.innerHTML = cache.payments.map(function(p){
+          var acts = '';
+          if(p.payment_status==='waiting'||p.payment_status==='confirming')
+            acts += '<button class="btn btn-ok" onclick="confirmPayment(\''+p.id+'\')"><i class="fa-solid fa-check-circle"></i></button>';
+          if(p.payment_status==='confirmed')
+            acts += '<button class="btn btn-err" onclick="refundPayment(\''+p.id+'\')"><i class="fa-solid fa-rotate-left"></i></button>';
+          acts += '<button class="btn btn-info" onclick="detailPayment(\''+p.id+'\')"><i class="fa-solid fa-clipboard-list"></i></button>';
+          return '<tr><td>'+dt(p.created_at)+'</td><td>'+userName(p.user_id)+'</td><td>'+(p.subscriptions?.plans?.label||p.plan_id)+'</td><td>$'+p.amount_usdt+'</td><td>'+ps(p.payment_status)+'</td><td><div class="cell-actions">'+acts+'</div></td></tr>';
+        }).join('');
+      }catch(e){
+        showTableError('t-pay', 6, '<i class="fa-solid fa-triangle-exclamation"></i>', 'خطا در بارگذاری پرداخت‌ها. اتصال API را بررسی کنید.');
+      }
+    }
+
+    /* ===== EMAILS ===== */
+    async function loadEmails(){
+      showTableLoading('t-email', 5);
+      try{
+        var d = await apiGet('emails');
+        cache.emails = d.emails||[];
+        var TN={welcome:'خوش‌آمد',payment_success:'پرداخت موفق',subscription_expiring:'رو به انقضا',subscription_expired:'منقضی شده',payment_failed:'پرداخت ناموفق'};
+        var tb = document.querySelector('#t-email tbody');
+        if(!cache.emails.length){
+          showTableError('t-email', 5, '<i class="fa-solid fa-envelope"></i>', 'هنوز ایمیلی ارسال نشده');
+          return;
+        }
+        tb.innerHTML = cache.emails.map(function(e){
+          return '<tr><td>'+dt(e.created_at)+'</td><td style="direction:ltr;text-align:left">'+esc(e.to_email)+'</td><td>'+(TN[e.template]||esc(e.template))+'</td><td>'+esc(e.subject)+'</td><td>'+ps(e.status)+'</td></tr>';
+        }).join('');
+      }catch(e){
+        showTableError('t-email', 5, '<i class="fa-solid fa-triangle-exclamation"></i>', 'خطا در بارگذاری ایمیل‌ها. اتصال API را بررسی کنید.');
+      }
+    }
+
+    /* ===== VERSIONS ===== */
+    function renderVersions(){
+      var versions = getVersions();
+      if(!versions.length){
+        document.getElementById('versions-list').innerHTML = '<div style="text-align:center;padding:2rem;color:var(--txt-dim)">هنوز نسخه‌ای ذخیره نشده. روی «ذخیره نسخه جدید» کلیک کنید.</div>';
+        return;
+      }
+      document.getElementById('versions-list').innerHTML = versions.map(function(v,i){
+        return '<div class="version-item"><div class="version-dot '+(i>0?'old':'')+'"></div>'+
+          '<div class="version-info"><div class="version-tag">'+v.tag+'</div>'+
+          '<div class="version-date">'+new Date(v.date).toLocaleString('fa-IR')+'</div>'+
+          '<div class="version-msg">'+v.message+'</div></div>'+
+          '<div class="cell-actions"><button class="btn btn-info" onclick="restoreVersion('+i+')"><i class="fa-solid fa-rotate-left"></i> بازگردانی</button></div></div>';
+      }).join('');
+    }
+
+    window.createVersion = function(){
+      openModal('ذخیره نسخه جدید', '<div class="form-group"><label class="form-label">پیام نسخه</label><input class="form-input" id="ver-msg" placeholder="تغییرات این نسخه"></div>', function(){
+        var msg = document.getElementById('ver-msg').value.trim() || 'نسخه بدون پیام';
+        var versions = getVersions();
+        var num = versions.length + 1;
+        versions.unshift({tag:'v'+num,message:msg,date:new Date().toISOString(),content:JSON.parse(JSON.stringify(contentData)),offers:getOffers(),settings:getSettings()});
+        if(versions.length > 20) versions = versions.slice(0,20);
+        saveVersions(versions);
+        renderVersions();
+        toast('نسخه v'+num+' ذخیره شد','ok');
+        return true;
+      });
+    };
+
+    window.restoreVersion = function(i){
+      var versions = getVersions();
+      var v = versions[i];
+      if(!v) return;
+      showConfirm('آیا از بازگردانی به نسخه '+v.tag+' مطمئنید؟',function(){
+        if(v.content){
+          contentData = JSON.parse(JSON.stringify(v.content));
+          Object.keys(contentData).forEach(function(k){
+            Object.keys(contentData[k]).forEach(function(f){
+              localStorage.setItem('ic-content-'+k+'-'+f, contentData[k][f]);
+            });
+          });
+        }
+        if(v.offers) saveOffers(v.offers);
+        if(v.settings) saveSettingsData(v.settings);
+        toast('بازگردانی به '+v.tag+' انجام شد','ok');
+        loadSection(currentSection);
+      });
+    };
+
+    function autoVersion(message){
+      var versions = getVersions();
+      var num = versions.length + 1;
+      versions.unshift({tag:'v'+num,message:message,date:new Date().toISOString(),content:JSON.parse(JSON.stringify(contentData)),offers:getOffers(),settings:getSettings()});
+      if(versions.length > 20) versions = versions.slice(0,20);
+      saveVersions(versions);
+    }
+
+    /* ===== SETTINGS ===== */
+    function loadSettings(){
+      var s = getSettings();
+      document.getElementById('set-site-name').value = s.siteName || '';
+      document.getElementById('set-site-desc').value = s.siteDesc || '';
+      document.getElementById('set-support-email').value = s.supportEmail || '';
+      document.getElementById('set-site-url').value = s.siteUrl || '';
+      renderBankCards();
+    }
+
+    window.saveSettings = function(){
+      var s = {
+        siteName: document.getElementById('set-site-name').value.trim(),
+        siteDesc: document.getElementById('set-site-desc').value.trim(),
+        supportEmail: document.getElementById('set-support-email').value.trim(),
+        siteUrl: document.getElementById('set-site-url').value.trim()
+      };
+      var newKey = document.getElementById('set-admin-key').value.trim();
+      if(newKey){
+        if(newKey.length < 6){ toast('رمز باید حداقل ۶ کاراکتر باشد','err'); return; }
+        hashPassword(newKey).then(function(hash){
+          localStorage.setItem('ic-admin-hash', hash);
+          KEY = newKey;
+          // Update session with new password
+          var sessionExpiry = Date.now() + (30 * 60 * 1000);
+          localStorage.setItem('ic-admin-session', btoa(newKey + ':' + sessionExpiry));
+          toast('رمز عبور تغییر کرد. در ورود بعدی از رمز جدید استفاده کنید.','info');
+        });
+      }
+      saveSettingsData(s);
+      toast('تنظیمات ذخیره شد','ok');
+      autoVersion('بروزرسانی تنظیمات');
+    };
+
+    /* ===== BANK CARDS ===== */
+    function getBankCards(){
+      try{return JSON.parse(localStorage.getItem('ic-bank-cards')||'[]')}catch(e){return[]}
+    }
+    function saveBankCardsData(cards){ localStorage.setItem('ic-bank-cards',JSON.stringify(cards)) }
+
+    function renderBankCards(){
+      var cards = getBankCards();
+      var el = document.getElementById('bank-cards-list');
+      if(!el) return;
+      if(!cards.length){
+        el.innerHTML = '<div class="table-empty"><div class="icon"><i class="fa-solid fa-credit-card"></i></div><div class="msg">هنوز کارت بانکی تعریف نشده. روی «کارت جدید» کلیک کنید.</div></div>';
+        return;
+      }
+      el.innerHTML = cards.map(function(c,i){
+        var masked = c.number ? c.number.replace(/(\d{4})/g, '$1 ').trim() : '****';
+        return '<div class="bank-card-item">'+
+          '<div class="bank-card-icon"><i class="fa-solid fa-credit-card"></i></div>'+
+          '<div class="bank-card-info">'+
+            '<div class="bank-card-number">'+masked+'</div>'+
+            '<div class="bank-card-name">'+(c.name||'-')+'</div>'+
+            '<div class="bank-card-bank">'+(c.bank||'-')+'</div>'+
+          '</div>'+
+          '<div class="cell-actions">'+
+            '<button class="btn btn-info" onclick="editBankCard('+i+')"><i class="fa-solid fa-pen"></i></button>'+
+            '<button class="btn btn-err" onclick="deleteBankCard('+i+')"><i class="fa-solid fa-trash"></i></button>'+
+          '</div>'+
+        '</div>';
+      }).join('');
+    }
+
+    window.openBankCardModal = function(editIndex){
+      var card = editIndex !== undefined ? getBankCards()[editIndex] : null;
+      var title = card ? 'ویرایش کارت بانکی' : 'کارت بانکی جدید';
+      var html = '<div class="form-group"><label class="form-label">شماره کارت</label>'+
+        '<input class="form-input" id="bc-number" value="'+(card?card.number:'')+'" placeholder="0000-0000-0000-0000" style="direction:ltr;text-align:left" maxlength="19"></div>'+
+        '<div class="form-group"><label class="form-label">نام صاحب کارت</label>'+
+        '<input class="form-input" id="bc-name" value="'+(card?card.name:'')+'" placeholder="نام و نام خانوادگی"></div>'+
+        '<div class="form-group"><label class="form-label">نام بانک</label>'+
+        '<input class="form-input" id="bc-bank" value="'+(card?card.bank:'')+'" placeholder="مثال: ملت، سپه، ...""></div>';
+      openModal(title, html, function(){
+        var number = document.getElementById('bc-number').value.replace(/[-\s]/g,'').trim();
+        var name = document.getElementById('bc-name').value.trim();
+        var bank = document.getElementById('bc-bank').value.trim();
+        if(!number || number.length < 16){ toast('شماره کارت باید ۱۶ رقم باشد','err'); return false; }
+        if(!name){ toast('نام صاحب کارت را وارد کنید','err'); return false; }
+        var cards = getBankCards();
+        var newCard = {number:number, name:name, bank:bank, created:new Date().toISOString()};
+        if(editIndex !== undefined){ cards[editIndex] = newCard; }
+        else { cards.push(newCard); }
+        saveBankCardsData(cards);
+        renderBankCards();
+        toast('کارت بانکی ذخیره شد','ok');
+        return true;
+      });
+      // Format card number with dashes as user types
+      setTimeout(function(){
+        var input = document.getElementById('bc-number');
+        if(input){
+          input.addEventListener('input', function(){
+            var v = this.value.replace(/[^\d]/g,'').substring(0,16);
+            var formatted = v.replace(/(\d{4})/g,'$1-').replace(/-$/,'');
+            this.value = formatted;
+          });
+        }
+      }, 100);
+    };
+
+    window.editBankCard = function(i){ openBankCardModal(i); };
+
+    window.deleteBankCard = function(i){
+      showConfirm('آیا از حذف این کارت مطمئنید؟',function(){
+        var cards = getBankCards();
+        cards.splice(i,1);
+        saveBankCardsData(cards);
+        renderBankCards();
+        toast('کارت حذف شد','ok');
+      });
+    };
+
+    /* ===== PREVIEW ===== */
+    window.toggleTrial = function(){
+      var on = document.getElementById('trial-toggle').checked;
+      var frame = document.getElementById('preview-frame');
+      frame.src = on ? 'index.html?trial=1' : 'index.html';
+    };
+
+    /* ===== ACTIONS ===== */
+    async function confirmPayment(id){
+      showConfirm('پرداخت تایید و اشتراک فعال شود؟',async function(){
+        var r=await api('admin-actions',{action:'confirm_payment',payload:{payment_id:id}});
+        toast(r.success?'پرداخت تایید شد':r.error,r.success);
+        if(r.success)loadPayments();
+      });
+    }
+    async function refundPayment(id){
+      showConfirm('پرداخت بازگشت و اشتراک لغو شود؟',async function(){
+        var r=await api('admin-actions',{action:'refund_payment',payload:{payment_id:id}});
+        toast(r.success?'بازگشت انجام شد':r.error,r.success);
+        if(r.success)loadPayments();
+      });
+    }
+    async function activateSub(id){
+      var r=await api('admin-actions',{action:'activate_subscription',payload:{subscription_id:id}});
+      toast(r.success?'اشتراک فعال شد':r.error,r.success);
+      if(r.success)loadSubs();
+    }
+    async function deactivateSub(id){
+      showConfirm('اشتراک لغو شود؟',async function(){
+        var r=await api('admin-actions',{action:'deactivate_subscription',payload:{subscription_id:id}});
+        toast(r.success?'اشتراک لغو شد':r.error,r.success);
+        if(r.success)loadSubs();
+      });
+    }
+    async function extendSub(id){
+      var days=prompt('چند روز اضافه شود؟','30');
+      if(!days)return;
+      var r=await api('admin-actions',{action:'extend_subscription',payload:{subscription_id:id,days:parseInt(days)}});
+      toast(r.success?r.message:r.error,r.success);
+      if(r.success)loadSubs();
+    }
+
+    /* ===== DETAIL VIEWS ===== */
+    async function detailPayment(id){
+      var r=await api('admin-actions',{action:'get_payment_details',payload:{payment_id:id}});
+      if(r.error)return toast(r.error,'err');
+      var p=r.payment;
+      var html='<table style="width:100%;border-collapse:collapse;font-size:.875rem">'+
+        row('شناسه',shortId(p.id))+row('تاریخ',dt(p.created_at))+row('کاربر',userName(p.user_id))+
+        row('پلن',esc(p.subscriptions?.plans?.label||p.plan_id))+row('مبلغ','$'+p.amount_usdt)+
+        row('وضعیت',ps(p.payment_status))+row('آدرس پرداخت',esc(p.pay_address||'-'))+
+        row('مبلغ پرداختی',p.pay_amount||'-')+row('TX Hash',esc(p.tx_hash||'-'))+'</table>';
+      openModal('جزئیات پرداخت',html);
+    }
+
+    async function detailUser(id){
+      var r=await api('admin-actions',{action:'get_user_details',payload:{user_id:id}});
+      if(r.error)return toast(r.error,'err');
+      var u=r.user;
+      var html='<table style="width:100%;border-collapse:collapse;font-size:.875rem">'+
+        row('ایمیل',esc(u.email))+row('نام',esc(u.name||'-'))+
+        row('تاریخ عضویت',dt(u.created_at))+row('آخرین ورود',u.last_sign_in?dt(u.last_sign_in):'هرگز')+'</table>';
+      if(r.subscriptions&&r.subscriptions.length){
+        html+='<h3 style="margin:1rem 0 .5rem;font-size:.875rem;color:var(--txt-dim)">اشتراک‌ها</h3>';
+        html+='<table style="width:100%;border-collapse:collapse;font-size:.8125rem"><tr><th>پلن</th><th>وضعیت</th><th>انقضا</th></tr>';
+        r.subscriptions.forEach(function(s){html+='<tr><td>'+esc(s.plans?.label||s.plan_id)+'</td><td>'+ss(s.status)+'</td><td>'+dt(s.expires_at)+'</td></tr>'});
+        html+='</table>';
+      }
+      openModal('جزئیات کاربر',html);
+    }
+
+    /* ===== EMAIL MODAL ===== */
+    window.openEmailModal = function(){
+      openModal('<i class="fa-solid fa-envelope"></i> ارسال ایمیل',
+        '<div class="form-group"><label class="form-label">ایمیل گیرنده</label><input class="form-input" id="m-email-to" placeholder="user@example.com" style="direction:ltr;text-align:left"></div>'+
+        '<div class="form-group"><label class="form-label">قالب</label><select class="form-select" id="m-email-tpl"><option value="welcome">خوش‌آمد</option><option value="payment_success">پرداخت موفق</option><option value="subscription_expiring">رو به انقضا</option><option value="subscription_expired">منقضی شده</option><option value="payment_failed">پرداخت ناموفق</option></select></div>',
+        async function(){
+          var to=document.getElementById('m-email-to').value.trim();
+          var tpl=document.getElementById('m-email-tpl').value;
+          if(!to){toast('ایمیل را وارد کنید','err');return false;}
+          var r=await api('admin-actions',{action:'send_email',payload:{to:to,template:tpl,custom_data:{}}});
+          toast(r.success?'ایمیل ارسال شد':r.error,r.success);
+          if(r.success)loadEmails();
+          return true;
+        }
+      );
+    };
+
+    /* ===== MODAL ===== */
+    function openModal(title,bodyHtml,footerFn){
+      document.getElementById('modal-title').textContent = title;
+      document.getElementById('modal-body').innerHTML = bodyHtml;
+      document.getElementById('modal-footer').innerHTML = '<button class="btn btn-primary" id="modal-ok">ذخیره</button><button class="btn btn-cancel" onclick="closeModal()">لغو</button>';
+      document.getElementById('modal-overlay').classList.add('on');
+      if(footerFn){
+        document.getElementById('modal-ok').addEventListener('click',function(){
+          var result = footerFn();
+          if(result && typeof result.then === 'function'){
+            result.then(function(r){ if(r !== false) closeModal(); });
+          } else if(result !== false) {
+            closeModal();
+          }
+        });
+      }
+    }
+    window.closeModal = function(){ document.getElementById('modal-overlay').classList.remove('on'); };
+    document.getElementById('modal-overlay').addEventListener('click',function(e){if(e.target===e.currentTarget)closeModal()});
+
+    /* ===== CONFIRM ===== */
+    function showConfirm(msg,onYes){
+      document.getElementById('confirm-msg').textContent = msg;
+      document.getElementById('confirm-overlay').classList.add('on');
+      var btn = document.getElementById('confirm-yes');
+      var newBtn = btn.cloneNode(true);
+      btn.parentNode.replaceChild(newBtn, btn);
+      newBtn.addEventListener('click',function(){
+        closeConfirm();
+        if(onYes) onYes();
+      });
+    }
+    window.closeConfirm = function(){ document.getElementById('confirm-overlay').classList.remove('on'); };
+
+    /* ===== CSV EXPORT ===== */
+    window.exportCSV = function(section){
+      var data = cache[section]||[];
+      if(!data.length) return toast('داده‌ای موجود نیست','err');
+      var headers = Object.keys(data[0]);
+      var csv = ','+headers.join(',')+'\n';
+      data.forEach(function(row){
+        csv+=headers.map(function(h){var v=row[h];return typeof v==='string'&&v.includes(',')?'"'+v+'"':v||''}).join(',')+'\n';
+      });
+      var blob=new Blob(['\uFEFF'+csv],{type:'text/csv;charset=utf-8'});
+      var a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=section+'_'+new Date().toISOString().slice(0,10)+'.csv';a.click();
+    };
+
+    /* ===== SAVE ALL ===== */
+    window.saveAll = function(){
+      if(currentSection==='content') saveContent();
+      else if(currentSection==='settings') saveSettings();
+      else toast('ذخیره شد','ok');
+    };
+
+    /* ===== HELPERS ===== */
+    var PS={confirmed:['تایید شده','badge-ok'],waiting:['در انتظار','badge-warn'],confirming:['در حال تایید','badge-info'],failed:['ناموفق','badge-err'],refunded:['بازگشت','badge-err'],expired:['منقضی','badge-neutral']};
+    var SS={active:['فعال','badge-ok'],pending:['در انتظار','badge-warn'],expired:['منقضی','badge-err'],cancelled:['لغو شده','badge-neutral']};
+    function ps(s){var x=PS[s]||[s,'badge-neutral'];return '<span class="badge '+x[1]+'">'+x[0]+'</span>'}
+    function ss(s){var x=SS[s]||[s,'badge-neutral'];return '<span class="badge '+x[1]+'">'+x[0]+'</span>'}
+    function dt(iso){return iso?new Date(iso).toLocaleDateString('fa-IR'):'-'}
+    function shortId(id){return id?id.slice(0,8)+'...':'-'}
+    function userName(uid){
+      var u=cache.users.find(function(x){return x.id===uid});
+      return esc(u?(u.name||u.email):shortId(uid));
+    }
+    function row(k,v){return '<tr><td style="padding:.375rem 0;color:var(--txt-dim);width:40%">'+k+'</td><td style="padding:.375rem 0;font-weight:500">'+v+'</td></tr>'}
+    function esc(s){
+      return String(s == null ? '' : s).replace(/[&<>"']/g, function(c){
+        return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c];
+      });
+    }
+
+    function toast(msg,type){
+      var t=document.createElement('div');
+      t.className='toast toast-'+(type||'ok');
+      t.textContent=msg;
+      document.body.appendChild(t);
+      setTimeout(function(){t.remove()},3000);
+    }
+
+    /* ===== EXPOSE FUNCTIONS FOR INLINE ONCLICK ===== */
+    window.confirmPayment = confirmPayment;
+    window.refundPayment = refundPayment;
+    window.activateSub = activateSub;
+    window.deactivateSub = deactivateSub;
+    window.extendSub = extendSub;
+    window.detailPayment = detailPayment;
+    window.detailUser = detailUser;
+    window.loadSection = loadSection;
+
+  })();
+  </script>
+</body>
+</html>
