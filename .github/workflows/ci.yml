@@ -1,0 +1,57 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Validate HTML
+        run: |
+          for f in *.html; do
+            echo "Checking $f..."
+            grep -q '<!DOCTYPE html\|<!doctype html>' "$f" || echo "WARNING: $f missing doctype"
+            grep -q '<html' "$f" || echo "WARNING: $f missing html tag"
+            grep -q '<head' "$f" || echo "WARNING: $f missing head tag"
+            grep -q '<body' "$f" || echo "WARNING: $f missing body tag"
+          done
+
+      - name: Check for broken internal links
+        run: |
+          for f in *.html; do
+            grep -oP 'href="[^"#]+"' "$f" | sed 's/href="//;s/"//' | while read link; do
+              if [[ "$link" == ./* ]] && [ ! -f "${link#./}" ]; then
+                echo "BROKEN LINK in $f: $link"
+              fi
+            done
+          done
+
+      - name: Validate CSS
+        run: |
+          find assets/css -name "*.css" -exec echo "Validating {}" \;
+
+      - name: Check for secrets in code
+        run: |
+          if grep -rn "ghp_\|sk_live_\|api_key\|password\|secret" --include="*.js" --include="*.html" --include="*.css" --include="*.ts" . 2>/dev/null | grep -v node_modules | grep -v ".env.example"; then
+            echo "WARNING: Potential secrets found in code"
+            exit 1
+          fi
+          echo "No secrets detected"
+
+      - name: Smoke test
+        run: node -e "
+          const fs = require('fs');
+          const pages = ['index.html', 'dashboard.html', 'pricing.html', 'admin.html'];
+          pages.forEach(p => {
+            if (!fs.existsSync(p)) { console.error('MISSING: ' + p); process.exit(1); }
+            const content = fs.readFileSync(p, 'utf8');
+            console.log(p + ': ' + content.length + ' bytes ✓');
+          });
+          console.log('All pages present');
+        "

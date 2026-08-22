@@ -1,0 +1,50 @@
+name: Security Scan
+
+on:
+  push:
+    branches: [main]
+  schedule:
+    - cron: '0 6 * * 1'  # Weekly Monday 6am UTC
+
+jobs:
+  scan:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Scan for leaked secrets
+        run: |
+          echo "Scanning for potential secrets..."
+          FOUND=0
+          for pattern in "ghp_" "sk_live_" "sk_test_" "AKIA" "api_key" "password" "secret" "token"; do
+            MATCHES=$(grep -rn "$pattern" --include="*.js" --include="*.html" --include="*.ts" --include="*.json" --include="*.toml" . 2>/dev/null | grep -v node_modules | grep -v ".env.example" | grep -v "package-lock" || true)
+            if [ -n "$MATCHES" ]; then
+              echo "FOUND potential '$pattern':"
+              echo "$MATCHES"
+              FOUND=1
+            fi
+          done
+          if [ $FOUND -eq 1 ]; then
+            echo "::warning::Potential secrets detected — review above"
+          else
+            echo "No secrets detected ✓"
+          fi
+
+      - name: Check .env exposure
+        run: |
+          if [ -f .env ]; then
+            echo "::error::.env file found in repo — should be in .gitignore"
+            exit 1
+          fi
+          echo "No .env file exposed ✓"
+
+      - name: Validate supabase config
+        run: |
+          if [ -f supabase/config.toml ]; then
+            echo "Supabase config found"
+            if grep -q "anon_key\|service_role_key" supabase/config.toml 2>/dev/null; then
+              echo "::error::Keys found in supabase config"
+              exit 1
+            fi
+            echo "Supabase config clean ✓"
+          fi
